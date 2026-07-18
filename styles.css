@@ -1343,9 +1343,9 @@ h1 {
   margin-bottom: 0.5rem !important;
   line-height: 1.05 !important;
 }
-/* Emergency Pipeline Test */
+/* Final Layout Spacing Adjustments */
 h1 {
-  color: red !important;
   margin-top: 0 !important;
-  padding-top: 0 !important;
+  margin-bottom: 0.5rem !important;
+  line-height: 1.05 !important;
 }
