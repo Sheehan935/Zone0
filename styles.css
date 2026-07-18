@@ -1359,3 +1359,10 @@ h1:first-of-type {
   margin-top: 48px !important;
   padding-top: 24px !important;
 }
+/* Container Spacing Above Hero Elements */
+.hero, 
+section:first-of-type,
+main {
+  padding-top: 64px !important;
+  margin-top: 24px !important;
+}
