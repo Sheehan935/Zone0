@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Zone 0 Landscaping helps Berkeley Hills homeowners reduce Zone 0 wildfire risk without sacrificing hillside character, privacy, or architectural landscape style."
+      content="Zone 0 Landscaping helps homeowners reduce Zone 0 wildfire risk without sacrificing hillside character, privacy, or architectural landscape style."
     />
     <meta property="og:title" content="Zone 0 Landscaping | Fire-Adapted Landscape Design" />
     <meta property="og:description" content="Zone 0 Landscaping helps Berkeley Hills homeowners reduce Zone 0 wildfire risk without sacrificing hillside character, privacy, or architectural landscape style." />
@@ -13,7 +13,39 @@
     <meta property="og:url" content="https://zone0landscaping.com" />
     <link rel="canonical" href="https://zone0landscaping.com" />
     <title>Zone 0 Landscaping | Fire-Adapted Landscape Design</title>
-    <link rel="stylesheet" href="styles.css?v=13" />
+    
+    <!-- Incremented cache-buster asset version to force immediate browser updates -->
+    <link rel="stylesheet" href="styles.css?v=14" />
+    
+    <!-- Layout alignment block to prevent fixed navigation header from clipping the primary title sentence -->
+    <style>
+      main {
+        padding-top: 140px !important;
+      }
+      @media (max-width: 768px) {
+        main {
+          padding-top: 100px !important;
+        }
+      }
+      .form-group {
+        margin-bottom: 1.25rem;
+        text-align: left;
+      }
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .hidden-field {
+        display: none !important;
+      }
+    </style>
   </head>
   <body>
     <a href="#main" class="skip-nav">Skip to main content</a>
@@ -469,45 +501,53 @@
           <p class="hidden-field">
             <label>Do not fill this out <input name="bot-field" /></label>
           </p>
-          <label>
-            Name
-            <input name="name" type="text" autocomplete="name" required />
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" autocomplete="email" required />
-          </label>
-          <label>
-            Property ZIP code
-            <input name="zip" type="text" inputmode="numeric" autocomplete="postal-code" required />
-          </label>
-          <label>
-            Which service are you considering?
-            <select name="service_interest" required>
+          
+          <div class="form-group">
+            <label for="paid-name">Name *</label>
+            <input id="paid-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="paid-email">Email *</label>
+            <input id="paid-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="paid-zip">Property ZIP code *</label>
+            <input id="paid-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="paid-service">Which service are you considering? *</label>
+            <select id="paid-service" name="service_interest" required>
               <option>Remote Design Review - from $299</option>
               <option>On-Site Design Consultation - from $750</option>
               <option>Zone 0 Redesign / Concept Plan</option>
               <option>HOA or neighborhood workshop</option>
             </select>
-          </label>
-          <label>
-            Project timing
-            <select name="timing" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="paid-timing">Project timing *</label>
+            <select id="paid-timing" name="timing" required>
               <option>As soon as possible</option>
               <option>Before fire season</option>
               <option>Planning a larger landscape project</option>
               <option>Insurance, HOA, or resale documentation need</option>
             </select>
-          </label>
-          <label>
-            Tell us about the property
+          </div>
+          
+          <div class="form-group">
+            <label for="paid-notes">Tell us about the property *</label>
             <textarea
+              id="paid-notes"
               name="project_notes"
               rows="5"
               placeholder="Example: Berkeley Hills home with mature front planting, wood fence at side yard, privacy concerns, and interest in a more architectural entry."
               required
             ></textarea>
-          </label>
+          </div>
+          
           <button class="button primary" type="submit">Request Paid Design Review</button>
           <p class="form-note">
             Paid reviews and consultations are scheduled after fit, scope, and
@@ -582,21 +622,25 @@
           <p class="hidden-field">
             <label>Do not fill this out <input name="bot-field" /></label>
           </p>
-          <label>
-            Name
-            <input name="name" type="text" autocomplete="name" required />
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" autocomplete="email" required />
-          </label>
-          <label>
-            ZIP code
-            <input name="zip" type="text" inputmode="numeric" autocomplete="postal-code" required />
-          </label>
-          <label>
-            What is prompting this?
-            <select name="prompting_reason">
+          
+          <div class="form-group">
+            <label for="free-name">Name *</label>
+            <input id="free-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="free-email">Email *</label>
+            <input id="free-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="free-zip">ZIP code *</label>
+            <input id="free-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" required />
+          </div>
+          
+          <div class="form-group">
+            <label for="free-reason">What is prompting this? *</label>
+            <select id="free-reason" name="prompting_reason">
               <option>Preserve landscape character while reducing risk</option>
               <option>Insurance concern</option>
               <option>HOA or neighborhood guidance</option>
@@ -604,19 +648,23 @@
               <option>Real estate sale or purchase</option>
               <option>Designing a larger landscape upgrade</option>
             </select>
-          </label>
-          <label>
-            Upload photos
-            <input name="photos" type="file" accept="image/*" multiple required />
-          </label>
-          <label>
-            Tell us what you are seeing
+          </div>
+          
+          <div class="form-group">
+            <label for="free-photos">Upload photos *</label>
+            <input id="free-photos" name="photos" type="file" accept="image/*" multiple required />
+          </div>
+          
+          <div class="form-group">
+            <label for="free-notes">Tell us what you are seeing</label>
             <textarea
+              id="free-notes"
               name="notes"
               rows="5"
               placeholder="Example: mature shrubs near the entry, bark mulch by siding, wood fence attached to the home, privacy concerns..."
             ></textarea>
-          </label>
+          </div>
+          
           <button class="button primary" type="submit">Request Style-Safe Review</button>
           <p class="form-note">
             Upload wide shots and closeups of siding, decks, fences, mulch beds,
