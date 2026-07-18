@@ -1359,9 +1359,14 @@ h1:first-of-type {
   margin-top: 48px !important;
   padding-top: 24px !important;
 }
-/* Deep Space Reset Above Hero Section */
+/* Clean Hero Text Clearance */
 .hero, 
 main section:first-of-type {
-  padding-top: 120px !important;
-  margin-top: 40px !important;
+  padding-top: 0px !important;
+  margin-top: 0px !important;
+}
+
+.hero .container,
+main section:first-of-type > div {
+  padding-top: 80px !important;
 }
