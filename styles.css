@@ -1352,3 +1352,10 @@ h1,
   line-height: 1.05 !important;
   padding-top: 0px !important;
 }
+/* Hero Text Spacing Correction */
+.hero h1,
+#main h1,
+h1:first-of-type {
+  margin-top: 48px !important;
+  padding-top: 24px !important;
+}
