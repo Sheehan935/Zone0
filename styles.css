@@ -213,7 +213,7 @@ section {
   grid-template-columns: minmax(0, 1.02fr) minmax(360px, 0.98fr);
   min-height: calc(100vh - 76px);
   padding-bottom: 54px;
-  padding-top: clamp(58px, 9vw, 110px);
+  padding-top: clamp(20px, 4vw, 48px); /* Fixed fluid sizing constraint */
 }
 
 .hero-copy {
@@ -225,7 +225,8 @@ section {
   font-size: 0.78rem;
   font-weight: 850;
   letter-spacing: 0.12em;
-  margin: 0 0 14px;
+  margin: 0 0 14px; /* Already has 0 on top, which is good! */
+  margin-top: 0;   /* Just to be absolutely sure */
   text-transform: uppercase;
 }
 
@@ -240,9 +241,9 @@ h1 {
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(3.1rem, 7.5vw, 6.75rem);
   font-weight: 700;
-  letter-spacing: 0;
-  line-height: 0.93;
-  margin-bottom: 24px;
+  letter-spacing: -0.02em; /* Added slight tracking reduction to look cleaner at huge sizes */
+  line-height: 0.85;       /* Reduced from 0.93 to bring the lines closer together */
+  margin-bottom: 16px;     /* Reduced from 24px to bring the description paragraph closer */
   max-width: 850px;
 }
 
