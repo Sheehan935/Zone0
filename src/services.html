@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | Zone 0 Landscaping</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="#contact">Get an Audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Zone 0 Defense & Hardscaping Services</h1>
+      <p>Specialized fire-safe landscaping for Bay Area homes within the critical 0–5 ft zone.</p>
+    </section>
+
+    <section class="services-list">
+      <article>
+        <h2>0–5 Ft Non-Combustible Zone Installation</h2>
+        <p>Replacing bark, mulch, and combustible plants within 5 feet of your home structure with hardscape, decorative gravel, and stone paver solutions.</p>
+      </article>
+
+      <article>
+        <h2>Fire-Resistant Plant Landscaping</h2>
+        <p>Curated design using high-moisture, low-resin plants specifically chosen for Bay Area microclimates.</p>
+      </article>
+
+      <article>
+        <h2>Property Defensible Space Audits</h2>
+        <p>Comprehensive site assessments to evaluate ember vulnerability and local fire code compliance.</p>
+      </article>
+    </section>
+
+    <!-- LEAD CAPTURE FORM -->
+    <section id="contact">
+      <h2>Request a Services Quote</h2>
+      <form name="services-inquiry" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="services-inquiry" />
+        
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="address">Property Address</label>
+        <input type="text" id="address" name="address" required />
+
+        <label for="service-needed">Service Interested In</label>
+        <select id="service-needed" name="service-needed">
+          <option value="zone0-hardscape">Zone 0 Hardscaping (0-5 ft)</option>
+          <option value="plant-design">Fire-Resistant Planting</option>
+          <option value="full-audit">Property Audit & Design</option>
+        </select>
+
+        <button type="submit">Get Estimate</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Zone 0 Landscaping. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
