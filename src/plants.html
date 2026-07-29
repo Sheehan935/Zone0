@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fire-Resistant Plants | Zone 0 Landscaping</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="plants.html">Plant Guide</a>
+      <a href="#contact">Get an Audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Bay Area Fire-Resistant Plant Guide</h1>
+      <p>Recommended plants for Defensible Space Zones 1 & 2 (5–30+ ft from structure) selected for high moisture content and low ignition rates.</p>
+    </section>
+
+    <section class="plant-grid">
+      <article class="plant-card">
+        <h3>Succulents & Groundcovers</h3>
+        <p><strong>Examples:</strong> Agave, Sedum, Delosperma (Ice Plant)</p>
+        <p>High moisture retention; ideal for planting near outer hardscape boundaries.</p>
+      </article>
+
+      <article class="plant-card">
+        <h3>Native Perennials</h3>
+        <p><strong>Examples:</strong> California Poppy, Yarrow, Salvia (Sage)</p>
+        <p>Drought-tolerant, low sap/resin content, and adaptable to Bay Area soils.</p>
+      </article>
+
+      <article class="plant-card">
+        <h3>Fire-Safe Shrubs</h3>
+        <p><strong>Examples:</strong> Ceanothus (California Lilac), Manzanita (low-growing varieties)</p>
+        <p>Requires minimal pruning and maintains leaf hydration throughout dry summers.</p>
+      </article>
+    </section>
+
+    <!-- CONSULTATION FORM -->
+    <section id="contact">
+      <h2>Need Help Selecting Fire-Safe Plants?</h2>
+      <form name="plant-guide-inquiry" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="plant-guide-inquiry" />
+        
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="city">Bay Area City / Microclimate</label>
+        <input type="text" id="city" name="city" placeholder="e.g., Berkeley, Oakland, Walnut Creek" required />
+
+        <button type="submit">Request Custom Plant Palette</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Zone 0 Landscaping. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
