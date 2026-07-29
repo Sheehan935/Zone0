@@ -785,6 +785,36 @@
         <a href="mailto:hello@zone0landscaping.com">hello@zone0landscaping.com</a>
         <a href="#photo-check">Style-Safe Review</a>
       </div>
-    </footer>
-  </body>
+    <footer>
+    <p>&copy; 2026 Zone 0 Landscaping. All rights reserved.</p>
+  </footer>
+
+  <!-- CONSULTATION FORM -->
+  <section id="contact">
+    <h2>Request a Zone 0 Consultation</h2>
+    <p>Get a fire-safe defensible space assessment for your property.</p>
+
+    <form name="consultation-request" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="consultation-request" />
+      
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" name="phone" />
+
+      <label for="address">Property Address (Bay Area)</label>
+      <input type="text" id="address" name="address" required />
+
+      <label for="message">Project Details / Goals</label>
+      <textarea id="message" name="message" rows="4"></textarea>
+
+      <button type="submit">Request Zone 0 Audit</button>
+    </form>
+  </section>
+
+</body>
 </html>
