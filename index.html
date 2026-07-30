@@ -166,27 +166,12 @@
           <h2>Get a Free Zone 0 Photo Check</h2>
           <p>Not sure if your mulch, plants, or fence violate local fire codes? Send us 1 to 3 photos of your home's perimeter. We'll reply with a plain-English review of what needs to change.</p>
           
-          <form id="photo-check-form" name="photo-check">
-            <div class="form-group">
-              <label for="name">Your Name</label>
-              <input type="text" id="name" name="name" required />
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-            <div class="form-group">
-              <label for="city">City / Neighborhood (e.g., Berkeley Hills)</label>
-              <input type="text" id="city" name="city" required />
-            </div>
-            <div class="form-group">
-              <label for="photos">Upload Perimeter Photos (Max 3)</label>
-              <input type="file" id="photos" name="photos" multiple accept="image/*" />
-              <p class="form-note">This static version opens an email draft. Attach your selected photos before sending.</p>
-            </div>
-            <button type="submit" class="btn btn-primary full-width">Submit for Free Review</button>
-            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-          </form>
+          <iframe
+            class="tally-embed"
+            data-tally-src="https://tally.so/embed/81VgKP?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+            title="Zone 0 Photo Check form"
+            loading="lazy"
+          ></iframe>
         </div>
       </section>
 
@@ -272,34 +257,6 @@
         <p>&copy; 2026 Zone 0 Landscaping. All rights reserved. | Educational guidance, not a formal legal compliance determination.</p>
       </div>
     </footer>
-    <script>
-      const photoCheckForm = document.querySelector("#photo-check-form");
-      const formStatus = document.querySelector("#form-status");
-
-      photoCheckForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const formData = new FormData(photoCheckForm);
-        const selectedPhotos = Array.from(document.querySelector("#photos").files).map((file) => file.name);
-        const body = [
-          "New Zone 0 photo check request",
-          "",
-          `Name: ${formData.get("name")}`,
-          `Email: ${formData.get("email")}`,
-          `City / Neighborhood: ${formData.get("city")}`,
-          "",
-          selectedPhotos.length
-            ? `Selected photo files to attach: ${selectedPhotos.join(", ")}`
-            : "Selected photo files to attach: none yet",
-          "",
-          "Please attach perimeter photos before sending this email."
-        ].join("\n");
-
-        const subject = encodeURIComponent("Zone 0 Photo Check Request");
-        const encodedBody = encodeURIComponent(body);
-        window.location.href = `mailto:hello@zone0landscaping.com?subject=${subject}&body=${encodedBody}`;
-        formStatus.textContent = "Your email app should open now. Attach your photos there, then send.";
-      });
-    </script>
+    <script src="https://tally.so/widgets/embed.js"></script>
   </body>
 </html>
