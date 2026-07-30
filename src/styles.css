@@ -21,22 +21,46 @@ body {
   line-height: 1.6;
 }
 
-/* Navigation */
-header {
+img {
+  max-width: 100%;
+  display: block;
+}
+
+header.site-header {
   background-color: #ffffff;
   border-bottom: 1px solid var(--border-color);
   padding: 1rem 2rem;
   position: sticky;
   top: 0;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-nav {
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+nav[aria-label="Primary navigation"] {
   max-width: 1100px;
   margin: 0 auto;
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 nav a {
@@ -50,19 +74,21 @@ nav a:hover {
   color: var(--primary);
 }
 
-nav a[href="#contact"] {
+.nav-cta {
   margin-left: auto;
   background-color: var(--primary);
   color: #ffffff;
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1rem;
   border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-nav a[href="#contact"]:hover {
+.nav-cta:hover {
   background-color: var(--primary-hover);
+  color: #ffffff;
 }
 
-/* Layout Containers */
 main {
   max-width: 1100px;
   margin: 2rem auto;
@@ -73,26 +99,173 @@ main {
   text-align: center;
   padding: 3rem 1rem;
   background: #ffffff;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-bottom: 2rem;
   border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 0.75rem;
+  font-size: 0.82rem;
 }
 
 .hero h1 {
   color: var(--primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
 }
 
-/* Forms */
-section#contact {
+.hero-lead,
+.lead-text,
+.content-block p,
+.card p,
+.faq-item p,
+.link-card p,
+.form-container p,
+.trust-item span {
+  color: var(--text-muted);
+}
+
+.hero-actions,
+.card-grid-4,
+.gallery-preview-grid,
+.link-list,
+.trust-strip {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-actions {
+  grid-template-columns: repeat(auto-fit, minmax(180px, max-content));
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background-color: #e8f1eb;
+  color: var(--primary);
+}
+
+.trust-strip {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-bottom: 2rem;
+}
+
+.trust-item {
   background: #ffffff;
-  padding: 2rem;
-  border-radius: 8px;
   border: 1px solid var(--border-color);
-  margin-top: 3rem;
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
-form {
+.status-banner,
+.content-block,
+.services-overview,
+.form-section,
+.faq-section {
+  margin: 2rem 0;
+}
+
+.status-banner .banner-content,
+.content-block,
+.services-overview,
+.form-container,
+.faq-item,
+.link-card,
+.card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.status-banner .banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.badge,
+.price-tag {
+  display: inline-block;
+  background: #e8f1eb;
+  color: var(--primary);
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.card-grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 1rem;
+}
+
+.card h3,
+.content-block h2,
+.services-overview h2,
+.form-container h2,
+.faq-section h2 {
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.card a,
+.text-link,
+.link-card,
+.status-banner a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.gallery-preview-grid {
+  grid-template-columns: 1fr;
+  margin: 1rem 0;
+}
+
+.gallery-card img {
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.form-section form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -128,8 +301,20 @@ button[type="submit"]:hover {
   background-color: var(--primary-hover);
 }
 
-/* Footer */
-footer {
+.link-list {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 1rem;
+}
+
+.link-card {
+  display: block;
+}
+
+.faq-item + .faq-item {
+  margin-top: 1rem;
+}
+
+footer.site-footer {
   text-align: center;
   padding: 2rem;
   color: var(--text-muted);
