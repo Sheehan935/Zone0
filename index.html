@@ -13,7 +13,7 @@
     <meta property="og:description" content="Zone 0 compliance that doesn't strip your hillside. Specialized defensible space design for Berkeley and East Bay homes." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://zone0landscaping.com/" />
-    <meta property="og:image" content="https://zone0landscaping.com/assets/og-image.jpg" />
+    <meta property="og:image" content="https://zone0landscaping.com/Assets/berkeley-house-hero.jpg" />
 
     <title>Zone 0 Landscaping | Fire-Adapted Hillside Design</title>
     <link rel="stylesheet" href="styles.css?v=20260730" />
@@ -55,11 +55,11 @@
         </div>
         <div class="hero-before-after">
           <figure>
-            <img src="/assets/Before.jpg" alt="Berkeley Hills hillside home before Zone 0 fire-adapted redesign" loading="lazy" />
+            <img src="Assets/Before.jpg" alt="Berkeley Hills hillside home before Zone 0 fire-adapted redesign" loading="lazy" />
             <figcaption>Before</figcaption>
           </figure>
           <figure>
-            <img src="/assets/After.jpg" alt="Same hillside home after Zone 0 fire-adapted redesign" loading="lazy" />
+            <img src="Assets/After.jpg" alt="Same hillside home after Zone 0 fire-adapted redesign" loading="lazy" />
             <figcaption>After</figcaption>
           </figure>
         </div>
@@ -122,7 +122,7 @@
         <p>See how hillside homes maintain architectural character after removing Zone 0 fuel.</p>
         <div class="gallery-preview-grid">
           <div class="gallery-card">
-            <img src="/assets/before-after-1.jpg" alt="Before and after Zone 0 landscape redesign in Berkeley Hills" loading="lazy" />
+            <img src="Assets/paver-material-hero.jpg" alt="Fire-adapted paver and stone material palette for a Zone 0 redesign" loading="lazy" />
             <p><strong>Berkeley Hills Entryway:</strong> Converted wood bark and junipers to steel-bordered gravel and specimen agaves.</p>
           </div>
         </div>
@@ -166,7 +166,7 @@
           <h2>Get a Free Zone 0 Photo Check</h2>
           <p>Not sure if your mulch, plants, or fence violate local fire codes? Send us 1 to 3 photos of your home's perimeter. We'll reply with a plain-English review of what needs to change.</p>
           
-          <form name="photo-check" method="POST" data-netlify="true" enctype="multipart/form-data">
+          <form id="photo-check-form" name="photo-check">
             <div class="form-group">
               <label for="name">Your Name</label>
               <input type="text" id="name" name="name" required />
@@ -181,9 +181,11 @@
             </div>
             <div class="form-group">
               <label for="photos">Upload Perimeter Photos (Max 3)</label>
-              <input type="file" id="photos" name="photos" multiple accept="image/*" required />
+              <input type="file" id="photos" name="photos" multiple accept="image/*" />
+              <p class="form-note">This static version opens an email draft. Attach your selected photos before sending.</p>
             </div>
             <button type="submit" class="btn btn-primary full-width">Submit for Free Review</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </section>
@@ -270,5 +272,34 @@
         <p>&copy; 2026 Zone 0 Landscaping. All rights reserved. | Educational guidance, not a formal legal compliance determination.</p>
       </div>
     </footer>
+    <script>
+      const photoCheckForm = document.querySelector("#photo-check-form");
+      const formStatus = document.querySelector("#form-status");
+
+      photoCheckForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(photoCheckForm);
+        const selectedPhotos = Array.from(document.querySelector("#photos").files).map((file) => file.name);
+        const body = [
+          "New Zone 0 photo check request",
+          "",
+          `Name: ${formData.get("name")}`,
+          `Email: ${formData.get("email")}`,
+          `City / Neighborhood: ${formData.get("city")}`,
+          "",
+          selectedPhotos.length
+            ? `Selected photo files to attach: ${selectedPhotos.join(", ")}`
+            : "Selected photo files to attach: none yet",
+          "",
+          "Please attach perimeter photos before sending this email."
+        ].join("\n");
+
+        const subject = encodeURIComponent("Zone 0 Photo Check Request");
+        const encodedBody = encodeURIComponent(body);
+        window.location.href = `mailto:hello@zone0landscaping.com?subject=${subject}&body=${encodedBody}`;
+        formStatus.textContent = "Your email app should open now. Attach your photos there, then send.";
+      });
+    </script>
   </body>
 </html>
