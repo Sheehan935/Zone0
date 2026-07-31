@@ -110,19 +110,26 @@ it does not contain marketing copy.
 
 ---
 
-# Services Overview (4 cards)
+# Services Overview (4 cards) — home page section AND `pages/services.html`
 
 - **Purpose:** Make the offer concrete — what can be bought, at what price.
 - **Visitor question(s):** What do I actually get, and what does it cost?
 - **Key message:** There's a free entry point (Photo Check) and paid tiers
   matched to different levels of commitment.
 - **Call to action:** All 4 cards (Submit Photos, Learn More, Book Consult,
-  View Full Services) now point to `#photo-check`.
+  View Full Services) point to `#photo-check` (same-page anchor on the home
+  page; `../index.html#photo-check` on `pages/services.html`).
 - **Required images:** None currently; not required for launch.
-- **Status:** Built, all CTAs functional. Note: all 4 tiers route to the
-  same free-tier form, which `reference/ux-review.md` #5 flags as making
-  paid tiers feel speculative rather than bookable — acceptable for V1,
-  worth a dedicated booking path in the future.
+- **Status:** Built in two places with identical copy (2026-07-30, see
+  `decisions.md` "Superseded: V1 is no longer single-page"): the home
+  page's `#services` section (now unreachable from nav, still present)
+  and the new `pages/services.html` (linked from nav/footer). Which one
+  stays authoritative — trim the home section to a teaser, or keep both —
+  is an open call, tracked in `00-project-dashboard.md`'s Next list. Note:
+  all 4 tiers still route to the same free-tier form, which
+  `reference/ux-review.md` #5 flags as making paid tiers feel speculative
+  rather than bookable — acceptable for now, worth a dedicated booking
+  path in the future.
 
 ---
 

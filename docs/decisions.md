@@ -183,3 +183,33 @@ building the pages later, it just stops pretending they exist today.
 **Verified:** Re-rendered the full page headlessly — zero remaining
 `href="/..."` links besides the logo, zero console/page errors, layout
 unaffected (checked full-page screenshot).
+
+---
+
+### 2026-07-30 — Superseded: V1 is no longer single-page
+
+**Decision:** The "V1 ships single-page" decision (earlier this same day)
+is superseded. Brian explicitly requested a real standalone `services.html`
+page, confirmed (not the existing `#services` home-page section). The
+site moves to a multi-page structure starting with this page.
+
+**Why:** Direct, explicit request — the scenario the original single-page
+decision's own header says it takes to reopen ("not to be revisited unless
+explicitly requested").
+
+**Practical implications, tracked as follow-up work:**
+- `01-project-brief.md`'s Version 1 Scope needs another pass (this will be
+  the second reversal in one day — brief updated to single-page a few
+  hours ago).
+- Home page nav/footer currently point `Services` at `#services` (the
+  anchor section) — needs to point at the new page instead once it exists.
+  The home page's Services Overview section content and the new page's
+  content will need to agree on which is authoritative.
+- New pages live in `pages/` per `01-project-brief.md`'s File Organization
+  (matches `pages/thank-you.html`), not at root — keeps `index.html` as
+  the only root-level page.
+- This reopens the question of the other 10 links stripped in the
+  previous entry (materials, design guides, rules timeline, etc.) — they
+  were removed on the premise that V1 stays single-page. That premise no
+  longer holds; whether to rebuild those as real pages is a separate call,
+  not assumed here.

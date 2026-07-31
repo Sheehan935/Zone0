@@ -3,10 +3,10 @@
 
 **Project Name:** Zone0Landscaping.com
 
-**Version:** 1.1
+**Version:** 1.2
 
-**Last Updated:** July 30, 2026 (revised — see `decisions.md` for the
-single-page decision this update reconciles)
+**Last Updated:** July 30, 2026 (revised again — see `decisions.md`,
+"Superseded: V1 is no longer single-page")
 
 ---
 
@@ -68,18 +68,19 @@ Visitors should be able to:
 
 # Version 1 Scope
 
-V1 is a single page (`index.html`) with anchor-linked sections, not
-separate pages — see `decisions.md` (2026-07-30, "V1 ships single-page").
-The one exception is the Thank You page, which exists separately because
-it's a redirect target for the lead-capture form, not a nav destination.
+V1 started single-page and is now moving to a small multi-page structure
+— see `decisions.md` (2026-07-30, "Superseded: V1 is no longer
+single-page"). New pages live in `pages/`, matching `pages/thank-you.html`.
+This section will need another pass once the Services page (and any
+further pages) actually exist, to record what's built versus planned.
 
 Included
 
-- Home page, containing the sections below as anchor-linked sections:
-  - Services overview
+- Home page, containing these sections as anchor-linked sections:
   - Before & After examples
   - Frequently Asked Questions
   - Contact (embedded Tally form, not a separate contact page)
+- Services page (`pages/services.html`)
 - Thank You page (`pages/thank-you.html`) — form redirect target only
 - Mobile responsive design
 - Basic SEO

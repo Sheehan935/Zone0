@@ -10,7 +10,9 @@ material. Never more than 3 active tasks in **Next**.
 
 # Current Goal
 
-Ship Version 1 — a single-page site (`index.html`) — to launch.
+Ship Version 1 — now a small multi-page site starting with `index.html`
+and `pages/services.html` — to launch. (Direction changed 2026-07-30,
+see `decisions.md`.)
 
 ---
 
@@ -82,12 +84,31 @@ Ship Version 1 — a single-page site (`index.html`) — to launch.
   the pages — see `decisions.md`. `index.html` now has zero links to
   unbuilt pages. Verified via headless render: no errors, no dead links,
   layout unaffected.
+- **Built `pages/services.html`** — first page in the new multi-page
+  direction (see `decisions.md`, "Superseded: V1 is no longer
+  single-page"). Reuses the 4 service-tier cards verbatim from the home
+  page (no invented content); CTAs link to `../index.html#photo-check`
+  since the Tally form isn't duplicated across pages. Home page nav/footer
+  "Services" now points here instead of `#services`. Along the way, fixed:
+  the logo SVG (was rendering as a full orange circle instead of a
+  green/orange split — path didn't close correctly), mobile dropdown nav
+  had no visual separation from page content (added box-shadow + border),
+  CTA copy was inconsistent ("Get Your Free Assessment" vs "...Zone 0
+  Assessment" — standardized), and `pages/thank-you.html`'s "Back to
+  Services" link (was pointing at the now-repurposed `#services` anchor).
+  All verified via headless render — zero dead links, zero console errors.
+- **Not yet resolved:** the home page still has its own `#services`
+  section with the same 4 cards — now unreachable from nav but still
+  present. Whether to trim/replace it now that a dedicated page exists is
+  an open content decision, not assumed here — see `decisions.md`.
 
 ---
 
 # Next (max 3)
 
-1. *(open slot)*
+1. **Decide what happens to the home page's `#services` section** now
+   that `pages/services.html` exists — trim to a short teaser linking to
+   the full page, or leave as-is with intentional duplication.
 2. *(open slot)*
 3. *(open slot)*
 
