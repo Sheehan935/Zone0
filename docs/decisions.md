@@ -146,3 +146,17 @@ labeled before/after images. The SEO ask to work "Fire-Adapted
 Landscaping," "East Bay," and "California" into the H1 was not applied —
 it directly conflicted with the same request's explicit instruction to
 "keep the existing headline," and the literal instruction was honored.
+
+---
+
+### 2026-07-30 — Reconciled `01-project-brief.md` V1 scope with single-page decision
+
+**Decision:** Updated the "Version 1 Scope" section to describe anchor-linked
+sections on one page instead of separate Services/Before & After/FAQ/Contact
+pages. Closes the staleness flagged in the "V1 ships single-page" entry
+above. Also added `legacy/` and `docs/reference/` to the File Organization
+section, which existed on disk but weren't documented.
+
+**Why:** `01-project-brief.md` is meant to only change when project
+direction changes — this was a real direction change (multi-page → single-
+page) that the brief hadn't caught up to yet.

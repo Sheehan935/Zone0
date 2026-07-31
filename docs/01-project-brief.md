@@ -3,9 +3,10 @@
 
 **Project Name:** Zone0Landscaping.com
 
-**Version:** 1.0
+**Version:** 1.1
 
-**Last Updated:** July 30, 2026
+**Last Updated:** July 30, 2026 (revised — see `decisions.md` for the
+single-page decision this update reconciles)
 
 ---
 
@@ -67,14 +68,19 @@ Visitors should be able to:
 
 # Version 1 Scope
 
+V1 is a single page (`index.html`) with anchor-linked sections, not
+separate pages — see `decisions.md` (2026-07-30, "V1 ships single-page").
+The one exception is the Thank You page, which exists separately because
+it's a redirect target for the lead-capture form, not a nav destination.
+
 Included
 
-- Home page
-- Services overview
-- Before & After examples
-- Frequently Asked Questions
-- Contact page
-- Thank You page
+- Home page, containing the sections below as anchor-linked sections:
+  - Services overview
+  - Before & After examples
+  - Frequently Asked Questions
+  - Contact (embedded Tally form, not a separate contact page)
+- Thank You page (`pages/thank-you.html`) — form redirect target only
 - Mobile responsive design
 - Basic SEO
 - Accessibility best practices
@@ -138,12 +144,15 @@ Avoid:
 
 Project follows a structured folder layout:
 
-- docs/
+- docs/ — active docs (`00-project-dashboard.md`, `01-project-brief.md`,
+  `02-content-plan.md`, `decisions.md`) plus a `reference/` subfolder for
+  non-authoritative material (audits, old planning docs)
 - assets/
 - css/
 - js/
 - pages/
-- archive/
+- archive/ — intentional reference snapshots (old index, template)
+- legacy/ — abandoned prior build attempts, kept separate from `archive/`
 
 ---
 
