@@ -5,6 +5,31 @@
   --text-dark: #0f172a;
   --text-muted: #475569;
   --border-color: #e2e8f0;
+
+  /* Type scale (1rem = 16px base) */
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-h3: 1.375rem;
+  --fs-h2: 1.75rem;
+  --fs-h1: 2.25rem;
+
+  /* Line heights */
+  --lh-tight: 1.2;
+  --lh-heading: 1.25;
+  --lh-body: 1.6;
+  --lh-snug: 1.45;
+
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
 }
 
 * {
@@ -17,12 +42,72 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--text-dark);
   background-color: var(--bg-light);
-  line-height: 1.6;
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
 }
 
 img {
   max-width: 100%;
   display: block;
+}
+
+/* Typography scale */
+h1 {
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  color: var(--primary);
+  margin-bottom: var(--space-6);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: var(--lh-heading);
+  margin-bottom: var(--space-4);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: var(--lh-heading);
+  margin-bottom: var(--space-3);
+}
+
+h4 {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  line-height: var(--lh-heading);
+  margin-bottom: var(--space-2);
+}
+
+p {
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  margin-bottom: var(--space-3);
+}
+
+/* .eyebrow is shared across pages as a small overline label (p.eyebrow on
+   services.html / thank-you.html) but repurposed as the h1 on index.html
+   (see decisions.md). Split by element so the label instances keep their
+   original small treatment while h1.eyebrow gets the new display scale. */
+p.eyebrow {
+  color: var(--primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 0.75rem;
+  font-size: 1.64rem;
+}
+
+h1.eyebrow {
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-6);
 }
 
 /* Navigation */
@@ -161,32 +246,22 @@ main {
   max-width: 1100px;
   margin: 2rem auto;
   padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+main > section {
+  padding-block: var(--space-12);
 }
 
 .hero {
   text-align: center;
-  padding: 3rem 1rem;
+  padding-inline: 1rem;
   background: #ffffff;
   border-radius: 12px;
-  margin-bottom: 2rem;
   border: 1px solid var(--border-color);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-}
-
-.eyebrow {
-  color: var(--primary);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  margin-bottom: 0.75rem;
-  font-size: 1.64rem;
-}
-
-.hero h1 {
-  color: var(--primary);
-  margin-bottom: 0.75rem;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.1;
 }
 
 .hero-lead,
@@ -198,6 +273,12 @@ main {
 .form-container p,
 .trust-item span {
   color: var(--text-muted);
+}
+
+.hero-lead,
+.lead-text {
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
 }
 
 .hero-lead {
@@ -212,7 +293,7 @@ main {
 .link-list,
 .trust-strip {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .trust-bar {
@@ -230,7 +311,8 @@ main {
   align-items: center;
   gap: 0.4rem;
   color: var(--text-muted);
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
   font-weight: 500;
 }
 
@@ -249,7 +331,8 @@ main {
 
 .cta-reassurance {
   margin-top: 1rem;
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
   color: var(--text-muted);
   font-weight: 500;
 }
@@ -268,7 +351,8 @@ main {
   gap: 0.5rem;
   color: var(--text-muted);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
 }
 
 .trust-indicator svg {
@@ -303,7 +387,7 @@ main {
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   letter-spacing: 0.08em;
   text-align: center;
 }
@@ -345,7 +429,6 @@ main {
 
 .trust-strip {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  margin-bottom: 2rem;
 }
 
 .trust-item {
@@ -358,17 +441,7 @@ main {
   gap: 0.35rem;
 }
 
-.status-banner,
-.content-block,
-.services-overview,
-.form-section,
-.faq-section {
-  margin: 2rem 0;
-}
-
 .status-banner .banner-content,
-.content-block,
-.services-overview,
 .form-container,
 .faq-item,
 .link-card,
@@ -376,7 +449,15 @@ main {
   background: #ffffff;
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: var(--space-6);
+}
+
+.content-block,
+.services-overview {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding-inline: var(--space-6);
 }
 
 .status-banner .banner-content {
@@ -394,15 +475,14 @@ main {
   color: var(--primary);
   padding: 0.35rem 0.65rem;
   border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: var(--fs-xs);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .card-grid-4 {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  margin-top: 1rem;
 }
 
 .card h3,
@@ -411,7 +491,6 @@ main {
 .form-container h2,
 .faq-section h2 {
   color: var(--primary);
-  margin-bottom: 0.75rem;
 }
 
 .card a,
@@ -443,7 +522,7 @@ button[type="submit"] {
   color: white;
   border: none;
   padding: 0.85rem;
-  font-size: 1rem;
+  font-size: var(--fs-base);
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
@@ -456,7 +535,6 @@ button[type="submit"]:hover {
 
 .link-list {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  margin-top: 1rem;
 }
 
 .link-card {
@@ -472,7 +550,8 @@ footer.site-footer {
   text-align: center;
   padding: 2rem;
   color: var(--text-muted);
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
   border-top: 1px solid var(--border-color);
   margin-top: 4rem;
 }
@@ -488,7 +567,6 @@ footer.site-footer {
 
 .footer-col h4 {
   color: var(--text-dark);
-  margin-bottom: 0.75rem;
 }
 
 .footer-col ul {
@@ -517,6 +595,15 @@ footer.site-footer {
 
 /* Responsive */
 @media (max-width: 768px) {
+  :root {
+    --fs-h1: 1.75rem;
+    --fs-h2: 1.5rem;
+  }
+
+  main > section {
+    padding-block: var(--space-8);
+  }
+
   header.site-header {
     position: relative;
   }
@@ -572,7 +659,7 @@ footer.site-footer {
   }
 
   .hero {
-    padding: 2rem 0.75rem;
+    padding-inline: 0.75rem;
   }
 }
 
