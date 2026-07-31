@@ -72,14 +72,22 @@ Ship Version 1 — a single-page site (`index.html`) — to launch.
   pinning `.card-grid-4` to 2 columns. Verified via headless render.
 - Removed the dead "View all FAQs" link — no additional FAQ content
   existed behind it, per `reference/link-audit.md` recommendation.
+- Tally form's post-submit redirect to `pages/thank-you.html` configured
+  by Brian directly in the Tally dashboard (2026-07-30). Not independently
+  verified from this side — Tally's redirect setting isn't visible from
+  the codebase — but per Brian's confirmation.
+- Stripped the remaining 11 dead body-copy links (hero secondary CTA,
+  regulation band, risk section, 4 Design Principles links, gallery
+  button, 3 Guide Preview cards) instead of leaving them dead or building
+  the pages — see `decisions.md`. `index.html` now has zero links to
+  unbuilt pages. Verified via headless render: no errors, no dead links,
+  layout unaffected.
 
 ---
 
 # Next (max 3)
 
-1. **Configure the Tally form's post-submit redirect** to
-   `pages/thank-you.html`. This is a setting in the Tally dashboard, not a
-   code change — needs you to do it there, not something I can push.
+1. *(open slot)*
 2. *(open slot)*
 3. *(open slot)*
 

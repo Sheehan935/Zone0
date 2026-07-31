@@ -37,8 +37,9 @@ belong in `legacy/`. Its relative asset paths (`styles.css`, `index.html`
 links) were rewritten with `../` prefixes since it now lives one directory
 deeper than before.
 
-**Follow-up:** Nothing currently links to `pages/thank-you.html` yet — the
-Tally form has no configured redirect. See `reference/ux-review.md` #1.
+**Follow-up:** ~~Nothing currently links to `pages/thank-you.html` yet — the
+Tally form has no configured redirect.~~ Resolved 2026-07-30 — Brian
+configured the redirect directly in the Tally dashboard.
 
 ---
 
@@ -93,9 +94,8 @@ repoint it to a section is a content call, not a mechanical one.
 
 **Also noted:** The `reference/ux-review.md` "broken mailto form" item (#1) is stale —
 `#photo-check` is already a working Tally embed (see commit `1c7683d`). The
-only remaining gap is that Tally has no post-submit redirect configured to
-`pages/thank-you.html` — that's a setting in the Tally dashboard, outside
-this repo.
+redirect-to-thank-you-page gap was resolved 2026-07-30 (Tally dashboard
+setting, configured by Brian).
 
 ---
 
@@ -160,3 +160,26 @@ section, which existed on disk but weren't documented.
 **Why:** `01-project-brief.md` is meant to only change when project
 direction changes — this was a real direction change (multi-page → single-
 page) that the brief hadn't caught up to yet.
+
+---
+
+### 2026-07-30 — Stripped the remaining 11 dead body-copy links
+
+**Decision:** Removed every remaining link in body copy that pointed to an
+unbuilt page, rather than leaving them dead or building the pages: hero
+secondary CTA ("See Zone 0 Rules"), regulation band ("Read the Timeline"),
+risk section ("Learn how embers ignite homes"), all 4 Design Principles
+"learn more" links, the gallery's "Explore the Before & After Gallery"
+button, and all 3 Guide Preview cards (converted from `<a>` to `<div>` so
+the card styling stays but there's no dead click target). Cleaned up the
+now-orphaned `.text-link` and `.status-banner a` CSS selectors.
+
+**Why:** Same reasoning as the "View all FAQs" removal — a link with no
+destination reads as broken or unfinished, which undercuts trust more than
+having no link at all. `link-audit.md` already recommended most of these
+as "Future standalone page" (V2); removing them now doesn't foreclose
+building the pages later, it just stops pretending they exist today.
+
+**Verified:** Re-rendered the full page headlessly — zero remaining
+`href="/..."` links besides the logo, zero console/page errors, layout
+unaffected (checked full-page screenshot).

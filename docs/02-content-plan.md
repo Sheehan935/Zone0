@@ -17,9 +17,9 @@ it does not contain marketing copy.
   do? Can I trust them?
 - **Key message:** Fire-safe compliance without stripping the hillside's
   curb appeal, backed by a credible checklist of what they specialize in.
-- **Call to action:** Get Your Free Zone 0 Assessment (primary, working) /
-  See Zone 0 Rules (secondary, de-emphasized — still a dead link, see
-  `reference/link-audit.md`)
+- **Call to action:** Get Your Free Zone 0 Assessment (primary, working).
+  The secondary "See Zone 0 Rules" CTA was removed (2026-07-30) rather than
+  left dead — see `decisions.md`.
 - **Required images:** Before/after hero pair — in place, now eager-loaded
   (was `loading="lazy"` on an above-the-fold image, which hurts perceived
   load speed) with above-image Before/After labels instead of captions
@@ -28,7 +28,7 @@ it does not contain marketing copy.
   claims), CTA reassurance line, and a 3-item trust-indicator row (icons +
   label). No fabricated claims (no star ratings, no unconfirmed
   service-area list) — see `decisions.md` (2026-07-30, "Premium polish
-  pass"). Secondary CTA still points to an unbuilt page.
+  pass"). Single, fully-working CTA.
 
 ---
 
@@ -53,10 +53,11 @@ it does not contain marketing copy.
   regulation.
 - **Visitor question(s):** Is this actually required right now, or optional?
 - **Key message:** Zone 0 rules are live in East Bay high-fire zones.
-- **Call to action:** Read the Timeline (dead link, see `reference/link-audit.md`)
+- **Call to action:** None. "Read the Timeline" link removed (2026-07-30)
+  since the destination page doesn't exist — see `decisions.md`.
 - **Required images:** None.
 - **Status:** Built. Regulation claim should be re-verified as current
-  before launch. CTA points to an unbuilt page.
+  before launch.
 
 ---
 
@@ -68,11 +69,11 @@ it does not contain marketing copy.
   everything else in my yard?
 - **Key message:** Embers ignite homes via combustibles right at the
   structure, not the whole property.
-- **Call to action:** Learn how embers ignite homes (dead link, see
-  `reference/link-audit.md`)
+- **Call to action:** None. "Learn how embers ignite homes" link removed
+  (2026-07-30) — see `decisions.md`.
 - **Required images:** None currently; a supporting diagram or photo would
   strengthen this but isn't required for launch.
-- **Status:** Built. CTA points to an unbuilt page.
+- **Status:** Built.
 
 ---
 
@@ -84,12 +85,12 @@ it does not contain marketing copy.
   my plants?
 - **Key message:** Fire safety and an attractive, private, planted yard are
   not mutually exclusive.
-- **Call to action:** 4 "learn more" links, one per card — all dead, see
-  `reference/link-audit.md` (recommended as future standalone pages).
+- **Call to action:** None. The 4 "learn more" links were removed
+  (2026-07-30) rather than left dead — see `decisions.md`. Cards are now
+  heading + description only.
 - **Required images:** None shown per card today; real material/design
   photos would strengthen this but aren't required for launch.
-- **Status:** Built. All 4 card links point to unbuilt pages — deferred to
-  V2 per `reference/link-audit.md`.
+- **Status:** Built.
 
 ---
 
@@ -100,8 +101,8 @@ it does not contain marketing copy.
 - **Visitor question(s):** What does this actually look like when it's done?
 - **Key message:** Real conversions exist and preserve architectural
   character.
-- **Call to action:** Explore the Before & After Gallery (dead link, see
-  `reference/link-audit.md`)
+- **Call to action:** None. "Explore the Before & After Gallery" button
+  removed (2026-07-30) — see `decisions.md`.
 - **Required images:** More real before/after project pairs — only one
   exists today. This is the largest content gap on the page.
 - **Status:** Weakest section on the site content-wise. Needs more real
@@ -133,9 +134,8 @@ it does not contain marketing copy.
   property.
 - **Call to action:** Embedded Tally form (working)
 - **Required images:** None.
-- **Status:** Functionally working. Post-submit redirect to
-  `pages/thank-you.html` not yet configured (Tally dashboard setting, see
-  `decisions.md`).
+- **Status:** Fully working, including the post-submit redirect to
+  `pages/thank-you.html` (configured directly in Tally, 2026-07-30).
 
 ---
 
@@ -146,11 +146,12 @@ it does not contain marketing copy.
   generic marketing?
 - **Key message:** Detailed, specific guidance exists (checklist, mulch
   rules, local standards).
-- **Call to action:** 3 guide links — all dead, see `reference/link-audit.md`
-  (recommended as future standalone pages; the Berkeley link is
-  additionally blocked on missing local service-area data).
+- **Call to action:** None. The 3 cards were links to unbuilt pages;
+  converted to plain (non-interactive) cards (2026-07-30) — see
+  `decisions.md`. The Berkeley card's underlying content is additionally
+  blocked on missing local service-area data.
 - **Required images:** None.
-- **Status:** Built. All 3 links point to unbuilt pages — deferred to V2.
+- **Status:** Built.
 
 ---
 
@@ -163,10 +164,10 @@ it does not contain marketing copy.
   enforced.
 - **Key message:** Zone 0 is narrower and less disruptive than visitors
   fear.
-- **Call to action:** View all FAQs (dead link — `reference/link-audit.md`
-  recommends removing for V1 since no additional FAQ content exists yet).
+- **Call to action:** None. "View all FAQs" removed since no additional
+  FAQ content exists yet.
 - **Required images:** None.
-- **Status:** Built. "View all FAQs" link has nothing behind it.
+- **Status:** Built.
 
 ---
 
