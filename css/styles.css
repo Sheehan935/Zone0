@@ -1,7 +1,6 @@
 :root {
   --primary: #1b4332;
   --primary-hover: #2d6a4f;
-  --accent: #d97706;
   --bg-light: #f8fafc;
   --text-dark: #0f172a;
   --text-muted: #475569;
@@ -28,9 +27,11 @@ img {
 
 /* Navigation */
 header.site-header {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border-color);
-  padding: 1rem 2rem;
+  padding: 1.1rem 2.5rem;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -38,6 +39,8 @@ header.site-header {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  box-shadow: 0 1px 12px rgba(15, 23, 42, 0.04);
+  transition: box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
 .brand {
@@ -50,16 +53,55 @@ header.site-header {
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   flex-shrink: 0;
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  background-color: var(--bg-light);
+}
+
+.nav-toggle-bar {
+  width: 22px;
+  height: 2px;
+  background-color: var(--text-dark);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 nav[aria-label="Primary navigation"] {
   max-width: 1100px;
   margin: 0 auto;
   display: flex;
-  gap: 1.5rem;
+  gap: 1.75rem;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -67,7 +109,7 @@ nav[aria-label="Primary navigation"] {
 nav a {
   text-decoration: none;
   color: var(--text-dark);
-  font-weight: 600;
+  font-weight: 500;
   transition: color 0.2s ease;
 }
 
@@ -76,18 +118,42 @@ nav a:hover {
 }
 
 .nav-cta {
+  order: 2;
   margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   background-color: var(--primary);
   color: #ffffff;
-  padding: 0.6rem 1rem;
-  border-radius: 6px;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
+  box-shadow: 0 6px 16px rgba(27, 67, 50, 0.18);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .nav-cta:hover {
   background-color: var(--primary-hover);
   color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(27, 67, 50, 0.24);
+}
+
+.nav-cta .icon-arrow-right {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.nav-cta:hover .icon-arrow-right {
+  transform: translateX(3px);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }
 
 /* Layout Containers */
@@ -108,8 +174,8 @@ main {
 }
 
 .eyebrow {
-  color: #b26205;
-  font-weight: 700;
+  color: var(--primary);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   margin-bottom: 0.75rem;
@@ -134,6 +200,11 @@ main {
   color: var(--text-muted);
 }
 
+.hero-lead {
+  max-width: 60ch;
+  margin: 0 auto;
+}
+
 .hero-actions,
 .form-group,
 .card-grid-4,
@@ -144,17 +215,74 @@ main {
   gap: 1rem;
 }
 
+.trust-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 1.5rem;
+  list-style: none;
+  margin: 1.75rem auto 0;
+  max-width: 46rem;
+}
+
+.trust-bar li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.icon-check {
+  width: 14px;
+  height: 14px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
 .hero-actions {
   grid-template-columns: repeat(auto-fit, minmax(180px, max-content));
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
+}
+
+.cta-reassurance {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.trust-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.75rem;
+  margin-top: 1.75rem;
+}
+
+.trust-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.trust-indicator svg {
+  width: 22px;
+  height: 22px;
+  color: var(--primary);
+  flex-shrink: 0;
 }
 
 .hero-before-after {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .hero-before-after figure {
@@ -169,13 +297,15 @@ main {
   display: block;
 }
 
-.hero-before-after figcaption {
-  margin-top: 0.5rem;
+.image-label {
+  display: block;
+  margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.08em;
+  text-align: center;
 }
 
 .btn {
@@ -202,8 +332,15 @@ main {
 }
 
 .btn-secondary {
-  background-color: #e8f1eb;
+  background-color: transparent;
+  color: var(--text-muted);
+  padding: 0.8rem 0.6rem;
+  font-weight: 500;
+}
+
+.btn-secondary:hover {
   color: var(--primary);
+  background-color: transparent;
 }
 
 .trust-strip {
@@ -383,18 +520,50 @@ footer.site-footer {
 /* Responsive */
 @media (max-width: 768px) {
   header.site-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: flex;
   }
 
   nav[aria-label="Primary navigation"] {
-    justify-content: center;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem 1.5rem;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.25s ease;
+  }
+
+  nav[aria-label="Primary navigation"].is-open {
+    max-height: 480px;
+    opacity: 1;
+  }
+
+  nav a {
+    padding: 0.85rem 0.5rem;
+    font-size: 1.05rem;
+    border-radius: 8px;
+  }
+
+  nav a:hover {
+    background-color: var(--bg-light);
   }
 
   .nav-cta {
-    margin-left: 0;
-    text-align: center;
+    order: 0;
+    margin: 0 0 0.5rem;
+    justify-content: center;
+    width: 100%;
   }
 }
 

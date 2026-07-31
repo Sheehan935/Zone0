@@ -96,3 +96,53 @@ repoint it to a section is a content call, not a mechanical one.
 only remaining gap is that Tally has no post-submit redirect configured to
 `pages/thank-you.html` — that's a setting in the Tally dashboard, outside
 this repo.
+
+---
+
+### 2026-07-30 — Formalized standing project constraints
+
+**Decision:** Recording these as permanent, not to be revisited without an
+explicit request: (1) static HTML/CSS/vanilla JS only — no framework, no
+build step, no npm dependencies; (2) contact forms use Tally; (3) content
+is educational before promotional, per the brand personality in
+`01-project-brief.md` ("avoid fear-based messaging, alarmist language").
+
+**Why:** These were already true in practice but hadn't been written down.
+A large enhancement request (see next entry) asked for React-based icons,
+which would have violated (1) silently if not already on record.
+
+---
+
+### 2026-07-30 — Premium polish pass: icons, nav, no fabricated social proof
+
+**Decision:** Implemented a hero/header refinement pass with three
+constraints applied to the original request: (1) icons are inline SVG
+(Lucide-style paths), not Lucide React — keeps the static-only constraint
+above intact; (2) nav is Services/Process/Gallery/FAQ, mapped to existing
+sections (`#services`, `#process` on Trust Strip, `#gallery` on the
+Before & After preview, `#faq`) — dropped "Portfolio" and "About" since
+neither has corresponding content and V1 is single-page; (3) no star
+rating or specific service-area town list was added — `02-content-plan.md`
+already has both flagged as unconfirmed, and publishing either would be a
+false-claims risk. The trust bar/indicators that shipped use only
+already-true, non-numeric claims (e.g. "East Bay Specialists").
+
+**Also:** A mobile hamburger menu (vanilla JS, `js/main.js`) replaced the
+simpler stacked-nav CSS fix from the previous mobile-audit pass, since it
+was explicitly requested this time with specific UX requirements (CTA at
+top of the drawer, smooth open/close, Escape-to-close). This supersedes
+the "avoid JS complexity" reasoning used in the earlier fix — that
+reasoning held until a fuller nav treatment was explicitly asked for.
+
+**Why:** Matches your instruction to ask before architectural changes and
+avoid scope creep, while still delivering the parts of the request that
+fit the existing static-site, single-page constraints.
+
+**Not done:** The "Optional Enhancement" image overlay callouts (dense
+vegetation / fire-adapted plants bullet lists on the before/after images)
+were skipped — marked optional in the request, and adds real layout
+complexity for a page that already communicates the transformation via
+labeled before/after images. The SEO ask to work "Fire-Adapted
+Landscaping," "East Bay," and "California" into the H1 was not applied —
+it directly conflicted with the same request's explicit instruction to
+"keep the existing headline," and the literal instruction was honored.

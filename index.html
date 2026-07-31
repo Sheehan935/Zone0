@@ -22,7 +22,7 @@
     <!-- HEADER & PRIMARY NAV -->
     <header class="site-header">
       <a class="brand" href="/" aria-label="Zone 0 Landscaping Home">
-        <svg class="brand-mark" style="width: 42px; height: 42px;" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+        <svg class="brand-mark" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
           <circle cx="60" cy="50" r="45" fill="#2d4a3f" />
           <path d="M 60 5 A 45 45 0 0 1 60 95 A 45 45 0 0 1 60 5" fill="#c85a2f" />
           <text x="60" y="125" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#2d4a3f" letter-spacing="1.5">ZONE 0</text>
@@ -30,42 +30,90 @@
         <span class="brand-name">Zone 0 Landscaping</span>
       </a>
 
-      <nav aria-label="Primary navigation">
-        <a href="#guide">Zone 0 Guide</a>
-        <a href="#design">Design</a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="primary-nav" aria-label="Primary navigation">
+        <a class="nav-cta" href="#photo-check">
+          Get Your Free Assessment
+          <svg class="icon-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </a>
         <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#gallery">Gallery</a>
         <a href="#faq">FAQ</a>
       </nav>
-
-      <a class="nav-cta" href="#photo-check">Free Photo Check</a>
     </header>
 
     <main id="main">
       <!-- 1. HERO SECTION -->
       <section class="hero">
-        <p class="eyebrow">FIRE-ADAPTED HILLSIDE DESIGN</p>
+        <p class="eyebrow">Modern Design. Naturally Resilient. Fire-Adapted.</p>
         <h1>Zone 0 compliance that doesn’t strip your hillside.</h1>
         <p class="hero-lead">
           Protect your East Bay home from wildfire risk without turning your yard into a barren gravel pit. We redesign the critical 5-foot zone using fire-adapted materials that look intentional.
         </p>
+
+        <ul class="trust-bar">
+          <li>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            California Zone 0 Guidelines
+          </li>
+          <li>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            East Bay Specialists
+          </li>
+          <li>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Fire-Adapted Design
+          </li>
+          <li>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Premium Landscape Materials
+          </li>
+        </ul>
+
         <div class="hero-actions">
-          <a href="#photo-check" class="btn btn-primary">Get a Free Photo Check</a>
+          <a href="#photo-check" class="btn btn-primary">Get Your Free Zone 0 Assessment</a>
           <a href="/zone-0/rules-and-timeline/" class="btn btn-secondary">See Zone 0 Rules</a>
         </div>
+        <p class="cta-reassurance">No obligation &middot; Professional, plain-English recommendations</p>
+
+        <div class="trust-indicators">
+          <div class="trust-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" /></svg>
+            Native Plant Design
+          </div>
+          <div class="trust-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z" /></svg>
+            Fire-Adapted
+          </div>
+          <div class="trust-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+            East Bay Landscapes
+          </div>
+        </div>
+
         <div class="hero-before-after">
           <figure>
-            <img src="assets/images/Before.jpg" alt="Berkeley Hills hillside home before Zone 0 fire-adapted redesign" loading="lazy" />
-            <figcaption>Before</figcaption>
+            <span class="image-label">Before</span>
+            <img src="assets/images/Before.jpg" alt="Berkeley Hills hillside home before Zone 0 fire-adapted redesign" fetchpriority="high" />
           </figure>
           <figure>
-            <img src="assets/images/After.jpg" alt="Same hillside home after Zone 0 fire-adapted redesign" loading="lazy" />
-            <figcaption>After</figcaption>
+            <span class="image-label">After</span>
+            <img src="assets/images/After.jpg" alt="Same hillside home after Zone 0 fire-adapted redesign" fetchpriority="high" />
           </figure>
         </div>
       </section>
 
       <!-- 2. TRUST STRIP -->
-      <section class="trust-strip">
+      <section id="process" class="trust-strip">
         <div class="trust-item"><strong>Inspect</strong><span>Identify non-compliant fuel</span></div>
         <div class="trust-item"><strong>Preserve</strong><span>Save mature architectural trees</span></div>
         <div class="trust-item"><strong>Redesign</strong><span>Hardscape & non-combustibles</span></div>
@@ -116,7 +164,7 @@
       </section>
 
       <!-- 6. BEFORE & AFTER GALLERY PREVIEW -->
-      <section class="content-block center-text">
+      <section id="gallery" class="content-block center-text">
         <h2>Compliant & Beautiful</h2>
         <p>See how hillside homes maintain architectural character after removing Zone 0 fuel.</p>
         <div class="gallery-preview-grid">
@@ -218,9 +266,9 @@
         <div class="footer-col">
           <h4>On This Page</h4>
           <ul>
-            <li><a href="#guide">Zone 0 Guide</a></li>
-            <li><a href="#design">Design Principles</a></li>
             <li><a href="#services">Services</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#gallery">Gallery</a></li>
             <li><a href="#faq">FAQ</a></li>
           </ul>
         </div>
@@ -236,5 +284,6 @@
       </div>
     </footer>
     <script src="https://tally.so/widgets/embed.js"></script>
+    <script src="js/main.js" defer></script>
   </body>
 </html>

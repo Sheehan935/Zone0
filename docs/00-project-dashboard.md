@@ -19,9 +19,9 @@ Ship Version 1 — a single-page site (`index.html`) — to launch.
 - Folder reorganization: `archive/`, `legacy/`, `pages/`, `docs/`, `css/`,
   `assets/images/` match the target structure
 - `pages/thank-you.html` moved into place with corrected relative paths
-- Header nav and footer trimmed to in-page anchors (`#guide`, `#design`,
-  `#services`, `#faq`, `#photo-check`); dead `Materials`/`Local` nav items
-  removed
+- Header nav and footer trimmed to in-page anchors; dead `Materials`/`Local`
+  nav items removed (later revised to `#services`/`#process`/`#gallery`/`#faq`
+  — see below)
 - Lead form verified working — it's a live Tally embed, not the broken
   `mailto` form an earlier review flagged
 - FAQ placeholder text ("Add your initial towns here...") confirmed no
@@ -44,6 +44,26 @@ Ship Version 1 — a single-page site (`index.html`) — to launch.
   horizontal overflow at 320px (was 43px), header height 219px vs 233px
   and now legible/tappable, nav-CTA is a single line at 44.8px (was
   wrapped to 3 lines), desktop header unaffected (77.78px, unchanged).
+- **Working tree corruption recovered.** An unexplained `git reset --hard`
+  + clean wiped the reorg, CSS fix, and all `docs/*.md` files mid-session
+  — traced to a stash (`migration:main-agents/...`) that wasn't mine,
+  meaning another session may be operating on this same repo concurrently.
+  Recovered via `git stash apply` for tracked files and rewrote the
+  untracked docs from conversation content; committed as `22a7537` to
+  protect against it happening again. Cause still unconfirmed — worth
+  checking if another Claude Code window/session has this repo open.
+- **Premium polish pass** (hero, header, mobile nav) — see `decisions.md`
+  for the full breakdown. Summary: inline-SVG icons (not Lucide React, to
+  keep the static-only stack), nav revised to
+  Services/Process/Gallery/FAQ (dropped Portfolio/About — no matching
+  content), no fabricated social proof added (no star ratings, no
+  unconfirmed town list). Added: hero trust bar + trust indicators + CTA
+  reassurance text, before/after image labels moved above images, a real
+  hamburger mobile nav (vanilla JS, `js/main.js`, replaces the earlier
+  stacked-nav CSS approach), sticky/blurred header, and a corrected
+  eyebrow color (now uses the primary green, 11:1 contrast). Verified via
+  the same headless-render method as the mobile audit — no overflow at
+  320px, hamburger open/close/Escape all work, all contrast checks pass.
 
 ---
 

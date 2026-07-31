@@ -12,25 +12,36 @@ it does not contain marketing copy.
 # Hero
 
 - **Purpose:** First impression — establish who this is for and the core
-  value proposition immediately.
-- **Visitor question(s):** Is this for my situation? What do they actually do?
+  value proposition immediately, and build trust before the first ask.
+- **Visitor question(s):** Is this for my situation? What do they actually
+  do? Can I trust them?
 - **Key message:** Fire-safe compliance without stripping the hillside's
-  curb appeal.
-- **Call to action:** Get a Free Photo Check (primary, working) / See Zone 0
-  Rules (secondary — currently a dead link, see `reference/link-audit.md`)
-- **Required images:** Before/after hero pair — in place
-- **Status:** Built. Secondary CTA points to an unbuilt page.
+  curb appeal, backed by a credible checklist of what they specialize in.
+- **Call to action:** Get Your Free Zone 0 Assessment (primary, working) /
+  See Zone 0 Rules (secondary, de-emphasized — still a dead link, see
+  `reference/link-audit.md`)
+- **Required images:** Before/after hero pair — in place, now eager-loaded
+  (was `loading="lazy"` on an above-the-fold image, which hurts perceived
+  load speed) with above-image Before/After labels instead of captions
+  below.
+- **Status:** Built, including a trust-bar checklist (4 true, non-numeric
+  claims), CTA reassurance line, and a 3-item trust-indicator row (icons +
+  label). No fabricated claims (no star ratings, no unconfirmed
+  service-area list) — see `decisions.md` (2026-07-30, "Premium polish
+  pass"). Secondary CTA still points to an unbuilt page.
 
 ---
 
-# Trust Strip
+# Trust Strip / Process (`#process`)
 
 - **Purpose:** Show the process at a glance; build credibility through
   structure before asking for anything.
 - **Visitor question(s):** What actually happens if I work with them?
 - **Key message:** There's a defined process (Inspect, Preserve, Redesign,
   Implement, Document).
-- **Call to action:** None — informational band.
+- **Call to action:** None — informational band. Now a nav destination
+  (`#process`) since the header nav was revised to Services/Process/
+  Gallery/FAQ.
 - **Required images:** None.
 - **Status:** Built.
 
@@ -82,10 +93,10 @@ it does not contain marketing copy.
 
 ---
 
-# Before & After Gallery Preview
+# Before & After Gallery Preview (`#gallery`)
 
 - **Purpose:** Provide visual proof that results look intentional, not
-  barren.
+  barren. Now a nav destination (`#gallery`).
 - **Visitor question(s):** What does this actually look like when it's done?
 - **Key message:** Real conversions exist and preserve architectural
   character.
