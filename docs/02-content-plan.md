@@ -115,13 +115,13 @@ it does not contain marketing copy.
 - **Visitor question(s):** What do I actually get, and what does it cost?
 - **Key message:** There's a free entry point (Photo Check) and paid tiers
   matched to different levels of commitment.
-- **Call to action:** Submit Photos (`#photo-check`, working) / Learn More,
-  Book Consult, View Full Services (all 3 dead — see `reference/link-audit.md`,
-  recommended fix is an anchor link, not a new page)
+- **Call to action:** All 4 cards (Submit Photos, Learn More, Book Consult,
+  View Full Services) now point to `#photo-check`.
 - **Required images:** None currently; not required for launch.
-- **Status:** Built. 3 of 4 CTAs are dead — highest-priority fix in
-  `reference/link-audit.md` since these are conversion-path links, not
-  content-marketing links.
+- **Status:** Built, all CTAs functional. Note: all 4 tiers route to the
+  same free-tier form, which `reference/ux-review.md` #5 flags as making
+  paid tiers feel speculative rather than bookable — acceptable for V1,
+  worth a dedicated booking path in the future.
 
 ---
 

@@ -64,18 +64,18 @@ Ship Version 1 — a single-page site (`index.html`) — to launch.
   eyebrow color (now uses the primary green, 11:1 contrast). Verified via
   the same headless-render method as the mobile audit — no overflow at
   320px, hamburger open/close/Escape all work, all contrast checks pass.
+- Fixed the 3 dead paid-service CTAs (Design Review, On-Site Consultation,
+  Zone 0 Redesign) — now point to `#photo-check` instead of unbuilt
+  `/services/...` pages, per `reference/link-audit.md`'s recommendation.
 
 ---
 
 # Next (max 3)
 
-1. **Fix the 3 dead paid-service CTAs** (Design Review $299, On-Site
-   Consultation $750, Zone 0 Redesign Custom). Per `reference/link-audit.md`, these
-   are conversion-path dead ends, not content gaps — recommended fix is
-   pointing them at an anchor (e.g. `#photo-check`), not writing new pages.
-2. **Configure the Tally form's post-submit redirect** to
+1. **Configure the Tally form's post-submit redirect** to
    `pages/thank-you.html`. This is a setting in the Tally dashboard, not a
-   code change.
+   code change — needs you to do it there, not something I can push.
+2. *(open slot)*
 3. *(open slot)*
 
 ---
