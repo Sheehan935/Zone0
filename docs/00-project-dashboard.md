@@ -67,6 +67,11 @@ Ship Version 1 — a single-page site (`index.html`) — to launch.
 - Fixed the 3 dead paid-service CTAs (Design Review, On-Site Consultation,
   Zone 0 Redesign) — now point to `#photo-check` instead of unbuilt
   `/services/...` pages, per `reference/link-audit.md`'s recommendation.
+- Tablet grid fix: Design Principles now lands on a clean 2-column layout
+  at 768px (was 3, orphaning a card) — added a `600–960px` breakpoint
+  pinning `.card-grid-4` to 2 columns. Verified via headless render.
+- Removed the dead "View all FAQs" link — no additional FAQ content
+  existed behind it, per `reference/link-audit.md` recommendation.
 
 ---
 
@@ -82,11 +87,8 @@ Ship Version 1 — a single-page site (`index.html`) — to launch.
 
 # Future
 
-- Tablet column tuning: Design Principles grid lands on an uneven
-  3-column layout at 768px (orphaned last card). Cosmetic only, deferred
-  per `mobile-audit.md`.
-- Remove or resolve the "View all FAQs" dead link (`#11` in `reference/link-audit.md`)
-- Add real testimonials — none exist on the site currently
+- Add real testimonials — none exist on the site currently. On hold until
+  real reviews exist to draw from (2026-07-30).
 - Add a real service-area/town list — needed for both trust and local SEO,
   currently missing entirely
 - Add more before/after project photos — only one real project pair exists

@@ -576,3 +576,9 @@ footer.site-footer {
     padding: 2rem 0.75rem;
   }
 }
+
+@media (min-width: 600px) and (max-width: 960px) {
+  .card-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
