@@ -1,2 +1,11 @@
+# macOS System Files
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Temporary Google Drive Sync Files
+.tmp.drivedownload/
 .tmp.driveupload/
+
+# Editor / Local Assistant Configs
+.claude/.tmp.driveupload/
