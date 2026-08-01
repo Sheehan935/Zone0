@@ -213,3 +213,28 @@ explicitly requested").
   were removed on the premise that V1 stays single-page. That premise no
   longer holds; whether to rebuild those as real pages is a separate call,
   not assumed here.
+
+---
+
+### 2026-08-01 — Reverted back to single-page; removed pricing; pure education framing
+
+**Decision:** `pages/services.html` is gone (moved to `archive/services.html`
+outside this session's action — found already relocated on disk when this
+work started). Rather than rebuild it, went back to single-page: nav/footer
+"Services" removed, repointed to a "Zones" link. The `#services`
+pricing-tier section (Free/$299/$750/Custom cards) was removed from
+`index.html` entirely, not just unlinked. Hero headline/subheadline
+rewritten to a purely educational framing ("Fire-Safe Defensible Space
+Meets California Native Landscape Design") with no pricing or sales
+language. Hero primary CTA now points to a new `#zones` anchor (added to
+the existing "5-Foot Zone Matters Most" section) instead of the lead form.
+
+**Why:** Explicit direction change requested directly. Net effect: the
+site is single-page again, and positions the business as an educational
+resource rather than a service-tier storefront — the opposite framing
+from the "premium landscaping" hero rewrite earlier the same day.
+
+**Not done:** The photo-check lead form and its own path to conversion
+remain untouched — only the pricing/tier presentation and hero framing
+changed. Whether the removed $299/$750/Custom tiers get reintroduced in
+some other form is an open question, not decided here.

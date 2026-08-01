@@ -1,3 +1,9 @@
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 :root {
   --primary: #1b4332;
   --primary-hover: #2d6a4f;
@@ -709,8 +715,13 @@ footer.site-footer {
     padding-inline: 0.75rem;
   }
 
+  .hero-badges {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .hero-badge {
-    flex: 0 1 calc(50% - var(--space-3) / 2);
+    min-width: 0;
     justify-content: center;
     text-align: center;
   }
