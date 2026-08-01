@@ -422,6 +422,25 @@ main > section {
   display: block;
 }
 
+.image-frame {
+  position: relative;
+}
+
+.image-badge {
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  bottom: var(--space-3);
+  background: rgba(15, 23, 42, 0.72);
+  color: #ffffff;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
 .image-label {
   display: block;
   margin-bottom: 0.5rem;
@@ -482,6 +501,34 @@ main > section {
   gap: 0.35rem;
 }
 
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  text-align: left;
+}
+
+.metric-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: var(--space-4);
+}
+
+.metric-value {
+  display: block;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-heading);
+  margin-bottom: var(--space-2);
+}
+
+.metric-card p {
+  margin-bottom: 0;
+}
+
 .status-banner .banner-content,
 .form-container,
 .faq-item,
@@ -491,6 +538,20 @@ main > section {
   border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: var(--space-6);
+}
+
+.form-container {
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.form-reassurance {
+  margin-top: var(--space-3);
+  margin-bottom: 0;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+  color: var(--text-muted);
+  font-weight: 500;
+  text-align: center;
 }
 
 .content-block,
@@ -542,8 +603,23 @@ main > section {
 }
 
 .gallery-preview-grid {
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   margin: 1rem 0;
+  text-align: left;
+}
+
+.gallery-placeholder {
+  aspect-ratio: 3 / 2;
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--border-color),
+    var(--border-color) 10px,
+    #ffffff 10px,
+    #ffffff 20px
+  );
+  border: 1px dashed var(--border-color);
 }
 
 .gallery-card img {
