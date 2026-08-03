@@ -91,6 +91,131 @@
             margin: 0;
             padding: 0;
         }
+
+        /* Interactive Zone-Based Plant Expander */
+        .zone-expander-container {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 2rem auto;
+            color: #2d3748;
+        }
+
+        .zone-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Expand section when cursor enters the zone card */
+        .zone-card:hover {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            border-color: #2f855a;
+        }
+
+        .zone-card:hover .zone-content {
+            max-height: 2000px;
+            opacity: 1;
+            padding: 1rem 1.5rem 1.5rem 1.5rem;
+        }
+
+        .zone-card:hover .expand-icon {
+            transform: rotate(180deg);
+            color: #2f855a;
+        }
+
+        .zone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 1.5rem;
+            background: #f7fafc;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .zone-card:hover .zone-header {
+            background: #f0fff4;
+        }
+
+        .zone-title-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .zone-badge {
+            background: #2f855a;
+            color: white;
+            font-weight: 700;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+
+        .zone-title {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .expand-icon {
+            font-size: 1.25rem;
+            color: #a0aec0;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        /* Collapsible Content Area */
+        .zone-content {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding: 0 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .plant-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+            text-align: left;
+        }
+
+        .plant-table th {
+            background: #edf2f7;
+            color: #4a5568;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid #cbd5e0;
+        }
+
+        .plant-table td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .plant-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .plant-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .botanical-name {
+            font-style: italic;
+            color: #718096;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen font-sans">
@@ -348,216 +473,206 @@
                     <p class="text-stone-600 font-light text-base leading-relaxed">A comprehensive database of fire-adapted native flora, categorized by defensible space zone.</p>
                 </div>
 
-                <!-- NEW COMPREHENSIVE PLANT DATA TABLE -->
-                <div class="w-full reveal mb-16">
-                    <div class="overflow-x-auto rounded-lg border border-stone-200 shadow-sm">
-                        <table class="w-full border-collapse text-sm text-left">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="p-4 bg-sage-dark text-white uppercase text-[10px] tracking-widest font-bold border-b border-stone-300">Common Name</th>
-                                    <th scope="col" class="p-4 bg-sage-dark text-white uppercase text-[10px] tracking-widest font-bold border-b border-stone-300">Botanical / Scientific Name</th>
-                                    <th scope="col" class="p-4 bg-sage-dark text-white uppercase text-[10px] tracking-widest font-bold border-b border-stone-300">Category / Type</th>
-                                    <th scope="col" class="p-4 bg-sage-dark text-white uppercase text-[10px] tracking-widest font-bold border-b border-stone-300">Care Notes</th>
-                                    <th scope="col" class="p-4 bg-sage-dark text-white uppercase text-[10px] tracking-widest font-bold border-b border-stone-300">Fire-Safety Benefits</th>
-                                    <th scope="col" class="p-4 bg-sage-dark text-white uppercase text-[10px] tracking-widest font-bold border-b border-stone-300 text-center">Zone</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-xs text-stone-700 bg-white">
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Canyon Live-Forever</td>
-                                    <td class="p-4 italic text-stone-500">Dudleya cymosa</td>
-                                    <td class="p-4">Evergreen Succulent</td>
-                                    <td class="p-4">Compact rosette succulent; needs good drainage; great for containers.</td>
-                                    <td class="p-4">Succulent foliage; highly fire-retardant.</td>
-                                    <td class="p-4 text-center font-bold text-sage-default">0–1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Broadleaf Stonecrop</td>
-                                    <td class="p-4 italic text-stone-500">Sedum spathulifolium</td>
-                                    <td class="p-4">Evergreen Succulent</td>
-                                    <td class="p-4">Low-growing native succulent with fleshy leaves; thrives in rock borders and pots.</td>
-                                    <td class="p-4">Fire-retardant succulent foliage; holds moisture near foundation.</td>
-                                    <td class="p-4 text-center font-bold text-sage-default">0–1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Sea Pink / Thrift</td>
-                                    <td class="p-4 italic text-stone-500">Armeria maritima</td>
-                                    <td class="p-4">Evergreen Perennial</td>
-                                    <td class="p-4">Compact mounding perennial; pink flower clusters; minimal water once established.</td>
-                                    <td class="p-4">Low fuel volume; high leaf moisture retention.</td>
-                                    <td class="p-4 text-center font-bold text-sage-default">0–1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Beach Strawberry</td>
-                                    <td class="p-4 italic text-stone-500">Fragaria chiloensis</td>
-                                    <td class="p-4">Groundcover</td>
-                                    <td class="p-4">Spreads by runners; part sun to full sun; light summer water.</td>
-                                    <td class="p-4">Glossy high-moisture leaves; hugs ground with no ladder fuel.</td>
-                                    <td class="p-4 text-center font-bold text-sage-default">0–1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Woodland Strawberry</td>
-                                    <td class="p-4 italic text-stone-500">Fragaria vesca</td>
-                                    <td class="p-4">Groundcover</td>
-                                    <td class="p-4">Prefers part shade and light irrigation; excellent under native oaks.</td>
-                                    <td class="p-4">High-moisture succulent foliage; low profile.</td>
-                                    <td class="p-4 text-center font-bold text-sage-default">0–1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Willowy Coyote Mint</td>
-                                    <td class="p-4 italic text-stone-500">Monardella viminea</td>
-                                    <td class="p-4">Groundcover / Perennial</td>
-                                    <td class="p-4">Small, aromatic native; requires well-drained soil; light summer water.</td>
-                                    <td class="p-4">Low fuel load; stays compact.</td>
-                                    <td class="p-4 text-center font-bold text-sage-default">0–1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Common Yarrow</td>
-                                    <td class="p-4 italic text-stone-500">Achillea millefolium</td>
-                                    <td class="p-4">Groundcover / Perennial</td>
-                                    <td class="p-4">Low-growing lawn substitute; mow to keep flat; very low water once established.</td>
-                                    <td class="p-4">High leaf moisture content; low fuel volume.</td>
-                                    <td class="p-4 text-center font-bold text-sage-default">0–1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">California Fuchsia</td>
-                                    <td class="p-4 italic text-stone-500">Zauschneria californica</td>
-                                    <td class="p-4">Perennial Groundcover</td>
-                                    <td class="p-4">Scarlet tubular summer blooms; excellent for erosion control; drought tolerant.</td>
-                                    <td class="p-4">High moisture content in foliage; low profile.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Blue-eyed Grass</td>
-                                    <td class="p-4 italic text-stone-500">Sisyrinchium bellum</td>
-                                    <td class="p-4">Perennial</td>
-                                    <td class="p-4">Small perennial with blue flowers; foliage dies back in peak summer heat.</td>
-                                    <td class="p-4">Low fuel volume when trimmed; high spring moisture.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Hummingbird Sage</td>
-                                    <td class="p-4 italic text-stone-500">Salvia spathacea</td>
-                                    <td class="p-4">Perennial Groundcover</td>
-                                    <td class="p-4">Broad-leaved groundcover with magenta blooms; thrives in dry oak shade.</td>
-                                    <td class="p-4">High foliage moisture compared to woody shrub sages.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Deer Grass</td>
-                                    <td class="p-4 italic text-stone-500">Muhlenbergia rigens</td>
-                                    <td class="p-4">Native Bunchgrass</td>
-                                    <td class="p-4">Dense native grass; cut back in late winter to clear old thatch.</td>
-                                    <td class="p-4">Holds green moisture late into dry season when trimmed.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Monkeyflower</td>
-                                    <td class="p-4 italic text-stone-500">Mimulus spp.</td>
-                                    <td class="p-4">Low Perennial / Shrub</td>
-                                    <td class="p-4">Endorsed by fire departments; low-growing flowering native.</td>
-                                    <td class="p-4">High water content in stems and foliage.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Island Bush Snapdragon</td>
-                                    <td class="p-4 italic text-stone-500">Galvezia speciosa</td>
-                                    <td class="p-4">Evergreen Shrub</td>
-                                    <td class="p-4">Evergreen with low growth habit; bright red flowers attract hummingbirds.</td>
-                                    <td class="p-4">Soft, high-moisture foliage; low fuel volume.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1–2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Beach Carpet Saltbush</td>
-                                    <td class="p-4 italic text-stone-500">Atriplex barclayana</td>
-                                    <td class="p-4">Groundcover</td>
-                                    <td class="p-4">6 in. tall spreading cover; tolerates poor soil, sand, and salt.</td>
-                                    <td class="p-4">High salt and moisture content in leaves; resists ignition.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">0–2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Four-Wing Saltbush</td>
-                                    <td class="p-4 italic text-stone-500">Atriplex canescens</td>
-                                    <td class="p-4">Groundcover / Shrub</td>
-                                    <td class="p-4">1-2 ft. tall; thrives in dry soils without summer water.</td>
-                                    <td class="p-4">Salty, moisture-holding foliage; strong ignition resistance.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1–2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Cleveland Sage</td>
-                                    <td class="p-4 italic text-stone-500">Salvia clevelandii</td>
-                                    <td class="p-4">Small Evergreen Shrub</td>
-                                    <td class="p-4">Highly drought tolerant; intensely fragrant purple blooms; needs good drainage.</td>
-                                    <td class="p-4">Low water requirement reduces dry deadwood buildup.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1–2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Dwarf Coyote Brush</td>
-                                    <td class="p-4 italic text-stone-500">Baccharis pilularis 'Pigeon Point'</td>
-                                    <td class="p-4">Groundcover Shrub</td>
-                                    <td class="p-4">Spreads 6-8 ft; tough slope stabilizer; shear annually to clear thatch.</td>
-                                    <td class="p-4">LA County Fire approved; low stature limits flame length.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1–2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Toyon / Christmas Berry</td>
-                                    <td class="p-4 italic text-stone-500">Heteromeles arbutifolia</td>
-                                    <td class="p-4">Large Shrub / Tree</td>
-                                    <td class="p-4">Highly drought tolerant; white summer flowers and red winter berries.</td>
-                                    <td class="p-4">Thick leathery leaves; fire-resistant; approved statewide.</td>
-                                    <td class="p-4 text-center font-bold text-sage-dark">1–2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Western / California Redbud</td>
-                                    <td class="p-4 italic text-stone-500">Cercis occidentalis</td>
-                                    <td class="p-4">Deciduous Shrub / Tree</td>
-                                    <td class="p-4">Pea-shaped magenta blooms in spring; multi-branching stems.</td>
-                                    <td class="p-4">Low resin content; drops leaves prior to peak fire hazard.</td>
-                                    <td class="p-4 text-center font-bold text-stone-900">2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">California Lilac</td>
-                                    <td class="p-4 italic text-stone-500">Ceanothus 'Concha'</td>
-                                    <td class="p-4">Evergreen Shrub</td>
-                                    <td class="p-4">Clusters of blue spring flowers; needs excellent drainage.</td>
-                                    <td class="p-4">Dense, high-moisture foliage when properly spaced.</td>
-                                    <td class="p-4 text-center font-bold text-stone-900">2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Pacific Wax Myrtle</td>
-                                    <td class="p-4 italic text-stone-500">Morella californica</td>
-                                    <td class="p-4">Evergreen Shrub / Tree</td>
-                                    <td class="p-4">Fast-growing screen plant for property borders; high water intake.</td>
-                                    <td class="p-4">Acts as a living ember screen when spaced away from structures.</td>
-                                    <td class="p-4 text-center font-bold text-stone-900">2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Coffeeberry</td>
-                                    <td class="p-4 italic text-stone-500">Frangula californica</td>
-                                    <td class="p-4">Evergreen Shrub</td>
-                                    <td class="p-4">Resilient native shrub with dark berries; thrives in full sun or shade.</td>
-                                    <td class="p-4">Highly fire-resistant; low deadwood accumulation.</td>
-                                    <td class="p-4 text-center font-bold text-stone-900">2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Quail Bush / Big Saltbush</td>
-                                    <td class="p-4 italic text-stone-500">Atriplex lentiformis</td>
-                                    <td class="p-4">Large Shrub</td>
-                                    <td class="p-4">6-10 ft. tall; highly salt and alkali tolerant; extremely drought-hardy.</td>
-                                    <td class="p-4">High salt/moisture content; widely used for post-fire revegetation.</td>
-                                    <td class="p-4 text-center font-bold text-stone-900">2</td>
-                                </tr>
-                                <tr class="border-b border-stone-100 bg-stone-50/50 hover:bg-stone-50 transition-colors">
-                                    <td class="p-4 font-bold text-stone-900">Coast Live Oak</td>
-                                    <td class="p-4 italic text-stone-500">Quercus agrifolia</td>
-                                    <td class="p-4">Native Canopy Tree</td>
-                                    <td class="p-4">Iconic native shade tree; prune lower branches to remove ladder fuels.</td>
-                                    <td class="p-4">Thick, moist bark suppresses embers and resists flame spread.</td>
-                                    <td class="p-4 text-center font-bold text-stone-900">2</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <!-- Interactive Zone-Based Plant Expander -->
+                <div class="zone-expander-container reveal mb-16">
+
+                    <!-- ZONE 0 (0-5 FT) -->
+                    <div class="zone-card">
+                        <div class="zone-header">
+                            <div class="zone-title-group">
+                                <span class="zone-badge">ZONE 0</span>
+                                <h3 class="zone-title">Ember-Resistant Zone (0 – 5 ft)</h3>
+                            </div>
+                            <span class="expand-icon">&#9660;</span>
+                        </div>
+                        <div class="zone-content">
+                            <table class="plant-table">
+                                <thead>
+                                    <tr>
+                                        <th>Common Name</th>
+                                        <th>Botanical Name</th>
+                                        <th>Category / Type</th>
+                                        <th>Care Notes</th>
+                                        <th>Fire-Safety Benefits</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="plant-name">Canyon Live-Forever</td>
+                                        <td class="botanical-name">Dudleya cymosa</td>
+                                        <td>Evergreen Succulent</td>
+                                        <td>Compact rosette; needs good drainage; great in containers.</td>
+                                        <td>Succulent foliage; highly fire-retardant.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Broadleaf Stonecrop</td>
+                                        <td class="botanical-name">Sedum spathulifolium</td>
+                                        <td>Evergreen Succulent</td>
+                                        <td>Low-growing native; thrives in rock borders and pots.</td>
+                                        <td>Fire-retardant succulent leaves; holds moisture near house.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Sea Pink / Thrift</td>
+                                        <td class="botanical-name">Armeria maritima</td>
+                                        <td>Evergreen Perennial</td>
+                                        <td>Compact mounding perennial; minimal water when set.</td>
+                                        <td>Low fuel volume; high leaf moisture retention.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Beach Strawberry</td>
+                                        <td class="botanical-name">Fragaria chiloensis</td>
+                                        <td>Groundcover</td>
+                                        <td>Spreads by runners; full to part sun; light summer water.</td>
+                                        <td>Glossy high-moisture leaves; hugs ground without ladder fuel.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Woodland Strawberry</td>
+                                        <td class="botanical-name">Fragaria vesca</td>
+                                        <td>Groundcover</td>
+                                        <td>Prefers part shade; light irrigation; good under oaks.</td>
+                                        <td>High-moisture succulent foliage; very low profile.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Willowy Coyote Mint</td>
+                                        <td class="botanical-name">Monardella viminea</td>
+                                        <td>Groundcover / Perennial</td>
+                                        <td>Small, aromatic native; requires well-drained soil.</td>
+                                        <td>Low fuel load; stays compact.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Common Yarrow</td>
+                                        <td class="botanical-name">Achillea millefolium</td>
+                                        <td>Groundcover / Perennial</td>
+                                        <td>Lawn substitute; mow to keep flat; very low water.</td>
+                                        <td>High leaf moisture content; low fuel volume.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
+                    <!-- ZONE 1 (5-30 FT) -->
+                    <div class="zone-card">
+                        <div class="zone-header">
+                            <div class="zone-title-group">
+                                <span class="zone-badge">ZONE 1</span>
+                                <h3 class="zone-title">Defensible Space Zone (5 – 30 ft)</h3>
+                            </div>
+                            <span class="expand-icon">&#9660;</span>
+                        </div>
+                        <div class="zone-content">
+                            <table class="plant-table">
+                                <thead>
+                                    <tr>
+                                        <th>Common Name</th>
+                                        <th>Botanical Name</th>
+                                        <th>Category / Type</th>
+                                        <th>Care Notes</th>
+                                        <th>Fire-Safety Benefits</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="plant-name">California Fuchsia</td>
+                                        <td class="botanical-name">Zauschneria californica</td>
+                                        <td>Perennial Groundcover</td>
+                                        <td>Scarlet blooms; excellent for dry banks &amp; erosion.</td>
+                                        <td>High foliage moisture content; low profile.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Blue-eyed Grass</td>
+                                        <td class="botanical-name">Sisyrinchium bellum</td>
+                                        <td>Perennial</td>
+                                        <td>Small blue flowers; dies back in peak summer heat.</td>
+                                        <td>Low fuel volume when trimmed; high spring moisture.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Hummingbird Sage</td>
+                                        <td class="botanical-name">Salvia spathacea</td>
+                                        <td>Perennial Groundcover</td>
+                                        <td>Broad-leaved groundcover; thrives in dry oak shade.</td>
+                                        <td>High foliage moisture compared to woody shrub sages.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Deer Grass</td>
+                                        <td class="botanical-name">Muhlenbergia rigens</td>
+                                        <td>Native Bunchgrass</td>
+                                        <td>Dense grass; cut back in late winter to remove thatch.</td>
+                                        <td>Holds green moisture late into dry season when cut back.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Monkeyflower</td>
+                                        <td class="botanical-name">Mimulus spp.</td>
+                                        <td>Low Perennial / Shrub</td>
+                                        <td>Fire-department endorsed; native flowering plant.</td>
+                                        <td>High water content in stems and foliage.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- ZONE 2 (30-100 FT) -->
+                    <div class="zone-card">
+                        <div class="zone-header">
+                            <div class="zone-title-group">
+                                <span class="zone-badge">ZONE 2</span>
+                                <h3 class="zone-title">Extended Defense Zone (30 – 100 ft)</h3>
+                            </div>
+                            <span class="expand-icon">&#9660;</span>
+                        </div>
+                        <div class="zone-content">
+                            <table class="plant-table">
+                                <thead>
+                                    <tr>
+                                        <th>Common Name</th>
+                                        <th>Botanical Name</th>
+                                        <th>Category / Type</th>
+                                        <th>Care Notes</th>
+                                        <th>Fire-Safety Benefits</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="plant-name">Western Redbud</td>
+                                        <td class="botanical-name">Cercis occidentalis</td>
+                                        <td>Deciduous Shrub / Tree</td>
+                                        <td>Magenta spring blooms; multi-branching stems.</td>
+                                        <td>Low resin content; drops leaves prior to peak fire hazard.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">California Lilac</td>
+                                        <td class="botanical-name">Ceanothus 'Concha'</td>
+                                        <td>Evergreen Shrub</td>
+                                        <td>Blue spring blooms; needs excellent drainage.</td>
+                                        <td>Dense, high-moisture foliage when properly spaced.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Pacific Wax Myrtle</td>
+                                        <td class="botanical-name">Morella californica</td>
+                                        <td>Evergreen Shrub / Tree</td>
+                                        <td>Fast-growing border screen plant; high water intake.</td>
+                                        <td>Acts as a living ember screen when spaced away from house.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Coffeeberry</td>
+                                        <td class="botanical-name">Frangula californica</td>
+                                        <td>Evergreen Shrub</td>
+                                        <td>Resilient native shrub; thrives in sun or shade.</td>
+                                        <td>Highly fire-resistant; minimal deadwood accumulation.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="plant-name">Coast Live Oak</td>
+                                        <td class="botanical-name">Quercus agrifolia</td>
+                                        <td>Native Canopy Tree</td>
+                                        <td>Prune lower branches to clear ladder fuel pathways.</td>
+                                        <td>Thick, moist bark suppresses embers and resists ignition.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="max-w-4xl mx-auto reveal mt-14">
