@@ -236,32 +236,34 @@
 <body class="flex flex-col min-h-screen font-sans">
 
     <!-- Sticky Educational Header -->
-    <header class="fixed top-0 w-full bg-stone-100/90 backdrop-blur-xl border-b border-stone-200 z-50">
-        <div class="max-w-[1400px] mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
-            <a href="/" class="text-2xl font-bold font-display tracking-tight uppercase">
-                Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-500 lowercase tracking-normal font-sans">/ educational guide</span>
-            </a>
-            <nav class="hidden md:flex space-x-8 text-[11px] uppercase tracking-[0.15em] font-bold">
-                <a href="#science" class="hover:text-sage-default transition-colors">5-Foot Science</a>
-                <a href="#interactive" class="hover:text-sage-default transition-colors">Risk Visualizer</a>
-                <a href="#flora" class="hover:text-sage-default transition-colors">Flora Swap</a>
-                <a href="#plants" class="hover:text-sage-default transition-colors">Native Plants</a>
-                <a href="#materials" class="hover:text-sage-default transition-colors">Hardscape Guide</a>
-                <a href="#faq" class="hover:text-sage-default transition-colors">AB 3074 FAQ</a>
-            </nav>
-            <button type="button" id="mobileMenuToggle" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle navigation menu">
-                <i class="fa-solid fa-bars text-xl" id="mobileMenuIcon" aria-hidden="true"></i>
-            </button>
-        </div>
-        <div id="mobileMenu" class="hidden md:hidden flex-col bg-stone-100 border-t border-stone-200 px-6 py-4">
-            <a href="#science" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-200">5-Foot Science</a>
-            <a href="#interactive" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-200">Risk Visualizer</a>
-            <a href="#flora" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-200">Flora Swap</a>
-            <a href="#plants" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-200">Native Plants</a>
-            <a href="#materials" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-200">Hardscape Guide</a>
-            <a href="#faq" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-200">AB 3074 FAQ</a>
-        </div>
-    </header>
+<header class="fixed top-0 w-full bg-stone-100/90 backdrop-blur-xl border-b border-stone-200 z-50">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+        <a href="/" class="text-2xl font-bold font-display tracking-tight uppercase">
+            Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-500 lowercase tracking-normal font-sans">/ educational guide</span>
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex space-x-8 text-[11px] uppercase tracking-[0.15em] font-bold text-stone-900">
+            <a href="/zone-0/" class="hover:text-sage-default transition-colors">Zone 0 Science</a>
+            <a href="/design/" class="hover:text-sage-default transition-colors">Design Principles</a>
+            <a href="/materials/" class="hover:text-sage-default transition-colors">Hardscape Guide</a>
+            <a href="/faq/" class="hover:text-sage-default transition-colors">AB 3074 FAQ</a>
+        </nav>
+        
+        <!-- Mobile Menu Button -->
+        <button type="button" id="mobileMenuToggle" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-stone-900" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle navigation menu">
+            <i class="fa-solid fa-bars text-xl" id="mobileMenuIcon" aria-hidden="true"></i>
+        </button>
+    </div>
+    
+    <!-- Mobile Navigation Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden flex-col bg-stone-100 border-t border-stone-200 px-6 py-4 shadow-lg">
+        <a href="/zone-0/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Zone 0 Science</a>
+        <a href="/design/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Design Principles</a>
+        <a href="/materials/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Hardscape Guide</a>
+        <a href="/faq/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">AB 3074 FAQ</a>
+    </div>
+</header>
 
     <!-- Main Content -->
     <main class="flex-grow pt-20">
