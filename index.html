@@ -140,6 +140,7 @@
         .zone-tab-btn[data-zone="0"] .zone-tab-badge { background: #c0492f; }
         .zone-tab-btn[data-zone="1"] .zone-tab-badge { background: #b7791f; }
         .zone-tab-btn[data-zone="2"] .zone-tab-badge { background: #2f855a; }
+        .zone-tab-btn[data-zone="3"] .zone-tab-badge { background: #78716c; }
 
         .zone-tab-btn[data-zone="0"]:hover,
         .zone-tab-btn[data-zone="0"].active { border-color: #c0492f; }
@@ -147,6 +148,8 @@
         .zone-tab-btn[data-zone="1"].active { border-color: #b7791f; }
         .zone-tab-btn[data-zone="2"]:hover,
         .zone-tab-btn[data-zone="2"].active { border-color: #2f855a; }
+        .zone-tab-btn[data-zone="3"]:hover,
+        .zone-tab-btn[data-zone="3"].active { border-color: #78716c; }
 
         .zone-tab-btn.active {
             box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
@@ -548,6 +551,11 @@
                             <span class="zone-tab-title">Extended Defense Zone</span>
                             <span class="zone-tab-range">30 &ndash; 100 ft from structure</span>
                         </button>
+                        <button type="button" class="zone-tab-btn" data-zone="3" role="tab" aria-selected="false" aria-controls="zone-panel-3" id="zone-tab-3" tabindex="-1">
+                            <span class="zone-tab-badge">Zone 3</span>
+                            <span class="zone-tab-title">Wildland Transition Zone</span>
+                            <span class="zone-tab-range">100+ ft from structure</span>
+                        </button>
                     </div>
 
                     <!-- ZONE 0 PANEL -->
@@ -683,6 +691,48 @@
                                 <span class="plant-category">Native Canopy Tree</span>
                                 <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Prune lower branches to clear ladder fuel pathways.</p></div>
                                 <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Thick, moist bark suppresses embers and resists ignition.</p></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ZONE 3 PANEL -->
+                    <div class="zone-panel" id="zone-panel-3" role="tabpanel" aria-labelledby="zone-tab-3" hidden>
+                        <p class="text-stone-600 text-sm leading-relaxed mb-8 max-w-2xl">Zone 3 is existing wildland vegetation, not a planting bed &mdash; the goal is thinning and spacing what's already there, not adding new plants. These are common East Bay wildland species and how to manage them for fuel reduction.</p>
+                        <div class="zone-plant-grid">
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Interior Live Oak</h4>
+                                <p class="botanical-name">Quercus wislizeni</p>
+                                <span class="plant-category">Native Canopy Tree</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Thin dense stands; remove lower limbs and surrounding brush to break up fuel continuity.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Thick bark and high canopy moisture resist ignition when properly spaced.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Blue Oak</h4>
+                                <p class="botanical-name">Quercus douglasii</p>
+                                <span class="plant-category">Native Canopy Tree</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Drought-deciduous; remove dead wood annually and keep grass mowed beneath canopy.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Sheds leaves ahead of peak fire season, reducing standing fuel load.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Toyon</h4>
+                                <p class="botanical-name">Heteromeles arbutifolia</p>
+                                <span class="plant-category">Evergreen Shrub / Small Tree</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Space individual stands at least 10 ft apart; remove dead interior branches.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Broad, moist leaves resist ignition better than most chaparral shrubs.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Big Berry Manzanita</h4>
+                                <p class="botanical-name">Arctostaphylos glauca</p>
+                                <span class="plant-category">Chaparral Shrub</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Contains volatile oils; requires generous spacing and removal of dead thatch underneath.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Well-spaced clumps break up fuel continuity across the wildland edge.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">California Buckeye</h4>
+                                <p class="botanical-name">Aesculus californica</p>
+                                <span class="plant-category">Deciduous Tree</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Drops leaves in summer drought; clear leaf litter from around the base each fall.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Bare summer canopy reduces available fuel during peak fire season.</p></div>
                             </div>
                         </div>
                     </div>
