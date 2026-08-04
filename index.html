@@ -92,129 +92,141 @@
             padding: 0;
         }
 
-        /* Interactive Zone-Based Plant Expander */
-        .zone-expander-container {
+        /* Zone-Based Plant Tabs */
+        .zone-tabs-container {
+            max-width: 1100px;
+            margin: 2rem auto 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            max-width: 1000px;
-            margin: 2rem auto;
-            color: #2d3748;
         }
 
-        .zone-card {
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .zone-tab-list {
+            display: flex;
+            gap: 0.85rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .zone-tab-btn {
+            flex: 1 1 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.4rem;
+            padding: 1.35rem 1.5rem;
+            border-radius: 14px;
+            border: 2px solid #e2e8f0;
             background: #ffffff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Expand section when cursor enters the zone card */
-        .zone-card:hover {
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            border-color: #2f855a;
-        }
-
-        .zone-card:hover .zone-content {
-            max-height: 2000px;
-            opacity: 1;
-            padding: 1rem 1.5rem 1.5rem 1.5rem;
-        }
-
-        .zone-card:hover .expand-icon {
-            transform: rotate(180deg);
-            color: #2f855a;
-        }
-
-        .zone-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 1.5rem;
-            background: #f7fafc;
             cursor: pointer;
-            user-select: none;
-            transition: background-color 0.2s ease;
+            text-align: left;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .zone-card:hover .zone-header {
-            background: #f0fff4;
+        .zone-tab-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.06);
         }
 
-        .zone-title-group {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .zone-badge {
-            background: #2f855a;
-            color: white;
+        .zone-tab-badge {
+            display: inline-block;
+            font-size: 0.75rem;
             font-weight: 700;
-            padding: 0.35rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            color: #ffffff;
         }
 
-        .zone-title {
-            margin: 0;
-            font-size: 1.25rem;
-            font-weight: 600;
+        .zone-tab-btn[data-zone="0"] .zone-tab-badge { background: #c0492f; }
+        .zone-tab-btn[data-zone="1"] .zone-tab-badge { background: #b7791f; }
+        .zone-tab-btn[data-zone="2"] .zone-tab-badge { background: #2f855a; }
+
+        .zone-tab-btn[data-zone="0"]:hover,
+        .zone-tab-btn[data-zone="0"].active { border-color: #c0492f; }
+        .zone-tab-btn[data-zone="1"]:hover,
+        .zone-tab-btn[data-zone="1"].active { border-color: #b7791f; }
+        .zone-tab-btn[data-zone="2"]:hover,
+        .zone-tab-btn[data-zone="2"].active { border-color: #2f855a; }
+
+        .zone-tab-btn.active {
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
+        }
+
+        .zone-tab-title {
+            font-size: 1.2rem;
+            font-weight: 700;
             color: #1a202c;
         }
 
-        .expand-icon {
-            font-size: 1.25rem;
-            color: #a0aec0;
-            transition: transform 0.3s ease, color 0.3s ease;
+        .zone-tab-range {
+            font-size: 0.95rem;
+            color: #718096;
         }
 
-        /* Collapsible Content Area */
-        .zone-content {
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-            padding: 0 1.5rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .zone-panel { display: none; }
+        .zone-panel.active { display: block; }
+
+        .zone-plant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
         }
 
-        .plant-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 0.5rem;
-            text-align: left;
+        .zone-plant-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 1.75rem;
         }
 
-        .plant-table th {
-            background: #edf2f7;
-            color: #4a5568;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0.75rem 1rem;
-            border-bottom: 2px solid #cbd5e0;
+        .zone-plant-card .plant-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
         }
 
-        .plant-table td {
-            padding: 0.875rem 1rem;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 0.9rem;
-        }
-
-        .plant-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .plant-name {
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .botanical-name {
+        .zone-plant-card .botanical-name {
+            font-size: 1rem;
             font-style: italic;
             color: #718096;
+            margin-bottom: 0.75rem;
+        }
+
+        .zone-plant-card .plant-category {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #4a5568;
+            background: #edf2f7;
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            margin-bottom: 1.1rem;
+        }
+
+        .zone-plant-card .plant-detail {
+            margin-top: 0.9rem;
+        }
+
+        .zone-plant-card .plant-detail-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.25rem;
+        }
+
+        .zone-plant-card .plant-detail-label.care { color: #2f855a; }
+        .zone-plant-card .plant-detail-label.fire { color: #c0492f; }
+
+        .zone-plant-card .plant-detail p {
+            font-size: 1rem;
+            line-height: 1.55;
+            color: #2d3748;
         }
     </style>
 </head>
@@ -488,206 +500,163 @@
                 <div class="text-center max-w-3xl mx-auto mb-16 reveal">
                     <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Master Plant Inventory</span>
                     <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4">Fire-Resistant & Fire-Adapted Native Plants</h2>
-                    <p class="text-stone-600 font-light text-base leading-relaxed">A comprehensive database of fire-adapted native flora, categorized by defensible space zone.</p>
+                    <p class="text-stone-600 font-light text-base leading-relaxed">A comprehensive database of fire-adapted native flora, categorized by defensible space zone. Select a zone below &mdash; color-coded from closest to the house (most critical) to the property edge.</p>
                 </div>
 
-                <!-- Interactive Zone-Based Plant Expander -->
-                <div class="zone-expander-container reveal mb-16">
+                <!-- Zone-Based Plant Tabs -->
+                <div class="zone-tabs-container reveal mb-16">
+                    <div class="zone-tab-list" role="tablist" aria-label="Defensible space zones">
+                        <button type="button" class="zone-tab-btn active" data-zone="0" role="tab" aria-selected="true" aria-controls="zone-panel-0" id="zone-tab-0">
+                            <span class="zone-tab-badge">Zone 0</span>
+                            <span class="zone-tab-title">Ember-Resistant Zone</span>
+                            <span class="zone-tab-range">0 &ndash; 5 ft from structure</span>
+                        </button>
+                        <button type="button" class="zone-tab-btn" data-zone="1" role="tab" aria-selected="false" aria-controls="zone-panel-1" id="zone-tab-1" tabindex="-1">
+                            <span class="zone-tab-badge">Zone 1</span>
+                            <span class="zone-tab-title">Defensible Space Zone</span>
+                            <span class="zone-tab-range">5 &ndash; 30 ft from structure</span>
+                        </button>
+                        <button type="button" class="zone-tab-btn" data-zone="2" role="tab" aria-selected="false" aria-controls="zone-panel-2" id="zone-tab-2" tabindex="-1">
+                            <span class="zone-tab-badge">Zone 2</span>
+                            <span class="zone-tab-title">Extended Defense Zone</span>
+                            <span class="zone-tab-range">30 &ndash; 100 ft from structure</span>
+                        </button>
+                    </div>
 
-                    <!-- ZONE 0 (0-5 FT) -->
-                    <div class="zone-card">
-                        <div class="zone-header">
-                            <div class="zone-title-group">
-                                <span class="zone-badge">ZONE 0</span>
-                                <h3 class="zone-title">Ember-Resistant Zone (0 – 5 ft)</h3>
+                    <!-- ZONE 0 PANEL -->
+                    <div class="zone-panel active" id="zone-panel-0" role="tabpanel" aria-labelledby="zone-tab-0">
+                        <div class="zone-plant-grid">
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Canyon Live-Forever</h4>
+                                <p class="botanical-name">Dudleya cymosa</p>
+                                <span class="plant-category">Evergreen Succulent</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Compact rosette; needs good drainage; great in containers.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Succulent foliage; highly fire-retardant.</p></div>
                             </div>
-                            <span class="expand-icon">&#9660;</span>
-                        </div>
-                        <div class="zone-content">
-                            <table class="plant-table">
-                                <thead>
-                                    <tr>
-                                        <th>Common Name</th>
-                                        <th>Botanical Name</th>
-                                        <th>Category / Type</th>
-                                        <th>Care Notes</th>
-                                        <th>Fire-Safety Benefits</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="plant-name">Canyon Live-Forever</td>
-                                        <td class="botanical-name">Dudleya cymosa</td>
-                                        <td>Evergreen Succulent</td>
-                                        <td>Compact rosette; needs good drainage; great in containers.</td>
-                                        <td>Succulent foliage; highly fire-retardant.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Broadleaf Stonecrop</td>
-                                        <td class="botanical-name">Sedum spathulifolium</td>
-                                        <td>Evergreen Succulent</td>
-                                        <td>Low-growing native; thrives in rock borders and pots.</td>
-                                        <td>Fire-retardant succulent leaves; holds moisture near house.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Sea Pink / Thrift</td>
-                                        <td class="botanical-name">Armeria maritima</td>
-                                        <td>Evergreen Perennial</td>
-                                        <td>Compact mounding perennial; minimal water when set.</td>
-                                        <td>Low fuel volume; high leaf moisture retention.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Beach Strawberry</td>
-                                        <td class="botanical-name">Fragaria chiloensis</td>
-                                        <td>Groundcover</td>
-                                        <td>Spreads by runners; full to part sun; light summer water.</td>
-                                        <td>Glossy high-moisture leaves; hugs ground without ladder fuel.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Woodland Strawberry</td>
-                                        <td class="botanical-name">Fragaria vesca</td>
-                                        <td>Groundcover</td>
-                                        <td>Prefers part shade; light irrigation; good under oaks.</td>
-                                        <td>High-moisture succulent foliage; very low profile.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Willowy Coyote Mint</td>
-                                        <td class="botanical-name">Monardella viminea</td>
-                                        <td>Groundcover / Perennial</td>
-                                        <td>Small, aromatic native; requires well-drained soil.</td>
-                                        <td>Low fuel load; stays compact.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Common Yarrow</td>
-                                        <td class="botanical-name">Achillea millefolium</td>
-                                        <td>Groundcover / Perennial</td>
-                                        <td>Lawn substitute; mow to keep flat; very low water.</td>
-                                        <td>High leaf moisture content; low fuel volume.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Broadleaf Stonecrop</h4>
+                                <p class="botanical-name">Sedum spathulifolium</p>
+                                <span class="plant-category">Evergreen Succulent</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Low-growing native; thrives in rock borders and pots.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Fire-retardant succulent leaves; holds moisture near house.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Sea Pink / Thrift</h4>
+                                <p class="botanical-name">Armeria maritima</p>
+                                <span class="plant-category">Evergreen Perennial</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Compact mounding perennial; minimal water when set.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low fuel volume; high leaf moisture retention.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Beach Strawberry</h4>
+                                <p class="botanical-name">Fragaria chiloensis</p>
+                                <span class="plant-category">Groundcover</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Spreads by runners; full to part sun; light summer water.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Glossy high-moisture leaves; hugs ground without ladder fuel.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Woodland Strawberry</h4>
+                                <p class="botanical-name">Fragaria vesca</p>
+                                <span class="plant-category">Groundcover</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Prefers part shade; light irrigation; good under oaks.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High-moisture succulent foliage; very low profile.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Willowy Coyote Mint</h4>
+                                <p class="botanical-name">Monardella viminea</p>
+                                <span class="plant-category">Groundcover / Perennial</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Small, aromatic native; requires well-drained soil.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low fuel load; stays compact.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Common Yarrow</h4>
+                                <p class="botanical-name">Achillea millefolium</p>
+                                <span class="plant-category">Groundcover / Perennial</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Lawn substitute; mow to keep flat; very low water.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High leaf moisture content; low fuel volume.</p></div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- ZONE 1 (5-30 FT) -->
-                    <div class="zone-card">
-                        <div class="zone-header">
-                            <div class="zone-title-group">
-                                <span class="zone-badge">ZONE 1</span>
-                                <h3 class="zone-title">Defensible Space Zone (5 – 30 ft)</h3>
+                    <!-- ZONE 1 PANEL -->
+                    <div class="zone-panel" id="zone-panel-1" role="tabpanel" aria-labelledby="zone-tab-1" hidden>
+                        <div class="zone-plant-grid">
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">California Fuchsia</h4>
+                                <p class="botanical-name">Zauschneria californica</p>
+                                <span class="plant-category">Perennial Groundcover</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Scarlet blooms; excellent for dry banks &amp; erosion.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High foliage moisture content; low profile.</p></div>
                             </div>
-                            <span class="expand-icon">&#9660;</span>
-                        </div>
-                        <div class="zone-content">
-                            <table class="plant-table">
-                                <thead>
-                                    <tr>
-                                        <th>Common Name</th>
-                                        <th>Botanical Name</th>
-                                        <th>Category / Type</th>
-                                        <th>Care Notes</th>
-                                        <th>Fire-Safety Benefits</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="plant-name">California Fuchsia</td>
-                                        <td class="botanical-name">Zauschneria californica</td>
-                                        <td>Perennial Groundcover</td>
-                                        <td>Scarlet blooms; excellent for dry banks &amp; erosion.</td>
-                                        <td>High foliage moisture content; low profile.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Blue-eyed Grass</td>
-                                        <td class="botanical-name">Sisyrinchium bellum</td>
-                                        <td>Perennial</td>
-                                        <td>Small blue flowers; dies back in peak summer heat.</td>
-                                        <td>Low fuel volume when trimmed; high spring moisture.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Hummingbird Sage</td>
-                                        <td class="botanical-name">Salvia spathacea</td>
-                                        <td>Perennial Groundcover</td>
-                                        <td>Broad-leaved groundcover; thrives in dry oak shade.</td>
-                                        <td>High foliage moisture compared to woody shrub sages.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Deer Grass</td>
-                                        <td class="botanical-name">Muhlenbergia rigens</td>
-                                        <td>Native Bunchgrass</td>
-                                        <td>Dense grass; cut back in late winter to remove thatch.</td>
-                                        <td>Holds green moisture late into dry season when cut back.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Monkeyflower</td>
-                                        <td class="botanical-name">Mimulus spp.</td>
-                                        <td>Low Perennial / Shrub</td>
-                                        <td>Fire-department endorsed; native flowering plant.</td>
-                                        <td>High water content in stems and foliage.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Blue-eyed Grass</h4>
+                                <p class="botanical-name">Sisyrinchium bellum</p>
+                                <span class="plant-category">Perennial</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Small blue flowers; dies back in peak summer heat.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low fuel volume when trimmed; high spring moisture.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Hummingbird Sage</h4>
+                                <p class="botanical-name">Salvia spathacea</p>
+                                <span class="plant-category">Perennial Groundcover</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Broad-leaved groundcover; thrives in dry oak shade.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High foliage moisture compared to woody shrub sages.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Deer Grass</h4>
+                                <p class="botanical-name">Muhlenbergia rigens</p>
+                                <span class="plant-category">Native Bunchgrass</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Dense grass; cut back in late winter to remove thatch.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Holds green moisture late into dry season when cut back.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Monkeyflower</h4>
+                                <p class="botanical-name">Mimulus spp.</p>
+                                <span class="plant-category">Low Perennial / Shrub</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Fire-department endorsed; native flowering plant.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High water content in stems and foliage.</p></div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- ZONE 2 (30-100 FT) -->
-                    <div class="zone-card">
-                        <div class="zone-header">
-                            <div class="zone-title-group">
-                                <span class="zone-badge">ZONE 2</span>
-                                <h3 class="zone-title">Extended Defense Zone (30 – 100 ft)</h3>
+                    <!-- ZONE 2 PANEL -->
+                    <div class="zone-panel" id="zone-panel-2" role="tabpanel" aria-labelledby="zone-tab-2" hidden>
+                        <div class="zone-plant-grid">
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Western Redbud</h4>
+                                <p class="botanical-name">Cercis occidentalis</p>
+                                <span class="plant-category">Deciduous Shrub / Tree</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Magenta spring blooms; multi-branching stems.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low resin content; drops leaves prior to peak fire hazard.</p></div>
                             </div>
-                            <span class="expand-icon">&#9660;</span>
-                        </div>
-                        <div class="zone-content">
-                            <table class="plant-table">
-                                <thead>
-                                    <tr>
-                                        <th>Common Name</th>
-                                        <th>Botanical Name</th>
-                                        <th>Category / Type</th>
-                                        <th>Care Notes</th>
-                                        <th>Fire-Safety Benefits</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="plant-name">Western Redbud</td>
-                                        <td class="botanical-name">Cercis occidentalis</td>
-                                        <td>Deciduous Shrub / Tree</td>
-                                        <td>Magenta spring blooms; multi-branching stems.</td>
-                                        <td>Low resin content; drops leaves prior to peak fire hazard.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">California Lilac</td>
-                                        <td class="botanical-name">Ceanothus 'Concha'</td>
-                                        <td>Evergreen Shrub</td>
-                                        <td>Blue spring blooms; needs excellent drainage.</td>
-                                        <td>Dense, high-moisture foliage when properly spaced.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Pacific Wax Myrtle</td>
-                                        <td class="botanical-name">Morella californica</td>
-                                        <td>Evergreen Shrub / Tree</td>
-                                        <td>Fast-growing border screen plant; high water intake.</td>
-                                        <td>Acts as a living ember screen when spaced away from house.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Coffeeberry</td>
-                                        <td class="botanical-name">Frangula californica</td>
-                                        <td>Evergreen Shrub</td>
-                                        <td>Resilient native shrub; thrives in sun or shade.</td>
-                                        <td>Highly fire-resistant; minimal deadwood accumulation.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="plant-name">Coast Live Oak</td>
-                                        <td class="botanical-name">Quercus agrifolia</td>
-                                        <td>Native Canopy Tree</td>
-                                        <td>Prune lower branches to clear ladder fuel pathways.</td>
-                                        <td>Thick, moist bark suppresses embers and resists ignition.</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">California Lilac</h4>
+                                <p class="botanical-name">Ceanothus 'Concha'</p>
+                                <span class="plant-category">Evergreen Shrub</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Blue spring blooms; needs excellent drainage.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Dense, high-moisture foliage when properly spaced.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Pacific Wax Myrtle</h4>
+                                <p class="botanical-name">Morella californica</p>
+                                <span class="plant-category">Evergreen Shrub / Tree</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Fast-growing border screen plant; high water intake.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Acts as a living ember screen when spaced away from house.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Coffeeberry</h4>
+                                <p class="botanical-name">Frangula californica</p>
+                                <span class="plant-category">Evergreen Shrub</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Resilient native shrub; thrives in sun or shade.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Highly fire-resistant; minimal deadwood accumulation.</p></div>
+                            </div>
+                            <div class="zone-plant-card">
+                                <h4 class="plant-name">Coast Live Oak</h4>
+                                <p class="botanical-name">Quercus agrifolia</p>
+                                <span class="plant-category">Native Canopy Tree</span>
+                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Prune lower branches to clear ladder fuel pathways.</p></div>
+                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Thick, moist bark suppresses embers and resists ignition.</p></div>
+                            </div>
                         </div>
                     </div>
 
@@ -786,7 +755,50 @@
                     }
                 });
             });
-            
+
+            // Zone Plant Tabs
+            const zoneTabs = document.querySelectorAll('.zone-tab-btn');
+            const zonePanels = document.querySelectorAll('.zone-panel');
+
+            function activateZoneTab(tab) {
+                const zone = tab.getAttribute('data-zone');
+
+                zoneTabs.forEach(function(t) {
+                    const isActive = t === tab;
+                    t.classList.toggle('active', isActive);
+                    t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                    t.setAttribute('tabindex', isActive ? '0' : '-1');
+                });
+
+                zonePanels.forEach(function(panel) {
+                    const isActive = panel.id === 'zone-panel-' + zone;
+                    panel.classList.toggle('active', isActive);
+                    if (isActive) {
+                        panel.removeAttribute('hidden');
+                    } else {
+                        panel.setAttribute('hidden', '');
+                    }
+                });
+            }
+
+            zoneTabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    activateZoneTab(tab);
+                });
+                tab.addEventListener('keydown', function(e) {
+                    const tabsArr = Array.from(zoneTabs);
+                    const idx = tabsArr.indexOf(tab);
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        const nextIdx = e.key === 'ArrowRight'
+                            ? (idx + 1) % tabsArr.length
+                            : (idx - 1 + tabsArr.length) % tabsArr.length;
+                        tabsArr[nextIdx].focus();
+                        activateZoneTab(tabsArr[nextIdx]);
+                    }
+                });
+            });
+
             // Educational Rating Calculator Logic
             const complianceSlider = document.getElementById('complianceSlider');
             const ratingDisplay = document.getElementById('ratingDisplay');
