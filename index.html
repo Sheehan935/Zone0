@@ -702,27 +702,43 @@
         </section>
 
     <section id="defensible-space-overview" class="py-16 bg-stone-900 text-white">
-    <div class="max-w-6xl mx-auto px-4 text-center">
+    <div class="max-w-6xl mx-auto px-6 text-center">
         <span class="text-xs uppercase tracking-widest font-bold text-sage-default block mb-2">System Overview</span>
         <h2 class="text-3xl font-display font-bold mb-4">Defensible Space & Native Plant Integration</h2>
-        <p class="text-stone-400 max-w-2xl mx-auto mb-8 text-sm font-light">Treating Zone 0 as the foundational anchor while seamlessly transitioning into native plant habitats.</p>
-        
-        <div class="bg-stone-800 p-3 rounded-lg shadow-2xl border border-stone-700 mb-8">
-            <img src="assets/images/zone-defensible-space-diagram.png" alt="Zone 0 Defensible Space Diagram" class="w-full h-auto rounded">
+        <p class="text-stone-400 max-w-2xl mx-auto mb-10 text-sm font-light">Treating Zone 0 as the foundational anchor while seamlessly transitioning into native plant habitats.</p>
+
+        <!-- Proximity Gradient Bar -->
+        <div class="flex h-3 rounded-full overflow-hidden mb-10 max-w-3xl mx-auto shadow-lg">
+            <div class="bg-[#c0492f]" style="width: 8%;"></div>
+            <div class="bg-[#b7791f]" style="width: 22%;"></div>
+            <div class="bg-[#2f855a]" style="width: 30%;"></div>
+            <div class="bg-[#78716c]" style="width: 40%;"></div>
+        </div>
+        <div class="flex justify-between max-w-3xl mx-auto text-[10px] uppercase tracking-widest text-stone-500 font-bold mb-12 -mt-8 px-1">
+            <span>House</span>
+            <span>100+ ft</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left text-xs">
-            <div class="border-l-2 border-amber-600 pl-4">
-                <span class="font-bold text-white block text-sm mb-1">Zone 0 (0–5 FT)</span>
-                <p class="text-stone-400">Ember-resistant foundation line. Non-combustible gravel, pavers, and specialized fire-resistant succulents.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#c0492f] rounded-lg p-5">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#e07a5f] block mb-1">Zone 0</span>
+                <span class="block text-sm font-semibold text-white mb-2">0&ndash;5 ft from structure</span>
+                <p class="text-stone-400 text-sm leading-relaxed">Ember-resistant zone. Non-combustible gravel, pavers, and hardscape only &mdash; no woody plants touching the structure.</p>
             </div>
-            <div class="border-l-2 border-sage-default pl-4">
-                <span class="font-bold text-white block text-sm mb-1">Zone 1 (5–30 FT)</span>
-                <p class="text-stone-400">Lean & clean native garden. Low-growing shrubs and grouped native grasses to interrupt flame pathways.</p>
+            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#b7791f] rounded-lg p-5">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#d69e4a] block mb-1">Zone 1</span>
+                <span class="block text-sm font-semibold text-white mb-2">5&ndash;30 ft</span>
+                <p class="text-stone-400 text-sm leading-relaxed">Lean, clean and green. Low, well-spaced, well-irrigated native plants with no ladder fuels.</p>
             </div>
-            <div class="border-l-2 border-stone-500 pl-4">
-                <span class="font-bold text-white block text-sm mb-1">Zone 2 (30–100+ FT)</span>
-                <p class="text-stone-400">Extended defensible buffer. Spaced mature trees, canopy limb clearance, and continuous fuel reduction.</p>
+            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#2f855a] rounded-lg p-5">
+                <span class="text-xs font-bold uppercase tracking-widest text-sage-light block mb-1">Zone 2</span>
+                <span class="block text-sm font-semibold text-white mb-2">30&ndash;100 ft</span>
+                <p class="text-stone-400 text-sm leading-relaxed">Reduced fuel zone. Spaced shrubs, limbed-up trees, and regularly mowed grasses.</p>
+            </div>
+            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#78716c] rounded-lg p-5">
+                <span class="text-xs font-bold uppercase tracking-widest text-stone-400 block mb-1">Zone 3</span>
+                <span class="block text-sm font-semibold text-white mb-2">100+ ft</span>
+                <p class="text-stone-400 text-sm leading-relaxed">Wildland transition. Existing vegetation thinned and cleared of dead material, not newly planted.</p>
             </div>
         </div>
     </div>
