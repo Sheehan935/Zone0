@@ -67,24 +67,6 @@
         .flora-card.is-active .flora-hazard { opacity: 0; }
         .flora-card:focus-visible { outline: 3px solid #6B7A64; outline-offset: 2px; }
 
-        @keyframes scan {
-            0% { top: 0; }
-            50% { top: 100%; }
-            100% { top: 0; }
-        }
-        .scanner-line {
-            position: absolute; width: 100%; height: 2px; background: #6B7A64;
-            box-shadow: 0 0 10px #6B7A64; animation: scan 3.5s linear infinite; z-index: 10;
-        }
-        .bounding-box {
-            position: absolute; border: 2px dashed #ef4444; background: rgba(239,68,68,0.2);
-            opacity: 0; animation: pulseReveal 3.5s infinite 1.5s; z-index: 5;
-        }
-        @keyframes pulseReveal {
-            0%, 100% { opacity: 0; }
-            10%, 90% { opacity: 1; }
-        }
-        
         /* Slider alignment fix */
         input[type=range] {
             width: 100%;
@@ -302,68 +284,48 @@
 
 </section>
 
-        <!-- Interactive Educational Visualizer & Compliance Calculator Section -->
-        <section id="interactive" class="py-24 bg-stone-900 text-stone-100 overflow-hidden">
-            <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-                <div class="mb-16 reveal">
-                    <span class="text-[10px] uppercase tracking-widest font-bold text-sage-light block mb-2">Educational Analysis Tools</span>
-                    <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4">Interactive Hazard & Compliance Tools</h2>
-                    <p class="text-stone-400 max-w-2xl font-light text-sm">Visualize foundation ember risks and explore how property retrofits impact defensible space ratings.</p>
-                </div>
+    <section id="defensible-space-overview" class="py-16 bg-stone-900 text-white">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+        <span class="text-xs uppercase tracking-widest font-bold text-sage-default block mb-2">System Overview</span>
+        <h2 class="text-3xl font-display font-bold mb-4">Defensible Space & Native Plant Integration</h2>
+        <p class="text-stone-400 max-w-2xl mx-auto mb-10 text-sm font-light">Treating Zone 0 as the foundational anchor while seamlessly transitioning into native plant habitats.</p>
 
-                <div class="grid lg:grid-cols-2 gap-12 items-stretch">
-                    
-                    <!-- Hazard Detection Visualizer -->
-                    <div class="border border-white/10 p-8 reveal bg-stone-800 flex flex-col h-full">
-                        <h3 class="text-xl font-display font-bold mb-2">1. Ember-Trap Hazard Diagram</h3>
-                        <p class="text-xs text-stone-400 mb-6 font-light flex-grow">Computer vision scan illustrating where blowing wildfire embers lodge around residential foundations.</p>
-                        
-                        <div class="relative h-60 bg-black overflow-hidden mb-4 border border-white/20">
-                            <img src="assets/images/berkeley-house-hero.jpg" alt="House exterior with vines and tree canopy against the foundation" class="w-full h-full object-cover opacity-60">
-                            <div class="scanner-line"></div>
+        <!-- Proximity Gradient Bar -->
+        <div class="flex h-3 rounded-full overflow-hidden mb-10 max-w-3xl mx-auto shadow-lg">
+            <div class="bg-[#c0492f]" style="width: 8%;"></div>
+            <div class="bg-[#b7791f]" style="width: 22%;"></div>
+            <div class="bg-[#2f855a]" style="width: 30%;"></div>
+            <div class="bg-[#78716c]" style="width: 40%;"></div>
+        </div>
+        <div class="flex justify-between max-w-3xl mx-auto text-[10px] uppercase tracking-widest text-stone-500 font-bold mb-12 -mt-8 px-1">
+            <span>House</span>
+            <span>100+ ft</span>
+        </div>
 
-                            <div class="bounding-box" style="top: 55%; left: 8%; width: 32%; height: 30%;">
-                                <span class="absolute -top-5 left-0 text-[9px] bg-terracotta text-white px-1 uppercase font-bold">Ember Trap: Vine on Deck Lattice</span>
-                            </div>
-                            <div class="bounding-box" style="top: 35%; left: 65%; width: 28%; height: 45%;">
-                                <span class="absolute -top-5 left-0 text-[9px] bg-terracotta text-white px-1 uppercase font-bold">Ember Trap: Canopy Over Stairwell</span>
-                            </div>
-                        </div>
-                        <p class="text-[11px] text-stone-400 leading-normal mt-auto">*Key Rule: Remove organic mulch, dry debris, and dense woody vegetation touching exterior walls.</p>
-                    </div>
-
-                    <!-- Defensible Space Compliance Calculator -->
-                    <div class="border border-white/10 p-8 reveal bg-stone-800 flex flex-col h-full" style="transition-delay: 0.15s;">
-                        <h3 class="text-xl font-display font-bold mb-2">2. Zone 0 Rating Estimator</h3>
-                        <p class="text-xs text-stone-400 mb-6 font-light">Adjust property parameters to estimate relative defensible space compliance score under California AB 3074.</p>
-                        
-                        <div class="space-y-6 flex-grow flex flex-col justify-center">
-                            <div>
-                                <label class="text-[10px] uppercase tracking-widest text-stone-400 font-bold block mb-2">Regional Microclimate ZIP</label>
-                                <input type="text" value="94708 (East Bay Hills High-Fire Zone)" readonly class="w-full bg-white/5 border border-white/20 p-3 text-xs text-white focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="text-[10px] uppercase tracking-widest text-stone-400 font-bold block mb-4">0–5 ft Ground Cover Type</label>
-                                <div class="relative px-2">
-                                    <input type="range" id="complianceSlider" min="0" max="75" step="25" value="25" class="w-full accent-sage-default">
-                                    <div class="flex justify-between w-full mt-2 text-[9px] sm:text-[10px] uppercase font-bold text-stone-400">
-                                        <div class="w-1/4 text-left">Bark Mulch</div>
-                                        <div class="w-1/4 text-center">Wood Shrubs</div>
-                                        <div class="w-1/4 text-center">Gravel / Succulents</div>
-                                        <div class="w-1/4 text-right">Pavers / Stone</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-sage-dark/30 border border-sage-default/40 p-5 text-center mt-4">
-                                <p class="text-[10px] uppercase tracking-widest text-sage-light font-bold mb-1">Estimated Fire Vulnerability Status</p>
-                                <p class="text-2xl font-display font-bold text-white" id="ratingDisplay">MODERATE RISK</p>
-                                <p class="text-[11px] text-stone-400 mt-1" id="ratingDesc">Woody shrubs near foundation create potential ladder fuels.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#c0492f] rounded-lg p-5">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#e07a5f] block mb-1">Zone 0</span>
+                <span class="block text-sm font-semibold text-white mb-2">0&ndash;5 ft from structure</span>
+                <p class="text-stone-400 text-sm leading-relaxed">Ember-resistant zone. Non-combustible gravel, pavers, and hardscape only &mdash; no woody plants touching the structure.</p>
             </div>
-        </section>
+            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#b7791f] rounded-lg p-5">
+                <span class="text-xs font-bold uppercase tracking-widest text-[#d69e4a] block mb-1">Zone 1</span>
+                <span class="block text-sm font-semibold text-white mb-2">5&ndash;30 ft</span>
+                <p class="text-stone-400 text-sm leading-relaxed">Lean, clean and green. Low, well-spaced, well-irrigated native plants with no ladder fuels.</p>
+            </div>
+            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#2f855a] rounded-lg p-5">
+                <span class="text-xs font-bold uppercase tracking-widest text-sage-light block mb-1">Zone 2</span>
+                <span class="block text-sm font-semibold text-white mb-2">30&ndash;100 ft</span>
+                <p class="text-stone-400 text-sm leading-relaxed">Reduced fuel zone. Spaced shrubs, limbed-up trees, and regularly mowed grasses.</p>
+            </div>
+            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#78716c] rounded-lg p-5">
+                <span class="text-xs font-bold uppercase tracking-widest text-stone-400 block mb-1">Zone 3</span>
+                <span class="block text-sm font-semibold text-white mb-2">100+ ft</span>
+                <p class="text-stone-400 text-sm leading-relaxed">Wildland transition. Existing vegetation thinned and cleared of dead material, not newly planted.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
         <!-- Section 03: Botanical Field Guide (Flora Swap) -->
         <section id="flora" class="py-24 bg-white border-b border-stone-200">
@@ -700,49 +662,6 @@
                 </div>
             </div>
         </section>
-
-    <section id="defensible-space-overview" class="py-16 bg-stone-900 text-white">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-        <span class="text-xs uppercase tracking-widest font-bold text-sage-default block mb-2">System Overview</span>
-        <h2 class="text-3xl font-display font-bold mb-4">Defensible Space & Native Plant Integration</h2>
-        <p class="text-stone-400 max-w-2xl mx-auto mb-10 text-sm font-light">Treating Zone 0 as the foundational anchor while seamlessly transitioning into native plant habitats.</p>
-
-        <!-- Proximity Gradient Bar -->
-        <div class="flex h-3 rounded-full overflow-hidden mb-10 max-w-3xl mx-auto shadow-lg">
-            <div class="bg-[#c0492f]" style="width: 8%;"></div>
-            <div class="bg-[#b7791f]" style="width: 22%;"></div>
-            <div class="bg-[#2f855a]" style="width: 30%;"></div>
-            <div class="bg-[#78716c]" style="width: 40%;"></div>
-        </div>
-        <div class="flex justify-between max-w-3xl mx-auto text-[10px] uppercase tracking-widest text-stone-500 font-bold mb-12 -mt-8 px-1">
-            <span>House</span>
-            <span>100+ ft</span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#c0492f] rounded-lg p-5">
-                <span class="text-xs font-bold uppercase tracking-widest text-[#e07a5f] block mb-1">Zone 0</span>
-                <span class="block text-sm font-semibold text-white mb-2">0&ndash;5 ft from structure</span>
-                <p class="text-stone-400 text-sm leading-relaxed">Ember-resistant zone. Non-combustible gravel, pavers, and hardscape only &mdash; no woody plants touching the structure.</p>
-            </div>
-            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#b7791f] rounded-lg p-5">
-                <span class="text-xs font-bold uppercase tracking-widest text-[#d69e4a] block mb-1">Zone 1</span>
-                <span class="block text-sm font-semibold text-white mb-2">5&ndash;30 ft</span>
-                <p class="text-stone-400 text-sm leading-relaxed">Lean, clean and green. Low, well-spaced, well-irrigated native plants with no ladder fuels.</p>
-            </div>
-            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#2f855a] rounded-lg p-5">
-                <span class="text-xs font-bold uppercase tracking-widest text-sage-light block mb-1">Zone 2</span>
-                <span class="block text-sm font-semibold text-white mb-2">30&ndash;100 ft</span>
-                <p class="text-stone-400 text-sm leading-relaxed">Reduced fuel zone. Spaced shrubs, limbed-up trees, and regularly mowed grasses.</p>
-            </div>
-            <div class="bg-stone-800 border border-stone-700 border-t-4 border-t-[#78716c] rounded-lg p-5">
-                <span class="text-xs font-bold uppercase tracking-widest text-stone-400 block mb-1">Zone 3</span>
-                <span class="block text-sm font-semibold text-white mb-2">100+ ft</span>
-                <p class="text-stone-400 text-sm leading-relaxed">Wildland transition. Existing vegetation thinned and cleared of dead material, not newly planted.</p>
-            </div>
-        </div>
-    </div>
-</section>
 </main>
 
     <!-- Educational Footer -->
@@ -849,34 +768,6 @@
                     }
                 });
             });
-
-            // Educational Rating Calculator Logic
-            const complianceSlider = document.getElementById('complianceSlider');
-            const ratingDisplay = document.getElementById('ratingDisplay');
-            const ratingDesc = document.getElementById('ratingDesc');
-
-            if(complianceSlider) {
-                complianceSlider.addEventListener('input', function() {
-                    const val = parseInt(this.value);
-                    if(val === 0) {
-                        ratingDisplay.textContent = "HIGH EMBER HAZARD";
-                        ratingDisplay.style.color = "#E06D53";
-                        ratingDesc.textContent = "Organic mulch within 5 ft presents high ignition risk.";
-                    } else if(val === 25) {
-                        ratingDisplay.textContent = "MODERATE RISK";
-                        ratingDisplay.style.color = "#f59e0b";
-                        ratingDesc.textContent = "Woody shrubs near foundation create potential ladder fuels.";
-                    } else if(val === 50) {
-                        ratingDisplay.textContent = "GOOD COMPLIANCE";
-                        ratingDisplay.style.color = "#8A9A83";
-                        ratingDesc.textContent = "Gravel firebreaks and native succulents reduce ember threats.";
-                    } else if(val === 75) {
-                        ratingDisplay.textContent = "OPTIMAL RESILIENCE";
-                        ratingDisplay.style.color = "#6B7A64";
-                        ratingDesc.textContent = "Non-combustible stone pavers and steel edging fully satisfy Zone 0 standards.";
-                    }
-                });
-            }
 
             // Scroll Reveal Observer
             const reveals = document.querySelectorAll(".reveal");
