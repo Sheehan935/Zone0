@@ -430,8 +430,16 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Botanical Card 1 -->
                     <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" tabindex="0" role="button" aria-pressed="false">
-                        <img src="https://images.unsplash.com/photo-1598902517833-2a832ec15234?auto=format&fit=crop&w=600&q=80" alt="Italian Cypress" class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] object-cover transition-opacity duration-500">
-                        <img src="https://images.unsplash.com/photo-1623912151662-3409192ce26f?auto=format&fit=crop&w=600&q=80" alt="Toyon" class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] object-cover transition-opacity duration-500">
+                        <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] flex flex-col items-center justify-center bg-terracotta/10 transition-opacity duration-500">
+                            <i class="fa-solid fa-triangle-exclamation text-5xl text-terracotta mb-4" aria-hidden="true"></i>
+                            <p class="text-sm font-bold uppercase tracking-widest text-terracotta">Italian Cypress</p>
+                            <p class="text-xs text-stone-500 mt-1">Resinous Fire Hazard</p>
+                        </div>
+                        <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] flex flex-col items-center justify-center bg-sage-default/10 transition-opacity duration-500">
+                            <i class="fa-solid fa-leaf text-5xl text-sage-default mb-4" aria-hidden="true"></i>
+                            <p class="text-sm font-bold uppercase tracking-widest text-sage-dark">Toyon</p>
+                            <p class="text-xs text-stone-500 mt-1">Fire-Adapted Native</p>
+                        </div>
 
                         <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
@@ -441,8 +449,16 @@
 
                     <!-- Botanical Card 2 -->
                     <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" style="transition-delay: 0.1s;" tabindex="0" role="button" aria-pressed="false">
-                        <img src="https://images.unsplash.com/photo-1589136979201-9252077e68fa?auto=format&fit=crop&w=600&q=80" alt="Bark Mulch" class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] object-cover transition-opacity duration-500">
-                        <img src="https://images.unsplash.com/photo-1509587584298-0f3b3a3a1797?auto=format&fit=crop&w=600&q=80" alt="Crushed Granite & Agave" class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] object-cover transition-opacity duration-500">
+                        <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] flex flex-col items-center justify-center bg-terracotta/10 transition-opacity duration-500">
+                            <i class="fa-solid fa-triangle-exclamation text-5xl text-terracotta mb-4" aria-hidden="true"></i>
+                            <p class="text-sm font-bold uppercase tracking-widest text-terracotta">Wood Bark Mulch</p>
+                            <p class="text-xs text-stone-500 mt-1">Combustible Ground Cover</p>
+                        </div>
+                        <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] flex flex-col items-center justify-center bg-sage-default/10 transition-opacity duration-500">
+                            <i class="fa-solid fa-leaf text-5xl text-sage-default mb-4" aria-hidden="true"></i>
+                            <p class="text-sm font-bold uppercase tracking-widest text-sage-dark">Decomposed Granite &amp; Agave</p>
+                            <p class="text-xs text-stone-500 mt-1">Non-Combustible Ground Cover</p>
+                        </div>
 
                         <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
@@ -452,8 +468,16 @@
 
                     <!-- Botanical Card 3 -->
                     <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" style="transition-delay: 0.2s;" tabindex="0" role="button" aria-pressed="false">
-                        <img src="https://images.unsplash.com/photo-1592659751912-70b9ebc74737?auto=format&fit=crop&w=600&q=80" alt="Rosemary" class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] object-cover transition-opacity duration-500">
-                        <img src="https://images.unsplash.com/photo-1681766627681-30d8a57700a9?auto=format&fit=crop&w=600&q=80" alt="California Sage" class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] object-cover transition-opacity duration-500">
+                        <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] flex flex-col items-center justify-center bg-terracotta/10 transition-opacity duration-500">
+                            <i class="fa-solid fa-triangle-exclamation text-5xl text-terracotta mb-4" aria-hidden="true"></i>
+                            <p class="text-sm font-bold uppercase tracking-widest text-terracotta">Rosemary</p>
+                            <p class="text-xs text-stone-500 mt-1">Oil-Rich Fire Hazard</p>
+                        </div>
+                        <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] flex flex-col items-center justify-center bg-sage-default/10 transition-opacity duration-500">
+                            <i class="fa-solid fa-leaf text-5xl text-sage-default mb-4" aria-hidden="true"></i>
+                            <p class="text-sm font-bold uppercase tracking-widest text-sage-dark">California Sage</p>
+                            <p class="text-xs text-stone-500 mt-1">Fire-Adapted Native</p>
+                        </div>
 
                         <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
