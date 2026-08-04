@@ -1,110 +1,125 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="PAGE DESCRIPTION HERE" />
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Science of Zone 0 | Zone 0 Educational Guide</title>
     
-    <!-- OpenGraph / Social Sharing -->
-    <meta property="og:title" content="PAGE TITLE HERE | Zone 0 Landscaping" />
-    <meta property="og:description" content="PAGE DESCRIPTION HERE" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://zone0landscaping.com/PAGE-PATH/" />
-    <meta property="og:image" content="https://zone0landscaping.com/assets/og-image.jpg" />
+    <!-- Google Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <title>PAGE TITLE HERE | Zone 0 Landscaping</title>
-    
-    <!-- Absolute path ensures styles load from any subfolder -->
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <!-- HEADER & PRIMARY NAV -->
-    <header class="site-header">
-      <a class="brand" href="/" aria-label="Zone 0 Landscaping Home">
-        <svg class="brand-mark" style="width: 42px; height: 42px;" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="60" cy="50" r="45" fill="#2d4a3f" />
-          <path d="M 60 5 A 45 45 0 0 1 60 95 A 45 45 0 0 1 60 5" fill="#c85a2f" />
-          <text x="60" y="125" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#2d4a3f" letter-spacing="1.5">ZONE 0</text>
-        </svg>
-        <span class="brand-name">Zone 0 Landscaping</span>
-      </a>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        stone: { 50: '#F9F9F7', 100: '#F5F5F2', 200: '#E8E8E3', 300: '#D5D5CE', 800: '#2A2A2A', 900: '#1A1A1A', 950: '#0F0F0F' },
+                        sage: { default: '#6B7A64', dark: '#4A5744', light: '#8A9A83' },
+                        terracotta: '#E06D53',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F5F5F2; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen font-sans">
 
-      <nav aria-label="Primary navigation">
-        <a href="/zone-0/">Zone 0 Guide</a>
-        <a href="/design/">Design</a>
-        <a href="/materials/">Materials</a>
-        <a href="/local/berkeley/">Local</a>
-        <a href="/services/">Services</a>
-      </nav>
-
-      <a class="nav-cta" href="/#photo-check">Free Photo Check</a>
+    <!-- Sticky Educational Header -->
+    <header class="fixed top-0 w-full bg-stone-100/90 backdrop-blur-xl border-b border-stone-200 z-50">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+            <a href="/" class="text-2xl font-bold font-display tracking-tight uppercase">
+                Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-500 lowercase tracking-normal font-sans">/ educational guide</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 text-[11px] uppercase tracking-[0.15em] font-bold text-stone-900 items-center">
+                <a href="/zone-0/" class="text-sage-default transition-colors">Zone 0 Science</a>
+                <a href="/design/" class="hover:text-sage-default transition-colors">Design Principles</a>
+                <a href="/materials/" class="hover:text-sage-default transition-colors">Hardscape Guide</a>
+                <a href="/faq/" class="hover:text-sage-default transition-colors">AB 3074 FAQ</a>
+                <a href="#" class="bg-sage-default text-white px-5 py-2 hover:bg-sage-dark transition-colors">Free Photo Check</a>
+            </nav>
+        </div>
     </header>
 
-    <!-- MAIN CONTENT AREA -->
-    <main id="main">
-      
-      <section class="content-block">
-        <h1>Page Title</h1>
-        <p>Your article content goes here.</p>
-      </section>
+    <!-- Main Content Grid -->
+    <main class="flex-grow pt-32 pb-24 max-w-[1400px] mx-auto px-6 lg:px-12 w-full">
+        <div class="flex flex-col lg:flex-row gap-16">
+            
+            <!-- Left Column: Article Content -->
+            <article class="lg:w-2/3">
+                <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-4">Core Principles</span>
+                <h1 class="text-4xl sm:text-5xl font-display font-bold mb-8 text-stone-900 leading-tight">The Science of Ember Dynamics & Ignition Vulnerability</h1>
+                
+                <div class="prose prose-stone max-w-none text-stone-600 leading-relaxed space-y-6">
+                    <p class="text-lg font-medium text-stone-800">During a wildfire, it is rarely a giant wall of flame that burns down a house. It is the invisible blizzard of burning embers blowing miles ahead of the fire front.</p>
+                    <p>Your article content goes here. You can expand on how embers lodge into wood mulch, dry leaves, and foundation vents, which is exactly why the 0-5 foot zone is so critical under AB 3074.</p>
+                    
+                    <h3 class="text-2xl font-display font-bold text-stone-900 mt-10 mb-4">How Embers Behave</h3>
+                    <p>Embers are driven by high winds and act similarly to blowing snow. Wherever snow drifts and piles up around your house—like corners, stairwells, and against the foundation—is exactly where burning embers will accumulate.</p>
+                </div>
+            </article>
 
-      <!-- Standard Article Footer Block (From Content Plan) -->
-      <section class="article-footer center-text" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
-        <h3>Related Articles</h3>
-        <p><a href="/zone-0/">Back to the Zone 0 Guide</a></p>
-        
-        <h3 style="margin-top: 2rem;">Get the Zone 0 Checklist</h3>
-        <p>[Email Capture Form Goes Here]</p>
-        
-        <h3 style="margin-top: 2rem;">Want someone to look at your property?</h3>
-        <p><a href="/#photo-check" class="btn btn-secondary">Get a free photo check</a></p>
-      </section>
+            <!-- Right Column: Sidebar -->
+            <aside class="lg:w-1/3 space-y-10">
+                
+                <!-- Email Capture Widget -->
+                <div class="bg-white border border-stone-200 p-8 shadow-sm">
+                    <h4 class="font-display font-bold text-lg text-stone-900 mb-2">Get the Zone 0 Checklist</h4>
+                    <p class="text-sm text-stone-600 mb-4">Download our free PDF guide to preparing your 0-5 foot zone for inspection.</p>
+                    <form class="flex flex-col gap-3">
+                        <input type="email" placeholder="Enter your email" class="w-full bg-stone-50 border border-stone-200 p-3 text-sm focus:outline-none focus:border-sage-default">
+                        <button type="button" class="w-full bg-stone-900 text-white p-3 text-xs uppercase tracking-widest font-bold hover:bg-sage-default transition-colors">Download Now</button>
+                    </form>
+                </div>
 
+                <!-- CTA Widget -->
+                <div class="bg-sage-default border border-sage-dark p-8 text-white shadow-sm">
+                    <h4 class="font-display font-bold text-lg mb-2">Want someone to look at your property?</h4>
+                    <p class="text-sm text-sage-50 mb-6 font-light">Send us a photo of your foundation line, and we'll point out the exact ember traps.</p>
+                    <a href="#" class="inline-block bg-white text-stone-900 px-6 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-100 transition-colors">Get a free photo check</a>
+                </div>
+
+                <!-- Related Links Widget -->
+                <div>
+                    <h4 class="font-display font-bold text-lg text-stone-900 mb-4 border-b border-stone-200 pb-2">Zone 0 Guide</h4>
+                    <ul class="space-y-3 text-sm text-stone-600">
+                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>What is Zone 0?</a></li>
+                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Rules & Timeline</a></li>
+                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>5-Foot Checklist</a></li>
+                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Mulch Alternatives</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-lg text-stone-900 mb-4 border-b border-stone-200 pb-2">Design & Materials</h4>
+                    <ul class="space-y-3 text-sm text-stone-600">
+                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Design Without Barren</a></li>
+                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Privacy Solutions</a></li>
+                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Gravel & DG</a></li>
+                    </ul>
+                </div>
+
+            </aside>
+        </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-      <div class="footer-grid">
-        <div class="footer-col">
-          <h4>Zone 0 Guide</h4>
-          <ul>
-            <li><a href="/zone-0/what-is-zone-0/">What is Zone 0?</a></li>
-            <li><a href="/zone-0/rules-and-timeline/">Rules & Timeline</a></li>
-            <li><a href="/zone-0/the-5-foot-checklist/">5-Foot Checklist</a></li>
-            <li><a href="/zone-0/mulch-and-ground-cover/">Mulch Alternatives</a></li>
-          </ul>
+    <!-- Educational Footer -->
+    <footer class="bg-stone-950 text-stone-400 pt-16 pb-10 border-t border-stone-900 mt-auto">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12 text-center text-xs">
+            <p>&copy; 2026 Zone 0 Educational Guide. All rights reserved.</p>
         </div>
-        <div class="footer-col">
-          <h4>Design & Materials</h4>
-          <ul>
-            <li><a href="/design/fire-adapted-without-barren/">Design Without Barren</a></li>
-            <li><a href="/design/privacy-without-fuel/">Privacy Solutions</a></li>
-            <li><a href="/materials/gravel-and-decomposed-granite/">Gravel & DG</a></li>
-            <li><a href="/materials/noncombustible-fencing/">Fencing Options</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Local Jurisdictions</h4>
-          <ul>
-            <li><a href="/local/berkeley/">Berkeley Hills</a></li>
-            <li><a href="/local/oakland-hills/">Oakland Hills</a></li>
-            <li><a href="/local/kensington/">Kensington</a></li>
-            <li><a href="/local/orinda/">Orinda / Lafayette</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="/services/">Our Services</a></li>
-            <li><a href="/about/">About Us</a></li>
-            <li><a href="/faq/">FAQ</a></li>
-            <li><a href="/contact/">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Zone 0 Landscaping. All rights reserved. | Educational guidance, not a formal legal compliance determination.</p>
-      </div>
     </footer>
-  </body>
+
+</body>
 </html>
