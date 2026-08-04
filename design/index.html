@@ -1,3 +1,4 @@
+cat << 'EOF' > design/index.html
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -125,5 +126,8 @@
         </div>
     </footer>
 
+<script src="/js/modal.js"></script>
 </body>
 </html>
+EOF
+git add design/index.html && git commit -m "fix incomplete design page" && git push origin main
