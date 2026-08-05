@@ -680,7 +680,7 @@
                     <p class="text-stone-600 font-light text-base">Hover, tap, or focus each botanical card to replace dangerous, ember-catching vegetation with fire-adapted California native flora.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Botanical Card 1 -->
                     <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" tabindex="0" role="button" aria-pressed="false">
                         <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
@@ -729,6 +729,23 @@
                         <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
                             <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
                             <h4 class="font-display font-bold text-sm text-stone-900">Rosemary <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> <span class="italic font-normal">Salvia apiana</span> (White Sage)</h4>
+                        </div>
+                    </div>
+
+                    <!-- Botanical Card 4 -->
+                    <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" style="transition-delay: 0.3s;" tabindex="0" role="button" aria-pressed="false">
+                        <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                            <img src="https://images.unsplash.com/photo-1605695781395-5607d3d60a88?auto=format&fit=crop&w=600&q=80" alt="Dense juniper shrub with berries" class="w-full h-full object-cover">
+                            <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Juniper &mdash; Ember-Catching Hazard</span>
+                        </div>
+                        <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                            <img src="https://images.unsplash.com/photo-1709072142656-6320f29588f1?auto=format&fit=crop&w=600&q=80" alt="Manzanita branch with smooth red bark" class="w-full h-full object-cover">
+                            <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Manzanita &mdash; Fire-Adapted Native</span>
+                        </div>
+
+                        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
+                            <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
+                            <h4 class="font-display font-bold text-sm text-stone-900">Juniper <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> <span class="italic font-normal">Arctostaphylos spp.</span> (Manzanita)</h4>
                         </div>
                     </div>
                 </div>
