@@ -1,5 +1,38 @@
 # Zone 0 Landscaping — Site Changelog
 
+## v1.4 — Zone 3, Plant Expansion, System Overview, Accessibility
+- Zone 3 Tab: Added a 4th "Wildland Transition Zone" tab (100+ ft),
+  framed around thinning/managing existing vegetation rather than
+  new planting.
+- Plant Inventory Expansion: Every zone tab now lists 9 plant
+  examples (36 total), all real California natives with honest
+  care/fire-safety notes.
+- Zone Key Removed: Dropped the redundant 4-card legend added in
+  v1.3 once the zone tabs themselves already showed the same
+  badge/title/range at a glance.
+- Flora Swap: Added a 4th card (Juniper -> Manzanita), moved the
+  whole section to the bottom of the page, added a cross-link to
+  the plant tabs.
+- System Overview: Replaced the old Risk Visualizer section (Ember-
+  Trap diagram + compliance slider) with a new "Defensible Space &
+  Native Plant Integration" section directly below the hero;
+  iterated its background from dark, to white, to matching the
+  site's actual background color, fixing a color seam against the
+  section below it.
+- Accessibility: Ran an axe-core audit and fixed 4 real WCAG AA
+  color-contrast failures (brand sage-green and one zone accent
+  color were too light as small text on light backgrounds).
+- Source Citation: Added a footer link to the official AB 3074 bill
+  text, since the site referenced the law repeatedly without citing
+  it anywhere.
+- Design System Page: Built out design/system/index.html with the
+  site's actual color palette, typography, logo/wordmark, and
+  button styles, pulled directly from the live code.
+- Bug Fixes: Repaired index.html twice after an external script
+  broke the document structure (content stranded after `</html>`);
+  fixed a CSS border-color bug on the Zone Key cards; corrected
+  mislabeled Ember-Trap hazard diagram callouts.
+
 ## v1.3 — Plant Guide Redesign & Flora Swap Fixes
 - Zone Plant Guide Overhaul: Replaced the hover-accordion plant table with a
   click-based, color-coded Zone 0/1/2 tab UI and a spacious card grid
