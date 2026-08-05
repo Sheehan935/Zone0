@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Design System | Zone 0</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -167,6 +168,74 @@
           <p class="text-sm font-bold">Zone 3</p>
           <p class="text-xs text-stone-500 font-mono">#78716c</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-xl font-display font-bold mb-1">Typography</h2>
+    <p class="text-stone-500 text-sm mb-6">Two typefaces, loaded via Google Fonts in every page's <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">&lt;head&gt;</code>.</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      <div class="border border-stone-200 rounded-lg p-6 bg-white">
+        <p class="text-xs font-bold uppercase tracking-widest text-sage-default mb-2">Display &mdash; Headlines</p>
+        <p class="font-display text-4xl mb-2">Plus Jakarta Sans</p>
+        <p class="text-stone-500 text-sm">Weights loaded: 300, 400, 500, 600, 700. Used for all headings (<code class="bg-stone-200 px-1 rounded text-xs">font-display</code>) and the logo wordmark.</p>
+      </div>
+      <div class="border border-stone-200 rounded-lg p-6 bg-white">
+        <p class="text-xs font-bold uppercase tracking-widest text-sage-default mb-2">Body &mdash; Text</p>
+        <p class="font-sans text-4xl mb-2">Inter</p>
+        <p class="text-stone-500 text-sm">Weights loaded: 300, 400, 500, 600. Used for all body copy, labels, and UI text (<code class="bg-stone-200 px-1 rounded text-xs">font-sans</code>, the default).</p>
+      </div>
+    </div>
+
+    <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 mb-4">Type Scale (as used on the live site)</h3>
+    <div class="border border-stone-200 rounded-lg divide-y divide-stone-200 bg-white">
+      <div class="p-5">
+        <p class="font-display font-light text-6xl leading-tight mb-1">Hero H1</p>
+        <p class="text-xs text-stone-500 font-mono">font-display font-light &middot; text-5xl sm:text-6xl lg:text-7xl &middot; tracking-tight</p>
+      </div>
+      <div class="p-5">
+        <p class="font-display font-bold text-4xl mb-1">Section H2</p>
+        <p class="text-xs text-stone-500 font-mono">font-display font-bold &middot; text-3xl sm:text-4xl</p>
+      </div>
+      <div class="p-5">
+        <p class="font-display font-bold text-2xl mb-1">Subsection H3</p>
+        <p class="text-xs text-stone-500 font-mono">font-display font-bold &middot; text-2xl</p>
+      </div>
+      <div class="p-5">
+        <p class="text-base text-stone-700 mb-1">Body copy sits here at 16px, font-light or font-normal Inter, usually text-stone-600 on light backgrounds.</p>
+        <p class="text-xs text-stone-500 font-mono">font-sans font-light &middot; text-base &middot; text-stone-600</p>
+      </div>
+      <div class="p-5">
+        <p class="text-[10px] uppercase tracking-widest font-bold text-sage-default mb-1">Eyebrow / Section Label</p>
+        <p class="text-xs text-stone-500 font-mono">text-[10px] uppercase tracking-widest font-bold text-sage-default</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-xl font-display font-bold mb-1">Logo / Wordmark</h2>
+    <p class="text-stone-500 text-sm mb-6">The site does not use an image logo &mdash; the header mark is text, built with Tailwind utility classes directly.</p>
+    <div class="border border-stone-200 rounded-lg p-8 bg-white flex items-center">
+      <a href="#" class="text-2xl font-bold font-display tracking-tight uppercase pointer-events-none" onclick="return false;">
+        Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-500 lowercase tracking-normal font-sans">/ educational guide</span>
+      </a>
+    </div>
+    <p class="text-xs text-stone-500 font-mono mt-3">text-2xl font-bold font-display tracking-tight uppercase &middot; the "0" is always text-sage-default</p>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-xl font-display font-bold mb-1">Buttons</h2>
+    <p class="text-stone-500 text-sm mb-6">CTA styles pulled from the homepage hero and section actions.</p>
+    <div class="flex flex-wrap gap-4 items-start">
+      <div>
+        <a href="#" class="inline-block bg-sage-default text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-sage-dark transition-colors shadow-lg pointer-events-none" onclick="return false;">Primary Action</a>
+        <p class="text-xs text-stone-500 font-mono mt-2">bg-sage-default hover:bg-sage-dark</p>
+      </div>
+      <div class="bg-stone-900 p-4 rounded-lg">
+        <a href="#" class="inline-block border border-white/50 text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-white hover:text-stone-900 transition-colors backdrop-blur-sm pointer-events-none" onclick="return false;">Secondary Action</a>
+        <p class="text-xs text-stone-300 font-mono mt-2">border-white/50, used on dark/image backgrounds</p>
       </div>
     </div>
   </section>
