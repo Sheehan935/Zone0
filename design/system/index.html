@@ -2,12 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Design System | Zone 0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            stone: {
+              50: '#F9F9F7',
+              100: '#F5F5F2',
+              200: '#E8E8E3',
+              300: '#D5D5CE',
+              800: '#2A2A2A',
+              900: '#1A1A1A',
+              950: '#0F0F0F',
+            },
+            sage: {
+              default: '#6B7A64',
+              dark: '#4A5744',
+              light: '#8A9A83',
+            },
+            terracotta: '#E06D53',
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-stone-50 text-stone-900 p-12">
-  <h1 class="text-3xl font-bold mb-2">Zone 0 Design System</h1>
-  <p class="text-stone-600 mb-6">Component library, colors, and layout ratios.</p>
-  <a href="/design/" class="text-emerald-700 underline text-sm font-semibold">← Back to Design Hub</a>
+<body class="bg-stone-50 text-stone-900 font-sans p-12">
+  <a href="/design/" class="text-sage-default hover:underline text-xs font-bold uppercase tracking-widest">&larr; Back to Design Hub</a>
+
+  <h1 class="text-3xl font-display font-bold mt-4 mb-2">Zone 0 Design System</h1>
+  <p class="text-stone-600 mb-12">Component library, colors, and layout ratios. Colors below are pulled directly from the live site's Tailwind config and inline styles &mdash; not aspirational, this is what's actually deployed.</p>
+
+  <section class="mb-16">
+    <h2 class="text-xl font-display font-bold mb-1">Core Theme Colors</h2>
+    <p class="text-stone-500 text-sm mb-6">Defined in <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">tailwind.config</code> in <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">index.html</code>.</p>
+
+    <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Sage &mdash; Primary Brand Color</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#8A9A83"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">sage-light</p>
+          <p class="text-xs text-stone-500 font-mono">#8A9A83</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#6B7A64"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">sage-default</p>
+          <p class="text-xs text-stone-500 font-mono">#6B7A64</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#4A5744"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">sage-dark</p>
+          <p class="text-xs text-stone-500 font-mono">#4A5744</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Terracotta &mdash; Accent / Alert</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#E06D53"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">terracotta</p>
+          <p class="text-xs text-stone-500 font-mono">#E06D53</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Stone &mdash; Neutral Scale</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#F9F9F7"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">stone-50</p>
+          <p class="text-xs text-stone-500 font-mono">#F9F9F7</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#F5F5F2"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">stone-100</p>
+          <p class="text-xs text-stone-500 font-mono">#F5F5F2</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#E8E8E3"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">stone-200</p>
+          <p class="text-xs text-stone-500 font-mono">#E8E8E3</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#D5D5CE"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">stone-300</p>
+          <p class="text-xs text-stone-500 font-mono">#D5D5CE</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#2A2A2A"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">stone-800</p>
+          <p class="text-xs text-stone-500 font-mono">#2A2A2A</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#1A1A1A"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">stone-900</p>
+          <p class="text-xs text-stone-500 font-mono">#1A1A1A</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#0F0F0F"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">stone-950</p>
+          <p class="text-xs text-stone-500 font-mono">#0F0F0F</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-xl font-display font-bold mb-1">Zone Accent Colors</h2>
+    <p class="text-stone-500 text-sm mb-6">Inline hex values (not in the Tailwind config) used for the Zone 0&ndash;3 tab badges, borders, and the System Overview proximity bar &mdash; color-coded from closest to the structure (most critical) to the wildland edge.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#c0492f"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">Zone 0</p>
+          <p class="text-xs text-stone-500 font-mono">#c0492f</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#b7791f"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">Zone 1</p>
+          <p class="text-xs text-stone-500 font-mono">#b7791f</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#2f855a"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">Zone 2</p>
+          <p class="text-xs text-stone-500 font-mono">#2f855a</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#78716c"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">Zone 3</p>
+          <p class="text-xs text-stone-500 font-mono">#78716c</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
