@@ -277,3 +277,49 @@ log said one thing and the live site said another defeats that purpose.
 Recording the actual state now, without trying to reconstruct a
 decision-by-decision rationale for every one of the ~80 intervening
 commits — that history is in `git log`, not owed a narrative here.
+
+---
+
+### 2026-08-05 — Asset folder structure
+
+**Decision:** All assets live under `assets/`, organized by type:
+`images/`, `icons/`, `fonts/`, `css/`, `js/`, `videos/`, `docs/`.
+Infographics and logos nest under `images/` (`assets/images/infographics/`,
+`assets/logos/`) rather than sitting at the top level of `assets/`.
+
+**Why:** A consistent, type-first layout under one root is easier to
+navigate and keep uncluttered than assets scattered across ad hoc
+top-level folders.
+
+---
+
+### 2026-08-05 — Lowercase folder names
+
+**Decision:** All folders under `assets/` use lowercase names with
+hyphens (e.g. `images/houses/`, `images/infographics/`), not mixed case.
+
+**Why:** macOS is case-insensitive but the web server is not — a folder
+renamed from `Houses/` to `houses/` locally will silently 404 in
+production if any page still links the old capitalization. (This exact
+gap existed in `index.html`'s hero `<img>` and `og:image` tag, both still
+pointing at `/assets/images/Houses/` after the rename — fixed alongside
+this entry.) Filenames themselves are untouched by this decision; only
+folder names are normalized.
+
+**Verified:** `grep`'d every `.html` file outside `archive/` for
+capitalized `assets/` path segments — the two `index.html` references
+above were the only ones found, both now corrected.
+
+---
+
+### 2026-08-05 — Wordmark in nav
+
+**Decision:** The desktop nav's text lockup — "Zone0 / educational
+guide" — is replaced site-wide with the image wordmark at
+`assets/logos/zone0-wordmark.png`.
+
+**Why:** See the earlier `fix(ui)` commits this same day: `faq/`,
+`materials/`, and `zone-0/` had fallen out of sync with the homepage's
+logo swap, plus the wordmark PNG's background needed to be made
+transparent first so it would read cleanly against the header's
+translucent blur.
