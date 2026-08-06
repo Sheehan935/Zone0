@@ -1,5 +1,25 @@
 # Zone 0 Landscaping — Site Changelog
 
+## v1.5 — Wordmark Logo, Asset Reorganization, Housekeeping
+- Header Wordmark: Replaced the text-based "Zone0 / educational guide"
+  header lockup with an image wordmark
+  (`assets/logos/zone0-wordmark.png`, background made transparent)
+  across every page.
+- Broken Image Fix: Repointed the hero background and `og:image` tag to
+  the correct lowercase `assets/images/houses/` path after a folder
+  rename left them 404ing in production.
+- Asset Reorganization: Consolidated assets under `assets/`, organized
+  by type; normalized all folder names to lowercase to avoid
+  case-sensitivity 404s between local (macOS) and production.
+- Internal Docs: Moved the internal branding guide out of the public
+  `/design/` hub to `docs/branding-guide/`; added a GitHub Pages
+  `_config.yml` to keep `docs/`, `archive/`, and internal report files
+  off the live site; reconciled `decisions.md` and the project
+  dashboard with the site's actual (multi-page) structure.
+- Housekeeping: Removed empty leftover directories, deduplicated
+  `.gitignore`, deleted merged branches, consolidated report files into
+  `docs/`.
+
 ## v1.4 — Zone 3, Plant Expansion, System Overview, Accessibility
 - Zone 3 Tab: Added a 4th "Wildland Transition Zone" tab (100+ ft),
   framed around thinning/managing existing vegetation rather than
