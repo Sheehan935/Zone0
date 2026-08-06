@@ -323,3 +323,21 @@ guide" — is replaced site-wide with the image wordmark at
 logo swap, plus the wordmark PNG's background needed to be made
 transparent first so it would read cleanly against the header's
 translucent blur.
+
+---
+
+### 2026-08-05 — Reverted: back to text wordmark
+
+**Decision:** The image wordmark (previous entry, same day) is reverted.
+The header on `index.html`, `faq/`, `materials/`, and `zone-0/` goes back
+to the text lockup — "Zone0 / educational guide," sage-green "0" — that
+was in place before it.
+
+**Why:** Explicit direction change requested directly, same day as the
+swap. `assets/logos/zone0-wordmark.png` (still a clean transparent PNG)
+is kept on disk and documented in the branding guide as retired, not
+deleted, in case it's wanted again.
+
+**Verified:** Rendered both `index.html` and `faq/` headlessly at
+1280px — text lockup displays correctly against the translucent blurred
+header bar on both, zero console errors.

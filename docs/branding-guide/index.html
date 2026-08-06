@@ -216,17 +216,17 @@
 
   <section class="mb-16">
     <h2 class="text-xl font-display font-bold mb-1">Logo / Wordmark</h2>
-    <p class="text-stone-500 text-sm mb-6">The header mark is an image: <code class="font-mono text-xs">/assets/logos/zone0-wordmark.png</code>, a transparent PNG used on every page.</p>
+    <p class="text-stone-500 text-sm mb-6">The site does not use an image logo &mdash; the header mark is text, built with Tailwind utility classes directly.</p>
     <div class="border border-stone-200 rounded-lg p-8 bg-white flex items-center">
-      <img src="/assets/logos/zone0-wordmark.png" alt="Zone0 Landscaping wordmark" class="h-9 w-auto">
-    </div>
-    <p class="text-xs text-stone-500 font-mono mt-3">h-9 w-auto &middot; wrapped in &lt;a href="/" class="flex items-center"&gt;</p>
-
-    <p class="text-stone-500 text-sm mt-8 mb-4">Retired: the previous text wordmark, replaced site-wide in August 2026.</p>
-    <div class="border border-stone-200 border-dashed rounded-lg p-8 bg-stone-50 flex items-center opacity-60">
-      <span class="text-2xl font-bold font-display tracking-tight uppercase">
+      <a href="#" class="text-2xl font-bold font-display tracking-tight uppercase pointer-events-none" onclick="return false;">
         Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-500 lowercase tracking-normal font-sans">/ educational guide</span>
-      </span>
+      </a>
+    </div>
+    <p class="text-xs text-stone-500 font-mono mt-3">text-2xl font-bold font-display tracking-tight uppercase &middot; the "0" is always text-sage-default</p>
+
+    <p class="text-stone-500 text-sm mt-8 mb-4">Retired: a transparent-PNG image wordmark (<code class="font-mono text-xs">/assets/logos/zone0-wordmark.png</code>) briefly replaced this site-wide in August 2026, then was reverted back to text.</p>
+    <div class="border border-stone-200 border-dashed rounded-lg p-8 bg-stone-50 flex items-center opacity-60">
+      <img src="/assets/logos/zone0-wordmark.png" alt="Zone0 Landscaping wordmark" class="h-9 w-auto">
     </div>
   </section>
 
