@@ -1,7 +1,7 @@
 # Zone 0 Landscaping Website
 ## Project Dashboard
 
-**Last Updated:** July 30, 2026
+**Last Updated:** August 5, 2026
 
 This is the only working document. Everything else in `docs/` is reference
 material. Never more than 3 active tasks in **Next**.
@@ -10,9 +10,11 @@ material. Never more than 3 active tasks in **Next**.
 
 # Current Goal
 
-Ship Version 1 — now a small multi-page site starting with `index.html`
-and `pages/services.html` — to launch. (Direction changed 2026-07-30,
-see `decisions.md`.)
+Site is live and multi-page: `index.html` plus `/zone-0/`, `/design/`,
+`/materials/`, `/faq/` (see `decisions.md`, 2026-08-05 entry — this
+supersedes every single-page/`pages/services.html` goal below, which is
+stale history kept for context). Working through the open content
+decisions listed in `PROJECT-SUMMARY-AND-NEXT-STEPS.md`.
 
 ---
 
@@ -106,9 +108,13 @@ see `decisions.md`.)
 
 # Next (max 3)
 
-1. **Decide what happens to the home page's `#services` section** now
-   that `pages/services.html` exists — trim to a short teaser linking to
-   the full page, or leave as-is with intentional duplication.
+Stale as of 2026-08-05 — `pages/services.html` and the `#services`
+section it referred to no longer exist on the current multi-page site.
+Current open items are tracked in `PROJECT-SUMMARY-AND-NEXT-STEPS.md`
+("Open decisions" and "Housekeeping still open") rather than duplicated
+here; promote up to 3 of those into this slot when actively working them.
+
+1. *(open slot)*
 2. *(open slot)*
 3. *(open slot)*
 

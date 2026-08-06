@@ -238,3 +238,42 @@ from the "premium landscaping" hero rewrite earlier the same day.
 remain untouched — only the pricing/tier presentation and hero framing
 changed. Whether the removed $299/$750/Custom tiers get reintroduced in
 some other form is an open question, not decided here.
+
+---
+
+### 2026-08-05 — Reconciling this log with reality: site is multi-page again, undocumented
+
+**Decision:** No new direction change is being made here — this entry
+records one that already happened without being logged. Between the
+2026-08-01 single-page revert above and today, roughly 80 commits
+(2026-08-03 through 2026-08-04, e.g. `4d96288` "publish new interactive
+Zone 0 educational guide", `ea94cdb` "publish materials guide", `118f1b6`
+"publish design strategy hub page", `45a3ecc` "publish faq hub page")
+rebuilt the site as multi-page. This log and `00-project-dashboard.md`
+were never updated to match, so both had been describing a single-page
+site for four days while the deployed site was not one.
+
+**Current state, verified against `index.html`'s nav (source of truth)
+and the live directory structure:**
+- Real, linked routes: `/zone-0/` (educational guide), `/design/`
+  (principles hub, links only to `/design/gallery/`), `/materials/`
+  (hardscape guide), `/faq/` (AB 3074 FAQ).
+- `services/` and `local/` exist as empty directories on disk (no
+  `index.html`, not tracked by git) — leftovers from pages built during
+  the same 08-03/08-04 push and later gutted by `6dabe2e` ("remove empty
+  0-byte service and design placeholders"). Not part of the current site;
+  candidates for deletion, tracked in the dashboard's housekeeping list.
+- `design/privacy-without-fuel/` and `design/system/` (now moved to
+  `docs/branding-guide/`, see the retitle commit `1bce3e7`) are real,
+  finished content that nothing links to — open content calls, not
+  resolved here.
+- `pages/thank-you.html` is still the only page under `pages/`; whether
+  it's still needed depends on the still-open `css/styles.css`/`js/main.js`
+  question in the dashboard.
+
+**Why:** `decisions.md` exists specifically so decisions don't get
+silently reversed or contradicted by stale docs. A four-day gap where the
+log said one thing and the live site said another defeats that purpose.
+Recording the actual state now, without trying to reconstruct a
+decision-by-decision rationale for every one of the ~80 intervening
+commits — that history is in `git log`, not owed a narrative here.
