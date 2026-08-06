@@ -70,7 +70,7 @@ site files.
 
 ## Editing workflow
 
-1. Edit in VS Code or Codex.
+1. Edit in VS Code.
 2. Preview locally with `python3 -m http.server 8080`.
 3. Run `git status --short --branch` before committing.
 4. Commit focused changes using Conventional Commits.
