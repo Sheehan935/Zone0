@@ -342,6 +342,34 @@
     </div>
 </section>
 
+<!-- Interactive Local Fire Code & AB 3074 Ordinance Lookup Tool -->
+<section id="regulations-lookup" class="py-24 bg-stone-950 text-stone-100 border-b border-stone-900">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+        <span class="text-[11px] uppercase tracking-[0.25em] font-bold text-sage-light block mb-2">Jurisdiction Lookup</span>
+        <h2 class="text-3xl font-display font-bold mb-3 text-white tracking-tight">Local Fire Authority & Ordinance Lookup</h2>
+        <p class="text-stone-300 max-w-2xl mx-auto mb-10 text-sm font-light leading-relaxed">
+            Select your city or local fire protection district for a summary of its defensible-space program, sourced and linked directly to the official page &mdash; always verify current requirements with your fire authority before relying on this for compliance.
+        </p>
+
+        <div class="max-w-md mx-auto mb-10">
+            <label for="city-ordinance-select" class="block text-[10px] uppercase tracking-[0.2em] font-bold text-stone-400 mb-2 text-left">
+                Select Your Jurisdiction:
+            </label>
+            <select id="city-ordinance-select" class="w-full bg-stone-900 text-stone-100 border border-stone-800 p-3.5 text-xs sm:text-sm focus:outline-none focus:border-sage-light rounded-xl transition-colors">
+                <option value="berkeley">City of Berkeley & Berkeley Hills (EMBER Program)</option>
+                <option value="oakland">Oakland Hills & Wildfire Prevention Assessment District</option>
+                <option value="moraga_orinda">Moraga-Orinda Fire District (Ordinance No. 23-03)</option>
+                <option value="san_ramon">San Ramon Valley Fire Protection District</option>
+                <option value="marin">Southern Marin Fire Protection District</option>
+                <option value="pasadena">Pasadena & SoCal VHFHSZ Regions</option>
+            </select>
+        </div>
+
+        <!-- Populated via JavaScript -->
+        <div id="ordinance-details-card" class="max-w-4xl mx-auto"></div>
+    </div>
+</section>
+
         <!-- Section: Recommended California Native Plants -->
         <section id="plants" class="py-24 bg-stone-50 border-b border-stone-200">
             <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -981,6 +1009,7 @@
     </script>
 <script src="/js/modal.js"></script>
 <script src="/js/zone0-tools.js"></script>
+<script src="/js/ordinance-lookup.js"></script>
 </body>
 </html>
 
