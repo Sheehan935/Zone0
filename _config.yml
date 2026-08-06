@@ -5,11 +5,8 @@
 # reference and history, but visitors cannot reach them by URL.
 
 exclude:
-  - docs/            # project documentation + internal branding guide
+  - docs/            # project documentation, internal branding guide, and reports
   - archive/         # historical page versions and old builds
   - README.md
   - CHANGELOG.md
   - TODO.md
-  - CHANGE-CONTROL-REPORT.md
-  - HERO-IMAGE-VERIFICATION.md
-  - SITE-AUDIT-REPORT.md
