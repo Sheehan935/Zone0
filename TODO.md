@@ -1,12 +1,10 @@
 # 📌 Zone 0 Backlog
 
 ## Up Next
-* [ ] 
+* [ ] Remove Design Principals from Header Menu
 * [ ] 
 
 ## Later / Ideas
-* [ ] 
-* [ ] 
 * [ ] Create Instagram account
 * [ ] Create Google Business account
 * [ ] Add Cal Fire code to links
