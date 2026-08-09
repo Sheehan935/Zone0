@@ -53,56 +53,6 @@
     <style>
         body { background-color: #F5F5F2; color: #1A1A1A; -webkit-font-smoothing: antialiased; }
 
-        .hero-overlay {
-            position: relative;
-            min-height: 70vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 4rem 1.5rem;
-            border-radius: 16px;
-            margin: 1rem auto 3rem auto;
-            max-width: 1140px;
-        }
-
-        .hero-overlay-content {
-            max-width: 800px;
-            z-index: 2;
-        }
-
-        .hero-overlay h1 {
-            color: #ffffff;
-            font-size: clamp(2.2rem, 4vw + 1rem, 3.4rem);
-            font-weight: 700;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-            margin-bottom: 1rem;
-        }
-
-        .hero-overlay .hero-lead {
-            color: #f0f4f1;
-            font-size: 1.25rem;
-            text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
-            margin-bottom: 2rem;
-        }
-
-        .hero-overlay .hero-badge {
-            background-color: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 0.4rem 0.9rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin: 0.25rem;
-        }
-
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -301,16 +251,25 @@
     <!-- Main Content -->
     <main class="flex-grow pt-20">
 
-<section class="hero hero-overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('assets/images/houses/Hill%20House.jpg');">
-  <div class="hero-overlay-content">
-    <h1>Mastering the 0–5 Foot <br><span class="font-bold">Wildfire Ignition Zone.</span></h1>
-    <p class="hero-lead">
-      Protect your East Bay hillside home, satisfy property insurance compliance requirements, and adapt your 0–5 ft Zone 0 perimeter with fire-adapted native design.
+<section class="relative py-32 lg:py-40 px-6 lg:px-12 bg-stone-950 text-center overflow-hidden">
+  <div class="relative z-10 max-w-4xl mx-auto">
+    <span class="inline-flex items-center gap-2 border border-stone-700 rounded-full px-6 py-2.5 text-xs uppercase tracking-[0.2em] font-bold text-stone-300 mb-8">
+      <span class="w-2 h-2 rounded-full bg-sage-light"></span>
+      California AB 3074 Educational Guide
+    </span>
+    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-light leading-[1.1] mb-6 tracking-tight text-white">
+      Mastering the 0–5 Foot <br><span class="font-bold">Wildfire Ignition Zone.</span>
+    </h1>
+    <p class="text-lg text-stone-300 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+      An objective, science-based guide to defensible space, ember dynamics, and fire-adapted native landscaping for California hillside homes.
     </p>
-    <div class="hero-badges">
-      <span class="hero-badge">AB 3074 Zone 0 Specialists</span>
-      <span class="hero-badge">Insurance Compliance Guidance</span>
-      <span class="hero-badge">Serving Berkeley, Oakland &amp; East Bay</span>
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+      <a href="/zone-0/" class="bg-sage-default text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-sage-dark transition-colors text-center w-full sm:w-auto shadow-lg rounded-full">
+        Read the Zone 0 Guide
+      </a>
+      <a href="/faq/" class="border border-stone-600 text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-white hover:text-stone-900 transition-colors text-center w-full sm:w-auto rounded-full">
+        View AB 3074 FAQ
+      </a>
     </div>
   </div>
 </section>
