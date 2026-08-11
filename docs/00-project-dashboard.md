@@ -1,7 +1,7 @@
 # Zone 0 Landscaping Website
 ## Project Dashboard
 
-**Last Updated:** August 5, 2026
+**Last Updated:** August 10, 2026
 
 This is the only working document. Everything else in `docs/` is reference
 material. Never more than 3 active tasks in **Next**.
@@ -11,10 +11,15 @@ material. Never more than 3 active tasks in **Next**.
 # Current Goal
 
 Site is live and multi-page: `index.html` plus `/zone-0/`, `/design/`,
-`/materials/`, `/faq/` (see `decisions.md`, 2026-08-05 entry — this
-supersedes every single-page/`pages/services.html` goal below, which is
-stale history kept for context). Working through the open content
-decisions listed in `PROJECT-SUMMARY-AND-NEXT-STEPS.md`.
+`/materials/`, `/faq/` (see `decisions.md`, 2026-08-05 entry). The current
+focus is organizing the business plan and turning the Zone 0 guide material
+into publishable, authoritative content.
+
+New working planning docs:
+
+- `03-business-plan-structure.md`
+- `04-zone-0-guide-content.md`
+- `05-content-plan-steps.md`
 
 ---
 
@@ -108,15 +113,13 @@ decisions listed in `PROJECT-SUMMARY-AND-NEXT-STEPS.md`.
 
 # Next (max 3)
 
-Stale as of 2026-08-05 — `pages/services.html` and the `#services`
-section it referred to no longer exist on the current multi-page site.
-Current open items are tracked in `PROJECT-SUMMARY-AND-NEXT-STEPS.md`
-("Open decisions" and "Housekeeping still open") rather than duplicated
-here; promote up to 3 of those into this slot when actively working them.
-
-1. *(open slot)*
-2. *(open slot)*
-3. *(open slot)*
+1. Rewrite `/zone-0/` from `04-zone-0-guide-content.md`, replacing the
+   remaining placeholder article text.
+2. Clarify paid offer paths from `03-business-plan-structure.md` so service
+   CTAs distinguish Photo Check, Design Review, On-Site Consultation, and
+   Redesign.
+3. Use `05-content-plan-steps.md` to choose the next page build: FAQ cleanup,
+   materials guide, checklist lead magnet, or local SEO page.
 
 ---
 

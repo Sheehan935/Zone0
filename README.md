@@ -16,20 +16,29 @@ Static GitHub Pages landing page for `zone0landscaping.com`.
 ```text
 zone0landscaping.com/
 ├── index.html
-├── styles.css
+├── css/
+├── js/
+├── zone-0/
+├── materials/
+├── faq/
+├── design/
 ├── CNAME
 ├── README.md
 ├── CHANGELOG.md
 ├── assets/
-│   ├── After.jpg
-│   ├── Before.jpg
-│   ├── berkeley-house-hero.jpg
-│   └── paver-material-hero.jpg
+├── docs/
 └── archive/
-    ├── business-plan/
-    ├── notes/
-    └── old-site-attempts/
 ```
+
+## Planning docs
+
+- `docs/00-project-dashboard.md` - current project state and next tasks
+- `docs/01-project-brief.md` - project purpose, audience, scope, and stack
+- `docs/02-content-plan.md` - current section-by-section content plan
+- `docs/03-business-plan-structure.md` - offer ladder, funnel, positioning,
+  content pillars, and operating plan
+- `docs/04-zone-0-guide-content.md` - pulled Zone 0 guide source content
+- `docs/05-content-plan-steps.md` - phased content production roadmap
 
 ## Open locally
 
