@@ -1,10 +1,8 @@
 # Zone 0 Landscaping — Project State
 
-**This is a factual snapshot of what exists now. It is NOT a decision document.** For approved decisions, see `docs/DECISION-REGISTER.md`. For supporting evidence, see `docs/AUDIT-BATCH-3.md`.
+**This is a factual snapshot of what exists now. It is NOT a decision document.** For approved decisions, see `docs/DECISION-REGISTER.md` and `docs/decisions.md`. For supporting audit evidence, see `docs/AUDIT-BATCH-3.md`.
 
-**Snapshot date:** 2026-08-18
-
-**Note on architecture:** the "Multi-page static HTML/CSS/JS" architecture described below reflects what is physically on disk as of the snapshot date — it has not changed since. As of 2026-08-19, the *target* architecture is locked to a one-page homepage (see `PROJECT-TRUTH.md` and `docs/decisions.md`). Consolidation has not yet been implemented; this file will be updated once `index.html` is rebuilt.
+**Snapshot date:** 2026-08-19 (production verification pass)
 
 ---
 
@@ -12,53 +10,47 @@
 
 - `Sheehan935/Zone0`
 - Branch: `main`
-- HEAD: `87ad910e0e7aa0e4ea24c08536ce905ec46d05a4`
-- `main` and `origin/main` were synchronized (identical commit) at audit time
-- Deployment: GitHub Pages
-- Production domain: `zone0landscaping.com`
+- HEAD: `5ff1975109fcfa90b5d297c938e6978c4be3999f` ("Complete Zone 0 homepage rebuild and audit")
+- `main` and `origin/main` synchronized at this commit — confirmed via `git fetch`.
+- Working tree: **clean** — no uncommitted changes (this session's entire rebuild, docs, and cleanup work is now committed as this single commit; pushed by `Sheehan935` directly, not through this session's own git actions).
+- Deployment: GitHub Pages, custom domain `zone0landscaping.com`, HTTPS certificate approved.
+
+## Production Verification — VERIFIED 2026-08-19
+
+- **GitHub Pages API** (`gh api repos/Sheehan935/Zone0/pages/builds/latest`) confirms the live build's `commit` field is `5ff1975109fcfa90b5d297c938e6978c4be3999f` — an exact match to local/origin HEAD. Build status `"built"`, pushed by `Sheehan935`. This is authoritative (from GitHub itself), not inferred from page content.
+- **HTTP smoke test** (direct `curl`, status codes):
+  - `/` → 200, `<title>` matches the rebuild exactly ("Zone 0 Landscaping | Protecting Homes. Preserving Landscapes.")
+  - `/zone-0/`, `/materials/`, `/faq/` → 200
+  - `/pages/thank-you.html` → 200
+  - `/assets/images/houses/Hill House.jpg` (hero image) → 200
+  - `/css/styles.css`, `/js/main.js`, `/js/zone0-tools.js` → 200
+  - `/js/modal.js` → **404** (correctly absent — confirms the deletion deployed)
+  - `/js/ordinance-lookup.js` → 200 (file still present on disk as required, simply unreferenced from `index.html`)
+  - `/zone-0/`'s cross-page anchors (`/#compliance-checklist-section`, `/#photo-check`) confirmed present in the live HTML.
+- **Content smoke test** (fetched render of `/`): H1 "Protecting Homes. Preserving Landscapes." present; nav reads "Approach / Landscaping / Zones / Resources / Free Photo Check"; "Lean. Green. Clean." heading present; Resources section lists Risk Calculator, Compliance Checklist, Inspection Checklist, FAQ & Official Resources; Free Photo Check CTA present with "Know what to fix. Get the work done. Keep the proof."; no broken/placeholder content or visible errors detected.
 
 ## Architecture
 
-Multi-page static HTML/CSS/JS. Pages present in the current working tree:
+**Locked one-page homepage is now live in production**, not just a target: `index.html` (10 sections: Header, Hero, Lean/Green/Clean, Landscaping/Hardscaping/Design, Visual Proof, Understand the Zones, Resources, How We Help, Free Photo Check, Footer) + `pages/thank-you.html`.
 
-- `index.html`
-- `zone-0/index.html`
-- `materials/index.html`
-- `faq/index.html`
-- `design/index.html`, `design/gallery/index.html`, `design/privacy-without-fuel/index.html`
-- `pages/thank-you.html`
-
-`pages/services.html` is **not** currently present (though referenced in some pre-audit documentation as built, and archived copies exist at `archive/services.html` and `archive/legacy_builds/src-multipage-attempt/services.html`).
+Legacy multi-page content remains on disk and deployed (still reachable by direct URL, still 200), but is no longer linked from primary navigation:
+- `zone-0/index.html`, `materials/index.html`, `faq/index.html`, `design/index.html` (+ `design/gallery/`, `design/privacy-without-fuel/`) — all present, all serving 200, each still links back into the new homepage via `/#photo-check` and `/#compliance-checklist-section` (both confirmed live).
+- `pages/services.html` — still not present (matches prior snapshots; archived copies only).
 
 ## Photo Check
 
-**As of 2026-08-18, latest** (superseding the original snapshot below):
+Custom `js/modal.js` implementation is fully retired (deleted, deployed 404). Tally embed is live in production and confirmed functional in this session's local testing (real form fields render, iframe receives a live `src`). Redirect to `pages/thank-you.html` is a Tally-dashboard setting (per `docs/decisions.md`, configured 2026-07-30), not independently re-verifiable from this side, but `pages/thank-you.html` itself is deployed and serving 200.
 
-- `js/modal.js` has been deleted. No page references it. No dangling script tags.
-- `index.html` has a `#photo-check` section with a Tally iframe (form ID `81VgKP`) plus the Tally widget loader script (`tally.so/widgets/embed.js`, line 1054) — appears functional.
-- `zone-0/index.html`, `materials/index.html`, `faq/index.html` — header and sidebar "Free Photo Check" CTAs (6 links total) all point to `/#photo-check`, correctly routing to the homepage's Tally section.
-- Net: the migration from custom modal to Tally embed appears complete and consistent across all 4 pages, in the current uncommitted working tree. Nothing here is committed yet. See `docs/AUDIT-BATCH-3.md` for the fuller before/after detail.
+## Tools (all in the Resources accordion, all locally verified functional this session)
 
-**Original snapshot (pre-2026-08-18), for reference:**
-
-- Implementation: custom `js/modal.js`, reachable from every page's "Free Photo Check" CTAs and `#photo-check` anchors.
-- Behavior: client-side only; no demonstrated submission backend (no `fetch`/`FormData`/`XHR`/form `action`).
-- Tally: not present in production or in any live-served file at that time. An archived Tally iframe implementation exists at `archive/index-current-backup.html`, form ID `81VgKP`, but `archive/` is excluded from the GitHub Pages build via `_config.yml`.
-
-## Tools
-
-- Risk Calculator (`js/zone0-tools.js`) — present, 5-question ember-hazard quiz.
-- Ordinance Lookup (`js/ordinance-lookup.js`) — present, local hardcoded jurisdiction data, no external API calls.
-- Compliance Checklist — present in the current uncommitted working tree (`index.html` + `js/main.js`), uses `window.localStorage` for persistence.
-
-## Working Tree
-
-Implementation files currently contain uncommitted modifications relative to HEAD `87ad910`: `TODO.md`, `css/styles.css`, `docs/00-project-dashboard.md`, `faq/index.html`, `index.html`, `js/main.js`, `js/modal.js`, `materials/index.html`, `zone-0/index.html`. These are recorded here as state, not altered by this document or by producing it.
+- Risk Calculator (`js/zone0-tools.js`) — open by default, functional, produces a result on submit.
+- Zone 0 Compliance Checklist — collapsed by default, functional, `localStorage`-backed persistence confirmed.
+- 5-Step Inspection Checklist — collapsed by default, condensed list format, all 5 steps present.
+- FAQ & Official Resources — collapsed by default, nested FAQ items open independently, official AB 3074 link correct.
+- Ordinance Lookup (`js/ordinance-lookup.js`) — file preserved on disk and still deployed (200), but intentionally not referenced from `index.html` per the locked decision to drop the jurisdiction-lookup feature from the homepage.
 
 ## Documentation
 
-- `docs/decisions.md` exists (committed, lowercase filename) and contains historical decision evidence, including the 2026-08-05 reconciliation of the decision log with the live multi-page site.
-- `docs/DECISION-REGISTER.md` exists in the working tree, uncommitted, and is currently byte-identical to `docs/decisions.md` — it does not currently hold a distinct structured decision record for the architecture or Photo Check questions.
-- `PROJECT-TRUTH.md` exists in the working tree but has never been committed (zero entries in `git log --all -- PROJECT-TRUTH.md`).
-- `PROJECT-TRUTH.md`'s single-page-architecture claim conflicts with verified repository and production state (see `docs/AUDIT-BATCH-3.md`, "Documentation Conflicts").
-- `PROJECT-TRUTH.md` is not treated as authoritative by this document.
+- `docs/decisions.md` and `docs/DECISION-REGISTER.md` both carry the 2026-08-19 "LOCKED: One-page homepage architecture" entry, appended (not rewritten) after the 2026-08-05 multi-page entry — history preserved, current decision recorded.
+- `PROJECT-TRUTH.md`'s one-page architecture claim is now consistent with both the locked decision record and the verified deployed reality (this was not true as of the 2026-08-11 version of that file, prior to the 2026-08-19 reconciliation pass).
+- This file (`docs/PROJECT-STATE.md`) supersedes its own 2026-08-18 snapshot, which described the pre-rebuild multi-page state as current — that snapshot is now historical, not current.

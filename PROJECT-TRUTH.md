@@ -63,13 +63,9 @@ Netlify Forms is no longer the current form solution.
 
 Do not propose replacing Tally with Netlify Forms unless explicitly asked to reconsider the architecture.
 
-### Legacy Custom Tool
+### Legacy Custom Tool — RESOLVED 2026-08-19
 
-A custom photo-review / hazard-analysis implementation has existed or may exist in older project files.
-
-Its current disposition is **UNRESOLVED**.
-
-Do not delete it, restore it, or replace it without an explicit decision.
+The custom photo-review / hazard-analysis implementation (`js/modal.js`) has been deleted and confirmed absent in production (404). See Section 5 for full evidence.
 
 ---
 
@@ -83,9 +79,7 @@ Do not delete it, restore it, or replace it without an explicit decision.
 
 **Branch:** `main`
 
-**Last reported commit:** `b7f6ccf`
-
-These values must be re-verified before making claims about current repository or deployment state.
+**Last reported commit:** `5ff1975109fcfa90b5d297c938e6978c4be3999f` — VERIFIED 2026-08-19 via `gh api repos/Sheehan935/Zone0/pages/builds/latest`, which confirms this exact commit is the one actually deployed and built, not just pushed. See `docs/PROJECT-STATE.md` for full production verification detail.
 
 ---
 
@@ -116,22 +110,17 @@ They are questions requiring evidence or explicit project decisions.
 
 See Section 1. No longer unresolved. Legacy `/zone-0/`, `/materials/`, `/faq/`, `/design/` retained as source material, not deleted.
 
-### Legacy Photo Review Tool
+### Legacy Photo Review Tool — RESOLVED 2026-08-19
 
-Determine what currently exists regarding:
-- `js/modal.js`
-- custom hazard-analysis quiz
-- Tally implementation
+`js/modal.js` (custom hazard-analysis quiz) is deleted from the repository at verified commit `5ff1975` and confirmed in production (`https://zone0landscaping.com/js/modal.js` returns 404). Tally is the sole Photo Check implementation, confirmed live: GitHub Pages API shows the deployed build matches commit `5ff1975` exactly, and the live Tally iframe was confirmed to receive a real `src` (widget script active). No further decision needed here — this was implemented, not just decided.
 
-Do not delete or replace anything without an explicit decision.
+### Buttondown — checked, not found in codebase
 
-### Buttondown
+Every document in `docs/` and `README.md` has now been read in full (`00`–`05`, `decisions.md`). Zero references to Buttondown anywhere. This does not confirm or rule out an external Buttondown account managed outside this repository — that would need to be answered directly, not inferred from code. Status: **not referenced in the codebase; unverified as an external service.**
 
-Current status: **NOT VERIFIED**
+### Analytics — checked, not found in codebase
 
-### Analytics
-
-Plausible/Fathom status: **NOT VERIFIED**
+Same treatment: zero references to Plausible, Fathom, GA4, or any analytics provider anywhere in `docs/` or `README.md`. Status: **not referenced in the codebase; unverified as an external service.**
 
 ---
 
