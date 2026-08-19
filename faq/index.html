@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth tw-shell">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AB 3074 FAQ | Zone 0 Educational Guide</title>
-    
+
     <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Shared component system (cards, buttons, checklist, matrix, science callouts) -->
+    <link rel="stylesheet" href="/css/styles.css">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,13 +45,28 @@
             <a href="/" class="text-2xl font-bold font-display tracking-tight uppercase">
                 Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-500 lowercase tracking-normal font-sans">/ educational guide</span>
             </a>
+
+            <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-8 text-[11px] uppercase tracking-[0.15em] font-bold text-stone-900 items-center">
                 <a href="/zone-0/" class="hover:text-sage-default transition-colors">Zone 0 Science</a>
                 <a href="/design/" class="hover:text-sage-default transition-colors">Design Principles</a>
                 <a href="/materials/" class="hover:text-sage-default transition-colors">Hardscape Guide</a>
                 <a href="/faq/" class="text-sage-default transition-colors">AB 3074 FAQ</a>
-                <a href="#" class="bg-sage-default text-white px-5 py-2 hover:bg-sage-dark transition-colors">Free Photo Check</a>
+                <a href="/#photo-check" class="bg-sage-default text-white px-5 py-2 hover:bg-sage-dark transition-colors">Free Photo Check</a>
             </nav>
+
+            <!-- Mobile Menu Button -->
+            <button type="button" id="mobileMenuToggle" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-stone-900" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle navigation menu">
+                <i class="fa-solid fa-bars text-xl" id="mobileMenuIcon" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden flex-col bg-stone-100 border-t border-stone-200 px-6 py-4 shadow-lg">
+            <a href="/zone-0/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Zone 0 Science</a>
+            <a href="/design/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Design Principles</a>
+            <a href="/materials/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Hardscape Guide</a>
+            <a href="/faq/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-sage-default hover:bg-stone-200">AB 3074 FAQ</a>
         </div>
     </header>
 
@@ -137,7 +155,7 @@
                 <div class="bg-sage-default border border-sage-dark p-8 text-white shadow-sm">
                     <h4 class="font-display font-bold text-lg mb-2">Want someone to look at your property?</h4>
                     <p class="text-sm text-sage-50 mb-6 font-light">Send us a photo of your foundation line, and we'll point out the exact ember traps.</p>
-                    <a href="#" class="inline-block bg-white text-stone-900 px-6 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-100 transition-colors">Get a free photo check</a>
+                    <a href="/#photo-check" class="inline-block bg-white text-stone-900 px-6 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-100 transition-colors">Get a free photo check</a>
                 </div>
 
                 <!-- Related Links Widget -->
@@ -146,8 +164,8 @@
                     <ul class="space-y-3 text-sm text-stone-600">
                         <li><a href="/zone-0/" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>What is Zone 0?</a></li>
                         <li><a href="/faq/" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Rules & Timeline</a></li>
-                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>5-Foot Checklist</a></li>
-                        <li><a href="/materials/" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Mulch Alternatives</a></li>
+                        <li><a href="/#compliance-checklist-section" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>5-Foot Checklist</a></li>
+                        <li><a href="/materials/#matrix" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Mulch Alternatives</a></li>
                     </ul>
                 </div>
 
@@ -162,6 +180,6 @@
         </div>
     </footer>
 
-<script src="/js/modal.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>

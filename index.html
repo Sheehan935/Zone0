@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth tw-shell">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zone 0 | Defensible Space & Native Landscape Guide</title>
-    <meta name="description" content="Educational guide to Cal Fire AB 3074 Zone 0 defensible space standards for East Bay hillside homes: ember science, fire-adapted California native plants, and non-combustible hardscape materials." />
-    <meta property="og:title" content="Zone 0 | Defensible Space & Native Landscape Guide" />
-    <meta property="og:description" content="Educational guide to Cal Fire AB 3074 Zone 0 defensible space standards for East Bay hillside homes." />
+    <title>Zone 0 Landscaping | Protecting Homes. Preserving Landscapes.</title>
+    <meta name="description" content="Fire-adapted landscaping for California hillside homes: Zone 0 requirements, non-combustible materials, and thoughtful planting that protects the home without stripping the landscape." />
+    <meta property="og:title" content="Zone 0 Landscaping | Protecting Homes. Preserving Landscapes." />
+    <meta property="og:description" content="Fire-adapted landscaping for California hillside homes: Zone 0 requirements, non-combustible materials, and thoughtful planting." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://zone0landscaping.com/" />
     <meta property="og:image" content="https://zone0landscaping.com/assets/images/houses/Berkeley%20House.jpg" />
@@ -15,11 +15,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Tailwind CSS -->
+    <!-- Shared component system (cards, buttons, checklist, matrix, science callouts) -->
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <!-- Tailwind CSS (existing site-wide setup, unchanged) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -56,6 +59,7 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* Reused by the Visual Proof hover/tap swap cards (formerly "Flora Swap") */
         .flora-card .flora-native { opacity: 0; transition: opacity 0.5s ease; }
         .flora-card:hover .flora-native,
         .flora-card:focus .flora-native,
@@ -67,96 +71,7 @@
         .flora-card.is-active .flora-hazard { opacity: 0; }
         .flora-card:focus-visible { outline: 3px solid #6B7A64; outline-offset: 2px; }
 
-        /* Slider alignment fix */
-        input[type=range] {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Zone-Based Plant Tabs */
-        .zone-tabs-container {
-            max-width: 1100px;
-            margin: 2rem auto 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        .zone-tab-list {
-            display: flex;
-            gap: 0.85rem;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        .zone-tab-btn {
-            flex: 1 1 240px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.4rem;
-            padding: 1.35rem 1.5rem;
-            border-radius: 14px;
-            border: 2px solid #e2e8f0;
-            background: #ffffff;
-            cursor: pointer;
-            text-align: left;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .zone-tab-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.06);
-        }
-
-        .zone-tab-badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 0.3rem 0.7rem;
-            border-radius: 999px;
-            color: #ffffff;
-        }
-
-        .zone-tab-btn[data-zone="0"] .zone-tab-badge { background: #c0492f; }
-        .zone-tab-btn[data-zone="1"] .zone-tab-badge { background: #b7791f; }
-        .zone-tab-btn[data-zone="2"] .zone-tab-badge { background: #2f855a; }
-        .zone-tab-btn[data-zone="3"] .zone-tab-badge { background: #78716c; }
-
-        .zone-tab-btn[data-zone="0"]:hover,
-        .zone-tab-btn[data-zone="0"].active { border-color: #c0492f; }
-        .zone-tab-btn[data-zone="1"]:hover,
-        .zone-tab-btn[data-zone="1"].active { border-color: #b7791f; }
-        .zone-tab-btn[data-zone="2"]:hover,
-        .zone-tab-btn[data-zone="2"].active { border-color: #2f855a; }
-        .zone-tab-btn[data-zone="3"]:hover,
-        .zone-tab-btn[data-zone="3"].active { border-color: #78716c; }
-
-        .zone-tab-btn.active {
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.1);
-        }
-
-        .zone-tab-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #1a202c;
-        }
-
-        .zone-tab-range {
-            font-size: 0.95rem;
-            color: #718096;
-        }
-
-        .zone-panel { display: none; }
-        .zone-panel.active { display: block; }
-
-        .zone-plant-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
+        /* Reused by the curated Landscaping plant cards */
         .zone-plant-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -217,666 +132,508 @@
 </head>
 <body class="flex flex-col min-h-screen font-sans">
 
-    <!-- Sticky Educational Header -->
-<header class="fixed top-0 w-full bg-stone-100/90 backdrop-blur-xl border-b border-stone-200 z-50">
+    <!-- ========================================================================
+         1. HEADER
+         ======================================================================== -->
+    <header class="fixed top-0 w-full bg-stone-100/90 backdrop-blur-xl border-b border-stone-200 z-50">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
         <a href="/" class="text-2xl font-bold font-display tracking-tight uppercase">
-            Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-600 lowercase tracking-normal font-sans">/ educational guide</span>
+            Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-600 lowercase tracking-normal font-sans">/ landscaping</span>
         </a>
-        
+
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex space-x-8 text-[11px] uppercase tracking-[0.15em] font-bold text-stone-900">
-            <a href="/zone-0/" class="hover:text-sage-default transition-colors">Zone 0 Science</a>
-            <a href="/design/" class="hover:text-sage-default transition-colors">Design Principles</a>
-            <a href="/materials/" class="hover:text-sage-default transition-colors">Hardscape Guide</a>
-            <a href="/faq/" class="hover:text-sage-default transition-colors">AB 3074 FAQ</a>
-          <a href="#photo-check" class="bg-sage-default text-white px-5 py-2 hover:bg-sage-dark transition-colors open-photo-modal">Free Photo Check</a>
+            <a href="#lean-green-clean" class="hover:text-sage-default transition-colors">Approach</a>
+            <a href="#landscaping" class="hover:text-sage-default transition-colors">Landscaping</a>
+            <a href="#zones" class="hover:text-sage-default transition-colors">Zones</a>
+            <a href="#resources" class="hover:text-sage-default transition-colors">Resources</a>
+          <a href="#photo-check" class="bg-sage-default text-white px-5 py-2 hover:bg-sage-dark transition-colors">Free Photo Check</a>
             </nav>
-        
+
         <!-- Mobile Menu Button -->
         <button type="button" id="mobileMenuToggle" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-stone-900" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle navigation menu">
             <i class="fa-solid fa-bars text-xl" id="mobileMenuIcon" aria-hidden="true"></i>
         </button>
     </div>
-    
+
     <!-- Mobile Navigation Dropdown -->
     <div id="mobileMenu" class="hidden md:hidden flex-col bg-stone-100 border-t border-stone-200 px-6 py-4 shadow-lg">
-        <a href="/zone-0/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Zone 0 Science</a>
-        <a href="/design/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Design Principles</a>
-        <a href="/materials/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Hardscape Guide</a>
-        <a href="/faq/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">AB 3074 FAQ</a>
+        <a href="#lean-green-clean" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Approach</a>
+        <a href="#landscaping" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Landscaping</a>
+        <a href="#zones" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Zones</a>
+        <a href="#resources" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Resources</a>
     </div>
 </header>
 
     <!-- Main Content -->
     <main class="flex-grow pt-20">
 
-<section class="relative py-32 lg:py-40 px-6 lg:px-12 bg-stone-950 text-center overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(15, 15, 15, 0.75), rgba(15, 15, 15, 0.75)), url('assets/images/houses/Hill%20House.jpg');">
-  <div class="relative z-10 max-w-4xl mx-auto">
-    <span class="inline-flex items-center gap-2 border border-stone-700 rounded-full px-6 py-2.5 text-xs uppercase tracking-[0.2em] font-bold text-stone-300 mb-8">
-      <span class="w-2 h-2 rounded-full bg-sage-light"></span>
-      California AB 3074 Educational Guide
-    </span>
-    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-light leading-[1.1] mb-6 tracking-tight text-white">
-      Mastering the 0–5 Foot <br><span class="font-bold">Wildfire Ignition Zone.</span>
-    </h1>
-    <p class="text-lg text-stone-300 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
-      An objective, science-based guide to defensible space, ember dynamics, and fire-adapted native landscaping for California hillside homes.
-    </p>
-    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-      <a href="/zone-0/" class="bg-sage-default text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-sage-dark transition-colors text-center w-full sm:w-auto shadow-lg rounded-full">
-        Read the Zone 0 Guide
-      </a>
-      <a href="/faq/" class="border border-stone-600 text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-white hover:text-stone-900 transition-colors text-center w-full sm:w-auto rounded-full">
-        View AB 3074 FAQ
-      </a>
-    </div>
-  </div>
-</section>
-
-        <section id="defensible-space-overview" class="py-16 bg-stone-50 text-stone-900">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-        <span class="text-xs uppercase tracking-widest font-bold text-sage-dark block mb-2">System Overview</span>
-        <h2 class="text-3xl font-display font-bold mb-4">Defensible Space & Native Plant Integration</h2>
-        <p class="text-stone-600 max-w-2xl mx-auto mb-10 text-sm font-light">Four zones, radiating out from the structure &mdash; each with different rules for what can grow there.</p>
-
-        <!-- Proximity Gradient Bar -->
-        <div class="flex h-3 rounded-full overflow-hidden mb-10 max-w-3xl mx-auto shadow-lg">
-            <div class="bg-[#c0492f]" style="width: 8%;"></div>
-            <div class="bg-[#b7791f]" style="width: 22%;"></div>
-            <div class="bg-[#2f855a]" style="width: 30%;"></div>
-            <div class="bg-[#78716c]" style="width: 40%;"></div>
-        </div>
-        <div class="flex justify-between max-w-3xl mx-auto text-[10px] uppercase tracking-widest text-stone-500 font-bold mb-12 -mt-8 px-1">
-            <span>House</span>
-            <span>100+ ft</span>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
-            <div class="bg-white border border-stone-200 border-t-4 border-t-[#c0492f] rounded-lg p-5">
-                <span class="text-xs font-bold uppercase tracking-widest text-[#c0492f] block mb-1">Zone 0</span>
-                <span class="block text-sm font-semibold text-stone-900 mb-2">0&ndash;5 ft from structure</span>
-                <p class="text-stone-600 text-sm leading-relaxed">Ember-resistant zone. Non-combustible gravel, pavers, and hardscape only &mdash; no woody plants touching the structure.</p>
-            </div>
-            <div class="bg-white border border-stone-200 border-t-4 border-t-[#b7791f] rounded-lg p-5">
-                <span class="text-xs font-bold uppercase tracking-widest text-[#92600c] block mb-1">Zone 1</span>
-                <span class="block text-sm font-semibold text-stone-900 mb-2">5&ndash;30 ft</span>
-                <p class="text-stone-600 text-sm leading-relaxed">Lean, clean and green. Low, well-spaced, well-irrigated native plants with no ladder fuels.</p>
-            </div>
-            <div class="bg-white border border-stone-200 border-t-4 border-t-[#2f855a] rounded-lg p-5">
-                <span class="text-xs font-bold uppercase tracking-widest text-[#2f855a] block mb-1">Zone 2</span>
-                <span class="block text-sm font-semibold text-stone-900 mb-2">30&ndash;100 ft</span>
-                <p class="text-stone-600 text-sm leading-relaxed">Reduced fuel zone. Spaced shrubs, limbed-up trees, and regularly mowed grasses.</p>
-            </div>
-            <div class="bg-white border border-stone-200 border-t-4 border-t-[#78716c] rounded-lg p-5">
-                <span class="text-xs font-bold uppercase tracking-widest text-stone-500 block mb-1">Zone 3</span>
-                <span class="block text-sm font-semibold text-stone-900 mb-2">100+ ft</span>
-                <p class="text-stone-600 text-sm leading-relaxed">Wildland transition. Existing vegetation thinned and cleared of dead material, not newly planted.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="secondary-risk-audit" class="py-24 bg-stone-100 border-b border-stone-200">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <span class="text-[11px] uppercase tracking-[0.25em] font-bold text-sage-default block mb-2">Property Audit</span>
-        <h2 class="text-3xl font-display font-bold mb-3 text-stone-900 tracking-tight">AB 3074 Property Fire Risk Audit Calculator</h2>
-        <p class="text-stone-600 max-w-xl mx-auto mb-10 text-sm font-light leading-relaxed">
-            Answer 5 quick questions about your home perimeter to calculate your ember ignition risk score.
+    <!-- ========================================================================
+         2. HERO
+         ======================================================================== -->
+    <section class="relative py-32 lg:py-40 px-6 lg:px-12 bg-stone-950 text-center overflow-hidden bg-cover bg-center" style="background-image: linear-gradient(rgba(15, 15, 15, 0.75), rgba(15, 15, 15, 0.75)), url('assets/images/houses/Hill%20House.jpg');">
+      <div class="relative z-10 max-w-4xl mx-auto">
+        <span class="inline-flex items-center gap-2 border border-stone-700 rounded-full px-6 py-2.5 text-xs uppercase tracking-[0.2em] font-bold text-stone-300 mb-8">
+          <span class="w-2 h-2 rounded-full bg-sage-light"></span>
+          Fire-Adapted Landscaping
+        </span>
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-display font-light leading-[1.1] mb-6 tracking-tight text-white">
+          Protecting Homes.<br><span class="font-bold">Preserving Landscapes.</span>
+        </h1>
+        <p class="text-lg text-stone-300 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+          Wildfire resilience doesn't mean a barren perimeter. We help California hillside homeowners meet Zone 0 requirements through thoughtful planting, non-combustible hardscape, and landscape design that stays beautiful &mdash; and stays maintained.
         </p>
-
-        <!-- Audit Engine Container -->
-        <div class="risk-calculator-container max-w-3xl mx-auto"></div>
-    </div>
-</section>
-
-<!-- Interactive Local Fire Code & AB 3074 Ordinance Lookup Tool -->
-<section id="regulations-lookup" class="py-24 bg-stone-950 text-stone-100 border-b border-stone-900">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-        <span class="text-[11px] uppercase tracking-[0.25em] font-bold text-sage-light block mb-2">Jurisdiction Lookup</span>
-        <h2 class="text-3xl font-display font-bold mb-3 text-white tracking-tight">Local Fire Authority & Ordinance Lookup</h2>
-        <p class="text-stone-300 max-w-2xl mx-auto mb-10 text-sm font-light leading-relaxed">
-            Select your city or local fire protection district for a summary of its defensible-space program, sourced and linked directly to the official page &mdash; always verify current requirements with your fire authority before relying on this for compliance.
-        </p>
-
-        <div class="max-w-md mx-auto mb-10">
-            <label for="city-ordinance-select" class="block text-[10px] uppercase tracking-[0.2em] font-bold text-stone-400 mb-2 text-left">
-                Select Your Jurisdiction:
-            </label>
-            <select id="city-ordinance-select" class="w-full bg-stone-900 text-stone-100 border border-stone-800 p-3.5 text-xs sm:text-sm focus:outline-none focus:border-sage-light rounded-xl transition-colors">
-                <option value="berkeley">City of Berkeley & Berkeley Hills (EMBER Program)</option>
-                <option value="oakland">Oakland Hills & Wildfire Prevention Assessment District</option>
-                <option value="moraga_orinda">Moraga-Orinda Fire District (Ordinance No. 23-03)</option>
-                <option value="san_ramon">San Ramon Valley Fire Protection District</option>
-                <option value="marin">Southern Marin Fire Protection District</option>
-                <option value="pasadena">Pasadena & SoCal VHFHSZ Regions</option>
-            </select>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <a href="#photo-check" class="bg-sage-default text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-sage-dark transition-colors text-center w-full sm:w-auto shadow-lg rounded-full">
+            Get Your Free Photo Check
+          </a>
+          <a href="#lean-green-clean" class="border border-stone-600 text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-white hover:text-stone-900 transition-colors text-center w-full sm:w-auto rounded-full">
+            Explore the Approach
+          </a>
         </div>
+      </div>
+    </section>
 
-        <!-- Populated via JavaScript -->
-        <div id="ordinance-details-card" class="max-w-4xl mx-auto"></div>
-    </div>
-</section>
+    <!-- ========================================================================
+         3. LEAN. GREEN. CLEAN.
+         ======================================================================== -->
+    <section id="lean-green-clean" class="scroll-mt-24 py-24 bg-stone-50 border-b border-stone-200">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Our Approach</span>
+            <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-stone-900">Lean. Green. Clean.</h2>
+            <p class="text-stone-600 max-w-2xl mx-auto mb-12 text-sm font-light leading-relaxed">Three principles guide every design and maintenance decision, from the first 5 feet outward.</p>
 
-        <!-- Section: Recommended California Native Plants -->
-        <section id="plants" class="py-24 bg-stone-50 border-b border-stone-200">
-            <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                    <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Master Plant Inventory</span>
-                    <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4">Fire-Resistant & Fire-Adapted Native Plants</h2>
-                    <p class="text-stone-600 font-light text-base leading-relaxed">A comprehensive database of fire-adapted native flora, categorized by defensible space zone. Select a zone below &mdash; color-coded from closest to the house (most critical) to the property edge.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                <div class="bg-white border border-stone-200 rounded-lg p-6">
+                    <span class="text-3xl font-display font-bold text-sage-default block mb-3">Lean</span>
+                    <p class="text-stone-600 text-sm leading-relaxed">Reduce fuel continuity through spacing, density control, and pruning &mdash; breaking up the paths embers and flame would otherwise follow.</p>
                 </div>
-
-                <!-- Zone-Based Plant Tabs -->
-                <div class="zone-tabs-container reveal mb-16">
-                    <div class="zone-tab-list" role="tablist" aria-label="Defensible space zones">
-                        <button type="button" class="zone-tab-btn active" data-zone="0" role="tab" aria-selected="true" aria-controls="zone-panel-0" id="zone-tab-0">
-                            <span class="zone-tab-badge">Zone 0</span>
-                            <span class="zone-tab-title">Ember-Resistant Zone</span>
-                            <span class="zone-tab-range">0 &ndash; 5 ft from structure</span>
-                        </button>
-                        <button type="button" class="zone-tab-btn" data-zone="1" role="tab" aria-selected="false" aria-controls="zone-panel-1" id="zone-tab-1" tabindex="-1">
-                            <span class="zone-tab-badge">Zone 1</span>
-                            <span class="zone-tab-title">Defensible Space Zone</span>
-                            <span class="zone-tab-range">5 &ndash; 30 ft from structure</span>
-                        </button>
-                        <button type="button" class="zone-tab-btn" data-zone="2" role="tab" aria-selected="false" aria-controls="zone-panel-2" id="zone-tab-2" tabindex="-1">
-                            <span class="zone-tab-badge">Zone 2</span>
-                            <span class="zone-tab-title">Extended Defense Zone</span>
-                            <span class="zone-tab-range">30 &ndash; 100 ft from structure</span>
-                        </button>
-                        <button type="button" class="zone-tab-btn" data-zone="3" role="tab" aria-selected="false" aria-controls="zone-panel-3" id="zone-tab-3" tabindex="-1">
-                            <span class="zone-tab-badge">Zone 3</span>
-                            <span class="zone-tab-title">Wildland Transition Zone</span>
-                            <span class="zone-tab-range">100+ ft from structure</span>
-                        </button>
-                    </div>
-
-                    <!-- ZONE 0 PANEL -->
-                    <div class="zone-panel active" id="zone-panel-0" role="tabpanel" aria-labelledby="zone-tab-0">
-                        <div class="zone-plant-grid">
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Canyon Live-Forever</h4>
-                                <p class="botanical-name">Dudleya cymosa</p>
-                                <span class="plant-category">Evergreen Succulent</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Compact rosette; needs good drainage; great in containers.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Succulent foliage; highly fire-retardant.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Broadleaf Stonecrop</h4>
-                                <p class="botanical-name">Sedum spathulifolium</p>
-                                <span class="plant-category">Evergreen Succulent</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Low-growing native; thrives in rock borders and pots.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Fire-retardant succulent leaves; holds moisture near house.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Sea Pink / Thrift</h4>
-                                <p class="botanical-name">Armeria maritima</p>
-                                <span class="plant-category">Evergreen Perennial</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Compact mounding perennial; minimal water when set.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low fuel volume; high leaf moisture retention.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Beach Strawberry</h4>
-                                <p class="botanical-name">Fragaria chiloensis</p>
-                                <span class="plant-category">Groundcover</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Spreads by runners; full to part sun; light summer water.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Glossy high-moisture leaves; hugs ground without ladder fuel.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Woodland Strawberry</h4>
-                                <p class="botanical-name">Fragaria vesca</p>
-                                <span class="plant-category">Groundcover</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Prefers part shade; light irrigation; good under oaks.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High-moisture succulent foliage; very low profile.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Willowy Coyote Mint</h4>
-                                <p class="botanical-name">Monardella viminea</p>
-                                <span class="plant-category">Groundcover / Perennial</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Small, aromatic native; requires well-drained soil.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low fuel load; stays compact.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Common Yarrow</h4>
-                                <p class="botanical-name">Achillea millefolium</p>
-                                <span class="plant-category">Groundcover / Perennial</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Lawn substitute; mow to keep flat; very low water.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High leaf moisture content; low fuel volume.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Idaho Fescue</h4>
-                                <p class="botanical-name">Festuca idahoensis</p>
-                                <span class="plant-category">Native Bunchgrass</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Fine-bladed clumping grass; trim spent flower stalks in late summer.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low, dense habit with minimal dry thatch buildup when maintained.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Coral Bells</h4>
-                                <p class="botanical-name">Heuchera micrantha</p>
-                                <span class="plant-category">Evergreen Perennial</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Part shade preferred; light supplemental water in summer.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Broad, moist leaves stay low to the ground; low fuel volume.</p></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ZONE 1 PANEL -->
-                    <div class="zone-panel" id="zone-panel-1" role="tabpanel" aria-labelledby="zone-tab-1" hidden>
-                        <div class="zone-plant-grid">
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">California Fuchsia</h4>
-                                <p class="botanical-name">Zauschneria californica</p>
-                                <span class="plant-category">Perennial Groundcover</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Scarlet blooms; excellent for dry banks &amp; erosion.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High foliage moisture content; low profile.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Blue-eyed Grass</h4>
-                                <p class="botanical-name">Sisyrinchium bellum</p>
-                                <span class="plant-category">Perennial</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Small blue flowers; dies back in peak summer heat.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low fuel volume when trimmed; high spring moisture.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Hummingbird Sage</h4>
-                                <p class="botanical-name">Salvia spathacea</p>
-                                <span class="plant-category">Perennial Groundcover</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Broad-leaved groundcover; thrives in dry oak shade.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High foliage moisture compared to woody shrub sages.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Deer Grass</h4>
-                                <p class="botanical-name">Muhlenbergia rigens</p>
-                                <span class="plant-category">Native Bunchgrass</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Dense grass; cut back in late winter to remove thatch.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Holds green moisture late into dry season when cut back.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Monkeyflower</h4>
-                                <p class="botanical-name">Mimulus spp.</p>
-                                <span class="plant-category">Low Perennial / Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Fire-department endorsed; native flowering plant.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>High water content in stems and foliage.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">California Buckwheat</h4>
-                                <p class="botanical-name">Eriogonum fasciculatum</p>
-                                <span class="plant-category">Low Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Very low water once established; light shearing after bloom.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Fine, tightly-packed foliage; widely used in defensible space plantings.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Douglas Iris</h4>
-                                <p class="botanical-name">Iris douglasiana</p>
-                                <span class="plant-category">Perennial</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Clumping habit; moderate water, part sun to part shade.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Fibrous, moisture-retentive leaves; low fuel volume.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Foothill Penstemon</h4>
-                                <p class="botanical-name">Penstemon heterophyllus</p>
-                                <span class="plant-category">Perennial / Low Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Excellent drainage required; deadhead after spring bloom.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Compact form with high bloom-season moisture content.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">California Aster</h4>
-                                <p class="botanical-name">Symphyotrichum chilense</p>
-                                <span class="plant-category">Perennial</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Spreads by rhizome; cut back after fall bloom to control spread.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Herbaceous growth dies back in winter, reducing standing dry fuel.</p></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ZONE 2 PANEL -->
-                    <div class="zone-panel" id="zone-panel-2" role="tabpanel" aria-labelledby="zone-tab-2" hidden>
-                        <div class="zone-plant-grid">
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Western Redbud</h4>
-                                <p class="botanical-name">Cercis occidentalis</p>
-                                <span class="plant-category">Deciduous Shrub / Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Magenta spring blooms; multi-branching stems.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Low resin content; drops leaves prior to peak fire hazard.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">California Lilac</h4>
-                                <p class="botanical-name">Ceanothus 'Concha'</p>
-                                <span class="plant-category">Evergreen Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Blue spring blooms; needs excellent drainage.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Dense, high-moisture foliage when properly spaced.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Pacific Wax Myrtle</h4>
-                                <p class="botanical-name">Morella californica</p>
-                                <span class="plant-category">Evergreen Shrub / Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Fast-growing border screen plant; high water intake.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Acts as a living ember screen when spaced away from house.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Coffeeberry</h4>
-                                <p class="botanical-name">Frangula californica</p>
-                                <span class="plant-category">Evergreen Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Resilient native shrub; thrives in sun or shade.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Highly fire-resistant; minimal deadwood accumulation.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Coast Live Oak</h4>
-                                <p class="botanical-name">Quercus agrifolia</p>
-                                <span class="plant-category">Native Canopy Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Prune lower branches to clear ladder fuel pathways.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Thick, moist bark suppresses embers and resists ignition.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">California Sagebrush</h4>
-                                <p class="botanical-name">Artemisia californica</p>
-                                <span class="plant-category">Evergreen Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Very low water; prune lightly to maintain shape.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Fine aromatic foliage; keep well-spaced from other shrubs.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Valley Oak</h4>
-                                <p class="botanical-name">Quercus lobata</p>
-                                <span class="plant-category">Native Canopy Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Deep taproot; deciduous, needs minimal water once established.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Sheds leaves in fall; prune to maintain clearance from structures.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Manzanita 'Dr. Hurd'</h4>
-                                <p class="botanical-name">Arctostaphylos manzanita 'Dr. Hurd'</p>
-                                <span class="plant-category">Evergreen Shrub / Small Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Excellent drainage essential; avoid summer irrigation once established.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Smooth bark sheds embers; space individual plants generously.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Flannel Bush</h4>
-                                <p class="botanical-name">Fremontodendron californicum</p>
-                                <span class="plant-category">Evergreen Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Thrives in poor, dry soil; avoid summer water and heavy pruning.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Space well away from structures; moderate fuel load when maintained.</p></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ZONE 3 PANEL -->
-                    <div class="zone-panel" id="zone-panel-3" role="tabpanel" aria-labelledby="zone-tab-3" hidden>
-                        <div class="zone-plant-grid">
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Interior Live Oak</h4>
-                                <p class="botanical-name">Quercus wislizeni</p>
-                                <span class="plant-category">Native Canopy Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Thin dense stands; remove lower limbs and surrounding brush to break up fuel continuity.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Thick bark and high canopy moisture resist ignition when properly spaced.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Blue Oak</h4>
-                                <p class="botanical-name">Quercus douglasii</p>
-                                <span class="plant-category">Native Canopy Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Drought-deciduous; remove dead wood annually and keep grass mowed beneath canopy.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Sheds leaves ahead of peak fire season, reducing standing fuel load.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Toyon</h4>
-                                <p class="botanical-name">Heteromeles arbutifolia</p>
-                                <span class="plant-category">Evergreen Shrub / Small Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Space individual stands at least 10 ft apart; remove dead interior branches.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Broad, moist leaves resist ignition better than most chaparral shrubs.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Big Berry Manzanita</h4>
-                                <p class="botanical-name">Arctostaphylos glauca</p>
-                                <span class="plant-category">Chaparral Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Contains volatile oils; requires generous spacing and removal of dead thatch underneath.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Well-spaced clumps break up fuel continuity across the wildland edge.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">California Buckeye</h4>
-                                <p class="botanical-name">Aesculus californica</p>
-                                <span class="plant-category">Deciduous Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Drops leaves in summer drought; clear leaf litter from around the base each fall.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Bare summer canopy reduces available fuel during peak fire season.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Coyote Brush</h4>
-                                <p class="botanical-name">Baccharis pilularis</p>
-                                <span class="plant-category">Evergreen Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Fast-spreading; thin regularly and remove dead interior growth.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Can accumulate dry fuel if unmanaged; thinning and spacing reduce risk.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Chamise</h4>
-                                <p class="botanical-name">Adenostoma fasciculatum</p>
-                                <span class="plant-category">Chaparral Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Classic wildland chaparral; requires aggressive thinning and generous spacing near structures.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Resinous and highly flammable if dense &mdash; manage as a fuel-reduction priority, not a planting choice.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">Black Sage</h4>
-                                <p class="botanical-name">Salvia mellifera</p>
-                                <span class="plant-category">Chaparral Shrub</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Thin dense stands; remove dead wood after bloom.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Aromatic oils burn readily; space well and clear dead material.</p></div>
-                            </div>
-                            <div class="zone-plant-card">
-                                <h4 class="plant-name">California Bay Laurel</h4>
-                                <p class="botanical-name">Umbellularia californica</p>
-                                <span class="plant-category">Native Canopy Tree</span>
-                                <div class="plant-detail"><span class="plant-detail-label care">Care Notes</span><p>Limb up lower branches; thin dense groves for airflow.</p></div>
-                                <div class="plant-detail"><span class="plant-detail-label fire">Fire-Safety Benefit</span><p>Aromatic oils in leaves and bark; maintain clearance and remove ladder fuels beneath.</p></div>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="bg-white border border-stone-200 rounded-lg p-6">
+                    <span class="text-3xl font-display font-bold text-sage-default block mb-3">Green</span>
+                    <p class="text-stone-600 text-sm leading-relaxed">Healthy, appropriately-watered planting. High-moisture, well-maintained vegetation resists ignition far better than dry, neglected growth.</p>
                 </div>
-
-                <div class="max-w-4xl mx-auto reveal mt-14">
-                    <h3 class="text-2xl font-display font-bold mb-6 text-center text-stone-900">California Native vs. Traditional Landscaping</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full border-collapse text-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-left p-4 bg-sage-dark text-white uppercase text-xs tracking-widest font-bold border border-stone-200">California Native</th>
-                                    <th scope="col" class="text-left p-4 bg-stone-700 text-white uppercase text-xs tracking-widest font-bold border border-stone-200">Traditional Non-Native</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="p-4 border border-stone-200 bg-white"><i class="fa-solid fa-droplet text-sage-default mr-2" aria-hidden="true"></i>Minimal water (relies on rainfall)</td>
-                                    <td class="p-4 border border-stone-200 bg-stone-100"><i class="fa-solid fa-droplet text-terracotta mr-2" aria-hidden="true"></i>High water (frequent irrigation)</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 border border-stone-200 bg-white"><i class="fa-solid fa-hand-sparkles text-sage-default mr-2" aria-hidden="true"></i>Low maintenance (less pruning/fertilizer)</td>
-                                    <td class="p-4 border border-stone-200 bg-stone-100"><i class="fa-solid fa-hand-sparkles text-terracotta mr-2" aria-hidden="true"></i>High maintenance (weekly labor & expense)</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-4 border border-stone-200 bg-white"><i class="fa-solid fa-bug text-sage-default mr-2" aria-hidden="true"></i>High wildlife value (attracts pollinators)</td>
-                                    <td class="p-4 border border-stone-200 bg-stone-100"><i class="fa-solid fa-bug text-terracotta mr-2" aria-hidden="true"></i>Low wildlife value</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Botanical Field Guide (Flora Swap) -->
-        <section id="flora" class="py-24 bg-white border-b border-stone-200">
-            <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-                <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                    <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Botanical Field Guide</span>
-                    <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4">The "Flora Swap" Experience</h2>
-                    <p class="text-stone-600 font-light text-base">Hover, tap, or focus each botanical card to replace dangerous, ember-catching vegetation with fire-adapted California native flora.</p>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Botanical Card 1 -->
-                    <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" tabindex="0" role="button" aria-pressed="false">
-                        <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
-                            <img src="https://images.unsplash.com/photo-1542969587-5b90477b65f4?auto=format&fit=crop&w=600&q=80" alt="Italian Cypress foliage" class="w-full h-full object-cover">
-                            <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Italian Cypress &mdash; Resinous Fire Hazard</span>
-                        </div>
-                        <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
-                            <img src="https://images.unsplash.com/photo-1575679483854-4a651f4bc7f3?auto=format&fit=crop&w=600&q=80" alt="Toyon shrub with red berries" class="w-full h-full object-cover">
-                            <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Toyon &mdash; Fire-Adapted Native</span>
-                        </div>
-
-                        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
-                            <h4 class="font-display font-bold text-sm text-stone-900">Italian Cypress <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> <span class="italic font-normal">Heteromeles arbutifolia</span> (Toyon)</h4>
-                        </div>
-                    </div>
-
-                    <!-- Botanical Card 2 -->
-                    <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" style="transition-delay: 0.1s;" tabindex="0" role="button" aria-pressed="false">
-                        <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
-                            <img src="https://images.unsplash.com/photo-1589562760889-38898c71d3d8?auto=format&fit=crop&w=600&q=80" alt="Wood bark mulch ground cover" class="w-full h-full object-cover">
-                            <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Wood Bark Mulch &mdash; Combustible</span>
-                        </div>
-                        <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
-                            <img src="https://images.unsplash.com/photo-1576003754536-7193a6589fae?auto=format&fit=crop&w=600&q=80" alt="Agave on decomposed granite ground cover" class="w-full h-full object-cover">
-                            <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Granite &amp; Agave &mdash; Non-Combustible</span>
-                        </div>
-
-                        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
-                            <h4 class="font-display font-bold text-sm text-stone-900">Wood Bark <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> Decomposed Granite & <span class="italic font-normal">Agave</span></h4>
-                        </div>
-                    </div>
-
-                    <!-- Botanical Card 3 -->
-                    <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" style="transition-delay: 0.2s;" tabindex="0" role="button" aria-pressed="false">
-                        <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
-                            <img src="https://images.unsplash.com/photo-1515586000433-45406d8e6662?auto=format&fit=crop&w=600&q=80" alt="Potted rosemary shrub" class="w-full h-full object-cover">
-                            <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Rosemary &mdash; Oil-Rich Fire Hazard</span>
-                        </div>
-                        <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
-                            <img src="https://images.unsplash.com/photo-1627744530302-a0a7f3d22a85?auto=format&fit=crop&w=600&q=80" alt="Gray-leaved white sage shrub" class="w-full h-full object-cover">
-                            <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">White Sage &mdash; Fire-Adapted Native</span>
-                        </div>
-
-                        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
-                            <h4 class="font-display font-bold text-sm text-stone-900">Rosemary <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> <span class="italic font-normal">Salvia apiana</span> (White Sage)</h4>
-                        </div>
-                    </div>
-
-                    <!-- Botanical Card 4 -->
-                    <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-stone-50 shadow-sm" style="transition-delay: 0.3s;" tabindex="0" role="button" aria-pressed="false">
-                        <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
-                            <img src="https://images.unsplash.com/photo-1605695781395-5607d3d60a88?auto=format&fit=crop&w=600&q=80" alt="Dense juniper shrub with berries" class="w-full h-full object-cover">
-                            <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Juniper &mdash; Ember-Catching Hazard</span>
-                        </div>
-                        <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
-                            <img src="https://images.unsplash.com/photo-1709072142656-6320f29588f1?auto=format&fit=crop&w=600&q=80" alt="Manzanita branch with smooth red bark" class="w-full h-full object-cover">
-                            <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Manzanita &mdash; Fire-Adapted Native</span>
-                        </div>
-
-                        <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
-                            <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover: View Native Replacement</p>
-                            <h4 class="font-display font-bold text-sm text-stone-900">Juniper <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> <span class="italic font-normal">Arctostaphylos spp.</span> (Manzanita)</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <p class="text-center text-sm text-stone-500 mt-10">Looking for more options? See the full <a href="#plants" class="text-sage-default font-semibold hover:underline">native plant list by zone</a> above.</p>
-            </div>
-        </section>
-
-<!-- Step-by-Step Inspection Checklist Section -->
-<section id="inspection-checklist" class="py-20 bg-stone-100 border-t border-stone-200">
-    <div class="max-w-6xl mx-auto px-6 lg:px-12">
-        <div class="text-center max-w-2xl mx-auto mb-16">
-            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-sage-dark block mb-3">Self-Audit Guide</span>
-            <h2 class="text-3xl sm:text-4xl font-display font-bold text-stone-900 mb-4">5-Step Zone 0 Inspection Checklist</h2>
-            <p class="text-stone-600 text-sm leading-relaxed">Follow this sequential process to audit your property perimeter before an official Cal Fire or insurance compliance inspection.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
-            <!-- Step 1 -->
-            <div class="bg-white border border-stone-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-2xl font-display font-bold text-sage-default">01</span>
-                        <span class="text-[10px] uppercase tracking-wider font-bold bg-amber-100 text-amber-800 px-2 py-1 rounded">Ground</span>
-                    </div>
-                    <h3 class="font-display font-bold text-base text-stone-900 mb-2">Clear Organic Mulch</h3>
-                    <p class="text-stone-600 text-xs leading-relaxed">Remove all bark, wood chips, pine needles, and organic matter within 5 feet of walls.</p>
-                </div>
-                <div class="mt-6 pt-4 border-t border-stone-100 flex items-center text-xs text-stone-500">
-                    <i class="fa-solid fa-check text-sage-default mr-2"></i> Non-combustible ground only
-                </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="bg-white border border-stone-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-2xl font-display font-bold text-sage-default">02</span>
-                        <span class="text-[10px] uppercase tracking-wider font-bold bg-amber-100 text-amber-800 px-2 py-1 rounded">Hardscape</span>
-                    </div>
-                    <h3 class="font-display font-bold text-base text-stone-900 mb-2">Install Gravel / DG</h3>
-                    <p class="text-stone-600 text-xs leading-relaxed">Replace organic mulch with crushed stone, river rock, gravel, or decomposed granite.</p>
-                </div>
-                <div class="mt-6 pt-4 border-t border-stone-100 flex items-center text-xs text-stone-500">
-                    <i class="fa-solid fa-check text-sage-default mr-2"></i> Minimum 2" depth rock
-                </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="bg-white border border-stone-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-2xl font-display font-bold text-sage-default">03</span>
-                        <span class="text-[10px] uppercase tracking-wider font-bold bg-amber-100 text-amber-800 px-2 py-1 rounded">Flora</span>
-                    </div>
-                    <h3 class="font-display font-bold text-base text-stone-900 mb-2">Prune & Thin Plants</h3>
-                    <p class="text-stone-600 text-xs leading-relaxed">Remove woody brush directly beneath windows and prune lower tree limbs under 6 feet.</p>
-                </div>
-                <div class="mt-6 pt-4 border-t border-stone-100 flex items-center text-xs text-stone-500">
-                    <i class="fa-solid fa-check text-sage-default mr-2"></i> Eliminate fuel ladders
-                </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="bg-white border border-stone-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-2xl font-display font-bold text-sage-default">04</span>
-                        <span class="text-[10px] uppercase tracking-wider font-bold bg-amber-100 text-amber-800 px-2 py-1 rounded">Roof & Gutters</span>
-                    </div>
-                    <h3 class="font-display font-bold text-base text-stone-900 mb-2">Clean Ember Traps</h3>
-                    <p class="text-stone-600 text-xs leading-relaxed">Clear dead leaves from gutters, roof valleys, and under balcony deck joists.</p>
-                </div>
-                <div class="mt-6 pt-4 border-t border-stone-100 flex items-center text-xs text-stone-500">
-                    <i class="fa-solid fa-check text-sage-default mr-2"></i> 1/8" metal mesh guards
-                </div>
-            </div>
-
-            <!-- Step 5 -->
-            <div class="bg-white border border-stone-200 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-2xl font-display font-bold text-sage-default">05</span>
-                        <span class="text-[10px] uppercase tracking-wider font-bold bg-amber-100 text-amber-800 px-2 py-1 rounded">Storage</span>
-                    </div>
-                    <h3 class="font-display font-bold text-base text-stone-900 mb-2">Relocate Combustibles</h3>
-                    <p class="text-stone-600 text-xs leading-relaxed">Move firewood piles, plastic furniture, and wooden planters out of the 0-5 ft perimeter.</p>
-                </div>
-                <div class="mt-6 pt-4 border-t border-stone-100 flex items-center text-xs text-stone-500">
-                    <i class="fa-solid fa-check text-sage-default mr-2"></i> Move 30+ feet away
+                <div class="bg-white border border-stone-200 rounded-lg p-6">
+                    <span class="text-3xl font-display font-bold text-sage-default block mb-3">Clean</span>
+                    <p class="text-stone-600 text-sm leading-relaxed">Ongoing removal of leaves, dead material, litter, and accumulated fine fuels &mdash; the small debris that turns a single ember into a spot fire.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-</main>
+    <!-- ========================================================================
+         4. LANDSCAPING / HARDSCAPING / DESIGN
+         ======================================================================== -->
+    <section id="landscaping" class="scroll-mt-24 py-24 bg-white border-b border-stone-200">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Landscaping, Hardscaping &amp; Design</span>
+                <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-stone-900">Planting With Purpose</h2>
+                <p class="text-stone-600 font-light text-base leading-relaxed">Fire safety and a beautiful property aren't in conflict. Here's how planting, materials, and design work together.</p>
+            </div>
 
-    <!-- Educational Footer -->
+            <!-- Landscape Design Guidance (condensed from the legacy Zone 0 plant database, reframed by design role rather than zone tier) -->
+            <div class="mb-16 reveal">
+                <h3 class="text-xl font-display font-bold text-stone-900 mb-2">Design Guidance, Not a Plant List</h3>
+                <p class="text-stone-600 text-sm leading-relaxed mb-8 max-w-2xl">A well-designed fire-adapted bed plays four roles at once &mdash; structure, color, groundcover, and a bridge to the wider landscape. Here's how a few reliable performers fill each role.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="bg-stone-50 border border-stone-200 rounded-lg p-6">
+                        <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Structural Anchors</span>
+                        <p class="text-stone-600 text-sm leading-relaxed">Give a bed its shape and backbone. <em>Manzanita 'Dr. Hurd'</em> sheds embers off its smooth bark and needs excellent drainage, avoiding summer irrigation once established. <em>Toyon</em> plays the same role at a larger scale &mdash; broad, moist leaves that resist ignition better than most chaparral shrubs, spaced at least 10 ft apart in individual stands.</p>
+                    </div>
+                    <div class="bg-stone-50 border border-stone-200 rounded-lg p-6">
+                        <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Pollinator Accents</span>
+                        <p class="text-stone-600 text-sm leading-relaxed">Bring color and pollinator activity to the planting bed. <em>California Buckwheat</em> is fine-textured and tightly packed, a standard choice in defensible-space plantings. <em>California Lilac 'Concha'</em> adds spring blue blooms with dense, high-moisture foliage when properly spaced.</p>
+                    </div>
+                    <div class="bg-stone-50 border border-stone-200 rounded-lg p-6">
+                        <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Groundcovers &amp; Spillers</span>
+                        <p class="text-stone-600 text-sm leading-relaxed">Soften edges, borders, and containers close to the house. <em>Canyon Live-Forever</em> is a compact, highly fire-retardant succulent well suited to containers. <em>Common Yarrow</em> works as a low-water lawn substitute, mowed flat, with high leaf moisture and low fuel volume.</p>
+                    </div>
+                    <div class="bg-stone-50 border border-stone-200 rounded-lg p-6">
+                        <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Native Integration</span>
+                        <p class="text-stone-600 text-sm leading-relaxed">Tie the designed beds into the surrounding landscape. <em>California Sagebrush</em> is fine and aromatic, kept well-spaced from neighboring shrubs. <em>Coast Live Oak</em>, pruned to clear ladder fuel beneath it, brings thick, moist bark.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Native vs Traditional comparison (from legacy plant section) -->
+            <div class="max-w-4xl mx-auto reveal mb-16">
+                <h3 class="text-xl font-display font-bold mb-6 text-center text-stone-900">California Native vs. Traditional Landscaping</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse text-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-left p-4 bg-sage-dark text-white uppercase text-xs tracking-widest font-bold border border-stone-200">California Native</th>
+                                <th scope="col" class="text-left p-4 bg-stone-700 text-white uppercase text-xs tracking-widest font-bold border border-stone-200">Traditional Non-Native</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-4 border border-stone-200 bg-white"><i class="fa-solid fa-droplet text-sage-default mr-2" aria-hidden="true"></i>Minimal water (relies on rainfall)</td>
+                                <td class="p-4 border border-stone-200 bg-stone-100"><i class="fa-solid fa-droplet text-terracotta mr-2" aria-hidden="true"></i>High water (frequent irrigation)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 border border-stone-200 bg-white"><i class="fa-solid fa-hand-sparkles text-sage-default mr-2" aria-hidden="true"></i>Low maintenance (less pruning/fertilizer)</td>
+                                <td class="p-4 border border-stone-200 bg-stone-100"><i class="fa-solid fa-hand-sparkles text-terracotta mr-2" aria-hidden="true"></i>High maintenance (weekly labor &amp; expense)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 border border-stone-200 bg-white"><i class="fa-solid fa-bug text-sage-default mr-2" aria-hidden="true"></i>High wildlife value (attracts pollinators)</td>
+                                <td class="p-4 border border-stone-200 bg-stone-100"><i class="fa-solid fa-bug text-terracotta mr-2" aria-hidden="true"></i>Low wildlife value</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Hardscape + Design sub-blocks (condensed from legacy /materials/ and /design/) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto reveal">
+                <div class="bg-stone-50 border border-stone-200 rounded-lg p-8">
+                    <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Hardscape</span>
+                    <h3 class="text-xl font-display font-bold text-stone-900 mb-3">Non-Combustible Transitions</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed">Stone, concrete, pavers, gravel, and decomposed granite (DG) create fuel breaks that read as intentional design &mdash; not a bare perimeter.</p>
+                </div>
+                <div class="bg-stone-50 border border-stone-200 rounded-lg p-8">
+                    <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Design</span>
+                    <h3 class="text-xl font-display font-bold text-stone-900 mb-3">Compliance That Looks Intentional</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed">Pairing architectural stone with drought-tolerant planting keeps a property's character &mdash; the goal is a designed landscape, not a stripped one.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         5. VISUAL PROOF
+         ======================================================================== -->
+    <section id="visual-proof" class="py-24 bg-stone-50 border-b border-stone-200">
+        <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Visual Proof</span>
+                <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-stone-900">Problem &rarr; Better Approach</h2>
+                <p class="text-stone-600 font-light text-base">Hover, tap, or focus each card to see a common Zone 0 problem next to a fire-adapted alternative.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1 -->
+                <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-white shadow-sm" tabindex="0" role="button" aria-pressed="false">
+                    <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                        <img src="https://images.unsplash.com/photo-1542969587-5b90477b65f4?auto=format&fit=crop&w=600&q=80" alt="Italian Cypress foliage" class="w-full h-full object-cover">
+                        <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Continuous Planting &mdash; Fire Hazard</span>
+                    </div>
+                    <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                        <img src="https://images.unsplash.com/photo-1575679483854-4a651f4bc7f3?auto=format&fit=crop&w=600&q=80" alt="Toyon shrub with red berries" class="w-full h-full object-cover">
+                        <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Separated Planting &mdash; Fire-Adapted</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover</p>
+                        <h4 class="font-display font-bold text-sm text-stone-900">Italian Cypress <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> Toyon</h4>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-white shadow-sm" style="transition-delay: 0.1s;" tabindex="0" role="button" aria-pressed="false">
+                    <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                        <img src="https://images.unsplash.com/photo-1589562760889-38898c71d3d8?auto=format&fit=crop&w=600&q=80" alt="Wood bark mulch ground cover" class="w-full h-full object-cover">
+                        <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Organic Material Near Home</span>
+                    </div>
+                    <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                        <img src="https://images.unsplash.com/photo-1576003754536-7193a6589fae?auto=format&fit=crop&w=600&q=80" alt="Agave on decomposed granite ground cover" class="w-full h-full object-cover">
+                        <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Non-Combustible Transition</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover</p>
+                        <h4 class="font-display font-bold text-sm text-stone-900">Wood Bark <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> DG &amp; Agave</h4>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-white shadow-sm" style="transition-delay: 0.2s;" tabindex="0" role="button" aria-pressed="false">
+                    <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                        <img src="https://images.unsplash.com/photo-1515586000433-45406d8e6662?auto=format&fit=crop&w=600&q=80" alt="Potted rosemary shrub" class="w-full h-full object-cover">
+                        <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Rosemary &mdash; Oil-Rich Hazard</span>
+                    </div>
+                    <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                        <img src="https://images.unsplash.com/photo-1627744530302-a0a7f3d22a85?auto=format&fit=crop&w=600&q=80" alt="Gray-leaved white sage shrub" class="w-full h-full object-cover">
+                        <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">White Sage &mdash; Fire-Adapted</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover</p>
+                        <h4 class="font-display font-bold text-sm text-stone-900">Rosemary <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> White Sage</h4>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flora-card relative h-96 cursor-pointer reveal border border-stone-200 p-2 bg-white shadow-sm" style="transition-delay: 0.3s;" tabindex="0" role="button" aria-pressed="false">
+                    <div class="flora-hazard absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                        <img src="https://images.unsplash.com/photo-1605695781395-5607d3d60a88?auto=format&fit=crop&w=600&q=80" alt="Dense juniper shrub with berries" class="w-full h-full object-cover">
+                        <span class="absolute top-0 left-0 right-0 bg-terracotta/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Juniper &mdash; Ember-Catching</span>
+                    </div>
+                    <div class="flora-native absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] transition-opacity duration-500">
+                        <img src="https://images.unsplash.com/photo-1709072142656-6320f29588f1?auto=format&fit=crop&w=600&q=80" alt="Manzanita branch with smooth red bark" class="w-full h-full object-cover">
+                        <span class="absolute top-0 left-0 right-0 bg-sage-dark/90 text-white text-xs font-bold uppercase tracking-widest text-center py-2">Manzanita &mdash; Fire-Adapted</span>
+                    </div>
+                    <div class="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur p-4 border border-stone-200 shadow-md">
+                        <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-1">Tap or Hover</p>
+                        <h4 class="font-display font-bold text-sm text-stone-900">Juniper <i class="fa-solid fa-arrow-right mx-1.5 text-stone-400" aria-hidden="true"></i> Manzanita</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         6. UNDERSTAND THE ZONES
+         ======================================================================== -->
+    <section id="zones" class="scroll-mt-24 py-24 bg-white border-b border-stone-200">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <span class="text-xs uppercase tracking-widest font-bold text-sage-dark block mb-2">Defensible Space</span>
+            <h2 class="text-3xl font-display font-bold mb-4 text-stone-900">Understand the Zones</h2>
+            <p class="text-stone-600 max-w-2xl mx-auto mb-12 text-sm font-light">Defensible space radiates out from the structure in rings, each with different rules for what can grow there.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+                <div class="bg-white border border-stone-200 border-t-4 border-t-[#c0492f] rounded-lg p-5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-[#c0492f] block mb-1">Zone 0</span>
+                    <span class="block text-sm font-semibold text-stone-900 mb-2">0&ndash;5 ft from structure</span>
+                    <p class="text-stone-600 text-sm leading-relaxed">Ember-resistant zone. Non-combustible gravel, pavers, and hardscape only &mdash; no woody plants touching the structure.</p>
+                </div>
+                <div class="bg-white border border-stone-200 border-t-4 border-t-[#b7791f] rounded-lg p-5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-[#92600c] block mb-1">Zone 1</span>
+                    <span class="block text-sm font-semibold text-stone-900 mb-2">5&ndash;30 ft</span>
+                    <p class="text-stone-600 text-sm leading-relaxed">Lean. Green. Clean. Low, well-spaced, well-irrigated native plants with no ladder fuels.</p>
+                </div>
+                <div class="bg-white border border-stone-200 border-t-4 border-t-[#2f855a] rounded-lg p-5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-[#2f855a] block mb-1">Zone 2</span>
+                    <span class="block text-sm font-semibold text-stone-900 mb-2">30&ndash;100 ft</span>
+                    <p class="text-stone-600 text-sm leading-relaxed">Reduced fuel zone. Spaced shrubs, limbed-up trees, and regularly mowed grasses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         7. RESOURCES
+         ======================================================================== -->
+    <section id="resources" class="scroll-mt-24 py-24 bg-stone-100 border-b border-stone-200">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <span class="text-[11px] uppercase tracking-[0.25em] font-bold text-sage-default block mb-2">Resources</span>
+            <h2 class="text-3xl font-display font-bold mb-3 text-stone-900 tracking-tight">Tools &amp; Reference Material</h2>
+            <p class="text-stone-600 max-w-xl mx-auto mb-14 text-sm font-light leading-relaxed">
+                Self-audit tools, checklists, and official sources &mdash; everything short of an on-site visit.
+            </p>
+
+            <div class="max-w-3xl mx-auto text-left space-y-4">
+
+                <!-- Risk Calculator (open by default) -->
+                <details class="group bg-white border border-stone-200 rounded-lg" open>
+                    <summary class="flex items-center justify-between cursor-pointer p-6 font-display font-bold text-lg text-stone-900 [&::-webkit-details-marker]:hidden">
+                        <span>Property Fire Risk Audit Calculator</span>
+                        <i class="fa-solid fa-chevron-down text-sm text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open:-rotate-180"></i>
+                    </summary>
+                    <div class="px-6 pb-6 border-t border-stone-100 pt-4">
+                        <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">Answer 5 quick questions about your home perimeter to calculate your ember ignition risk score.</p>
+                        <div class="risk-calculator-container"></div>
+                    </div>
+                </details>
+
+                <!-- Zone 0 Compliance Checklist (collapsed) -->
+                <details id="compliance-checklist-section" class="scroll-mt-24 group bg-white border border-stone-200 rounded-lg">
+                    <summary class="flex items-center justify-between cursor-pointer p-6 font-display font-bold text-lg text-stone-900 [&::-webkit-details-marker]:hidden">
+                        <span>Zone 0 Compliance Checklist</span>
+                        <i class="fa-solid fa-chevron-down text-sm text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open:-rotate-180"></i>
+                    </summary>
+                    <div class="px-6 pb-6 border-t border-stone-100 pt-4">
+                        <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">Work through the four highest-impact retrofits in the 0&ndash;5 ft zone. Your progress is saved in this browser.</p>
+
+                        <div class="compliance-checklist" id="compliance-checklist">
+                            <div class="compliance-progress-track">
+                                <div class="compliance-progress-fill" id="compliance-progress-fill"></div>
+                            </div>
+
+                            <label class="compliance-check-item" data-item-id="mulch-removal">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Organic Mulch Removal</span>
+                                    <p class="compliance-item-detail">Replace wood bark, wood chips, and other organic mulch within 5 ft of the foundation with non-combustible decomposed granite (DG) or rock.</p>
+                                </span>
+                            </label>
+
+                            <label class="compliance-check-item" data-item-id="vent-mesh">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Vent Mesh Retrofits</span>
+                                    <p class="compliance-item-detail">Install 1/8" stainless steel wire mesh over all attic and crawlspace vents to stop embers from entering the structure.</p>
+                                </span>
+                            </label>
+
+                            <label class="compliance-check-item" data-item-id="under-deck-clearance">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Under-Deck Clearance</span>
+                                    <p class="compliance-item-detail">Remove stored lumber, firewood, and dry debris from underneath decks and elevated porches.</p>
+                                </span>
+                            </label>
+
+                            <label class="compliance-check-item" data-item-id="fence-isolation">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Wooden Fence Isolation</span>
+                                    <p class="compliance-item-detail">Replace the first 5 ft of a wooden fence attached to the house with a non-combustible section, or otherwise isolate it from the siding.</p>
+                                </span>
+                            </label>
+
+                            <div class="compliance-status-banner" id="compliance-status-banner">0 of 4 complete &mdash; start with mulch removal, the highest-impact fix.</div>
+                        </div>
+                        <p class="text-xs text-stone-400 leading-relaxed mt-6">A self-audit tool for homeowner reference, not a substitute for an official AB 3074 compliance inspection.</p>
+                    </div>
+                </details>
+
+                <!-- 5-Step Zone 0 Inspection Checklist (collapsed, condensed to a numbered list) -->
+                <details class="group bg-white border border-stone-200 rounded-lg">
+                    <summary class="flex items-center justify-between cursor-pointer p-6 font-display font-bold text-lg text-stone-900 [&::-webkit-details-marker]:hidden">
+                        <span>5-Step Zone 0 Inspection Checklist</span>
+                        <i class="fa-solid fa-chevron-down text-sm text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open:-rotate-180"></i>
+                    </summary>
+                    <div class="px-6 pb-6 border-t border-stone-100 pt-4">
+                        <p class="text-stone-600 text-sm font-light leading-relaxed mb-6">Follow this sequential process to audit your property perimeter before an official inspection.</p>
+                        <ol class="space-y-4">
+                            <li class="flex gap-4">
+                                <span class="text-lg font-display font-bold text-sage-default flex-shrink-0 w-8">01</span>
+                                <span><span class="font-display font-bold text-sm text-stone-900 block">Clear Organic Mulch</span><span class="text-stone-600 text-xs leading-relaxed">Remove bark, wood chips, pine needles within 5 ft of walls.</span></span>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-lg font-display font-bold text-sage-default flex-shrink-0 w-8">02</span>
+                                <span><span class="font-display font-bold text-sm text-stone-900 block">Install Gravel / DG</span><span class="text-stone-600 text-xs leading-relaxed">Replace mulch with crushed stone, gravel, or decomposed granite.</span></span>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-lg font-display font-bold text-sage-default flex-shrink-0 w-8">03</span>
+                                <span><span class="font-display font-bold text-sm text-stone-900 block">Prune &amp; Thin Plants</span><span class="text-stone-600 text-xs leading-relaxed">Remove brush beneath windows; prune lower tree limbs.</span></span>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-lg font-display font-bold text-sage-default flex-shrink-0 w-8">04</span>
+                                <span><span class="font-display font-bold text-sm text-stone-900 block">Clean Ember Traps</span><span class="text-stone-600 text-xs leading-relaxed">Clear dead leaves from gutters, roof valleys, deck joists.</span></span>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-lg font-display font-bold text-sage-default flex-shrink-0 w-8">05</span>
+                                <span><span class="font-display font-bold text-sm text-stone-900 block">Relocate Combustibles</span><span class="text-stone-600 text-xs leading-relaxed">Move firewood, furniture, and planters out of the 0&ndash;5 ft ring.</span></span>
+                            </li>
+                        </ol>
+                    </div>
+                </details>
+
+                <!-- FAQ + Official Resources (collapsed) -->
+                <details class="group bg-white border border-stone-200 rounded-lg">
+                    <summary class="flex items-center justify-between cursor-pointer p-6 font-display font-bold text-lg text-stone-900 [&::-webkit-details-marker]:hidden">
+                        <span>FAQ &amp; Official Resources</span>
+                        <i class="fa-solid fa-chevron-down text-sm text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open:-rotate-180"></i>
+                    </summary>
+                    <div class="px-6 pb-6 border-t border-stone-100 pt-4">
+                        <div class="space-y-4 mb-6">
+                            <details class="group/faq bg-stone-50 border border-stone-200 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+                                <summary class="flex items-center justify-between font-display font-bold text-sm text-stone-900">
+                                    <span>What is Assembly Bill 3074 (AB 3074)?</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open/faq:-rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-stone-600 leading-relaxed text-sm border-t border-stone-100 pt-3">
+                                    AB 3074 requires the Board of Forestry and Fire Protection to establish regulations for an ember-resistant zone (Zone 0) within 0 to 5 feet of structures in Very High Fire Hazard Severity Zones (VHFHSZ).
+                                </div>
+                            </details>
+                            <details class="group/faq bg-stone-50 border border-stone-200 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+                                <summary class="flex items-center justify-between font-display font-bold text-sm text-stone-900">
+                                    <span>Are bark and wood mulch allowed in Zone 0?</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open/faq:-rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-stone-600 leading-relaxed text-sm border-t border-stone-100 pt-3">
+                                    No. Organic mulches such as wood chips, bark, and pine needles ignite easily when struck by windborne embers. They must be replaced with non-combustible materials like gravel, decomposed granite (DG), pavers, or bare earth.
+                                </div>
+                            </details>
+                            <details class="group/faq bg-stone-50 border border-stone-200 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+                                <summary class="flex items-center justify-between font-display font-bold text-sm text-stone-900">
+                                    <span>Do I have to remove all plants from the 5-foot perimeter?</span>
+                                    <i class="fa-solid fa-chevron-down text-xs text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open/faq:-rotate-180"></i>
+                                </summary>
+                                <div class="mt-3 text-stone-600 leading-relaxed text-sm border-t border-stone-100 pt-3">
+                                    Not necessarily. While minimizing plants directly adjacent to walls is recommended, low-growing, high-moisture specimens planted selectively with non-combustible groundcover separation are allowed depending on local fire authority enforcement.
+                                </div>
+                            </details>
+                        </div>
+                        <a href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201920200AB3074" target="_blank" rel="noopener noreferrer" class="block bg-stone-50 border border-stone-200 rounded-lg p-6 hover:border-sage-default transition-colors">
+                            <h4 class="font-display font-bold text-stone-900 mb-1">Official AB 3074 Text</h4>
+                            <p class="text-stone-600 text-sm">The legislation itself, via California Legislative Information. Ember-resistant zone regulations are still being finalized by the Board of Forestry and Fire Protection.</p>
+                        </a>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         8. HOW WE HELP
+         ======================================================================== -->
+    <section id="how-we-help" class="py-24 bg-white border-b border-stone-200">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">How We Help</span>
+            <h2 class="text-3xl sm:text-4xl font-display font-bold mb-12 text-stone-900">From Assessment to Ongoing Care</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
+                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                    <span class="text-xl font-display font-bold text-sage-default block mb-2">01</span>
+                    <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Assess</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Photo review to identify what needs attention.</p>
+                </div>
+                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                    <span class="text-xl font-display font-bold text-sage-default block mb-2">02</span>
+                    <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Design</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">A plan that balances Zone 0 requirements with how the property looks and functions.</p>
+                </div>
+                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                    <span class="text-xl font-display font-bold text-sage-default block mb-2">03</span>
+                    <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Landscape</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Fire-adapted planting selected and placed by zone.</p>
+                </div>
+                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                    <span class="text-xl font-display font-bold text-sage-default block mb-2">04</span>
+                    <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Hardscape</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Non-combustible materials where they're needed most.</p>
+                </div>
+                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                    <span class="text-xl font-display font-bold text-sage-default block mb-2">05</span>
+                    <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Maintain</h3>
+                    <p class="text-stone-600 text-xs leading-relaxed">Ongoing lean/green/clean upkeep to keep the work effective.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         9. FREE PHOTO CHECK (existing Tally implementation, preserved as-is)
+         ======================================================================== -->
+    <section id="photo-check" class="scroll-mt-24 form-section py-24 bg-stone-950">
+      <div class="form-container max-w-2xl mx-auto px-6">
+        <span class="text-[10px] uppercase tracking-widest font-bold text-sage-light block mb-2 text-center">Start Your Free Photo Check</span>
+        <h2 class="text-white text-center">Know what to fix. Get the work done. Keep the proof.</h2>
+        <ol class="text-stone-300 text-sm max-w-md mx-auto my-6 space-y-2 list-decimal list-inside text-left">
+          <li>Send 1&ndash;3 photos of your home's perimeter</li>
+          <li>Receive a plain-English review</li>
+          <li>Identify priorities</li>
+          <li>Plan the work</li>
+        </ol>
+        <iframe
+          class="tally-embed"
+          data-tally-src="https://tally.so/embed/81VgKP?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+          title="Zone 0 Photo Check form"
+          loading="lazy"
+        ></iframe>
+        <p class="form-reassurance text-stone-400">No obligation &middot; Confidential review &middot; Response within 24 hours</p>
+      </div>
+    </section>
+
+    </main>
+
+    <!-- ========================================================================
+         10. FOOTER
+         ======================================================================== -->
     <footer class="bg-stone-950 text-stone-400 pt-16 pb-10 border-t border-stone-900">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12 text-center text-xs">
             <p class="mb-2">Source: <a href="https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201920200AB3074" target="_blank" rel="noopener noreferrer" class="text-stone-300 hover:text-sage-light underline underline-offset-2">AB 3074 (2020), California Legislative Information</a> &mdash; ember-resistant zone regulations are still being finalized by the Board of Forestry and Fire Protection at the time of writing.</p>
-            <p>&copy; 2026 Zone 0 Educational Guide. All rights reserved.</p>
+            <p>&copy; 2026 Zone 0 Landscaping. All rights reserved.</p>
         </div>
     </footer>
 
@@ -884,43 +641,9 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
-            // Mobile Menu Toggle
-            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+            // Mobile menu toggle is handled by /js/main.js (shared across all pages)
 
-            if (mobileMenuToggle && mobileMenu) {
-                function closeMobileMenu() {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenu.classList.remove('flex');
-                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
-                    mobileMenuIcon.classList.remove('fa-xmark');
-                    mobileMenuIcon.classList.add('fa-bars');
-                }
-
-                function openMobileMenu() {
-                    mobileMenu.classList.remove('hidden');
-                    mobileMenu.classList.add('flex');
-                    mobileMenuToggle.setAttribute('aria-expanded', 'true');
-                    mobileMenuIcon.classList.remove('fa-bars');
-                    mobileMenuIcon.classList.add('fa-xmark');
-                }
-
-                mobileMenuToggle.addEventListener('click', function() {
-                    const isOpen = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
-                    if (isOpen) { closeMobileMenu(); } else { openMobileMenu(); }
-                });
-
-                mobileMenu.querySelectorAll('a').forEach(function(link) {
-                    link.addEventListener('click', closeMobileMenu);
-                });
-
-                window.addEventListener('resize', function() {
-                    if (window.innerWidth >= 768) closeMobileMenu();
-                });
-            }
-
-            // Flora Swap
+            // Visual Proof hover/tap swap (same mechanic as the legacy "Flora Swap")
             document.querySelectorAll('.flora-card').forEach(function(card) {
                 function toggleFlora() {
                     const isActive = card.classList.toggle('is-active');
@@ -935,53 +658,10 @@
                 });
             });
 
-            // Zone Plant Tabs
-            const zoneTabs = document.querySelectorAll('.zone-tab-btn');
-            const zonePanels = document.querySelectorAll('.zone-panel');
-
-            function activateZoneTab(tab) {
-                const zone = tab.getAttribute('data-zone');
-
-                zoneTabs.forEach(function(t) {
-                    const isActive = t === tab;
-                    t.classList.toggle('active', isActive);
-                    t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-                    t.setAttribute('tabindex', isActive ? '0' : '-1');
-                });
-
-                zonePanels.forEach(function(panel) {
-                    const isActive = panel.id === 'zone-panel-' + zone;
-                    panel.classList.toggle('active', isActive);
-                    if (isActive) {
-                        panel.removeAttribute('hidden');
-                    } else {
-                        panel.setAttribute('hidden', '');
-                    }
-                });
-            }
-
-            zoneTabs.forEach(function(tab) {
-                tab.addEventListener('click', function() {
-                    activateZoneTab(tab);
-                });
-                tab.addEventListener('keydown', function(e) {
-                    const tabsArr = Array.from(zoneTabs);
-                    const idx = tabsArr.indexOf(tab);
-                    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                        e.preventDefault();
-                        const nextIdx = e.key === 'ArrowRight'
-                            ? (idx + 1) % tabsArr.length
-                            : (idx - 1 + tabsArr.length) % tabsArr.length;
-                        tabsArr[nextIdx].focus();
-                        activateZoneTab(tabsArr[nextIdx]);
-                    }
-                });
-            });
-
             // Scroll Reveal Observer
             const reveals = document.querySelectorAll(".reveal");
             const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -40px 0px" };
-            
+
             const revealOnScroll = new IntersectionObserver(function(entries, observer) {
                 entries.forEach(entry => {
                     if (!entry.isIntersecting) return;
@@ -995,9 +675,10 @@
             });
         });
     </script>
-<script src="/js/modal.js"></script>
-<script src="/js/zone0-tools.js"></script>
-<script src="/js/ordinance-lookup.js"></script>
+
+    <script async src="https://tally.so/widgets/embed.js"></script>
+
+    <script src="/js/zone0-tools.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>
-

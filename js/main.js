@@ -35,59 +35,122 @@
   });
 })();
 
-// Interactive Photo Check Modal
-document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('photo-modal')) return;
+// Sticky header mobile menu (index.html, /zone-0/, /materials/, /faq/)
+(function () {
+    function initMobileMenu() {
+        var toggle = document.getElementById('mobileMenuToggle');
+        var menu = document.getElementById('mobileMenu');
+        var icon = document.getElementById('mobileMenuIcon');
+        if (!toggle || !menu) return;
 
-    const modalHTML = `
-    <div id="photo-modal" class="fixed inset-0 bg-stone-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white border border-stone-200 max-w-lg w-full p-8 shadow-2xl relative">
-            <button id="close-modal" class="absolute top-4 right-4 text-stone-400 hover:text-stone-900 text-xl font-bold">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Free Property Review</span>
-            <h3 class="text-2xl font-display font-bold text-stone-900 mb-2">Upload Your Zone 0 Photo</h3>
-            <p class="text-sm text-stone-600 mb-6">Send us a photo of your foundation line or landscaping. We will review it for ember traps and AB 3074 compliance.</p>
-            
-            <form id="photo-check-form" class="space-y-4" onsubmit="event.preventDefault(); alert('Photo received! We will follow up shortly.'); document.getElementById('photo-modal').classList.add('hidden');">
-                <div>
-                    <label class="block text-xs uppercase tracking-wider font-bold text-stone-700 mb-1">Your Name</label>
-                    <input type="text" required placeholder="Jane Doe" class="w-full bg-stone-50 border border-stone-200 p-3 text-sm focus:outline-none focus:border-sage-default">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase tracking-wider font-bold text-stone-700 mb-1">Email Address</label>
-                    <input type="email" required placeholder="jane@example.com" class="w-full bg-stone-50 border border-stone-200 p-3 text-sm focus:outline-none focus:border-sage-default">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase tracking-wider font-bold text-stone-700 mb-1">Property Photo</label>
-                    <input type="file" accept="image/*" required class="w-full bg-stone-50 border border-stone-200 p-2 text-xs text-stone-600 focus:outline-none">
-                </div>
-                <button type="submit" class="w-full bg-stone-900 text-white p-3 text-xs uppercase tracking-widest font-bold hover:bg-sage-default transition-colors">
-                    Submit Photo for Review
-                </button>
-            </form>
-        </div>
-    </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-    const modal = document.getElementById('photo-modal');
-    const closeBtn = document.getElementById('close-modal');
-
-    document.addEventListener('click', (e) => {
-        const target = e.target.closest('a');
-        if (target && (target.getAttribute('href') === '#' || target.innerText.includes('Free Photo Check') || target.innerText.includes('free photo check'))) {
-            e.preventDefault();
-            modal.classList.remove('hidden');
+        function closeMobileMenu() {
+            menu.classList.add('hidden');
+            menu.classList.remove('flex');
+            toggle.setAttribute('aria-expanded', 'false');
+            if (icon) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
         }
-    });
 
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+        function openMobileMenu() {
+            menu.classList.remove('hidden');
+            menu.classList.add('flex');
+            toggle.setAttribute('aria-expanded', 'true');
+            if (icon) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
+        }
+
+        toggle.addEventListener('click', function () {
+            var isOpen = toggle.getAttribute('aria-expanded') === 'true';
+            if (isOpen) { closeMobileMenu(); } else { openMobileMenu(); }
+        });
+
+        menu.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth >= 768) closeMobileMenu();
+        });
     }
-    
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.add('hidden');
-    });
-});
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMobileMenu);
+    } else {
+        initMobileMenu();
+    }
+})();
+
+// Interactive AB 3074 Compliance Checklist
+(function () {
+    var STORAGE_KEY = 'zone0-compliance-checklist';
+
+    function loadState() {
+        try {
+            return JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function saveState(state) {
+        try {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+            /* localStorage unavailable (private mode etc.) — checklist still works, just won't persist */
+        }
+    }
+
+    function initComplianceChecklist() {
+        var container = document.getElementById('compliance-checklist');
+        if (!container) return;
+
+        var items = Array.prototype.slice.call(container.querySelectorAll('.compliance-check-item'));
+        var fill = document.getElementById('compliance-progress-fill');
+        var banner = document.getElementById('compliance-status-banner');
+        var state = loadState();
+
+        function render() {
+            var checkedCount = 0;
+            items.forEach(function (item) {
+                var checkbox = item.querySelector('input[type="checkbox"]');
+                var isChecked = !!state[item.dataset.itemId];
+                checkbox.checked = isChecked;
+                item.classList.toggle('is-checked', isChecked);
+                if (isChecked) checkedCount++;
+            });
+
+            if (fill) fill.style.width = (checkedCount / items.length * 100) + '%';
+
+            if (banner) {
+                if (checkedCount === items.length) {
+                    banner.textContent = 'All 4 complete — nice work. Consider a free photo check to confirm.';
+                } else if (checkedCount === 0) {
+                    banner.textContent = '0 of ' + items.length + ' complete — start with mulch removal, the highest-impact fix.';
+                } else {
+                    banner.textContent = checkedCount + ' of ' + items.length + ' complete.';
+                }
+            }
+        }
+
+        items.forEach(function (item) {
+            var checkbox = item.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener('change', function () {
+                state[item.dataset.itemId] = checkbox.checked;
+                saveState(state);
+                render();
+            });
+        });
+
+        render();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initComplianceChecklist);
+    } else {
+        initComplianceChecklist();
+    }
+})();

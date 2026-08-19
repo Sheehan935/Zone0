@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth tw-shell">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Science of Zone 0 | Zone 0 Educational Guide</title>
-    
+
     <!-- Google Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Shared component system (cards, buttons, checklist, matrix, science callouts) -->
+    <link rel="stylesheet" href="/css/styles.css">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,13 +45,28 @@
             <a href="/" class="text-2xl font-bold font-display tracking-tight uppercase">
                 Zone<span class="text-sage-default">0</span> <span class="text-xs font-normal text-stone-500 lowercase tracking-normal font-sans">/ educational guide</span>
             </a>
+
+            <!-- Desktop Navigation -->
             <nav class="hidden md:flex space-x-8 text-[11px] uppercase tracking-[0.15em] font-bold text-stone-900 items-center">
                 <a href="/zone-0/" class="text-sage-default transition-colors">Zone 0 Science</a>
                 <a href="/design/" class="hover:text-sage-default transition-colors">Design Principles</a>
                 <a href="/materials/" class="hover:text-sage-default transition-colors">Hardscape Guide</a>
                 <a href="/faq/" class="hover:text-sage-default transition-colors">AB 3074 FAQ</a>
-                <a href="#" class="bg-sage-default text-white px-5 py-2 hover:bg-sage-dark transition-colors">Free Photo Check</a>
+                <a href="/#photo-check" class="bg-sage-default text-white px-5 py-2 hover:bg-sage-dark transition-colors">Free Photo Check</a>
             </nav>
+
+            <!-- Mobile Menu Button -->
+            <button type="button" id="mobileMenuToggle" class="md:hidden inline-flex items-center justify-center w-11 h-11 -mr-2 text-stone-900" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle navigation menu">
+                <i class="fa-solid fa-bars text-xl" id="mobileMenuIcon" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden flex-col bg-stone-100 border-t border-stone-200 px-6 py-4 shadow-lg">
+            <a href="/zone-0/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-sage-default hover:bg-stone-200">Zone 0 Science</a>
+            <a href="/design/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Design Principles</a>
+            <a href="/materials/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Hardscape Guide</a>
+            <a href="/faq/" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">AB 3074 FAQ</a>
         </div>
     </header>
 
@@ -60,13 +78,55 @@
             <article class="lg:w-2/3">
                 <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-4">Core Principles</span>
                 <h1 class="text-4xl sm:text-5xl font-display font-bold mb-8 text-stone-900 leading-tight">The Science of Ember Dynamics & Ignition Vulnerability</h1>
-                
+
                 <div class="prose prose-stone max-w-none text-stone-600 leading-relaxed space-y-6">
-                    <p class="text-lg font-medium text-stone-800">During a wildfire, it is rarely a giant wall of flame that burns down a house. It is the invisible blizzard of burning embers blowing miles ahead of the fire front.</p>
-                    <p>Your article content goes here. You can expand on how embers lodge into wood mulch, dry leaves, and foundation vents, which is exactly why the 0-5 foot zone is so critical under AB 3074.</p>
-                    
-                    <h3 class="text-2xl font-display font-bold text-stone-900 mt-10 mb-4">How Embers Behave</h3>
-                    <p>Embers are driven by high winds and act similarly to blowing snow. Wherever snow drifts and piles up around your house—like corners, stairwells, and against the foundation—is exactly where burning embers will accumulate.</p>
+                    <p class="text-lg font-medium text-stone-800">During a wildfire, it is rarely a giant wall of flame that burns down a house. It is the invisible blizzard of burning embers &mdash; firebrands &mdash; blowing miles ahead of the fire front. Nationwide research attributes the large majority of home losses in wildland-urban interface fires to embers, not direct flame contact.</p>
+
+                    <div class="mandate-banner not-prose">
+                        <div>
+                            <h3 class="text-white text-xl font-display font-bold mb-1">What AB 3074 Actually Requires</h3>
+                            <p class="text-stone-300 text-sm max-w-md mb-0">Assembly Bill 3074 (2020) directs California's Board of Forestry and Fire Protection to adopt building code regulations establishing an "ember-resistant zone" &mdash; Zone 0 &mdash; within 0 to 5 feet of structures in Very High Fire Hazard Severity Zones (VHFHSZ) and Wildland-Urban Interface areas. The statute sets the mandate; the Board defines the technical standard, which is why cities like Berkeley and fire districts like Moraga-Orinda have moved ahead with their own local Zone 0 ordinances in the meantime.</p>
+                        </div>
+                        <div class="text-center flex-shrink-0">
+                            <span class="mandate-stat block">0&ndash;5 ft</span>
+                            <span class="text-stone-400 text-[10px] uppercase tracking-widest font-bold">Regulated ring</span>
+                        </div>
+                    </div>
+
+                    <p>The 0&ndash;5 ft ring exists because it is the zone where three failure modes converge at once: it's close enough to the house for an ember to reach an ignition point without traveling far, it's where combustible landscaping (mulch, wood fencing, stored firewood) is most commonly placed right up against a wall, and it's where the structure's own architecture &mdash; corners, vents, decks &mdash; creates places for wind-blown embers to physically collect and sit until they ignite something.</p>
+
+                    <h3 class="text-2xl font-display font-bold text-stone-900 mt-10 mb-4">Ember Trap Hydraulics</h3>
+                    <p>Embers don't fall in a straight line — once airborne, a lofted firebrand behaves less like a solid object and more like a particle suspended in a moving fluid, governed by the same boundary-layer aerodynamics that pile snow into drifts. As wind moves across a building, it separates and recirculates at obstructions: inside walls, at re-entrant corners, in the low-pressure eddy behind a chimney or dormer, and along the toe of a wall where horizontal wind meets a vertical surface. Airflow slows dramatically in these recirculation zones, and embers &mdash; which are light relative to their surface area &mdash; lose momentum and settle out of the airstream exactly there. This is why the highest ember accumulation on a real structure is almost never on an open, flat, wind-swept surface; it's concentrated in inside corners, stairwells, deck-to-wall junctions, and gutter valleys &mdash; the same low-flow pockets where blowing snow or dry leaves collect.</p>
+                    <p>Because these "ember traps" are a predictable consequence of the building's geometry, they are also predictable places to defend: any organic fuel (mulch, leaf litter, stacked wood) sitting inside one of these pockets is sitting exactly where an ember is statistically most likely to land and dwell long enough to ignite it.</p>
+
+                    <h3 class="text-2xl font-display font-bold text-stone-900 mt-10 mb-4">Wind-Borne Firebrand Dynamics</h3>
+                    <p>A firebrand is a burning or smoldering piece of vegetation or structural debris lofted by a fire's convective plume. Depending on size, density, and plume strength, firebrands have been documented traveling well over a mile ahead of an active fire front in wind-driven conditions &mdash; a phenomenon fire scientists call "spotting." Smaller, lighter embers travel farther but carry less stored heat and cool faster in flight; larger embers carry more heat but fall out of the airstream sooner. The combined effect during a wind event is a firebrand "shower": a sustained rain of embers of mixed size arriving well before, and often independent of, the main fire, which is why a home can ignite from embers alone even if the flame front never reaches the property line.</p>
+                    <p>This is also why Zone 0 is treated as a distinct hazard category from the broader defensible-space zones farther out: at 30&ndash;100 ft (Zone 2), the goal is reducing fuel that could carry flame toward the house; at 0&ndash;5 ft, flame contact from adjacent vegetation is only part of the risk &mdash; the zone must also survive an ember shower arriving independently, by air, regardless of what is or isn't burning nearby.</p>
+
+                    <h3 class="text-2xl font-display font-bold text-stone-900 mt-10 mb-4">Siding & Envelope Ignition Points</h3>
+                    <p>Once an ember lands and holds heat against a building surface, ignition depends on what that surface is and where the embers can penetrate the building envelope:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Combustible siding (wood, engineered wood, some fiber-cement trims):</strong> can smolder and ignite directly from sustained ember contact, especially in corners where debris accumulates against the material.</li>
+                        <li><strong>Vinyl siding:</strong> typically softens and deforms at temperatures well below active ignition, warping and creating gaps that expose the water-resistive barrier and wall cavity behind it to further ember intrusion &mdash; a secondary ignition pathway rather than a primary one.</li>
+                        <li><strong>Vent penetrations:</strong> attic, foundation, crawlspace, and eave vents are engineered gaps in the building envelope. Standard insect screen is not ember-resistant; embers pass through easily and can ignite insulation, framing, or stored debris on the other side.</li>
+                        <li><strong>Deck and siding junctions:</strong> the gap where a deck ledger board meets the house, and the space beneath an elevated deck, are both wind-sheltered ember traps directly against combustible framing.</li>
+                        <li><strong>Window and door reveals, exterior corners, and utility penetrations:</strong> any gap, reveal, or 90&deg; corner along the envelope is a place embers can lodge against combustible trim or accumulate as debris over time.</li>
+                    </ul>
+
+                    <div class="science-callout-grid not-prose">
+                        <div class="science-callout">
+                            <h4>Ember Trap Hydraulics</h4>
+                            <p>Wind recirculates at corners and low-pressure pockets, causing embers to settle exactly where organic fuel is most often stored.</p>
+                        </div>
+                        <div class="science-callout">
+                            <h4>Firebrand Spotting</h4>
+                            <p>Wind-driven embers can travel over a mile ahead of a fire front, igniting homes independent of the visible flame line.</p>
+                        </div>
+                        <div class="science-callout">
+                            <h4>Envelope Penetration</h4>
+                            <p>Unmeshed vents, deck ledgers, and siding gaps are the physical pathways embers use to reach combustible material inside the wall.</p>
+                        </div>
+                    </div>
                 </div>
             </article>
 
@@ -87,26 +147,26 @@
                 <div class="bg-sage-default border border-sage-dark p-8 text-white shadow-sm">
                     <h4 class="font-display font-bold text-lg mb-2">Want someone to look at your property?</h4>
                     <p class="text-sm text-sage-50 mb-6 font-light">Send us a photo of your foundation line, and we'll point out the exact ember traps.</p>
-                    <a href="#" class="inline-block bg-white text-stone-900 px-6 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-100 transition-colors">Get a free photo check</a>
+                    <a href="/#photo-check" class="inline-block bg-white text-stone-900 px-6 py-3 text-xs uppercase tracking-widest font-bold hover:bg-stone-100 transition-colors">Get a free photo check</a>
                 </div>
 
                 <!-- Related Links Widget -->
                 <div>
                     <h4 class="font-display font-bold text-lg text-stone-900 mb-4 border-b border-stone-200 pb-2">Zone 0 Guide</h4>
                     <ul class="space-y-3 text-sm text-stone-600">
-                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>What is Zone 0?</a></li>
-                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Rules & Timeline</a></li>
-                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>5-Foot Checklist</a></li>
-                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Mulch Alternatives</a></li>
+                        <li><a href="/zone-0/" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>What is Zone 0?</a></li>
+                        <li><a href="/faq/" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Rules & Timeline</a></li>
+                        <li><a href="/#compliance-checklist-section" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>5-Foot Checklist</a></li>
+                        <li><a href="/materials/#matrix" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Mulch Alternatives</a></li>
                     </ul>
                 </div>
 
                 <div>
                     <h4 class="font-display font-bold text-lg text-stone-900 mb-4 border-b border-stone-200 pb-2">Design & Materials</h4>
                     <ul class="space-y-3 text-sm text-stone-600">
-                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Design Without Barren</a></li>
-                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Privacy Solutions</a></li>
-                        <li><a href="#" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Gravel & DG</a></li>
+                        <li><a href="/design/" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Design Without Barren</a></li>
+                        <li><a href="/design/" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Privacy Solutions</a></li>
+                        <li><a href="/materials/#matrix" class="hover:text-sage-default transition-colors"><i class="fa-solid fa-arrow-right text-[10px] mr-2"></i>Gravel & DG</a></li>
                     </ul>
                 </div>
 
@@ -121,6 +181,6 @@
         </div>
     </footer>
 
-<script src="/js/modal.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>
