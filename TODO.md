@@ -10,7 +10,7 @@
 - [ ] **East Bay ZIP Code Lookup**: Implement dynamic status lookup for `94708`, `94611`, `94563`, and `94549`.
 - [ ] **Direct Contact CTA**: Configure "Have questions on new Zone 0 guidelines>>>" heading with clickable SMS/email links.
 - [x] **Perimeter Photo Review**: Replaced with a custom Cloudflare Worker form (photos + notes), 2026-08-20 — see `worker/README.md`. Worker, R2 bucket, and Resend sending domain are live and verified end-to-end 2026-08-20.
-- [ ] **Photo Check — lead delivery**: `hello@zone0landscaping.com` forwards nowhere. Set up Resend inbound routing or a forward, or leads stay in the Resend dashboard only.
+- [ ] **hello@ inbox**: Root domain has no MX, so mail to `hello@zone0landscaping.com` bounces (it is published on the FAQ and thank-you pages). Set up ImprovMX free forwarding to Gmail at GoDaddy DNS. Lead notifications now go straight to Gmail, so this is about visitor email only.
 - [ ] **Photo Check — R2 cleanup**: Delete the 5 test objects in `zone0-photo-check-uploads` (see `docs/PROJECT-STATE.md`).
 
 ## 3. Site Expansion & Landing Pages

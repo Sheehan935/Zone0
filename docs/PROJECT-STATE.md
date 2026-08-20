@@ -106,8 +106,9 @@ Cloudflare Worker `zone0-photo-check`
 Email (Resend)
   Domain   zone0landscaping.com — DKIM, SPF, MX verified 2026-08-20
   From     leads@zone0landscaping.com
-  To       hello@zone0landscaping.com
-  Reply-To sheehan935@gmail.com
+  To       sheehan935@gmail.com  (was hello@zone0landscaping.com; changed
+           2026-08-20 so lead delivery does not depend on forwarding)
+  Reply-To the homeowner's own address, set per-lead by the Worker
 
 Verified end-to-end 2026-08-20, 2:41 PM: real form POST returned
 `200 {"ok":true}` -> photo stored in R2 -> notification email delivered with
@@ -121,9 +122,15 @@ from the real site, not from a local file or a `file://` page.
 
 ### Open items
 
-- `hello@zone0landscaping.com` does not currently forward anywhere. Until
-  Resend inbound routing or a forward is set up, leads are only visible in
-  the Resend dashboard.
+- `hello@zone0landscaping.com` still receives no mail: the root domain has no
+  MX record at all (checked 2026-08-20 — DNS is at GoDaddy,
+  `ns47/ns48.domaincontrol.com`; Resend's MX sits on
+  `send.zone0landscaping.com` and does not affect the root). The address is
+  published as a `mailto:` on `faq/index.html` and `pages/thank-you.html`, so
+  anything a visitor sends there is currently bounced. Planned fix: ImprovMX
+  free forwarding — MX `mx1.improvmx.com` (10) and `mx2.improvmx.com` (20) on
+  `@`, plus TXT `v=spf1 include:spf.improvmx.com ~all`. Lead notifications no
+  longer depend on this (see the To address above).
 - Frontend endpoint change is committed but **not yet pushed**; the live site
   still serves the placeholder constant until `git push` and the GitHub Pages
   rebuild complete.

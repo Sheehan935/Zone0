@@ -8,7 +8,7 @@ bucket_name = "zone0-photo-check-uploads"
 
 [vars]
 ALLOWED_ORIGIN = "https://zone0landscaping.com"
-NOTIFY_EMAIL = "hello@zone0landscaping.com"
+NOTIFY_EMAIL = "sheehan935@gmail.com"
 FROM_EMAIL = "leads@zone0landscaping.com"
 
 # RESEND_API_KEY is a secret, not a var — set it with:

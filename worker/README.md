@@ -79,8 +79,12 @@ natural next step — free, and integrates directly with Workers.
 
 ## Confirming it works
 
-- `NOTIFY_EMAIL` (currently `hello@zone0landscaping.com`) is where lead emails
+- `NOTIFY_EMAIL` (currently `sheehan935@gmail.com`) is where lead emails
   arrive — change it in `wrangler.toml` and redeploy if that should be different.
+  It was pointed straight at the owner's Gmail on 2026-08-20 so lead delivery
+  does not depend on `hello@zone0landscaping.com` forwarding. `FROM_EMAIL`
+  stays `leads@zone0landscaping.com` (the Resend-verified sending domain) and
+  `reply_to` is still the homeowner's own address, so replies go to the lead.
 - Submitting a real test lead through the live form will use your real Resend
   quota and land a real object in R2 — inexpensive, but not nothing. A
   clearly-marked test submission (e.g. name "QA TEST — DO NOT CONTACT") is the
