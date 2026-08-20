@@ -2,7 +2,7 @@
 
 **This is a factual snapshot of what exists now. It is NOT a decision document.** For approved decisions, see `docs/DECISION-REGISTER.md` and `docs/decisions.md`. For supporting audit evidence, see `docs/AUDIT-BATCH-3.md`.
 
-**Snapshot date:** 2026-08-19 (production verification pass)
+**Snapshot date:** 2026-08-20 (visual pass complete and deployed)
 
 ---
 
@@ -10,10 +10,25 @@
 
 - `Sheehan935/Zone0`
 - Branch: `main`
-- HEAD: `5ff1975109fcfa90b5d297c938e6978c4be3999f` ("Complete Zone 0 homepage rebuild and audit")
+- HEAD: `40227b5c32263398099c38cb256f579ec2cb4af5` ("fix(ui): unify CTA shape, fix H2 and grid bugs")
 - `main` and `origin/main` synchronized at this commit — confirmed via `git fetch`.
-- Working tree: **clean** — no uncommitted changes (this session's entire rebuild, docs, and cleanup work is now committed as this single commit; pushed by `Sheehan935` directly, not through this session's own git actions).
+- Working tree: **clean**.
 - Deployment: GitHub Pages, custom domain `zone0landscaping.com`, HTTPS certificate approved.
+
+## Visual / Design System Pass — COMPLETE, DEPLOYED 2026-08-20
+
+Following the visual/design-system audit (evidence: computed-style measurements against production, see prior audit report in conversation history — not separately filed), the 4 highest-priority findings from its "Recommended Design Pass" were implemented, verified locally, committed as `40227b5`, and confirmed live in production:
+
+1. **Free Photo Check H2** — was rendering as body text (16px/400/Inter); now matches the site-wide H2 pattern (`text-3xl sm:text-4xl font-display font-bold`). Verified live: `36px`.
+2. **CTA button shape unified to `rounded-full`** across all three instances (hero, header nav, Risk Calculator submit). Fixing the Risk Calculator button required also guarding a previously-unguarded legacy rule in `css/styles.css` (`button[type="submit"]`) that had higher CSS specificity than the Tailwind utility class and was silently overriding both its radius and background color — same `:not(.tw-shell)` guard pattern used earlier for `main`/`nav a`. Verified live: header CTA radius `9999px`.
+3. **How We Help 5-card grid** — was orphaning the 5th card alone on its own row at 768–1023px widths; switched from CSS grid to `flex flex-wrap justify-center` with explicit `calc()` widths per breakpoint, so any incomplete row self-centers at any width in that range, not just the one width originally measured.
+4. **Zone severity colors tokenized** (`zone.red`/`amber`/`amberdark`/`green` added to `tailwind.config`, replacing 4 raw arbitrary hex values) and the Zones/Resources section eyebrow labels consolidated to the standard pattern used by the other 5 sections.
+
+**Explicitly not touched** (audit findings noted but excluded from this controlled pass): Zones/Resources H2 font-size variance (30px vs. 36px elsewhere), Visual Proof card corner-radius (0px, differs from the 8px card standard). Both confirmed still unchanged post-pass — regression-checked, not accidentally caught by the fix.
+
+**Verification chain, repository → deployed → live:**
+- GitHub Pages API (`gh api repos/Sheehan935/Zone0/pages/builds/latest`) confirms deployed `commit` = `40227b5`, status `built`.
+- Live production spot-check (`https://zone0landscaping.com/`, real headless render): Photo Check H2 = `36px` (was `16px`), header CTA `border-radius` = `9999px` (was `0px`), zero console errors, zero horizontal overflow.
 
 ## Production Verification — VERIFIED 2026-08-19
 

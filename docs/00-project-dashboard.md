@@ -1,7 +1,7 @@
 # Zone 0 Landscaping Website
 ## Project Dashboard
 
-**Last Updated:** August 11, 2026
+**Last Updated:** August 20, 2026
 
 This is the primary Project Control document. `PROJECT-TRUTH.md` is the
 authoritative decision/state layer. Other files in `docs/` are reference
@@ -182,44 +182,34 @@ No analytics provider should be treated as current until verified.
 
 # Next
 
-**Only these 3 items are active.**
+**No active P0/P1 items as of 2026-08-20.** The 3 items previously listed here are
+now complete:
 
-### 1. Consolidate Homepage Into Locked One-Page Architecture
-**Status:** 🔵 In Progress  
-**Priority:** P0  
-**Owner:** Implementation
+### 1. Consolidate Homepage Into Locked One-Page Architecture — 🟢 COMPLETE
+`index.html` rebuilt into the 10 locked sections, deployed as commit `5ff1975`,
+independently verified live in production (GitHub Pages API commit match + HTTP
+smoke test + content smoke test). See `docs/PROJECT-STATE.md`.
 
-Rebuild `index.html` into the 10 locked sections, drawing content from the
-retained legacy pages as source material. Architecture question itself is
-resolved — this task is now implementation, not reconciliation.
+### 2. Verify Current Repository State — 🟢 COMPLETE
+Repeated `git fetch` + `gh api repos/Sheehan935/Zone0/pages/builds/latest`
+checks throughout this project's recent sessions confirm local `main`,
+`origin/main`, and the live GitHub Pages deployment commit have stayed in
+sync at every checkpoint, most recently at commit `40227b5`.
 
-### 2. Verify Current Repository State
-**Status:** 🟡 Needs Review  
-**Priority:** P0  
-**Owner:** Git / Release Control
+### 3. Complete Site Audit / Fact-Based QA — 🟢 COMPLETE
+Two audit passes completed and both passed:
+- **Functional QA** (navigation, Risk Calculator, Compliance Checklist,
+  Inspection Checklist, FAQ, Tally/Photo Check, responsive, JS/runtime,
+  production-vs-repo) — 0 blockers, 0 functional defects. Result: QA PASSED.
+- **Visual/design-system audit** — identified 4 highest-priority findings
+  (Free Photo Check H2 rendering as body text, 3 inconsistent CTA button
+  radii, a How We Help grid orphan at tablet width, 4 un-tokenized Zone
+  colors). All 4 implemented, verified, committed as `40227b5`, and
+  confirmed live in production. See `docs/PROJECT-STATE.md` for full detail.
 
-Verify:
-
-- local branch
-- local HEAD
-- `git status`
-- modified files
-- untracked files
-- local → GitHub alignment
-
-Do not assume local and GitHub are synchronized.
-
-### 3. Complete Site Audit / Fact-Based QA
-**Status:** 🟠 Open  
-**Priority:** P1  
-**Owner:** Site Audit / QA Roles
-
-Continue the audit using the current architecture and Project Truth.
-
-Audit findings must be based on the actual current implementation.
-
-Do not treat historical 12-page requirements or Netlify Forms as current
-requirements.
+No new P0/P1 items have been identified. Do not invent speculative next
+steps here — add a new item only when there's a concrete, evidenced reason
+to.
 
 ---
 
