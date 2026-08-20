@@ -127,10 +127,14 @@ from the real site, not from a local file or a `file://` page.
   `ns47/ns48.domaincontrol.com`; Resend's MX sits on
   `send.zone0landscaping.com` and does not affect the root). The address is
   published as a `mailto:` on `faq/index.html` and `pages/thank-you.html`, so
-  anything a visitor sends there is currently bounced. Planned fix: ImprovMX
-  free forwarding — MX `mx1.improvmx.com` (10) and `mx2.improvmx.com` (20) on
-  `@`, plus TXT `v=spf1 include:spf.improvmx.com ~all`. Lead notifications no
-  longer depend on this (see the To address above).
+  anything a visitor sends there is currently bounced. Fix in progress: the
+  ImprovMX DNS records were added at GoDaddy on 2026-08-20 — MX
+  `mx1.improvmx.com` (10) and `mx2.improvmx.com` (20) on `@`, plus TXT
+  `v=spf1 include:spf.improvmx.com ~all`, all at 1/2 hour TTL. Still
+  outstanding: create the free ImprovMX account, add the domain, and point the
+  `hello` alias at the owner's Gmail; forwarding does not work until that is
+  done. Lead notifications no longer depend on any of this (see the To address
+  above).
 - Frontend endpoint change is committed but **not yet pushed**; the live site
   still serves the placeholder constant until `git push` and the GitHub Pages
   rebuild complete.
