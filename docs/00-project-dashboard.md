@@ -46,7 +46,7 @@ Additional routes require separate approval.
 
 ## Form
 
-**Current form system: custom Cloudflare Worker — implemented 2026-08-20, not yet live**
+**Current form system: custom Cloudflare Worker — LIVE, verified end-to-end 2026-08-20**
 
 Tally was retired 2026-08-20 after live investigation found its hosted form
 never had real Photo-upload/City/Notes fields, only Name/Email/Phone — not
@@ -54,14 +54,13 @@ fixable from the repository since Tally's form composition is dashboard-side
 only. See `docs/decisions.md`, 2026-08-20 entry.
 
 The Photo Check form (`index.html#photo-check`, `js/photo-check-form.js`)
-now posts to a Cloudflare Worker (`worker/`) that stores photos in R2 and
-emails the lead via Resend, then redirects to `pages/thank-you.html` on
-success.
+posts to a Cloudflare Worker (`worker/`) that stores photos in R2 and emails
+the lead via Resend, then redirects to `pages/thank-you.html` on success.
 
-**Not yet live in production** — requires one-time Cloudflare + Resend account
-setup only the site owner can perform (create accounts, create the R2 bucket,
-verify a sending domain, deploy the Worker, wire its URL into
-`js/photo-check-form.js`). See `worker/README.md` for the exact steps.
+**Confirmed live**: the Worker is deployed, the Resend sending domain
+(`zone0landscaping.com`) is verified, and a real submission through the
+production site was confirmed delivered to the owner's inbox. See
+`docs/PROJECT-STATE.md`'s Photo Check section for the verification evidence.
 
 ### Retired Form Assumptions
 
@@ -186,15 +185,17 @@ No analytics provider should be treated as current until verified.
 
 # Next
 
-**1 active P0 item as of 2026-08-20:**
+**No active P0 items as of 2026-08-20.**
 
-### 0. Deploy the Photo Check Cloudflare Worker — 🟠 OPEN, BLOCKED ON OWNER SETUP
-`worker/` is implemented and locally verified (see `docs/PROJECT-STATE.md`),
-but requires Brian to create Cloudflare + Resend accounts, create the R2
-bucket, verify a sending domain, deploy the Worker, and hand back its URL
-before the live Photo Check form can accept real leads. See `worker/README.md`.
-Until this is done, the Photo Check form on the live site will show a
-network-error state on submit.
+### 0. Deploy the Photo Check Cloudflare Worker — 🟢 COMPLETE
+`worker/` is deployed, the Resend sending domain is verified, and a real
+submission through the production site was confirmed delivered to the
+owner's inbox. See `docs/PROJECT-STATE.md`'s Photo Check section.
+
+Remaining non-blocking cleanup: delete the 6 test/verification objects left
+in the `zone0-photo-check-uploads` R2 bucket, and finish the separate
+ImprovMX setup for `hello@zone0landscaping.com` inbound forwarding (does not
+block Photo Check — see `docs/PROJECT-STATE.md`'s Open Items).
 
 The 3 items previously listed here are complete:
 

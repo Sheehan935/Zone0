@@ -2,7 +2,7 @@
 
 **This is a factual snapshot of what exists now. It is NOT a decision document.** For approved decisions, see `docs/DECISION-REGISTER.md` and `docs/decisions.md`. For supporting audit evidence, see `docs/AUDIT-BATCH-3.md`.
 
-**Snapshot date:** 2026-08-20 (Photo Check backend deployed to Cloudflare and verified end-to-end)
+**Snapshot date:** 2026-08-20 (Photo Check fully live: real homeowner-path submission through the production site confirmed delivered)
 
 ---
 
@@ -10,9 +10,9 @@
 
 - `Sheehan935/Zone0`
 - Branch: `main`
-- HEAD at the time this snapshot was written: `0c20881` ("feat(photo-check): replace Tally with custom Cloudflare Worker"). The commit carrying this update is the next one after that.
-- That commit wires `js/photo-check-form.js` to the deployed Worker URL (it previously held a placeholder constant) and synchronizes this file.
-- `origin/main` is **behind** until that commit is pushed. GitHub Pages redeploys on push; the live form is not functional until then.
+- HEAD: `379a221` ("Record ImprovMX DNS records added at GoDaddy for hello@ forwarding").
+- `main` and `origin/main` confirmed synchronized at this HEAD (`git fetch` + compare).
+- Working tree clean.
 - Deployment: GitHub Pages, custom domain `zone0landscaping.com`, HTTPS certificate approved.
 
 ## Visual / Design System Pass — COMPLETE, DEPLOYED 2026-08-20
@@ -52,7 +52,7 @@ Legacy multi-page content remains on disk and deployed (still reachable by direc
 - `zone-0/index.html`, `materials/index.html`, `faq/index.html`, `design/index.html` (+ `design/gallery/`, `design/privacy-without-fuel/`) — all present, all serving 200, each still links back into the new homepage via `/#photo-check` and `/#compliance-checklist-section` (both confirmed live).
 - `pages/services.html` — still not present (matches prior snapshots; archived copies only).
 
-## Photo Check — REPLACED 2026-08-20, BACKEND DEPLOYED AND VERIFIED
+## Photo Check — REPLACED 2026-08-20, LIVE AND VERIFIED
 
 **Correction to this file's own prior claim:** the entry below (superseded by
 this one) previously stated the Tally embed was "confirmed functional...
@@ -110,11 +110,22 @@ Email (Resend)
            2026-08-20 so lead delivery does not depend on forwarding)
   Reply-To the homeowner's own address, set per-lead by the Worker
 
-Verified end-to-end 2026-08-20, 2:41 PM: real form POST returned
-`200 {"ok":true}` -> photo stored in R2 -> notification email delivered with
-no warning payload -> photo link in the email resolved.
-Resend email ID `382d8ea7-79bf-4e7f-9b44-0c2af0e4e771`; test lead ID
-`994bae31-5487-4ca4-8cd9-229f576f0ae6`.
+**Final verification — real homeowner-path submission, not a synthetic test:**
+the site owner submitted the live production form at `zone0landscaping.com`
+through an actual browser. Result: notification email received at
+`sheehan935@gmail.com`, from `leads@zone0landscaping.com`, subject "New Photo
+Check lead — Brian Sheehan (Kensington)", containing the submitted
+name/email/phone/city/notes and a working photo link
+(`/photo/ba752818-.../d3804fa2-....png`). This is the strongest possible
+confirmation short of a real customer lead — the entire path (form → Worker →
+R2 → Resend → inbox) is confirmed working for a real user on the real site,
+not just via `curl` against the Worker directly.
+
+Earlier same-day `curl`-driven tests against the Worker directly also confirm
+each stage in isolation: CORS/origin allowlisting, honeypot/timing spam
+checks, R2 storage, and — after the `NOTIFY_EMAIL` fix and Resend domain
+verification were both completed — clean `{"ok":true}` responses with no
+email-failure warning.
 
 The Origin allowlist accepts `https://zone0landscaping.com`. The bare
 `workers.dev` origin is **not** allowed, so functional testing must be done
@@ -123,31 +134,51 @@ from the real site, not from a local file or a `file://` page.
 ### Open items
 
 - `hello@zone0landscaping.com` still receives no mail: the root domain has no
-  MX record at all (checked 2026-08-20 — DNS is at GoDaddy,
-  `ns47/ns48.domaincontrol.com`; Resend's MX sits on
-  `send.zone0landscaping.com` and does not affect the root). The address is
-  published as a `mailto:` on `faq/index.html` and `pages/thank-you.html`, so
-  anything a visitor sends there is currently bounced. Fix in progress: the
+  MX record at all (DNS is at GoDaddy, `ns47/ns48.domaincontrol.com`; Resend's
+  MX sits on `send.zone0landscaping.com` and does not affect the root). The
+  address is published as a `mailto:` on `faq/index.html` and
+  `pages/thank-you.html`, so anything a visitor sends there still bounces.
   ImprovMX DNS records were added at GoDaddy on 2026-08-20 — MX
   `mx1.improvmx.com` (10) and `mx2.improvmx.com` (20) on `@`, plus TXT
-  `v=spf1 include:spf.improvmx.com ~all`, all at 1/2 hour TTL. Still
-  outstanding: create the free ImprovMX account, add the domain, and point the
-  `hello` alias at the owner's Gmail; forwarding does not work until that is
-  done. Lead notifications no longer depend on any of this (see the To address
-  above).
-- Frontend endpoint change is committed but **not yet pushed**; the live site
-  still serves the placeholder constant until `git push` and the GitHub Pages
-  rebuild complete.
-- 5 test objects remain in the R2 bucket (4 x 287 B early tests, 1 x 5.8 KB
-  verification photo from the 2:41 PM run) and should be deleted.
+  `v=spf1 include:spf.improvmx.com ~all`. Still outstanding: create the free
+  ImprovMX account, add the domain, and point the `hello` alias at the owner's
+  Gmail; forwarding does not work until that is done. Lead notifications do
+  not depend on this — they go to `sheehan935@gmail.com` directly (see the To
+  address above) — so this is a general-inbox gap, not a Photo Check blocker.
+- 6 test/verification objects remain in the R2 bucket (5 synthetic `curl`
+  tests plus the 1 real browser-submitted verification above) and should be
+  deleted once the owner is done reviewing them.
 
 See `worker/README.md` for the backend implementation and `docs/decisions.md`'s
 2026-08-20 entry for the full decision record.
 
-Redirect to `pages/thank-you.html` is now handled entirely by
-`js/photo-check-form.js` (client-side, on a successful Worker response), not
-by an external dashboard setting — this removes the "not independently
-verifiable" caveat that applied to the old Tally-configured redirect.
+### Post-submission UX — CHANGED 2026-08-20: in-page success modal, no redirect
+
+The redirect to `pages/thank-you.html` has been replaced with an in-page,
+accessible success modal (`#pc-success-modal` in `index.html`, logic in
+`js/photo-check-form.js`). On a successful Worker response the homeowner now
+stays on `index.html#photo-check` at their existing scroll position; the form
+is reset and the submit button stays disabled until the modal is dismissed
+(preventing a duplicate submit), then re-enabled with focus returned to it.
+The modal is dismissed via its `×` button, its `Close` button, or `Escape`,
+with focus trapped inside while open. Backend failures (validation errors or
+network errors) are unaffected: the modal never opens, entered data and
+selected files are retained, and the existing inline error message displays.
+
+Verified locally at 1440/1024/768/390px via Playwright: modal open/close
+behavior, focus trap, Escape, duplicate-submit prevention, form reset on
+success, no false-success on a real backend rejection (tested against the
+live Worker from localhost, which correctly 403s on origin mismatch), zero
+console errors from the new code paths, and no horizontal overflow at any
+width. Not yet verified against the real deployed Worker from the actual
+`zone0landscaping.com` origin — that requires this change to be pushed and
+served from production first.
+
+`pages/thank-you.html` is no longer referenced anywhere in the live site's
+code (confirmed via repo-wide search across `index.html` and all `js/`/
+`pages/` files) — it is now an orphaned/legacy page, reachable only by a
+direct URL, not deleted. Kept in place per explicit instruction rather than
+removed, as historical/fallback artifact.
 
 ## Tools (all in the Resources accordion, all locally verified functional this session)
 

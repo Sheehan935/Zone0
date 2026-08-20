@@ -53,7 +53,7 @@ Do not create or require additional page routes unless separately approved.
 
 ## 2. CURRENT FORM SYSTEM
 
-**Custom Cloudflare Worker — RESOLVED 2026-08-20**
+**Custom Cloudflare Worker — LIVE 2026-08-20**
 
 Tally has been replaced with a custom Photo Check backend, per explicit
 request. Reason: live investigation confirmed Tally's hosted form (`81VgKP`)
@@ -64,9 +64,11 @@ composition is dashboard-side only. See `docs/decisions.md`, 2026-08-20 entry.
 
 Current architecture: real HTML form (`index.html#photo-check`,
 `js/photo-check-form.js`) → Cloudflare Worker (`worker/`) → photos stored in
-R2, lead emailed via Resend. See `worker/README.md` for deployment and
-required external account setup (Cloudflare, Resend) — this is not yet live in
-production; it requires one-time setup only the site owner can perform.
+R2, lead emailed via Resend. Confirmed live: the Worker is deployed, the
+Resend sending domain is verified, and a real submission through the
+production site was confirmed delivered to the owner's inbox. See
+`docs/PROJECT-STATE.md`'s Photo Check section for the verification evidence
+and `worker/README.md` for the implementation.
 
 ### Legacy Decision
 
@@ -122,7 +124,9 @@ See Section 1. No longer unresolved. Legacy `/zone-0/`, `/materials/`, `/faq/`, 
 
 ### Legacy Photo Review Tool — RESOLVED 2026-08-19
 
-`js/modal.js` (custom hazard-analysis quiz) is deleted from the repository at verified commit `5ff1975` and confirmed in production (`https://zone0landscaping.com/js/modal.js` returns 404). Tally is the sole Photo Check implementation, confirmed live: GitHub Pages API shows the deployed build matches commit `5ff1975` exactly, and the live Tally iframe was confirmed to receive a real `src` (widget script active). No further decision needed here — this was implemented, not just decided.
+`js/modal.js` (custom hazard-analysis quiz) is deleted from the repository at verified commit `5ff1975` and confirmed in production (`https://zone0landscaping.com/js/modal.js` returns 404). No further decision needed here — this was implemented, not just decided.
+
+**Superseded 2026-08-20:** the sentence in this entry's original text claiming "Tally is the sole Photo Check implementation, confirmed live" is no longer true — Tally was retired the same day and replaced with the custom Cloudflare Worker backend described in Section 2. Preserved here for history, not as current fact.
 
 ### Buttondown — checked, not found in codebase
 
