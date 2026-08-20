@@ -39,7 +39,7 @@
         return (
             '<form class="risk-calculator-form bg-white border border-stone-200 rounded-lg p-6 sm:p-8">' +
                 rows +
-                '<button type="submit" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold hover:bg-sage-dark transition-colors">Calculate Score</button>' +
+                '<button type="submit" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors">Calculate Score</button>' +
             '</form>' +
             '<div class="risk-calculator-result hidden bg-white border border-stone-200 rounded-lg p-6 sm:p-8 text-left"></div>'
         );

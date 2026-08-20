@@ -48,6 +48,12 @@
                             light: '#8A9A83',
                         },
                         terracotta: '#E06D53',
+                        zone: {
+                            red: '#c0492f',
+                            amber: '#b7791f',
+                            amberdark: '#92600c',
+                            green: '#2f855a',
+                        },
                     }
                 }
             }
@@ -147,7 +153,7 @@
             <a href="#landscaping" class="hover:text-sage-default transition-colors">Landscaping</a>
             <a href="#zones" class="hover:text-sage-default transition-colors">Zones</a>
             <a href="#resources" class="hover:text-sage-default transition-colors">Resources</a>
-          <a href="#photo-check" class="bg-sage-default text-white px-5 py-2 hover:bg-sage-dark transition-colors">Free Photo Check</a>
+          <a href="#photo-check" class="bg-sage-default text-white px-5 py-2 rounded-full hover:bg-sage-dark transition-colors">Free Photo Check</a>
             </nav>
 
         <!-- Mobile Menu Button -->
@@ -384,23 +390,23 @@
          ======================================================================== -->
     <section id="zones" class="scroll-mt-24 py-24 bg-white border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
-            <span class="text-xs uppercase tracking-widest font-bold text-sage-dark block mb-2">Defensible Space</span>
+            <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Defensible Space</span>
             <h2 class="text-3xl font-display font-bold mb-4 text-stone-900">Understand the Zones</h2>
             <p class="text-stone-600 max-w-2xl mx-auto mb-12 text-sm font-light">Defensible space radiates out from the structure in rings, each with different rules for what can grow there.</p>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
-                <div class="bg-white border border-stone-200 border-t-4 border-t-[#c0492f] rounded-lg p-5">
-                    <span class="text-xs font-bold uppercase tracking-widest text-[#c0492f] block mb-1">Zone 0</span>
+                <div class="bg-white border border-stone-200 border-t-4 border-t-zone-red rounded-lg p-5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-zone-red block mb-1">Zone 0</span>
                     <span class="block text-sm font-semibold text-stone-900 mb-2">0&ndash;5 ft from structure</span>
                     <p class="text-stone-600 text-sm leading-relaxed">Ember-resistant zone. Non-combustible gravel, pavers, and hardscape only &mdash; no woody plants touching the structure.</p>
                 </div>
-                <div class="bg-white border border-stone-200 border-t-4 border-t-[#b7791f] rounded-lg p-5">
-                    <span class="text-xs font-bold uppercase tracking-widest text-[#92600c] block mb-1">Zone 1</span>
+                <div class="bg-white border border-stone-200 border-t-4 border-t-zone-amber rounded-lg p-5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-zone-amberdark block mb-1">Zone 1</span>
                     <span class="block text-sm font-semibold text-stone-900 mb-2">5&ndash;30 ft</span>
                     <p class="text-stone-600 text-sm leading-relaxed">Lean. Green. Clean. Low, well-spaced, well-irrigated native plants with no ladder fuels.</p>
                 </div>
-                <div class="bg-white border border-stone-200 border-t-4 border-t-[#2f855a] rounded-lg p-5">
-                    <span class="text-xs font-bold uppercase tracking-widest text-[#2f855a] block mb-1">Zone 2</span>
+                <div class="bg-white border border-stone-200 border-t-4 border-t-zone-green rounded-lg p-5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-zone-green block mb-1">Zone 2</span>
                     <span class="block text-sm font-semibold text-stone-900 mb-2">30&ndash;100 ft</span>
                     <p class="text-stone-600 text-sm leading-relaxed">Reduced fuel zone. Spaced shrubs, limbed-up trees, and regularly mowed grasses.</p>
                 </div>
@@ -413,7 +419,7 @@
          ======================================================================== -->
     <section id="resources" class="scroll-mt-24 py-24 bg-stone-100 border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
-            <span class="text-[11px] uppercase tracking-[0.25em] font-bold text-sage-default block mb-2">Resources</span>
+            <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">Resources</span>
             <h2 class="text-3xl font-display font-bold mb-3 text-stone-900 tracking-tight">Tools &amp; Reference Material</h2>
             <p class="text-stone-600 max-w-xl mx-auto mb-14 text-sm font-light leading-relaxed">
                 Self-audit tools, checklists, and official sources &mdash; everything short of an on-site visit.
@@ -572,28 +578,28 @@
             <span class="text-[10px] uppercase tracking-widest font-bold text-sage-default block mb-2">How We Help</span>
             <h2 class="text-3xl sm:text-4xl font-display font-bold mb-12 text-stone-900">From Assessment to Ongoing Care</h2>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
-                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+            <div class="flex flex-wrap justify-center gap-4 text-left">
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(20%-0.8rem)] bg-stone-50 border border-stone-200 rounded-lg p-5">
                     <span class="text-xl font-display font-bold text-sage-default block mb-2">01</span>
                     <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Assess</h3>
                     <p class="text-stone-600 text-xs leading-relaxed">Photo review to identify what needs attention.</p>
                 </div>
-                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(20%-0.8rem)] bg-stone-50 border border-stone-200 rounded-lg p-5">
                     <span class="text-xl font-display font-bold text-sage-default block mb-2">02</span>
                     <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Design</h3>
                     <p class="text-stone-600 text-xs leading-relaxed">A plan that balances Zone 0 requirements with how the property looks and functions.</p>
                 </div>
-                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(20%-0.8rem)] bg-stone-50 border border-stone-200 rounded-lg p-5">
                     <span class="text-xl font-display font-bold text-sage-default block mb-2">03</span>
                     <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Landscape</h3>
                     <p class="text-stone-600 text-xs leading-relaxed">Fire-adapted planting selected and placed by zone.</p>
                 </div>
-                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(20%-0.8rem)] bg-stone-50 border border-stone-200 rounded-lg p-5">
                     <span class="text-xl font-display font-bold text-sage-default block mb-2">04</span>
                     <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Hardscape</h3>
                     <p class="text-stone-600 text-xs leading-relaxed">Non-combustible materials where they're needed most.</p>
                 </div>
-                <div class="bg-stone-50 border border-stone-200 rounded-lg p-5">
+                <div class="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(20%-0.8rem)] bg-stone-50 border border-stone-200 rounded-lg p-5">
                     <span class="text-xl font-display font-bold text-sage-default block mb-2">05</span>
                     <h3 class="font-display font-bold text-sm text-stone-900 mb-1">Maintain</h3>
                     <p class="text-stone-600 text-xs leading-relaxed">Ongoing lean/green/clean upkeep to keep the work effective.</p>
@@ -608,7 +614,7 @@
     <section id="photo-check" class="scroll-mt-24 form-section py-24 bg-stone-950">
       <div class="form-container max-w-2xl mx-auto px-6">
         <span class="text-[10px] uppercase tracking-widest font-bold text-sage-light block mb-2 text-center">Start Your Free Photo Check</span>
-        <h2 class="text-white text-center">Know what to fix. Get the work done. Keep the proof.</h2>
+        <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-white text-center">Know what to fix. Get the work done. Keep the proof.</h2>
         <ol class="text-stone-300 text-sm max-w-md mx-auto my-6 space-y-2 list-decimal list-inside text-left">
           <li>Send 1&ndash;3 photos of your home's perimeter</li>
           <li>Receive a plain-English review</li>

@@ -695,7 +695,7 @@ main > section {
   border: 0;
 }
 
-button[type="submit"] {
+html:not(.tw-shell) button[type="submit"] {
   background-color: var(--primary);
   color: white;
   border: none;
@@ -707,7 +707,7 @@ button[type="submit"] {
   transition: background 0.2s ease;
 }
 
-button[type="submit"]:hover {
+html:not(.tw-shell) button[type="submit"]:hover {
   background-color: var(--primary-hover);
 }
 
