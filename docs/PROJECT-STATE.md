@@ -2,7 +2,7 @@
 
 **This is a factual snapshot of what exists now. It is NOT a decision document.** For approved decisions, see `docs/DECISION-REGISTER.md` and `docs/decisions.md`. For supporting audit evidence, see `docs/AUDIT-BATCH-3.md`.
 
-**Snapshot date:** 2026-08-20 (Photo Check backend replacement implemented, not yet committed)
+**Snapshot date:** 2026-08-20 (Photo Check backend deployed to Cloudflare and verified end-to-end)
 
 ---
 
@@ -10,9 +10,9 @@
 
 - `Sheehan935/Zone0`
 - Branch: `main`
-- HEAD: `fa0fca279b7a1bd34ccef94af024d74cd3038719` ("Record visual pass completion and project state") — corrects this file's own previous `40227b5` claim, which was already one commit stale.
-- `main` and `origin/main` synchronized at this HEAD — confirmed via `git fetch`.
-- Working tree: **not clean** — the Tally-removal/Cloudflare-Worker changes described below are implemented and locally verified but deliberately left uncommitted pending live deployment verification (see Photo Check section).
+- HEAD at the time this snapshot was written: `0c20881` ("feat(photo-check): replace Tally with custom Cloudflare Worker"). The commit carrying this update is the next one after that.
+- That commit wires `js/photo-check-form.js` to the deployed Worker URL (it previously held a placeholder constant) and synchronizes this file.
+- `origin/main` is **behind** until that commit is pushed. GitHub Pages redeploys on push; the live form is not functional until then.
 - Deployment: GitHub Pages, custom domain `zone0landscaping.com`, HTTPS certificate approved.
 
 ## Visual / Design System Pass — COMPLETE, DEPLOYED 2026-08-20
@@ -52,7 +52,7 @@ Legacy multi-page content remains on disk and deployed (still reachable by direc
 - `zone-0/index.html`, `materials/index.html`, `faq/index.html`, `design/index.html` (+ `design/gallery/`, `design/privacy-without-fuel/`) — all present, all serving 200, each still links back into the new homepage via `/#photo-check` and `/#compliance-checklist-section` (both confirmed live).
 - `pages/services.html` — still not present (matches prior snapshots; archived copies only).
 
-## Photo Check — REPLACED 2026-08-20, IMPLEMENTED BUT NOT YET LIVE
+## Photo Check — REPLACED 2026-08-20, BACKEND DEPLOYED AND VERIFIED
 
 **Correction to this file's own prior claim:** the entry below (superseded by
 this one) previously stated the Tally embed was "confirmed functional...
@@ -94,15 +94,44 @@ browser, real file uploads, not just HTML inspection):
   in local testing (none configured; that requires the owner's own Resend
   account).
 
-**NOT YET LIVE IN PRODUCTION.** The Worker is not deployed to Cloudflare —
-that requires the site owner to create Cloudflare and Resend accounts, create
-the R2 bucket, verify a sending domain, deploy the Worker, and provide its
-URL for `js/photo-check-form.js` to be wired to (currently a placeholder
-constant). Until that happens, submitting the live form will show a
-network-error state, not a successful lead. See `worker/README.md` for the
-exact steps and `docs/decisions.md`'s 2026-08-20 entry for the full decision
-record. This working tree is also **not yet committed** — see git status at
-the top of this file, which will be stale until that commit happens.
+### Backend — COMPLETE, verified 2026-08-20
+
+Cloudflare Worker `zone0-photo-check`
+  URL      https://zone0-photo-check.zone0landscaping.workers.dev
+  Endpoint POST /submit  (multipart/form-data, Origin-allowlisted)
+  Photos   GET /photo/:leadId/:photoId.jpg
+  Storage  R2 bucket `zone0-photo-check-uploads`
+  Secret   RESEND_API_KEY (Worker secret)
+
+Email (Resend)
+  Domain   zone0landscaping.com — DKIM, SPF, MX verified 2026-08-20
+  From     leads@zone0landscaping.com
+  To       hello@zone0landscaping.com
+  Reply-To sheehan935@gmail.com
+
+Verified end-to-end 2026-08-20, 2:41 PM: real form POST returned
+`200 {"ok":true}` -> photo stored in R2 -> notification email delivered with
+no warning payload -> photo link in the email resolved.
+Resend email ID `382d8ea7-79bf-4e7f-9b44-0c2af0e4e771`; test lead ID
+`994bae31-5487-4ca4-8cd9-229f576f0ae6`.
+
+The Origin allowlist accepts `https://zone0landscaping.com`. The bare
+`workers.dev` origin is **not** allowed, so functional testing must be done
+from the real site, not from a local file or a `file://` page.
+
+### Open items
+
+- `hello@zone0landscaping.com` does not currently forward anywhere. Until
+  Resend inbound routing or a forward is set up, leads are only visible in
+  the Resend dashboard.
+- Frontend endpoint change is committed but **not yet pushed**; the live site
+  still serves the placeholder constant until `git push` and the GitHub Pages
+  rebuild complete.
+- 5 test objects remain in the R2 bucket (4 x 287 B early tests, 1 x 5.8 KB
+  verification photo from the 2:41 PM run) and should be deleted.
+
+See `worker/README.md` for the backend implementation and `docs/decisions.md`'s
+2026-08-20 entry for the full decision record.
 
 Redirect to `pages/thank-you.html` is now handled entirely by
 `js/photo-check-form.js` (client-side, on a successful Worker response), not

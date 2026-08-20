@@ -1,7 +1,7 @@
 // Photo Check lead form — submits directly to the Zone 0 Cloudflare Worker.
 // See worker/README.md for the backend implementation and deployment steps.
 (function () {
-    var ENDPOINT = 'https://zone0-photo-check.YOUR-SUBDOMAIN.workers.dev/submit'; // TODO: replace after `wrangler deploy` (see worker/README.md)
+    var ENDPOINT = 'https://zone0-photo-check.zone0landscaping.workers.dev/submit';
 
     var MAX_FILES = 3;
     var MAX_FILE_SIZE = 8 * 1024 * 1024;
