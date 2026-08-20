@@ -46,25 +46,29 @@ Additional routes require separate approval.
 
 ## Form
 
-**Current form system: Tally**
+**Current form system: custom Cloudflare Worker — implemented 2026-08-20, not yet live**
 
-The Photo Check uses the Tally form embedded on `index.html`.
+Tally was retired 2026-08-20 after live investigation found its hosted form
+never had real Photo-upload/City/Notes fields, only Name/Email/Phone — not
+fixable from the repository since Tally's form composition is dashboard-side
+only. See `docs/decisions.md`, 2026-08-20 entry.
 
-Tally post-submit redirect to:
+The Photo Check form (`index.html#photo-check`, `js/photo-check-form.js`)
+now posts to a Cloudflare Worker (`worker/`) that stores photos in R2 and
+emails the lead via Resend, then redirects to `pages/thank-you.html` on
+success.
 
-`pages/thank-you.html`
+**Not yet live in production** — requires one-time Cloudflare + Resend account
+setup only the site owner can perform (create accounts, create the R2 bucket,
+verify a sending domain, deploy the Worker, wire its URL into
+`js/photo-check-form.js`). See `worker/README.md` for the exact steps.
 
-was configured by Brian on July 30, 2026.
+### Retired Form Assumptions
 
-The redirect configuration itself is not independently visible from the
-repository and should be treated as user-confirmed until independently
-verified.
+**Netlify Forms: RETIRED / SUPERSEDED.** **Tally: RETIRED / SUPERSEDED
+2026-08-20.**
 
-### Retired Form Assumption
-
-**Netlify Forms: RETIRED / SUPERSEDED**
-
-Do not create Netlify Forms work or treat Netlify Forms as the current
+Do not create Netlify Forms or Tally work, or treat either as the current
 implementation.
 
 ## Deployment
@@ -182,8 +186,17 @@ No analytics provider should be treated as current until verified.
 
 # Next
 
-**No active P0/P1 items as of 2026-08-20.** The 3 items previously listed here are
-now complete:
+**1 active P0 item as of 2026-08-20:**
+
+### 0. Deploy the Photo Check Cloudflare Worker — 🟠 OPEN, BLOCKED ON OWNER SETUP
+`worker/` is implemented and locally verified (see `docs/PROJECT-STATE.md`),
+but requires Brian to create Cloudflare + Resend accounts, create the R2
+bucket, verify a sending domain, deploy the Worker, and hand back its URL
+before the live Photo Check form can accept real leads. See `worker/README.md`.
+Until this is done, the Photo Check form on the live site will show a
+network-error state on submit.
+
+The 3 items previously listed here are complete:
 
 ### 1. Consolidate Homepage Into Locked One-Page Architecture — 🟢 COMPLETE
 `index.html` rebuilt into the 10 locked sections, deployed as commit `5ff1975`,

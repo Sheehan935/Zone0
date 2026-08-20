@@ -364,3 +364,33 @@ explicitly NOT deleted as part of this decision.
 **Why:** Explicit, direct decision from Brian, 2026-08-19.
 
 **Status:** LOCKED.
+
+---
+
+### 2026-08-20 — Tally retired, replaced with custom Cloudflare Worker
+
+**Decision:** Tally (form `81VgKP`) is retired as the Photo Check backend.
+Replaced with a custom system: real HTML form on `index.html#photo-check`
+(`js/photo-check-form.js`) posting to a Cloudflare Worker (`worker/`), which
+validates the submission, stores up to 3 photos in Cloudflare R2, and emails
+the lead to Zone 0 via Resend.
+
+**Why:** Live investigation (2026-08-19 functional/navigation audit) found
+Tally's hosted form only ever had 3 real fields — Name, Email, Phone. The
+City, Photo-upload, and Notes fields shown on the page were inert labels with
+no bound form control in Tally's own form builder. Since Photo Check is the
+site's primary lead-generation mechanism and photo upload is its entire
+premise, this was a business-critical defect, and it was not fixable from the
+repository — Tally's form composition is controlled entirely inside Tally's
+dashboard. Explicit direct decision from Brian to replace the architecture,
+2026-08-20 — see the full request in that session's task history.
+
+Evaluated form-backend-as-a-service alternatives (Formspree, Web3Forms) but
+both require a paid plan for file-upload support and neither was chosen;
+Brian selected a self-hosted Cloudflare Worker + R2 + Resend architecture
+instead, trading a small amount of setup/maintenance for zero recurring SaaS
+cost and full data ownership.
+
+**Status:** Implemented in the repository (`worker/`, `index.html`,
+`js/photo-check-form.js`); **not yet live** — requires one-time Cloudflare and
+Resend account setup only the site owner can perform. See `worker/README.md`.

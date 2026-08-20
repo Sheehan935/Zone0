@@ -10,3 +10,8 @@
 # Editor / Local Assistant Configs
 .claude/.tmp.driveupload/
 local/
+
+# Cloudflare Worker local dev state / secrets (never commit real credentials)
+worker/.wrangler/
+worker/.dev.vars
+worker/node_modules/

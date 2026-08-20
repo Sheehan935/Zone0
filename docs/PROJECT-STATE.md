@@ -2,7 +2,7 @@
 
 **This is a factual snapshot of what exists now. It is NOT a decision document.** For approved decisions, see `docs/DECISION-REGISTER.md` and `docs/decisions.md`. For supporting audit evidence, see `docs/AUDIT-BATCH-3.md`.
 
-**Snapshot date:** 2026-08-20 (visual pass complete and deployed)
+**Snapshot date:** 2026-08-20 (Photo Check backend replacement implemented, not yet committed)
 
 ---
 
@@ -10,9 +10,9 @@
 
 - `Sheehan935/Zone0`
 - Branch: `main`
-- HEAD: `40227b5c32263398099c38cb256f579ec2cb4af5` ("fix(ui): unify CTA shape, fix H2 and grid bugs")
-- `main` and `origin/main` synchronized at this commit — confirmed via `git fetch`.
-- Working tree: **clean**.
+- HEAD: `fa0fca279b7a1bd34ccef94af024d74cd3038719` ("Record visual pass completion and project state") — corrects this file's own previous `40227b5` claim, which was already one commit stale.
+- `main` and `origin/main` synchronized at this HEAD — confirmed via `git fetch`.
+- Working tree: **not clean** — the Tally-removal/Cloudflare-Worker changes described below are implemented and locally verified but deliberately left uncommitted pending live deployment verification (see Photo Check section).
 - Deployment: GitHub Pages, custom domain `zone0landscaping.com`, HTTPS certificate approved.
 
 ## Visual / Design System Pass — COMPLETE, DEPLOYED 2026-08-20
@@ -52,9 +52,62 @@ Legacy multi-page content remains on disk and deployed (still reachable by direc
 - `zone-0/index.html`, `materials/index.html`, `faq/index.html`, `design/index.html` (+ `design/gallery/`, `design/privacy-without-fuel/`) — all present, all serving 200, each still links back into the new homepage via `/#photo-check` and `/#compliance-checklist-section` (both confirmed live).
 - `pages/services.html` — still not present (matches prior snapshots; archived copies only).
 
-## Photo Check
+## Photo Check — REPLACED 2026-08-20, IMPLEMENTED BUT NOT YET LIVE
 
-Custom `js/modal.js` implementation is fully retired (deleted, deployed 404). Tally embed is live in production and confirmed functional in this session's local testing (real form fields render, iframe receives a live `src`). Redirect to `pages/thank-you.html` is a Tally-dashboard setting (per `docs/decisions.md`, configured 2026-07-30), not independently re-verifiable from this side, but `pages/thank-you.html` itself is deployed and serving 200.
+**Correction to this file's own prior claim:** the entry below (superseded by
+this one) previously stated the Tally embed was "confirmed functional...
+real form fields render." That was wrong. A dedicated live-production
+investigation (2026-08-19 functional/navigation audit) found Tally's hosted
+form (`81VgKP`) had only 3 real fields — Name, Email, Phone — the
+City/Photo-upload/Notes controls shown on the page were inert text, not bound
+form fields, confirmed identically at 1440/768/390px via `frameLocator`
+inspection of the live iframe. This was a Tally-dashboard-side defect, not
+fixable from the repository. See that session's audit report and
+`docs/decisions.md`'s 2026-08-19 entry for the original evidence.
+
+**Current implementation:** Tally has been removed entirely
+(`js/photo-check-form.js` replaces the widget script; the iframe and
+`.tally-embed` CSS rule are deleted). The Photo Check section
+(`index.html#photo-check`) is now a real HTML form — Name, Email, Phone, City,
+Photos (1–3 files, image types only, 8MB each), Notes — that posts to a
+Cloudflare Worker (`worker/src/index.js`).
+
+**Locally verified, this session** (`npx wrangler dev` + Playwright, real
+browser, real file uploads, not just HTML inspection):
+- All 6 fields render as real, labeled, functional controls at 1440px and 390px.
+- Native HTML5 `required` validation blocks an empty submit before any network call.
+- Selected-file names/sizes display after choosing photos.
+- Full valid submission (real multipart POST, real JPEG file) → Worker
+  validates → stores the photo in a local-emulated R2 bucket (confirmed via
+  the bucket's object listing, and confirmed the stored bytes are
+  byte-identical to the uploaded file via `GET /photo/{key}`) → responds
+  `{ok:true}` → frontend redirects to `pages/thank-you.html`. Zero console
+  errors.
+- Server-side validation independently confirmed via `curl`: wrong CORS
+  origin rejected (403), missing required fields rejected with specific
+  messages, honeypot-filled submissions silently accepted (200, discarded),
+  submissions faster than 3 seconds rejected (basic bot mitigation), non-image
+  file types rejected, >3 files rejected.
+- Email delivery path (Resend) is implemented with graceful degradation — if
+  the Resend API call fails, the lead and photos are still saved in R2 and
+  the homeowner still sees success — but was not verified with a real API key
+  in local testing (none configured; that requires the owner's own Resend
+  account).
+
+**NOT YET LIVE IN PRODUCTION.** The Worker is not deployed to Cloudflare —
+that requires the site owner to create Cloudflare and Resend accounts, create
+the R2 bucket, verify a sending domain, deploy the Worker, and provide its
+URL for `js/photo-check-form.js` to be wired to (currently a placeholder
+constant). Until that happens, submitting the live form will show a
+network-error state, not a successful lead. See `worker/README.md` for the
+exact steps and `docs/decisions.md`'s 2026-08-20 entry for the full decision
+record. This working tree is also **not yet committed** — see git status at
+the top of this file, which will be stale until that commit happens.
+
+Redirect to `pages/thank-you.html` is now handled entirely by
+`js/photo-check-form.js` (client-side, on a successful Worker response), not
+by an external dashboard setting — this removes the "not independently
+verifiable" caveat that applied to the old Tally-configured redirect.
 
 ## Tools (all in the Resources accordion, all locally verified functional this session)
 

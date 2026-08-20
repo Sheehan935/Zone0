@@ -688,13 +688,6 @@ main > section {
   margin-bottom: 0.75rem;
 }
 
-.tally-embed {
-  width: 100%;
-  min-height: 620px;
-  margin-top: 1rem;
-  border: 0;
-}
-
 html:not(.tw-shell) button[type="submit"] {
   background-color: var(--primary);
   color: white;

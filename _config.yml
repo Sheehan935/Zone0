@@ -7,6 +7,7 @@
 exclude:
   - docs/            # project documentation, internal branding guide, and reports
   - archive/         # historical page versions and old builds
+  - worker/          # Cloudflare Worker source (deployed separately to Cloudflare, not GitHub Pages)
   - README.md
   - CHANGELOG.md
   - TODO.md

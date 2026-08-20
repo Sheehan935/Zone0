@@ -1,0 +1,16 @@
+name = "zone0-photo-check"
+main = "src/index.js"
+compatibility_date = "2026-08-19"
+
+[[r2_buckets]]
+binding = "PHOTO_BUCKET"
+bucket_name = "zone0-photo-check-uploads"
+
+[vars]
+ALLOWED_ORIGIN = "https://zone0landscaping.com"
+NOTIFY_EMAIL = "hello@zone0landscaping.com"
+FROM_EMAIL = "leads@zone0landscaping.com"
+
+# RESEND_API_KEY is a secret, not a var — set it with:
+#   npx wrangler secret put RESEND_API_KEY
+# Never add it here or anywhere else in the repository.
