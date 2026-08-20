@@ -16,8 +16,67 @@
         var photosSelected = document.getElementById('pc-photos-selected');
         var errorBox = document.getElementById('pc-form-error');
         var submitBtn = document.getElementById('pc-submit');
+        var originalSubmitLabel = submitBtn.textContent;
+
+        var modal = document.getElementById('pc-success-modal');
+        var modalCloseX = document.getElementById('pc-success-close-x');
+        var modalCloseBtn = document.getElementById('pc-success-close');
 
         if (loadedAtField) loadedAtField.value = String(Date.now());
+
+        function getFocusableEls(container) {
+            var els = container.querySelectorAll(
+                'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+            );
+            return Array.prototype.slice.call(els).filter(function (el) {
+                return el.offsetParent !== null;
+            });
+        }
+
+        function onModalKeydown(e) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                closeSuccessModal();
+                return;
+            }
+            if (e.key === 'Tab') {
+                var focusables = getFocusableEls(modal);
+                if (focusables.length === 0) return;
+                var first = focusables[0];
+                var last = focusables[focusables.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+
+        function openSuccessModal() {
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            document.addEventListener('keydown', onModalKeydown);
+            var focusables = getFocusableEls(modal);
+            (focusables[0] || modal).focus();
+        }
+
+        function closeSuccessModal() {
+            modal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            document.removeEventListener('keydown', onModalKeydown);
+
+            // The submit button was disabled (and so lost focus) before the modal
+            // opened, so it can't be used as a "return to opener" focus target
+            // until it's re-enabled here, immediately before we focus it.
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalSubmitLabel;
+            submitBtn.focus();
+        }
+
+        modalCloseX.addEventListener('click', closeSuccessModal);
+        modalCloseBtn.addEventListener('click', closeSuccessModal);
 
         function showError(message) {
             errorBox.textContent = message;
@@ -68,7 +127,6 @@
             }
 
             submitBtn.disabled = true;
-            var originalLabel = submitBtn.textContent;
             submitBtn.textContent = 'Sending…';
 
             fetch(ENDPOINT, {
@@ -82,17 +140,22 @@
                 })
                 .then(function (result) {
                     if (result.data && result.data.ok) {
-                        window.location.href = 'pages/thank-you.html';
+                        // Submit button stays disabled until the modal is closed,
+                        // preventing an accidental duplicate submission.
+                        form.reset();
+                        photosSelected.innerHTML = '';
+                        if (loadedAtField) loadedAtField.value = String(Date.now());
+                        openSuccessModal();
                         return;
                     }
                     showError((result.data && result.data.error) || 'Something went wrong. Please try again.');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = originalLabel;
+                    submitBtn.textContent = originalSubmitLabel;
                 })
                 .catch(function () {
                     showError('We could not reach the server. Please check your connection and try again.');
                     submitBtn.disabled = false;
-                    submitBtn.textContent = originalLabel;
+                    submitBtn.textContent = originalSubmitLabel;
                 });
         });
     }
