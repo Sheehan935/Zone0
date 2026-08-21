@@ -354,7 +354,7 @@ main > section {
 .card p,
 .faq-item p,
 .link-card p,
-.form-container p,
+html:not(.tw-shell) .form-container p,
 .trust-item span {
   color: var(--text-muted);
 }
@@ -591,7 +591,7 @@ main > section {
 }
 
 .status-banner .banner-content,
-.form-container,
+html:not(.tw-shell) .form-container,
 .faq-item,
 .link-card,
 .card {
@@ -601,7 +601,7 @@ main > section {
   padding: var(--space-6);
 }
 
-.form-container {
+html:not(.tw-shell) .form-container {
   box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
 }
 
@@ -651,7 +651,7 @@ main > section {
 .card h3,
 .content-block h2,
 .services-overview h2,
-.form-container h2,
+html:not(.tw-shell) .form-container h2,
 .faq-section h2 {
   color: var(--primary);
 }
