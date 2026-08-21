@@ -51,7 +51,7 @@ natural next step — free, and integrates directly with Workers.
    volume needs.
 
    Until that domain is verified, you can test with Resend's shared test domain,
-   but production lead emails need the verified domain so `leads@zone0landscaping.com`
+   but production lead emails need the verified domain so `hello@zone0landscaping.com`
    is allowed to send.
 
 4. **Get a Resend API key** (Settings → API Keys → Create) and set it as a
@@ -82,9 +82,14 @@ natural next step — free, and integrates directly with Workers.
 - `NOTIFY_EMAIL` (currently `sheehan935@gmail.com`) is where lead emails
   arrive — change it in `wrangler.toml` and redeploy if that should be different.
   It was pointed straight at the owner's Gmail on 2026-08-20 so lead delivery
-  does not depend on `hello@zone0landscaping.com` forwarding. `FROM_EMAIL`
-  stays `leads@zone0landscaping.com` (the Resend-verified sending domain) and
-  `reply_to` is still the homeowner's own address, so replies go to the lead.
+  does not depend on any inbound forwarding being set up for `@zone0landscaping.com`
+  addresses. `FROM_EMAIL` is `hello@zone0landscaping.com` (changed 2026-08-20
+  from `leads@zone0landscaping.com` so homeowners see Zone 0's public identity,
+  not an internal-looking address) and `reply_to` is the homeowner's own
+  submitted address, so a normal reply from the owner's inbox reaches the lead.
+  `leads@zone0landscaping.com` is no longer used anywhere — it remains a valid
+  address under the Resend-verified domain if needed again later, but nothing
+  in this Worker sends from or displays it.
 - Submitting a real test lead through the live form will use your real Resend
   quota and land a real object in R2 — inexpensive, but not nothing. A
   clearly-marked test submission (e.g. name "QA TEST — DO NOT CONTACT") is the

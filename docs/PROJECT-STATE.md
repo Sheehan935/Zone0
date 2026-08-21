@@ -105,10 +105,14 @@ Cloudflare Worker `zone0-photo-check`
 
 Email (Resend)
   Domain   zone0landscaping.com — DKIM, SPF, MX verified 2026-08-20
-  From     leads@zone0landscaping.com
+  From     hello@zone0landscaping.com (changed 2026-08-20 from
+           leads@zone0landscaping.com, so the homeowner sees Zone 0's public
+           identity rather than an internal-looking address; leads@ is no
+           longer used anywhere in this system)
   To       sheehan935@gmail.com  (was hello@zone0landscaping.com; changed
            2026-08-20 so lead delivery does not depend on forwarding)
-  Reply-To the homeowner's own address, set per-lead by the Worker
+  Reply-To the homeowner's own address, set per-lead by the Worker (unchanged
+           by the From-address change above)
 
 **Final verification — real homeowner-path submission, not a synthetic test:**
 the site owner submitted the live production form at `zone0landscaping.com`
@@ -119,7 +123,38 @@ name/email/phone/city/notes and a working photo link
 (`/photo/ba752818-.../d3804fa2-....png`). This is the strongest possible
 confirmation short of a real customer lead — the entire path (form → Worker →
 R2 → Resend → inbox) is confirmed working for a real user on the real site,
-not just via `curl` against the Worker directly.
+not just via `curl` against the Worker directly. (Historical record, kept as
+originally written: this test ran before the From-address change below and
+correctly shows `leads@zone0landscaping.com` as the sender at that time.)
+
+**From-address changed 2026-08-20, later the same day:** `FROM_EMAIL` was
+switched from `leads@zone0landscaping.com` to `hello@zone0landscaping.com`
+so the homeowner-facing sender identity is Zone 0's public address rather
+than an internal one. `worker/src/index.js` was not changed (it already read
+`from: env.FROM_EMAIL` and `reply_to: lead.email`) — only the `wrangler.toml`
+config value changed, then the Worker was redeployed.
+
+**First verification attempt was a false positive.** A `curl` test run
+immediately after `wrangler deploy` returned `{"ok":true}` with no warning,
+which was wrongly read as confirmation — that response only proves *some*
+valid Resend sender was used, not which one, since both the old and new
+`FROM_EMAIL` are equally valid senders under the same verified domain. The
+deploy had gone live at the exact same minute the test ran
+(`wrangler deployments list` showed the new version created
+2026-08-21T01:03:13 UTC), and Cloudflare's edge network is not instantly
+consistent across all POPs — the request almost certainly hit an edge that
+hadn't yet received the new version, silently exercising the old code path.
+The received email at that point showed `leads@zone0landscaping.com`, not
+`hello@`.
+
+**Re-verified correctly** with a second test, run well after propagation
+completed, and independently confirmed by the site owner reading the actual
+Gmail message rather than trusting the API response: sender displayed as
+`hello@zone0landscaping.com` (not `leads@`), and hitting Reply in Gmail
+addressed the response to `test-fromaddr-reverify@example.com` — the
+homeowner test address supplied as Reply-To, not to `hello@` or `leads@`.
+Both From and Reply-To are confirmed working as intended, verified against
+the real deployed system, not inferred from source code.
 
 Earlier same-day `curl`-driven tests against the Worker directly also confirm
 each stage in isolation: CORS/origin allowlisting, honeypot/timing spam
@@ -145,7 +180,9 @@ See `worker/README.md` for the backend implementation and `docs/decisions.md`'s
 **Public-facing:**
 - `hello@zone0landscaping.com` — general contact. Appears in the homepage
   footer (`index.html`, added 2026-08-20), `faq/index.html`, and
-  `pages/thank-you.html` (both already correct, unchanged).
+  `pages/thank-you.html` (both already correct, unchanged). Also, as of later
+  the same day, this is the Photo Check Worker's `FROM_EMAIL` — see the
+  Photo Check section above for that change and its verification.
 - `support@zone0landscaping.com` — decided but **not placed anywhere on the
   site**. No genuine support/help/billing context exists on any live or
   orphaned page (verified via repo-wide search 2026-08-20). Alias-only per
@@ -156,10 +193,13 @@ See `worker/README.md` for the backend implementation and `docs/decisions.md`'s
   repository at all. Alias-only.
 
 **Internal/operational:**
-- `leads@zone0landscaping.com` — Photo Check's Resend `FROM_EMAIL` only
-  (`worker/wrangler.toml`). Never displayed publicly. Notification
-  destination is `NOTIFY_EMAIL = sheehan935@gmail.com`, unaffected by this
-  decision.
+- `leads@zone0landscaping.com` — no longer used anywhere in the system as of
+  2026-08-20 (previously the Photo Check `FROM_EMAIL`; replaced by `hello@`
+  so homeowners see Zone 0's public identity, not an internal-looking
+  address). Remains a valid sender under the Resend-verified domain if ever
+  needed again, but nothing currently sends from or displays it.
+- Notification destination is `NOTIFY_EMAIL = sheehan935@gmail.com`,
+  unaffected by the From-address change.
 
 **Infrastructure decision:** all three public addresses stay **free ImprovMX
 aliases** forwarding to the owner's Gmail — explicitly not a paid mailbox,
