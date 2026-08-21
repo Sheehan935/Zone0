@@ -84,7 +84,7 @@ async function handleSubmit(request, env, corsHeaders) {
   if (!name) errors.push('Name is required.');
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('A valid email is required.');
   if (!phone || phone.replace(/\D/g, '').length < 7) errors.push('A valid phone number is required.');
-  if (!city) errors.push('City / neighborhood is required.');
+  if (!city) errors.push('City is required.');
 
   const files = form.getAll('photos').filter((f) => f && typeof f === 'object' && 'arrayBuffer' in f && f.size > 0);
   if (files.length < 1) errors.push('At least 1 photo is required.');
@@ -136,7 +136,7 @@ async function sendNotification(env, lead) {
     `Name: ${lead.name}`,
     `Email: ${lead.email}`,
     `Phone: ${lead.phone}`,
-    `City / Neighborhood: ${lead.city}`,
+    `City: ${lead.city}`,
     `Notes: ${lead.notes || '(none)'}`,
     '',
     `Lead ID: ${lead.leadId}`,
