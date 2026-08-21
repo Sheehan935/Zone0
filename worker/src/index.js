@@ -116,6 +116,13 @@ async function handleSubmit(request, env, corsHeaders) {
   const photoUrls = uploadedKeys.map((k) => `${new URL(request.url).origin}/photo/${k}`);
 
   try {
+    await insertLeadRecord(env, { leadId, name, email, phone, city, notes, uploadedKeys });
+  } catch (e) {
+    // The lead + photos are already safely stored in R2 even if the review-portal
+    // database write failed -- this must never block the homeowner's submission.
+  }
+
+  try {
     await sendNotification(env, { leadId, name, email, phone, city, notes, photoUrls });
   } catch (e) {
     // Lead + photos are already safely stored in R2 even though the notification email failed.
@@ -123,6 +130,17 @@ async function handleSubmit(request, env, corsHeaders) {
   }
 
   return json({ ok: true }, 200, corsHeaders);
+}
+
+async function insertLeadRecord(env, lead) {
+  if (!env.DB) return; // D1 binding not configured on this environment
+  const now = Date.now();
+  await env.DB.prepare(
+    `INSERT INTO leads (id, name, email, phone, city, notes, photo_keys, status, submitted_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, 'new', ?, ?)`
+  )
+    .bind(lead.leadId, lead.name, lead.email, lead.phone, lead.city, lead.notes || null, JSON.stringify(lead.uploadedKeys), now, now)
+    .run();
 }
 
 function field(form, key) {

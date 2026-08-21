@@ -1,0 +1,25 @@
+name = "zone0-review-portal"
+main = "src/index.js"
+compatibility_date = "2026-08-19"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "zone0-leads"
+database_id = "cb6e31ac-2d8b-4425-bc96-785e0d42253c"
+
+[[r2_buckets]]
+binding = "PHOTO_BUCKET"
+bucket_name = "zone0-photo-check-uploads"
+
+[vars]
+FROM_EMAIL = "hello@zone0landscaping.com"
+# ACCESS_AUD and ACCESS_TEAM_DOMAIN come from the Cloudflare Access application
+# created in the Zero Trust dashboard (see review-worker/README.md). Until both
+# are set, the Worker refuses all requests rather than running unprotected.
+ACCESS_AUD = ""
+ACCESS_TEAM_DOMAIN = ""
+
+# RESEND_API_KEY is a secret, not a var -- set it with:
+#   npx wrangler secret put RESEND_API_KEY
+# This is a separate secret from the one on the public zone0-photo-check Worker --
+# both must be set independently. Never add it here or anywhere else in the repository.
