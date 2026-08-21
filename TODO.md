@@ -10,7 +10,7 @@
 - [ ] **East Bay ZIP Code Lookup**: Implement dynamic status lookup for `94708`, `94611`, `94563`, and `94549`.
 - [ ] **Direct Contact CTA**: Configure "Have questions on new Zone 0 guidelines>>>" heading with clickable SMS/email links.
 - [x] **Perimeter Photo Review**: Replaced with a custom Cloudflare Worker form (photos + notes), 2026-08-20 — see `worker/README.md`. Worker, R2 bucket, and Resend sending domain are live and verified end-to-end 2026-08-20.
-- [ ] **hello@ inbox**: Root domain has no MX, so mail to `hello@zone0landscaping.com` bounces (it is published on the FAQ and thank-you pages). Set up ImprovMX free forwarding to Gmail at GoDaddy DNS. Lead notifications now go straight to Gmail, so this is about visitor email only.
+- [ ] **Email aliases (hello@/support@/privacy@)**: Root domain has no MX, so mail to any `@zone0landscaping.com` address bounces. Decision 2026-08-20: all three stay free ImprovMX aliases forwarding to the owner's Gmail (no paid mailbox). MX/TXT DNS records for ImprovMX were added at GoDaddy 2026-08-20; still outstanding: create the free ImprovMX account, add the domain, and configure all three aliases (`hello@`, `support@`, `privacy@`) to forward to Gmail. `hello@` is now shown in the homepage footer (`index.html`) in addition to its existing appearances on `faq/index.html` and `pages/thank-you.html`. `support@`/`privacy@` are alias-only — no website placement, since no genuine support or privacy/legal context currently exists on the site. Photo Check lead notifications are unaffected (`NOTIFY_EMAIL` already goes straight to Gmail).
 - [ ] **Photo Check — R2 cleanup**: Delete the 6 test objects in `zone0-photo-check-uploads` (see `docs/PROJECT-STATE.md`).
 
 ## 3. Site Expansion & Landing Pages

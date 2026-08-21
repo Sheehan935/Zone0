@@ -133,24 +133,46 @@ from the real site, not from a local file or a `file://` page.
 
 ### Open items
 
-- `hello@zone0landscaping.com` still receives no mail: the root domain has no
-  MX record at all (DNS is at GoDaddy, `ns47/ns48.domaincontrol.com`; Resend's
-  MX sits on `send.zone0landscaping.com` and does not affect the root). The
-  address is published as a `mailto:` on `faq/index.html` and
-  `pages/thank-you.html`, so anything a visitor sends there still bounces.
-  ImprovMX DNS records were added at GoDaddy on 2026-08-20 — MX
-  `mx1.improvmx.com` (10) and `mx2.improvmx.com` (20) on `@`, plus TXT
-  `v=spf1 include:spf.improvmx.com ~all`. Still outstanding: create the free
-  ImprovMX account, add the domain, and point the `hello` alias at the owner's
-  Gmail; forwarding does not work until that is done. Lead notifications do
-  not depend on this — they go to `sheehan935@gmail.com` directly (see the To
-  address above) — so this is a general-inbox gap, not a Photo Check blocker.
 - 6 test/verification objects remain in the R2 bucket (5 synthetic `curl`
   tests plus the 1 real browser-submitted verification above) and should be
   deleted once the owner is done reviewing them.
 
 See `worker/README.md` for the backend implementation and `docs/decisions.md`'s
 2026-08-20 entry for the full decision record.
+
+## Email Architecture — DECIDED 2026-08-20, PARTIALLY IMPLEMENTED
+
+**Public-facing:**
+- `hello@zone0landscaping.com` — general contact. Appears in the homepage
+  footer (`index.html`, added 2026-08-20), `faq/index.html`, and
+  `pages/thank-you.html` (both already correct, unchanged).
+- `support@zone0landscaping.com` — decided but **not placed anywhere on the
+  site**. No genuine support/help/billing context exists on any live or
+  orphaned page (verified via repo-wide search 2026-08-20). Alias-only per
+  explicit decision, so it works if ever given out directly, without
+  inventing a support page or section that doesn't otherwise exist.
+- `privacy@zone0landscaping.com` — decided but **not placed anywhere on the
+  site**, for the same reason: no Privacy Policy or Terms page exists in the
+  repository at all. Alias-only.
+
+**Internal/operational:**
+- `leads@zone0landscaping.com` — Photo Check's Resend `FROM_EMAIL` only
+  (`worker/wrangler.toml`). Never displayed publicly. Notification
+  destination is `NOTIFY_EMAIL = sheehan935@gmail.com`, unaffected by this
+  decision.
+
+**Infrastructure decision:** all three public addresses stay **free ImprovMX
+aliases** forwarding to the owner's Gmail — explicitly not a paid mailbox,
+to avoid an unrequested recurring cost. Root domain has no MX record today
+(DNS at GoDaddy, `ns47/ns48.domaincontrol.com`); Resend's MX sits only on
+`send.zone0landscaping.com` and doesn't cover the root. ImprovMX MX/TXT
+records (`mx1`/`mx2.improvmx.com`, SPF) were added at GoDaddy 2026-08-20.
+
+**Still outstanding (external, owner-only):** create the free ImprovMX
+account, add `zone0landscaping.com`, and configure all three aliases
+(`hello@`, `support@`, `privacy@`) to forward to Gmail. Until that's done,
+mail to any of these addresses bounces. Photo Check lead notifications do
+not depend on this and are unaffected.
 
 ### Post-submission UX — CHANGED 2026-08-20: in-page success modal, no redirect
 

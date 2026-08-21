@@ -194,8 +194,9 @@ owner's inbox. See `docs/PROJECT-STATE.md`'s Photo Check section.
 
 Remaining non-blocking cleanup: delete the 6 test/verification objects left
 in the `zone0-photo-check-uploads` R2 bucket, and finish the separate
-ImprovMX setup for `hello@zone0landscaping.com` inbound forwarding (does not
-block Photo Check — see `docs/PROJECT-STATE.md`'s Open Items).
+ImprovMX setup for `hello@`/`support@`/`privacy@zone0landscaping.com` inbound
+forwarding (does not block Photo Check — see `docs/PROJECT-STATE.md`'s Email
+Architecture section).
 
 The 3 items previously listed here are complete:
 
