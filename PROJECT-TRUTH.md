@@ -10,21 +10,23 @@
 
 ### LOCKED DECISION — One-Page Homepage
 
-**Status: LOCKED — 2026-08-19**
+**Status: LOCKED — 2026-08-19; section order updated 2026-08-24**
 
 The Zone 0 public site is a ONE-PAGE HOMEPAGE (`index.html`) plus `pages/thank-you.html`.
 
 Homepage sections, in order:
 1. Header
 2. Hero
-3. Lean. Green. Clean.
-4. Landscaping / Hardscaping / Design
-5. Visual Proof
-6. Understand the Zones
-7. Resources
-8. How We Help
-9. Free Photo Check
+3. Free Photo Check
+4. Lean. Green. Clean.
+5. Landscaping / Hardscaping / Design
+6. Visual Proof
+7. Understand the Zones
+8. Resources
+9. How We Help
 10. Footer
+
+**2026-08-24 change:** Free Photo Check moved from position 9 (just before Footer) to position 3 (immediately after Hero, before Lean. Green. Clean.), per explicit user request to surface the lead-gen form higher on the page. The `id="photo-check"` anchor and its `form-section`/`form-container` classes were preserved; only position changed.
 
 Brand hierarchy:
 - Primary positioning: Protecting Homes. Preserving Landscapes.
@@ -69,6 +71,13 @@ Resend sending domain is verified, and a real submission through the
 production site was confirmed delivered to the owner's inbox. See
 `docs/PROJECT-STATE.md`'s Photo Check section for the verification evidence
 and `worker/README.md` for the implementation.
+
+An internal, Cloudflare Access-gated extension (`review-worker/`) was added
+2026-08-20/21 for the owner to work leads end-to-end (queue, six-category
+analysis, homeowner response). It does not change anything above — the
+public form/Worker/R2/Resend path is unmodified except for one additive D1
+insert. See `docs/PROJECT-STATE.md`'s Photo Check Review Portal section for
+current status; not yet fully exercised in production.
 
 ### Legacy Decision
 

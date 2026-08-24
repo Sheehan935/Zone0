@@ -1,7 +1,7 @@
 # Zone 0 Landscaping Website
 ## Project Dashboard
 
-**Last Updated:** August 20, 2026
+**Last Updated:** August 21, 2026
 
 This is the primary Project Control document. `PROJECT-TRUTH.md` is the
 authoritative decision/state layer. Other files in `docs/` are reference
@@ -21,8 +21,11 @@ work.
 
 **LOCKED — One-page homepage:**
 
-- `index.html` (10 sections: Header, Hero, Lean/Green/Clean, Landscaping/Hardscaping/Design, Visual Proof, Understand the Zones, Resources, How We Help, Free Photo Check, Footer)
-- `pages/thank-you.html` for the Tally Photo Check confirmation flow
+- `index.html` (10 sections: Header, Hero, Free Photo Check, Lean/Green/Clean, Landscaping/Hardscaping/Design, Visual Proof, Understand the Zones, Resources, How We Help, Footer — Photo Check moved from position 9 to position 3 on 2026-08-24, see `PROJECT-TRUTH.md`)
+- `pages/thank-you.html` — orphaned legacy page as of 2026-08-20/21; no longer
+  referenced anywhere in the live site's code. Photo Check's success state is
+  now an in-page modal (see `docs/PROJECT-STATE.md`'s Photo Check section),
+  and Tally (which this page was originally built for) is retired.
 
 The previous 12-page launch requirement remains **UNLOCKED / RETIRED**. The 2026-08-03–08-18 multi-page implementation (`/zone-0/`, `/materials/`, `/faq/`, `/design/`, `pages/services.html`) is superseded, not deleted — see `docs/decisions.md`, 2026-08-19 entry. Those directories are retained as source material for homepage consolidation and must not be deleted in this step.
 
@@ -80,9 +83,12 @@ implementation.
 
 **Branch:** `main`
 
-**Last reported commit:** `b7f6ccf`
+**Last reported commit:** `bf075d0`
 
-Local Git working-tree state remains unverified.
+Local `main`/`origin/main`/live GitHub Pages deployment confirmed in sync at
+this commit as of 2026-08-21 (`git fetch` + `gh api .../pages/builds/latest`).
+Working tree carries only untracked raw logo source files — see
+`docs/PROJECT-STATE.md`'s Logo / Brand section.
 
 ---
 
@@ -157,7 +163,10 @@ The project history references custom scripts including:
 - `js/modal.js`
 - custom hazard-analysis functionality
 
-Tally is the current form system.
+This line previously read "Tally is the current form system" — stale as of
+2026-08-20; see the Form section above for the current (and current-current)
+system. Left uncorrected in earlier versions of this file by oversight, not
+because Tally was ever re-adopted.
 
 The disposition of the legacy custom functionality is:
 
@@ -185,20 +194,29 @@ No analytics provider should be treated as current until verified.
 
 # Next
 
-**No active P0 items as of 2026-08-20.**
+**1 active P0 item as of 2026-08-21:**
 
-### 0. Deploy the Photo Check Cloudflare Worker — 🟢 COMPLETE
+### 0. Run the Review Portal's first authenticated production workflow — 🟠 OPEN
+Cloudflare Access and the review portal's own `RESEND_API_KEY` secret are
+both now confirmed live (see `docs/PROJECT-STATE.md`'s Photo Check Review
+Portal section) — every prerequisite is in place. What's left is the actual
+walkthrough: queue → open a lead → complete the six-category analysis →
+send a response from `hello@zone0landscaping.com` → confirm real email
+delivery. This needs a human browser login through Access, so it's the site
+owner's action, not something to automate further.
+
+Non-blocking cleanup, same priority tier: delete the 9 test/verification
+objects left in the `zone0-photo-check-uploads` R2 bucket, and finish the
+separate ImprovMX setup for `hello@`/`support@`/`privacy@zone0landscaping.com`
+inbound forwarding (does not block Photo Check or the review portal — see
+`docs/PROJECT-STATE.md`'s Email Architecture section).
+
+### Deploy the Photo Check Cloudflare Worker — 🟢 COMPLETE
 `worker/` is deployed, the Resend sending domain is verified, and a real
 submission through the production site was confirmed delivered to the
 owner's inbox. See `docs/PROJECT-STATE.md`'s Photo Check section.
 
-Remaining non-blocking cleanup: delete the 6 test/verification objects left
-in the `zone0-photo-check-uploads` R2 bucket, and finish the separate
-ImprovMX setup for `hello@`/`support@`/`privacy@zone0landscaping.com` inbound
-forwarding (does not block Photo Check — see `docs/PROJECT-STATE.md`'s Email
-Architecture section).
-
-The 3 items previously listed here are complete:
+The items previously listed here are complete:
 
 ### 1. Consolidate Homepage Into Locked One-Page Architecture — 🟢 COMPLETE
 `index.html` rebuilt into the 10 locked sections, deployed as commit `5ff1975`,

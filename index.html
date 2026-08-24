@@ -202,7 +202,95 @@
     </section>
 
     <!-- ========================================================================
-         3. LEAN. GREEN. CLEAN.
+         3. FREE PHOTO CHECK
+         ======================================================================== -->
+    <section id="photo-check" class="scroll-mt-24 form-section py-24 bg-stone-950">
+      <div class="form-container max-w-2xl mx-auto px-6">
+        <span class="text-[10px] uppercase tracking-widest font-bold text-sage-light block mb-2 text-center">Start Your Free Photo Check</span>
+        <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-white text-center">Is My Home At Risk?</h2>
+        <p class="text-stone-300 text-sm max-w-md mx-auto my-6 text-center">Upload up to 3 pictures of your home's perimeter.</p>
+
+        <form id="photo-check-form" class="bg-white border border-stone-200 rounded-lg p-6 sm:p-8 mt-8 text-left" novalidate>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="pc-name" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Name</label>
+              <input type="text" id="pc-name" name="name" required autocomplete="name"
+                class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+            </div>
+            <div>
+              <label for="pc-phone" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Phone</label>
+              <input type="tel" id="pc-phone" name="phone" required autocomplete="tel"
+                class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <label for="pc-email" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Email</label>
+            <input type="email" id="pc-email" name="email" required autocomplete="email"
+              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+          </div>
+
+          <div class="mt-4">
+            <label for="pc-city" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">City</label>
+            <input type="text" id="pc-city" name="city" required autocomplete="address-level2"
+              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+          </div>
+
+          <div class="mt-4">
+            <label for="pc-photos" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Photos</label>
+            <p class="text-xs text-stone-500 mb-2">1&ndash;3 photos of the 0&ndash;5 ft area around your home's foundation &mdash; mulch, vents, siding, and anything touching the house.</p>
+            <input type="file" id="pc-photos" name="photos" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple required
+              class="w-full text-sm text-stone-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:uppercase file:tracking-widest file:font-bold file:bg-stone-100 file:text-stone-900 hover:file:bg-stone-200">
+            <p class="text-xs text-stone-400 mt-1">JPG, PNG, WEBP, or HEIC. Up to 3 photos, 8MB each.</p>
+            <ul id="pc-photos-selected" class="text-xs text-stone-600 mt-2 space-y-1" aria-live="polite"></ul>
+          </div>
+
+          <div class="mt-4">
+            <label for="pc-notes" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Notes <span class="normal-case font-normal text-stone-400">(optional)</span></label>
+            <textarea id="pc-notes" name="notes" rows="3"
+              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default"></textarea>
+          </div>
+
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label for="pc-website">Leave this field blank</label>
+            <input type="text" id="pc-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="loadedAt" id="pc-loaded-at" value="">
+
+          <div id="pc-form-error" class="hidden mt-4 text-sm text-zone-red" role="alert"></div>
+
+          <button type="submit" id="pc-submit" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+            Get My Free Photo Check
+          </button>
+        </form>
+
+        <p class="form-reassurance text-stone-400">No obligation &middot; Confidential review &middot; Response within 24 hours</p>
+
+        <div id="pc-success-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="pc-success-title" aria-describedby="pc-success-desc">
+          <div class="absolute inset-0 bg-stone-950/70"></div>
+          <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full p-6 sm:p-8 text-left">
+            <button type="button" id="pc-success-close-x" class="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-100 hover:text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default" aria-label="Close">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4 pr-8">
+              <span class="flex-shrink-0 w-10 h-10 rounded-full bg-sage-default/10 text-sage-dark flex items-center justify-center" aria-hidden="true">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <h2 id="pc-success-title" class="text-xl font-display font-bold text-stone-900">Photo Check received</h2>
+            </div>
+            <p id="pc-success-desc" class="text-sm text-stone-700 leading-relaxed">
+              Thanks &mdash; your photos and property details are in. We&rsquo;ll review the first five feet around your home for visible ember vulnerabilities and fire-safety opportunities.
+            </p>
+            <button type="button" id="pc-success-close" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors focus:outline-none focus:ring-2 focus:ring-sage-default focus:ring-offset-2">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         4. LEAN. GREEN. CLEAN.
          ======================================================================== -->
     <section id="lean-green-clean" class="scroll-mt-24 py-24 bg-stone-50 border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
@@ -228,7 +316,7 @@
     </section>
 
     <!-- ========================================================================
-         4. LANDSCAPING / HARDSCAPING / DESIGN
+         5. LANDSCAPING / HARDSCAPING / DESIGN
          ======================================================================== -->
     <section id="landscaping" class="scroll-mt-24 py-24 bg-white border-b border-stone-200">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -308,7 +396,7 @@
     </section>
 
     <!-- ========================================================================
-         5. VISUAL PROOF
+         6. VISUAL PROOF
          ======================================================================== -->
     <section id="visual-proof" class="py-24 bg-stone-50 border-b border-stone-200">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -387,7 +475,7 @@
     </section>
 
     <!-- ========================================================================
-         6. UNDERSTAND THE ZONES
+         7. UNDERSTAND THE ZONES
          ======================================================================== -->
     <section id="zones" class="scroll-mt-24 py-24 bg-white border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
@@ -416,7 +504,7 @@
     </section>
 
     <!-- ========================================================================
-         7. RESOURCES
+         8. RESOURCES
          ======================================================================== -->
     <section id="resources" class="scroll-mt-24 py-24 bg-stone-100 border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
@@ -572,7 +660,7 @@
     </section>
 
     <!-- ========================================================================
-         8. HOW WE HELP
+         9. HOW WE HELP
          ======================================================================== -->
     <section id="how-we-help" class="py-24 bg-white border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
@@ -607,94 +695,6 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- ========================================================================
-         9. FREE PHOTO CHECK
-         ======================================================================== -->
-    <section id="photo-check" class="scroll-mt-24 form-section py-24 bg-stone-950">
-      <div class="form-container max-w-2xl mx-auto px-6">
-        <span class="text-[10px] uppercase tracking-widest font-bold text-sage-light block mb-2 text-center">Start Your Free Photo Check</span>
-        <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-white text-center">Is My Home At Risk?</h2>
-        <p class="text-stone-300 text-sm max-w-md mx-auto my-6 text-center">Upload up to 3 pictures of your home's perimeter.</p>
-
-        <form id="photo-check-form" class="bg-white border border-stone-200 rounded-lg p-6 sm:p-8 mt-8 text-left" novalidate>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label for="pc-name" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Name</label>
-              <input type="text" id="pc-name" name="name" required autocomplete="name"
-                class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
-            </div>
-            <div>
-              <label for="pc-phone" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Phone</label>
-              <input type="tel" id="pc-phone" name="phone" required autocomplete="tel"
-                class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
-            </div>
-          </div>
-
-          <div class="mt-4">
-            <label for="pc-email" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Email</label>
-            <input type="email" id="pc-email" name="email" required autocomplete="email"
-              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
-          </div>
-
-          <div class="mt-4">
-            <label for="pc-city" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">City</label>
-            <input type="text" id="pc-city" name="city" required autocomplete="address-level2"
-              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
-          </div>
-
-          <div class="mt-4">
-            <label for="pc-photos" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Photos</label>
-            <p class="text-xs text-stone-500 mb-2">1&ndash;3 photos of the 0&ndash;5 ft area around your home's foundation &mdash; mulch, vents, siding, and anything touching the house.</p>
-            <input type="file" id="pc-photos" name="photos" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple required
-              class="w-full text-sm text-stone-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:uppercase file:tracking-widest file:font-bold file:bg-stone-100 file:text-stone-900 hover:file:bg-stone-200">
-            <p class="text-xs text-stone-400 mt-1">JPG, PNG, WEBP, or HEIC. Up to 3 photos, 8MB each.</p>
-            <ul id="pc-photos-selected" class="text-xs text-stone-600 mt-2 space-y-1" aria-live="polite"></ul>
-          </div>
-
-          <div class="mt-4">
-            <label for="pc-notes" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Notes <span class="normal-case font-normal text-stone-400">(optional)</span></label>
-            <textarea id="pc-notes" name="notes" rows="3"
-              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default"></textarea>
-          </div>
-
-          <div class="absolute -left-[9999px]" aria-hidden="true">
-            <label for="pc-website">Leave this field blank</label>
-            <input type="text" id="pc-website" name="website" tabindex="-1" autocomplete="off">
-          </div>
-          <input type="hidden" name="loadedAt" id="pc-loaded-at" value="">
-
-          <div id="pc-form-error" class="hidden mt-4 text-sm text-zone-red" role="alert"></div>
-
-          <button type="submit" id="pc-submit" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
-            Get My Free Photo Check
-          </button>
-        </form>
-
-        <p class="form-reassurance text-stone-400">No obligation &middot; Confidential review &middot; Response within 24 hours</p>
-
-        <div id="pc-success-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="pc-success-title" aria-describedby="pc-success-desc">
-          <div class="absolute inset-0 bg-stone-950/70"></div>
-          <div class="relative bg-white rounded-lg shadow-xl max-w-md w-full p-6 sm:p-8 text-left">
-            <button type="button" id="pc-success-close-x" class="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-full text-stone-500 hover:bg-stone-100 hover:text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default" aria-label="Close">
-              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-            </button>
-            <div class="flex items-center gap-3 mb-4 pr-8">
-              <span class="flex-shrink-0 w-10 h-10 rounded-full bg-sage-default/10 text-sage-dark flex items-center justify-center" aria-hidden="true">
-                <i class="fa-solid fa-check"></i>
-              </span>
-              <h2 id="pc-success-title" class="text-xl font-display font-bold text-stone-900">Photo Check received</h2>
-            </div>
-            <p id="pc-success-desc" class="text-sm text-stone-700 leading-relaxed">
-              Thanks &mdash; your photos and property details are in. We&rsquo;ll review the first five feet around your home for visible ember vulnerabilities and fire-safety opportunities.
-            </p>
-            <button type="button" id="pc-success-close" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors focus:outline-none focus:ring-2 focus:ring-sage-default focus:ring-offset-2">
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
     </section>
 
     </main>

@@ -2,7 +2,7 @@
 
 **This is a factual snapshot of what exists now. It is NOT a decision document.** For approved decisions, see `docs/DECISION-REGISTER.md` and `docs/decisions.md`. For supporting audit evidence, see `docs/AUDIT-BATCH-3.md`.
 
-**Snapshot date:** 2026-08-20 (Photo Check fully live: real homeowner-path submission through the production site confirmed delivered)
+**Snapshot date:** 2026-08-21 (Photo Check live and verified; footer nav, copy simplification, and new logo all live; Photo Check Review Portal built as an MVP but not yet fully live — see its section below)
 
 ---
 
@@ -10,10 +10,10 @@
 
 - `Sheehan935/Zone0`
 - Branch: `main`
-- HEAD: `379a221` ("Record ImprovMX DNS records added at GoDaddy for hello@ forwarding").
+- HEAD: `bf075d0` ("feat(brand): refine logo to premium/restrained wordmark treatment").
 - `main` and `origin/main` confirmed synchronized at this HEAD (`git fetch` + compare).
-- Working tree clean.
-- Deployment: GitHub Pages, custom domain `zone0landscaping.com`, HTTPS certificate approved.
+- Working tree: untracked only — `assets/logos/Canva Logomark Side/` and `assets/logos/Canva Logomark Top/` (raw logo source exports, intentionally not committed; see Logo / Brand section below).
+- Deployment: GitHub Pages, custom domain `zone0landscaping.com`, HTTPS certificate approved. GitHub Pages API confirms deployed commit = `bf075d0`, status `built`.
 
 ## Visual / Design System Pass — COMPLETE, DEPLOYED 2026-08-20
 
@@ -46,7 +46,9 @@ Following the visual/design-system audit (evidence: computed-style measurements 
 
 ## Architecture
 
-**Locked one-page homepage is now live in production**, not just a target: `index.html` (10 sections: Header, Hero, Lean/Green/Clean, Landscaping/Hardscaping/Design, Visual Proof, Understand the Zones, Resources, How We Help, Free Photo Check, Footer) + `pages/thank-you.html`.
+**Locked one-page homepage** (structure, not current section order below, is live in production): `index.html` + `pages/thank-you.html`.
+
+**2026-08-24 (uncommitted, not yet deployed):** Free Photo Check moved from position 9 to position 3, immediately after Hero and before Lean/Green/Clean. Current order: Header, Hero, Free Photo Check, Lean/Green/Clean, Landscaping/Hardscaping/Design, Visual Proof, Understand the Zones, Resources, How We Help, Footer. See `PROJECT-TRUTH.md` for the locked-decision update. Production still serves the prior order (Photo Check at position 9) until this is committed and deployed.
 
 Legacy multi-page content remains on disk and deployed (still reachable by direct URL, still 200), but is no longer linked from primary navigation:
 - `zone-0/index.html`, `materials/index.html`, `faq/index.html`, `design/index.html` (+ `design/gallery/`, `design/privacy-without-fuel/`) — all present, all serving 200, each still links back into the new homepage via `/#photo-check` and `/#compliance-checklist-section` (both confirmed live).
@@ -168,40 +170,60 @@ from the real site, not from a local file or a `file://` page.
 
 ### Open items
 
-- 6 test/verification objects remain in the R2 bucket (5 synthetic `curl`
-  tests plus the 1 real browser-submitted verification above) and should be
-  deleted once the owner is done reviewing them.
+- 9 test/verification objects now remain in the R2 bucket (the original 6,
+  plus 2 from the `hello@` From-address verification and 1 from the review
+  portal's production D1 check, all logged elsewhere in this file) and
+  should be deleted once the owner is done reviewing them.
 
 See `worker/README.md` for the backend implementation and `docs/decisions.md`'s
 2026-08-20 entry for the full decision record.
 
-## Email Architecture — DECIDED 2026-08-20, PARTIALLY IMPLEMENTED
+## Email Architecture — DECIDED 2026-08-20, ROSTER REVISED 2026-08-24, PARTIALLY IMPLEMENTED
+
+The full address roster was restated by the owner 2026-08-24. Two changes
+from the 2026-08-20 decision: `legal@` replaces `privacy@`, and two
+additional aliases (`brion@`, `info@`) join the roster. The Photo Check
+sender was re-confirmed on 2026-08-24 as `hello@` — the owner's 2026-08-24
+note associating `leads@` with the photo upload form was raised as a
+conflict with the 2026-08-20 From-address decision and resolved in favor of
+keeping `hello@`. `leads@` remains internal-only.
 
 **Public-facing:**
-- `hello@zone0landscaping.com` — general contact. Appears in the homepage
-  footer (`index.html`, added 2026-08-20), `faq/index.html`, and
-  `pages/thank-you.html` (both already correct, unchanged). Also, as of later
-  the same day, this is the Photo Check Worker's `FROM_EMAIL` — see the
-  Photo Check section above for that change and its verification.
+- `hello@zone0landscaping.com` — general contact, and the only address
+  placed anywhere in the markup. Appears in the homepage footer
+  (`index.html`, added 2026-08-20), `faq/index.html`, and
+  `pages/thank-you.html`. Also the Photo Check Worker's `FROM_EMAIL`
+  (`worker/wrangler.toml`) — see the Photo Check section above for that
+  change and its verification. Re-confirmed 2026-08-24.
 - `support@zone0landscaping.com` — decided but **not placed anywhere on the
   site**. No genuine support/help/billing context exists on any live or
-  orphaned page (verified via repo-wide search 2026-08-20). Alias-only per
-  explicit decision, so it works if ever given out directly, without
-  inventing a support page or section that doesn't otherwise exist.
-- `privacy@zone0landscaping.com` — decided but **not placed anywhere on the
-  site**, for the same reason: no Privacy Policy or Terms page exists in the
-  repository at all. Alias-only.
+  orphaned page (verified via repo-wide search 2026-08-20, re-verified
+  2026-08-24). Alias-only per explicit decision, so it works if ever given
+  out directly, without inventing a support page or section that doesn't
+  otherwise exist.
+- `legal@zone0landscaping.com` — replaces `privacy@` as of 2026-08-24.
+  Decided but **not placed anywhere on the site**, for the same reason: no
+  Privacy Policy or Terms page exists in the repository at all
+  (`design/privacy-without-fuel` is a gallery item, not a policy page).
+  Alias-only. Building a Privacy/Terms page was offered 2026-08-24 and
+  explicitly deferred — see TODO.
+- `info@zone0landscaping.com` — added to the roster 2026-08-24. Alias-only;
+  overlaps `hello@` in purpose and is deliberately **not** placed on the
+  site, so the public contact point stays single and unambiguous.
 
 **Internal/operational:**
-- `leads@zone0landscaping.com` — no longer used anywhere in the system as of
-  2026-08-20 (previously the Photo Check `FROM_EMAIL`; replaced by `hello@`
-  so homeowners see Zone 0's public identity, not an internal-looking
-  address). Remains a valid sender under the Resend-verified domain if ever
-  needed again, but nothing currently sends from or displays it.
+- `leads@zone0landscaping.com` — not used anywhere in the system. Previously
+  the Photo Check `FROM_EMAIL`; replaced by `hello@` on 2026-08-20 so
+  homeowners see Zone 0's public identity, not an internal-looking address.
+  That decision was re-examined 2026-08-24 and deliberately kept. Remains a
+  valid sender under the Resend-verified domain if ever needed again, but
+  nothing currently sends from or displays it.
+- `brion@zone0landscaping.com` — owner's named address, added to the roster
+  2026-08-24. Alias-only, for direct correspondence; not placed on the site.
 - Notification destination is `NOTIFY_EMAIL = sheehan935@gmail.com`,
   unaffected by the From-address change.
 
-**Infrastructure decision:** all three public addresses stay **free ImprovMX
+**Infrastructure decision:** all roster addresses stay **free ImprovMX
 aliases** forwarding to the owner's Gmail — explicitly not a paid mailbox,
 to avoid an unrequested recurring cost. Root domain has no MX record today
 (DNS at GoDaddy, `ns47/ns48.domaincontrol.com`); Resend's MX sits only on
@@ -209,10 +231,10 @@ to avoid an unrequested recurring cost. Root domain has no MX record today
 records (`mx1`/`mx2.improvmx.com`, SPF) were added at GoDaddy 2026-08-20.
 
 **Still outstanding (external, owner-only):** create the free ImprovMX
-account, add `zone0landscaping.com`, and configure all three aliases
-(`hello@`, `support@`, `privacy@`) to forward to Gmail. Until that's done,
-mail to any of these addresses bounces. Photo Check lead notifications do
-not depend on this and are unaffected.
+account, add `zone0landscaping.com`, and configure all six aliases
+(`hello@`, `support@`, `legal@`, `info@`, `leads@`, `brion@`) to forward to
+Gmail. Until that's done, mail to any of these addresses bounces. Photo
+Check lead notifications do not depend on this and are unaffected.
 
 ### Post-submission UX — CHANGED 2026-08-20: in-page success modal, no redirect
 
@@ -242,6 +264,144 @@ code (confirmed via repo-wide search across `index.html` and all `js/`/
 direct URL, not deleted. Kept in place per explicit instruction rather than
 removed, as historical/fallback artifact.
 
+## Footer Navigation — ADDED 2026-08-20, LIVE
+
+The footer was a single centered block (AB 3074 citation + copyright only, no
+site navigation). Replaced with three groups — Company, Explore, Contact —
+linking only to anchors that already exist on `index.html`, per an explicit
+decision to stay consistent with the locked one-page architecture: no links
+to the orphaned legacy pages (`zone-0/`, `materials/`, `faq/`), since that
+would reintroduce them into primary navigation, a separate still-open
+question this change deliberately left untouched. `hello@zone0landscaping.com`
+appears in the Contact group. Verified via Playwright at 1440/1024/768/390px:
+every link's destination correct and actually navigates, mailto correct,
+semantic nav landmarks, keyboard focus, zero console errors, zero horizontal
+overflow (a 768px-width email-wrapping bug was caught and fixed during
+testing). Confirmed live in production.
+
+## Photo Check Copy Simplification — CHANGED 2026-08-21, LIVE
+
+- H2 changed: "See what's putting your home at risk." → "Is My Home At Risk?"
+- Removed entirely (not replaced): "A free, no-pressure look at your home's
+  fire risk."
+- The City field's label changed from "City / Neighborhood" to "City" —
+  **the field itself was not removed**, despite an initial request to do so.
+  Its validation, D1 storage, and email templates live in the Worker and the
+  Review Portal (see below), both explicitly on a "do not change" list for
+  that task; removing it from only the frontend would have broken every
+  future submission with a server-side validation error. Resolved by keeping
+  the field fully functional and relabeling it. The two leftover
+  "neighborhood" strings in `worker/src/index.js` (a validation message and
+  the notification email body) were tidied to match, along with one in the
+  not-yet-deployed review portal's queue table header.
+- Verified via Playwright at 1440px/390px: exact heading text, sentence
+  confirmed absent, exactly 6 visible form fields (Name/Phone/Email/City/
+  Photos/Notes), native required-field validation still active, zero
+  console errors, zero horizontal overflow.
+
+## Logo / Brand — REVISED 2026-08-20–21, LIVE
+
+The header's text wordmark ("Zone0 / landscaping") was replaced with the
+leaf mark + "Zone Zero" logo, then that logo itself was refined:
+
+1. **First pass (2026-08-20):** used the raw Canva export as-is. Its source
+   PNG had a solid white background baked into an oversized square canvas —
+   using it directly caused a visible white box in the header and clipped
+   most of the wordmark when height-constrained. Fixed by stripping the
+   background to transparent and cropping to the artwork's actual bounding
+   box (Python/Pillow, run locally — not a repo dependency).
+2. **Revision pass (2026-08-21):** the user asked for a refined wordmark
+   (the original "ZERO" treatment was a thin, hard-to-read script). Four
+   candidate directions were drafted as a design canvas — horizontal
+   (preferred), stacked-refined, compact-for-header, and a lighter
+   "premium/restrained" option — each showing both an oversized view and a
+   real ~80px header-size mockup. **Option D (premium/restrained) was
+   selected.** Implemented as live text, not a baked image: the leaf mark
+   alone (recolored from the source export's unrelated bright green to the
+   site's actual `sage-default` `#6B7A64`) plus a real "ZONE ZERO" `<span>`
+   in Plus Jakarta Sans Bold with wide letter-spacing — crisper at any size,
+   smaller asset, and properly accessible (`aria-label="Zone Zero"` on the
+   link, decorative `alt=""` on the leaf so screen readers don't announce
+   the name twice).
+
+Verified via Playwright at 1440px/390px both passes: image loads (checked
+via `naturalWidth`, not just absence of a 404), correct computed color
+(`rgb(107,122,100)`), no overlap with the mobile menu button, zero console
+errors. Confirmed live in production both times.
+
+**Assets:** `assets/logos/zone-zero-leaf.png` is the only logo asset
+referenced by `index.html`, committed to git. `assets/logos/Canva Logomark
+Side/` and `assets/logos/Canva Logomark Top/` (the raw source exports) are
+on disk but intentionally left untracked — the user's own source material,
+not something this session added to version control.
+
+## Photo Check Review Portal — BUILT 2026-08-20–21, MVP, NOT YET FULLY LIVE
+
+An internal, authenticated tool for working Photo Check leads end-to-end:
+queue → open a lead → view submitted photos → complete a six-category
+fire-safety analysis → send a response to the homeowner from
+`hello@zone0landscaping.com` → track status through to Closed. Full plan at
+the time: a new, separate Cloudflare Worker (`zone0-review-portal`, source
+in `review-worker/`) rather than merging into the public-facing Worker, for
+blast-radius isolation between untrusted public intake and trusted admin
+surface. New D1 database `zone0-leads` (one table, `analysis_json` as a
+single JSON column rather than 42 separate columns — right-sized for
+processing the first 10-20 leads, not a reporting system). Server-rendered
+HTML, no framework, matching the rest of the repo.
+
+**The only change to the existing, live public Worker:** `handleSubmit` now
+also inserts a row into the same D1 database after its existing R2-store-
+and-notify sequence, wrapped the same way the existing Resend call already
+is so a D1 failure can never block a homeowner's submission. Uses D1
+prepared statements (`.bind()`), never string-interpolated SQL, since this
+is the one place public input reaches the new datastore. **Deployed and
+live** — confirmed via a real test submission through the actual public
+form landing correctly in production D1, with its R2 photo independently
+confirmed retrievable.
+
+**Security:** every route requires a valid Cloudflare Access JWT, verified
+Worker-side (RSASSA-PKCS1-v1_5 signature check against Cloudflare's
+published JWKS, audience + expiry checked) as defense-in-depth on top of
+Access itself — fails closed if Access isn't configured, which was the
+state through most of this build (confirmed via real production `curl`:
+every route type — queue, individual lead URLs, the photo route, POST
+actions, even a forged Access header — returned 403). All user-supplied
+fields are HTML-escaped on render (verified against live `<script>`/`<img
+onerror>` XSS probes in both the queue and detail views) and D1-bound
+against SQL injection. Send-to-homeowner is idempotency-guarded (a repeat
+send is silently refused, verified) and gated behind `status = 'complete'`
+and a non-empty response (both guards verified). No per-lead access-control
+list: there is exactly one authorized user, meant to see every lead by
+design, so Access gating the whole route surface is the right-sized
+control — a deliberate scope decision, not an oversight.
+
+**Status as of this snapshot:**
+- `review-worker/` deployed to Cloudflare (`zone0-review-portal.
+  zone0landscaping.workers.dev`).
+- Every local guard/workflow path tested via `wrangler dev` + direct D1
+  queries: draft save + reload persistence, status transitions (including
+  that editing after Complete or after a send doesn't corrupt the frozen
+  `response_sent_body` audit record), the four send guards above.
+- **Cloudflare Access is confirmed live**, not just suspected: the owner
+  filled in real `ACCESS_AUD`/`ACCESS_TEAM_DOMAIN` values in
+  `review-worker/wrangler.toml`, the Worker was redeployed with them, and an
+  unauthenticated request now gets a real `302` to
+  `spring-cell-6642.cloudflareaccess.com`'s login page carrying the matching
+  AUD — both the edge-level Access policy and the Worker's own
+  defense-in-depth JWT check are wired to the same application.
+- **The review portal's `RESEND_API_KEY` secret is confirmed set**
+  (`wrangler secret list` on `review-worker/`), separate from the public
+  Worker's own key as designed.
+- **Still not run:** the actual authenticated workflow (queue → open →
+  complete → send) against production, and a real email delivery check.
+  Both prerequisites (Access, the Resend secret) are now in place — this is
+  the one remaining step, and it requires a human browser login through
+  Access, so the site owner needs to click through it directly, with
+  lead/R2/D1 state checked before and after.
+
+See `review-worker/src/index.js`, `review-worker/wrangler.toml`, and
+`review-worker/migrations/0001_init.sql`.
+
 ## Tools (all in the Resources accordion, all locally verified functional this session)
 
 - Risk Calculator (`js/zone0-tools.js`) — open by default, functional, produces a result on submit.
@@ -255,3 +415,4 @@ removed, as historical/fallback artifact.
 - `docs/decisions.md` and `docs/DECISION-REGISTER.md` both carry the 2026-08-19 "LOCKED: One-page homepage architecture" entry, appended (not rewritten) after the 2026-08-05 multi-page entry — history preserved, current decision recorded.
 - `PROJECT-TRUTH.md`'s one-page architecture claim is now consistent with both the locked decision record and the verified deployed reality (this was not true as of the 2026-08-11 version of that file, prior to the 2026-08-19 reconciliation pass).
 - This file (`docs/PROJECT-STATE.md`) supersedes its own 2026-08-18 snapshot, which described the pre-rebuild multi-page state as current — that snapshot is now historical, not current.
+- This 2026-08-21 sync adds the Footer Navigation, Photo Check Copy Simplification, Logo / Brand, and Photo Check Review Portal sections, and refreshes the Repository section's HEAD/commit references, none of which were reflected in this file's prior version.
