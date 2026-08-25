@@ -381,10 +381,41 @@ defect. Real recipients, including the one real lead's actual address,
 work as expected. Any future QA sends should target `delivered@resend.dev`
 (Resend's own testing address) or a real inbox, never `@example.com`.
 
-Two more test leads exist from this verification pass: id
-`98e8b645-4d17-43d0-8d2e-75eb2fafdfd2` ("QA TEST - DO NOT CONTACT") and id
-`f5d474c4-84e3-4e57-b306-aef78abb96c1` ("QA TEST 2 - DO NOT CONTACT") —
-both flagged in `TODO.md`'s R2 cleanup item alongside the pre-existing 9.
+**R2/D1 test-data cleanup — 2026-08-25.** The "9 pre-existing test objects"
+figure quoted in earlier entries and `TODO.md` was an estimate from memory,
+never checked against an actual bucket listing. `wrangler r2 object` has no
+`list` subcommand in this wrangler version, so the real inventory was
+pulled via the Cloudflare REST API directly (`GET .../r2/buckets/{bucket}/
+objects`, paginated) using wrangler's own cached OAuth token. The bucket
+actually held **28 objects** across 6 D1 leads plus 22 orphaned (no D1 row)
+objects predating the review portal's D1 wiring.
+
+Cross-referencing against the full `leads` table turned up 6 rows, not 2:
+
+| id | name | status | disposition |
+|---|---|---|---|
+| `89790bbf...` | "CLAUDE TEST - review portal D1 verification, ignore/delete" | complete | **deleted** — self-labeled junk |
+| `98e8b645...` | "QA TEST - DO NOT CONTACT" | complete | **deleted** — this session's redesign-deploy test |
+| `f5d474c4...` | "QA TEST 2 - DO NOT CONTACT" | complete | **deleted** — this session's post-fix retest |
+| `796cce36...` | "Brian Sheehan" / Kensington | complete | **kept** — real verification lead from 2026-08-22, predates this session |
+| `9932b30b...` | "Brian Sheehan" / Kensington | new | **kept** — real lead, old flat photo-key format (submitted before this redesign's Worker was live), never reviewed |
+| `8a2291ec...` | "Brian Sheehan" / 681 Oberlin Ave | complete | **kept** — the lead used for this redesign's first successful Review Portal send, 2026-08-25 |
+
+Deleted: the 3 unambiguous rows above plus their 10 R2 objects (5 for
+`98e8b645`, 4 for `f5d474c4`, 1 for `89790bbf`), via the same REST API
+(`DELETE .../objects/{key}`) then `DELETE FROM leads WHERE id IN (...)`
+against production D1 — confirmed via `changes: 3` in the D1 response and a
+follow-up `SELECT` showing exactly 3 rows remain.
+
+**Deliberately left alone, pending the site owner's own call** (real
+history, not junk create this session):
+- The 3 kept leads above and their R2 photos.
+- `ba752818-fa13-4b92-bd50-d38be1036047/d3804fa2-....png` — an orphaned
+  object (no D1 row) that is the exact photo link this file already cites
+  elsewhere as the "strongest possible confirmation" evidence from the
+  original Tally-retirement verification.
+- 9 more orphaned, unlabeled objects (tiny files, no D1 row) from early
+  Worker development before D1 was wired in.
 
 The Review Portal section below documents the portal's general status;
 its six categories described there are superseded by this redesign.
