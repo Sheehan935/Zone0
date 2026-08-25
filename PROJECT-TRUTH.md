@@ -79,6 +79,49 @@ public form/Worker/R2/Resend path is unmodified except for one additive D1
 insert. See `docs/PROJECT-STATE.md`'s Photo Check Review Portal section for
 current status; not yet fully exercised in production.
 
+### Photo Check Redesign — IMPLEMENTED, LOCALLY VERIFIED, NOT YET DEPLOYED (2026-08-24)
+
+Per explicit decision, the intake form and review console were redesigned:
+
+- **Form fields:** `city` replaced with a full property `address` (plain
+  text, no map autocomplete/API). Name, Phone, Email kept.
+- **Photos:** replaced the flat "1-3 generic photos" limit with **per-side
+  capture** — Front/Back/Left/Right, up to 5 photos each, at least 1
+  required per side. R2 keys now encode the side:
+  `{leadId}/{zone}/{uuid}.{ext}`.
+- **Public form UX:** `index.html#photo-check` is now a 3-step stepper
+  (Property → Photos → Concerns) instead of one long form. See
+  `js/photo-check-form.js`.
+- **Review console categories:** the six categories changed from
+  Landscape/Plants, Organic/Combustible Materials, Structure/Foundation,
+  Hardscape/Ground Surface, Trees/Overhead Vegetation, Maintenance/Ongoing
+  Risk — to zone-based categories: Zone 0 Ground Cover, Zone 0 Vegetation,
+  Zone 1 Ladder Fuels, Zone 2 Spacing, Home Hardening, Combustible
+  Storage/Attachments. The old per-category Status/Risk/Priority scheme
+  (OK/Needs Attention/Critical, etc.) was replaced with a single
+  **Pass / Needs Work / Fail** rating + one notes field per category. The
+  more granular fields it replaced (Zone 0 Applicability, How Zone 0 Can
+  Help, separate Risk/Priority) are gone, not preserved elsewhere — a
+  deliberate simplification, not an oversight.
+- **D1 schema:** `review-worker/migrations/0002_address.sql` renames
+  `leads.city` to `leads.address`. Applied and confirmed against a **local**
+  D1 instance only (`wrangler d1 migrations apply zone0-leads --local`) —
+  **not yet run against the remote/production database.**
+- **Verification performed this session:** real browser exercise of the
+  full 3-step stepper (`localhost` static server) including validation,
+  per-zone photo add/remove, progress gating, and the submit error path;
+  and a real `wrangler dev` + local D1 round trip for `review-worker` —
+  inserted a test lead, fetched the queue and lead-detail pages, POSTed a
+  draft save, and confirmed the new categories, Pass/Fail/Needs-Work
+  ratings, and zone-grouped photos all render and persist correctly.
+  **Neither Worker has been redeployed and the D1 migration has not been
+  applied to the remote database** — see `worker/README.md`'s "Deploying
+  the per-side photo redesign" section for the exact deploy steps and
+  order (review-worker + migration first, then worker). This directly
+  affects the open P0 item below ("run the Review Portal's first
+  authenticated production workflow") — that walkthrough should use this
+  redesigned scheme, not the one it was originally scoped against.
+
 ### Legacy Decision
 
 Netlify Forms is no longer the current form solution, and remains not the

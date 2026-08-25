@@ -1,6 +1,7 @@
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
 const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8MB per photo
-const MAX_FILES = 3;
+const ZONES = ['front', 'back', 'left', 'right'];
+const MAX_FILES_PER_ZONE = 5;
 const MIN_SUBMIT_TIME_MS = 3000; // reject submissions faster than a human could plausibly fill the form
 
 export default {
@@ -77,21 +78,25 @@ async function handleSubmit(request, env, corsHeaders) {
   const name = field(form, 'name');
   const email = field(form, 'email');
   const phone = field(form, 'phone');
-  const city = field(form, 'city');
+  const address = field(form, 'address');
   const notes = field(form, 'notes');
 
   const errors = [];
   if (!name) errors.push('Name is required.');
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('A valid email is required.');
   if (!phone || phone.replace(/\D/g, '').length < 7) errors.push('A valid phone number is required.');
-  if (!city) errors.push('City is required.');
+  if (!address) errors.push('Property address is required.');
 
-  const files = form.getAll('photos').filter((f) => f && typeof f === 'object' && 'arrayBuffer' in f && f.size > 0);
-  if (files.length < 1) errors.push('At least 1 photo is required.');
-  if (files.length > MAX_FILES) errors.push(`No more than ${MAX_FILES} photos are allowed.`);
-  for (const f of files) {
-    if (!ALLOWED_IMAGE_TYPES.includes(f.type)) errors.push(`"${f.name}" is not a supported image type.`);
-    if (f.size > MAX_FILE_SIZE) errors.push(`"${f.name}" is larger than 8MB.`);
+  const filesByZone = {};
+  for (const zone of ZONES) {
+    const files = form.getAll(`photos_${zone}`).filter((f) => f && typeof f === 'object' && 'arrayBuffer' in f && f.size > 0);
+    filesByZone[zone] = files;
+    if (files.length < 1) errors.push(`At least 1 photo of the ${zone} is required.`);
+    if (files.length > MAX_FILES_PER_ZONE) errors.push(`No more than ${MAX_FILES_PER_ZONE} photos are allowed per side.`);
+    for (const f of files) {
+      if (!ALLOWED_IMAGE_TYPES.includes(f.type)) errors.push(`"${f.name}" is not a supported image type.`);
+      if (f.size > MAX_FILE_SIZE) errors.push(`"${f.name}" is larger than 8MB.`);
+    }
   }
 
   if (errors.length) {
@@ -101,13 +106,15 @@ async function handleSubmit(request, env, corsHeaders) {
   const leadId = crypto.randomUUID();
   const uploadedKeys = [];
   try {
-    for (const f of files) {
-      const ext = (f.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
-      const key = `${leadId}/${crypto.randomUUID()}.${ext}`;
-      await env.PHOTO_BUCKET.put(key, f.stream(), {
-        httpMetadata: { contentType: f.type },
-      });
-      uploadedKeys.push(key);
+    for (const zone of ZONES) {
+      for (const f of filesByZone[zone]) {
+        const ext = (f.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+        const key = `${leadId}/${zone}/${crypto.randomUUID()}.${ext}`;
+        await env.PHOTO_BUCKET.put(key, f.stream(), {
+          httpMetadata: { contentType: f.type },
+        });
+        uploadedKeys.push(key);
+      }
     }
   } catch (e) {
     return json({ ok: false, error: 'Photo upload failed. Please try again.' }, 502, corsHeaders);
@@ -116,14 +123,14 @@ async function handleSubmit(request, env, corsHeaders) {
   const photoUrls = uploadedKeys.map((k) => `${new URL(request.url).origin}/photo/${k}`);
 
   try {
-    await insertLeadRecord(env, { leadId, name, email, phone, city, notes, uploadedKeys });
+    await insertLeadRecord(env, { leadId, name, email, phone, address, notes, uploadedKeys });
   } catch (e) {
     // The lead + photos are already safely stored in R2 even if the review-portal
     // database write failed -- this must never block the homeowner's submission.
   }
 
   try {
-    await sendNotification(env, { leadId, name, email, phone, city, notes, photoUrls });
+    await sendNotification(env, { leadId, name, email, phone, address, notes, photoUrls });
   } catch (e) {
     // Lead + photos are already safely stored in R2 even though the notification email failed.
     return json({ ok: true, warning: 'Received, but the confirmation email failed to send.' }, 200, corsHeaders);
@@ -136,10 +143,10 @@ async function insertLeadRecord(env, lead) {
   if (!env.DB) return; // D1 binding not configured on this environment
   const now = Date.now();
   await env.DB.prepare(
-    `INSERT INTO leads (id, name, email, phone, city, notes, photo_keys, status, submitted_at, updated_at)
+    `INSERT INTO leads (id, name, email, phone, address, notes, photo_keys, status, submitted_at, updated_at)
      VALUES (?, ?, ?, ?, ?, ?, ?, 'new', ?, ?)`
   )
-    .bind(lead.leadId, lead.name, lead.email, lead.phone, lead.city, lead.notes || null, JSON.stringify(lead.uploadedKeys), now, now)
+    .bind(lead.leadId, lead.name, lead.email, lead.phone, lead.address, lead.notes || null, JSON.stringify(lead.uploadedKeys), now, now)
     .run();
 }
 
@@ -154,7 +161,7 @@ async function sendNotification(env, lead) {
     `Name: ${lead.name}`,
     `Email: ${lead.email}`,
     `Phone: ${lead.phone}`,
-    `City: ${lead.city}`,
+    `Address: ${lead.address}`,
     `Notes: ${lead.notes || '(none)'}`,
     '',
     `Lead ID: ${lead.leadId}`,
@@ -172,7 +179,7 @@ async function sendNotification(env, lead) {
       from: env.FROM_EMAIL,
       to: env.NOTIFY_EMAIL,
       reply_to: lead.email,
-      subject: `New Photo Check lead — ${lead.name} (${lead.city})`,
+      subject: `New Photo Check lead — ${lead.name} (${lead.address})`,
       text,
     }),
   });

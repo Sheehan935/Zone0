@@ -11,17 +11,22 @@ this directory from the Pages build.
 ## What it does
 
 `POST /submit` — accepts the Photo Check form (`multipart/form-data`):
-validates the fields and up to 3 photos, stores the photos in an R2 bucket, and
-emails the lead details + photo links to Zone 0 via Resend. Responds with
-`{ ok: true }` on success or `{ ok: false, error: "..." }` on a validation
-failure — the frontend (`js/photo-check-form.js`) shows that error inline and
-lets the homeowner fix it and resubmit, rather than failing silently.
+Name, Phone, Email, Address, optional Notes, plus photos submitted
+per-side as separate fields — `photos_front`, `photos_back`, `photos_left`,
+`photos_right` — each accepting up to 5 images. Every side requires at least
+1 photo. Validates the fields and files, stores each photo in R2 under
+`{leadId}/{zone}/{uuid}.{ext}` (the zone segment is what lets the review
+portal group photos by side), and emails the lead details + photo links to
+Zone 0 via Resend. Responds with `{ ok: true }` on success or
+`{ ok: false, error: "..." }` on a validation failure — the frontend
+(`js/photo-check-form.js`) shows that error inline and lets the homeowner fix
+it and resubmit, rather than failing silently.
 
-`GET /photo/{key}` — streams a stored photo back out of R2. Used only in the
-lead-notification email links; the keys are random UUIDs, not listed or
-guessable, but not further access-controlled. If that's not tight enough once
-this is live, the simplest upgrade is adding a shared-secret query parameter
-check to this route.
+`GET /photo/{leadId}/{zone}/{uuid}.{ext}` — streams a stored photo back out of
+R2. Used only in the lead-notification email links; the keys are random
+UUIDs, not listed or guessable, but not further access-controlled. If that's
+not tight enough once this is live, the simplest upgrade is adding a
+shared-secret query parameter check to this route.
 
 Basic spam mitigation: a hidden honeypot field (`website`) that real visitors
 never fill in, plus a minimum-time-since-page-load check (rejects submissions
@@ -95,6 +100,30 @@ natural next step — free, and integrates directly with Workers.
   clearly-marked test submission (e.g. name "QA TEST — DO NOT CONTACT") is the
   simplest way to confirm the full chain end-to-end once deployed.
 - R2 objects are visible in the Cloudflare dashboard under R2 → `zone0-photo-check-uploads`.
+
+## Deploying the per-side photo redesign
+
+The form was redesigned to collect a full property address instead of just
+a city, and to collect multiple labeled photos per side of the house
+(front/back/left/right, up to 5 each) instead of up to 3 generic photos.
+This changes both this Worker and `review-worker/`, and requires a D1
+schema change (`city` renamed to `address`). Deploy in this order:
+
+```
+cd review-worker
+npx wrangler d1 migrations apply zone0-leads --remote   # applies 0002_address.sql
+npx wrangler deploy
+
+cd ../worker
+npx wrangler deploy
+```
+
+Deploy `review-worker` first — the D1 rename should land before the public
+Worker starts writing `address` instead of `city`. Existing R2 photo keys
+from before this change (flat `{leadId}/{uuid}.{ext}`, no zone segment)
+won't have a zone to group under in the review portal; the portal skips
+malformed keys rather than mis-rendering them, so re-check any lead
+submitted before this deploy.
 
 ## Local development
 

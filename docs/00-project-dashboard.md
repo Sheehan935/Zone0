@@ -194,16 +194,30 @@ No analytics provider should be treated as current until verified.
 
 # Next
 
-**1 active P0 item as of 2026-08-21:**
+**2 active P0 items as of 2026-08-24:**
 
-### 0. Run the Review Portal's first authenticated production workflow — 🟠 OPEN
+### 0a. Deploy the Photo Check Redesign — 🟠 OPEN
+The per-side photo capture + address field + zone-based review categories
+(see `PROJECT-TRUTH.md` and `docs/PROJECT-STATE.md`'s Photo Check Redesign
+entries) are implemented and locally verified but **not deployed**: the D1
+migration (`review-worker/migrations/0002_address.sql`) has not been applied
+to the remote database, and neither Worker has been redeployed. This blocks
+item 0b below — the "first authenticated production workflow" should be run
+against this redesigned scheme, not the one it was originally scoped
+against. See `worker/README.md`'s "Deploying the per-side photo redesign"
+section for the exact commands/order. Requires the site owner's own
+Cloudflare credentials to run `wrangler deploy` / `wrangler d1 migrations
+apply --remote`, so it's the owner's action.
+
+### 0b. Run the Review Portal's first authenticated production workflow — 🟠 OPEN
 Cloudflare Access and the review portal's own `RESEND_API_KEY` secret are
 both now confirmed live (see `docs/PROJECT-STATE.md`'s Photo Check Review
 Portal section) — every prerequisite is in place. What's left is the actual
 walkthrough: queue → open a lead → complete the six-category analysis →
 send a response from `hello@zone0landscaping.com` → confirm real email
 delivery. This needs a human browser login through Access, so it's the site
-owner's action, not something to automate further.
+owner's action, not something to automate further. Do this after 0a so the
+walkthrough exercises the current categories, not the superseded ones.
 
 Non-blocking cleanup, same priority tier: delete the 9 test/verification
 objects left in the `zone0-photo-check-uploads` R2 bucket, and finish the

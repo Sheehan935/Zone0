@@ -279,6 +279,61 @@ semantic nav landmarks, keyboard focus, zero console errors, zero horizontal
 overflow (a 768px-width email-wrapping bug was caught and fixed during
 testing). Confirmed live in production.
 
+## Photo Check Redesign — Per-Side Photos + Address — IMPLEMENTED 2026-08-24, LOCALLY VERIFIED, NOT DEPLOYED
+
+Per explicit decision, replaced the flat "City + up to 3 generic photos"
+intake with a full property `address` field and per-side photo capture
+(Front/Back/Left/Right, up to 5 photos each, 1+ required per side), and
+replaced the review console's six-category Status/Risk/Priority scheme with
+zone-based categories rated Pass/Needs Work/Fail. Full detail of what
+changed is in `PROJECT-TRUTH.md`'s "Photo Check Redesign" entry (Section 2)
+— this entry is the verification record.
+
+**Changed files:** `index.html` (Photo Check section rebuilt as a 3-step
+stepper), `js/photo-check-form.js` (rewritten for per-zone file state and
+step navigation), `worker/src/index.js` (per-zone `photos_{zone}` fields,
+`address` replaces `city`, R2 keys now `{leadId}/{zone}/{uuid}.{ext}`),
+`review-worker/src/index.js` (new `CATEGORIES`, Pass/Fail/Needs-Work rating
+UI with a small inline script for live client-side highlight, zone-grouped
+photo display, updated queue/detail queries), `review-worker/migrations/
+0002_address.sql` (renames `leads.city` to `leads.address`), `worker/
+README.md` (documents the new contract and the required deploy order).
+
+**Verified this session, real behavior not just source inspection:**
+- Both Worker source files and the rewritten client JS pass `node --check`.
+- Public form: exercised in a real browser against a local static server
+  (`python3 -m http.server`, real `.claude/launch.json` preview, not a
+  synthetic DOM check) — filled Step 1, confirmed empty-field validation
+  blocks advancing, added/removed synthetic photos across all 4 zones,
+  confirmed the "N of 4 areas covered" gating and Continue-button
+  enable/disable, reached Step 3, submitted, and confirmed the
+  network-failure path shows a friendly error (expected: the live Worker's
+  `ALLOWED_ORIGIN` doesn't include `localhost`, and it hasn't been
+  redeployed with the new contract yet, so this exercised the CORS-failure
+  branch, not a real submission). Zero unexpected console errors.
+- Review console: applied `0002_address.sql` to a **local** D1 instance
+  (`wrangler d1 migrations apply zone0-leads --local`), inserted a synthetic
+  test lead directly via `wrangler d1 execute --local`, ran `wrangler dev
+  --local`, and confirmed via real HTTP requests: the queue lists the
+  address column correctly; the lead-detail page groups photos by zone with
+  correct per-zone counts; all 6 new categories render with Pass/Needs
+  Work/Fail controls; a real `POST /save-draft` persisted a rating + notes
+  per category, transitioned status `new` → `in_review`, and the
+  server-rendered re-fetch showed the correct saved rating and its matching
+  color highlight.
+
+**Not done — explicitly still open:**
+- Neither Worker has been redeployed (`wrangler deploy`).
+- The `0002_address.sql` migration has **not** been applied to the remote/
+  production D1 database (`--remote` flag), only local.
+- Nothing has been pushed to `origin/main` or built by GitHub Pages.
+- No real end-to-end submission through the live production Worker exists
+  for this new contract yet.
+
+See `worker/README.md`'s "Deploying the per-side photo redesign" section
+for the exact commands and required order (review-worker + migration
+first, then the public worker) once the site owner is ready to deploy.
+
 ## Photo Check Copy Simplification — CHANGED 2026-08-21, LIVE
 
 - H2 changed: "See what's putting your home at risk." → "Is My Home At Risk?"
@@ -336,6 +391,13 @@ on disk but intentionally left untracked — the user's own source material,
 not something this session added to version control.
 
 ## Photo Check Review Portal — BUILT 2026-08-20–21, MVP, NOT YET FULLY LIVE
+
+**2026-08-24 update:** the six categories and their rating scheme described
+below were replaced (zone-based categories, Pass/Needs Work/Fail) as part
+of the Photo Check Redesign — see that section above for what changed and
+what's been verified. This section's content below is otherwise historical
+(describes the original MVP build) and has not been rewritten line-by-line
+to match; treat the categories named below as superseded.
 
 An internal, authenticated tool for working Photo Check leads end-to-end:
 queue → open a lead → view submitted photos → complete a six-category

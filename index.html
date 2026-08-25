@@ -208,47 +208,139 @@
       <div class="form-container max-w-2xl mx-auto px-6">
         <span class="text-[10px] uppercase tracking-widest font-bold text-sage-light block mb-2 text-center">Start Your Free Photo Check</span>
         <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-white text-center">Is My Home At Risk?</h2>
-        <p class="text-stone-300 text-sm max-w-md mx-auto my-6 text-center">Upload up to 3 pictures of your home's perimeter.</p>
+        <p class="text-stone-300 text-sm max-w-md mx-auto my-6 text-center">A closer look at your home's Zone 0 &mdash; the first 5 feet of defensible space. Takes about 5 minutes.</p>
 
         <form id="photo-check-form" class="bg-white border border-stone-200 rounded-lg p-6 sm:p-8 mt-8 text-left" novalidate>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label for="pc-name" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Name</label>
-              <input type="text" id="pc-name" name="name" required autocomplete="name"
+
+          <div class="flex gap-1.5 mb-2" aria-hidden="true">
+            <div id="pc-progress-1" class="flex-1 h-1 rounded-full bg-sage-default"></div>
+            <div id="pc-progress-2" class="flex-1 h-1 rounded-full bg-stone-200"></div>
+            <div id="pc-progress-3" class="flex-1 h-1 rounded-full bg-stone-200"></div>
+          </div>
+          <div class="flex justify-between text-[10px] uppercase tracking-widest font-bold mb-6">
+            <span id="pc-progress-label-1" class="text-sage-dark">Property</span>
+            <span id="pc-progress-label-2" class="text-stone-400">Photos</span>
+            <span id="pc-progress-label-3" class="text-stone-400">Concerns</span>
+          </div>
+
+          <div id="pc-step-1" data-step="1">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label for="pc-name" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Name</label>
+                <input type="text" id="pc-name" name="name" autocomplete="name"
+                  class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+              </div>
+              <div>
+                <label for="pc-phone" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Phone</label>
+                <input type="tel" id="pc-phone" name="phone" autocomplete="tel"
+                  class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <label for="pc-email" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Email</label>
+              <input type="email" id="pc-email" name="email" autocomplete="email"
+                class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+              <p class="text-xs text-stone-400 mt-1">Your report is sent here.</p>
+            </div>
+
+            <div class="mt-4">
+              <label for="pc-address" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Property Address</label>
+              <input type="text" id="pc-address" name="address" autocomplete="street-address" placeholder="123 Skyline Blvd, Oakland, CA"
                 class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
             </div>
-            <div>
-              <label for="pc-phone" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Phone</label>
-              <input type="tel" id="pc-phone" name="phone" required autocomplete="tel"
-                class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+
+            <div id="pc-step1-error" class="hidden mt-4 text-sm text-zone-red" role="alert"></div>
+
+            <button type="button" id="pc-step1-next" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors">
+              Continue to Photos &rarr;
+            </button>
+          </div>
+
+          <div id="pc-step-2" data-step="2" class="hidden">
+            <h3 class="font-display font-bold text-lg text-stone-900 mb-1">Capture Your Zone 0</h3>
+            <p class="text-xs text-stone-500 mb-5">Walk around your home and photograph the foundation and the first 5 feet of ground and vegetation on each side. Add as many photos as you need for each side (up to 5).</p>
+
+            <div class="space-y-4" id="pc-zones">
+              <div class="border border-stone-200 rounded-lg p-4" data-zone-card="front">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-bold text-stone-900">Front of House</span>
+                  <span id="pc-count-front" class="text-[10px] uppercase tracking-widest font-bold text-stone-400">0 photos</span>
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1" id="pc-thumbs-front"></div>
+                <button type="button" data-zone="front" class="pc-add-photo mt-3 text-xs uppercase tracking-widest font-bold text-sage-dark hover:text-sage-default inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Photo
+                </button>
+                <input type="file" id="pc-photos-front" data-zone="front" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple class="hidden">
+                <p class="text-xs text-stone-500 mt-2">Include the entire foundation, corner to corner.</p>
+              </div>
+
+              <div class="border border-stone-200 rounded-lg p-4" data-zone-card="back">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-bold text-stone-900">Back of House</span>
+                  <span id="pc-count-back" class="text-[10px] uppercase tracking-widest font-bold text-stone-400">0 photos</span>
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1" id="pc-thumbs-back"></div>
+                <button type="button" data-zone="back" class="pc-add-photo mt-3 text-xs uppercase tracking-widest font-bold text-sage-dark hover:text-sage-default inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Photo
+                </button>
+                <input type="file" id="pc-photos-back" data-zone="back" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple class="hidden">
+                <p class="text-xs text-stone-500 mt-2">Show any decks, patios, or furniture near the house.</p>
+              </div>
+
+              <div class="border border-stone-200 rounded-lg p-4" data-zone-card="left">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-bold text-stone-900">Left Side</span>
+                  <span id="pc-count-left" class="text-[10px] uppercase tracking-widest font-bold text-stone-400">0 photos</span>
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1" id="pc-thumbs-left"></div>
+                <button type="button" data-zone="left" class="pc-add-photo mt-3 text-xs uppercase tracking-widest font-bold text-sage-dark hover:text-sage-default inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Photo
+                </button>
+                <input type="file" id="pc-photos-left" data-zone="left" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple class="hidden">
+                <p class="text-xs text-stone-500 mt-2">Show the full side wall and adjacent plantings.</p>
+              </div>
+
+              <div class="border border-stone-200 rounded-lg p-4" data-zone-card="right">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-bold text-stone-900">Right Side</span>
+                  <span id="pc-count-right" class="text-[10px] uppercase tracking-widest font-bold text-stone-400">0 photos</span>
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1" id="pc-thumbs-right"></div>
+                <button type="button" data-zone="right" class="pc-add-photo mt-3 text-xs uppercase tracking-widest font-bold text-sage-dark hover:text-sage-default inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Photo
+                </button>
+                <input type="file" id="pc-photos-right" data-zone="right" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple class="hidden">
+                <p class="text-xs text-stone-500 mt-2">Show the full side wall and adjacent plantings.</p>
+              </div>
+            </div>
+
+            <p class="text-xs text-stone-400 mt-2">JPG, PNG, WEBP, or HEIC. Up to 5 photos per side, 8MB each.</p>
+            <div id="pc-step2-error" class="hidden mt-3 text-sm text-zone-red" role="alert"></div>
+            <p id="pc-zones-progress" class="text-xs text-stone-500 text-center mt-4">0 of 4 areas covered &mdash; at least 1 photo needed per area</p>
+
+            <div class="flex gap-3 mt-4">
+              <button type="button" id="pc-step2-back" class="flex-1 bg-stone-100 text-stone-700 p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-stone-200 transition-colors">Back</button>
+              <button type="button" id="pc-step2-next" disabled class="flex-1 bg-stone-200 text-stone-400 p-3 text-xs uppercase tracking-widest font-bold rounded-full transition-colors disabled:cursor-not-allowed">Continue to Concerns &rarr;</button>
             </div>
           </div>
 
-          <div class="mt-4">
-            <label for="pc-email" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Email</label>
-            <input type="email" id="pc-email" name="email" required autocomplete="email"
-              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
-          </div>
+          <div id="pc-step-3" data-step="3" class="hidden">
+            <div class="mt-1">
+              <label for="pc-notes" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Specific Concerns <span class="normal-case font-normal text-stone-400">(optional)</span></label>
+              <p class="text-xs text-stone-500 mb-2">E.g. wood mulch, large bushes against the wall, a wood pile.</p>
+              <textarea id="pc-notes" name="notes" rows="3"
+                class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default"></textarea>
+            </div>
 
-          <div class="mt-4">
-            <label for="pc-city" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">City</label>
-            <input type="text" id="pc-city" name="city" required autocomplete="address-level2"
-              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
-          </div>
+            <div id="pc-form-error" class="hidden mt-4 text-sm text-zone-red" role="alert"></div>
 
-          <div class="mt-4">
-            <label for="pc-photos" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Photos</label>
-            <p class="text-xs text-stone-500 mb-2">1&ndash;3 photos of the 0&ndash;5 ft area around your home's foundation &mdash; mulch, vents, siding, and anything touching the house.</p>
-            <input type="file" id="pc-photos" name="photos" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple required
-              class="w-full text-sm text-stone-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:uppercase file:tracking-widest file:font-bold file:bg-stone-100 file:text-stone-900 hover:file:bg-stone-200">
-            <p class="text-xs text-stone-400 mt-1">JPG, PNG, WEBP, or HEIC. Up to 3 photos, 8MB each.</p>
-            <ul id="pc-photos-selected" class="text-xs text-stone-600 mt-2 space-y-1" aria-live="polite"></ul>
-          </div>
-
-          <div class="mt-4">
-            <label for="pc-notes" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Notes <span class="normal-case font-normal text-stone-400">(optional)</span></label>
-            <textarea id="pc-notes" name="notes" rows="3"
-              class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default"></textarea>
+            <div class="flex gap-3 mt-6">
+              <button type="button" id="pc-step3-back" class="flex-1 bg-stone-100 text-stone-700 p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-stone-200 transition-colors">Back</button>
+              <button type="submit" id="pc-submit" class="flex-[2] bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
+                Get My Free Photo Check
+              </button>
+            </div>
           </div>
 
           <div class="absolute -left-[9999px]" aria-hidden="true">
@@ -256,12 +348,6 @@
             <input type="text" id="pc-website" name="website" tabindex="-1" autocomplete="off">
           </div>
           <input type="hidden" name="loadedAt" id="pc-loaded-at" value="">
-
-          <div id="pc-form-error" class="hidden mt-4 text-sm text-zone-red" role="alert"></div>
-
-          <button type="submit" id="pc-submit" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
-            Get My Free Photo Check
-          </button>
         </form>
 
         <p class="form-reassurance text-stone-400">No obligation &middot; Confidential review &middot; Response within 24 hours</p>

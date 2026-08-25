@@ -1,11 +1,14 @@
 const CATEGORIES = [
-  { key: 'landscape_plants', label: 'Landscape / Plants' },
-  { key: 'organic_combustible', label: 'Organic / Combustible Materials' },
-  { key: 'structure_foundation', label: 'Structure / Foundation' },
-  { key: 'hardscape_ground', label: 'Hardscape / Ground Surface' },
-  { key: 'trees_overhead', label: 'Trees / Overhead Vegetation' },
-  { key: 'maintenance_risk', label: 'Maintenance / Ongoing Risk' },
+  { key: 'zone0_ground_cover', label: 'Zone 0 (0-5 ft) Ground Cover' },
+  { key: 'zone0_vegetation', label: 'Zone 0 (0-5 ft) Vegetation' },
+  { key: 'zone1_ladder_fuels', label: 'Zone 1 (5-30 ft) Ladder Fuels' },
+  { key: 'zone2_spacing', label: 'Zone 2 (30-100 ft) Spacing' },
+  { key: 'home_hardening', label: 'Home Hardening (Roof / Vents)' },
+  { key: 'combustible_storage', label: 'Combustible Storage / Attachments' },
 ];
+
+const ZONES = ['front', 'back', 'left', 'right'];
+const ZONE_LABELS = { front: 'Front of House', back: 'Back of House', left: 'Left Side', right: 'Right Side' };
 
 const STATUS_LABELS = {
   new: 'New',
@@ -29,9 +32,9 @@ export default {
         return handleQueue(request, env);
       }
 
-      const photoMatch = url.pathname.match(/^\/review\/photo\/([^/]+)\/([^/]+)$/);
+      const photoMatch = url.pathname.match(/^\/review\/photo\/([^/]+)\/([^/]+)\/([^/]+)$/);
       if (photoMatch && request.method === 'GET') {
-        return handlePhoto(env, photoMatch[1], photoMatch[2]);
+        return handlePhoto(env, photoMatch[1], photoMatch[2], photoMatch[3]);
       }
 
       const leadMatch = url.pathname.match(/^\/review\/lead\/([^/]+)$/);
@@ -152,7 +155,7 @@ function base64UrlDecodeToBytes(b64url) {
 
 async function handleQueue(request, env) {
   const { results } = await env.DB.prepare(
-    `SELECT id, name, city, status, submitted_at FROM leads ORDER BY submitted_at DESC`
+    `SELECT id, name, address, status, submitted_at FROM leads ORDER BY submitted_at DESC`
   ).all();
 
   const rows = results
@@ -160,7 +163,7 @@ async function handleQueue(request, env) {
       (lead) => `
       <tr>
         <td class="px-4 py-3"><a href="/review/lead/${escapeAttr(lead.id)}" class="text-sage-dark font-semibold hover:underline">${escapeHtml(lead.name)}</a></td>
-        <td class="px-4 py-3">${escapeHtml(lead.city)}</td>
+        <td class="px-4 py-3">${escapeHtml(lead.address)}</td>
         <td class="px-4 py-3 text-stone-500">${escapeHtml(formatDate(lead.submitted_at))}</td>
         <td class="px-4 py-3">${statusBadge(lead.status)}</td>
       </tr>`
@@ -176,7 +179,7 @@ async function handleQueue(request, env) {
             <thead class="bg-stone-100 text-left text-xs uppercase tracking-wide text-stone-500">
               <tr>
                 <th class="px-4 py-3">Lead</th>
-                <th class="px-4 py-3">City</th>
+                <th class="px-4 py-3">Address</th>
                 <th class="px-4 py-3">Submitted</th>
                 <th class="px-4 py-3">Status</th>
               </tr>
@@ -196,15 +199,29 @@ async function handleLeadDetail(env, id) {
   const photoKeys = JSON.parse(lead.photo_keys || '[]');
   const analysis = lead.analysis_json ? JSON.parse(lead.analysis_json) : {};
 
-  const photosHtml = photoKeys
-    .map((key) => {
-      const [leadId, photoId] = key.split('/');
-      const src = `/review/photo/${encodeURIComponent(leadId)}/${encodeURIComponent(photoId)}`;
-      return `<a href="${src}" target="_blank" rel="noopener noreferrer" class="block">
-        <img src="${src}" alt="Submitted property photo" class="w-full h-40 object-cover rounded-lg border border-stone-200 hover:opacity-90 transition-opacity">
-      </a>`;
-    })
-    .join('');
+  const photosByZone = {};
+  for (const zone of ZONES) photosByZone[zone] = [];
+  for (const key of photoKeys) {
+    const [leadId, zone, photoId] = key.split('/');
+    if (!photoId) continue; // legacy key format from before per-side capture, skip rather than mis-render
+    const src = `/review/photo/${encodeURIComponent(leadId)}/${encodeURIComponent(zone)}/${encodeURIComponent(photoId)}`;
+    (photosByZone[zone] || (photosByZone[zone] = [])).push(src);
+  }
+
+  const photosHtml = ZONES.map((zone) => {
+    const srcs = photosByZone[zone] || [];
+    const thumbs = srcs
+      .map(
+        (src) => `<a href="${src}" target="_blank" rel="noopener noreferrer" class="block">
+          <img src="${src}" alt="Submitted property photo — ${escapeAttr(ZONE_LABELS[zone])}" class="w-full h-32 object-cover rounded-lg border border-stone-200 hover:opacity-90 transition-opacity">
+        </a>`
+      )
+      .join('');
+    return `<div class="mb-4">
+      <p class="text-xs uppercase tracking-wide font-bold text-stone-500 mb-2">${escapeHtml(ZONE_LABELS[zone])} &middot; ${srcs.length} photo${srcs.length === 1 ? '' : 's'}</p>
+      <div class="grid grid-cols-3 sm:grid-cols-4 gap-3">${thumbs || '<p class="text-stone-400 text-sm col-span-full">No photos.</p>'}</div>
+    </div>`;
+  }).join('');
 
   const categoriesHtml = CATEGORIES.map((cat) => categoryFieldset(cat, analysis[cat.key] || {})).join('');
 
@@ -217,7 +234,7 @@ async function handleLeadDetail(env, id) {
     <div class="flex items-start justify-between mt-4 mb-6">
       <div>
         <h1 class="text-2xl font-bold text-stone-900">${escapeHtml(lead.name)}</h1>
-        <p class="text-stone-500">${escapeHtml(lead.city)}</p>
+        <p class="text-stone-500">${escapeHtml(lead.address)}</p>
         <p class="text-sm text-stone-500 mt-1">${escapeHtml(lead.email)} &middot; ${escapeHtml(lead.phone)}</p>
         <p class="text-xs text-stone-400 mt-1">Submitted ${escapeHtml(formatDate(lead.submitted_at))}</p>
       </div>
@@ -227,11 +244,34 @@ async function handleLeadDetail(env, id) {
     ${lead.notes ? `<p class="mb-6 text-sm text-stone-700 bg-stone-50 border border-stone-200 rounded-lg p-4"><strong>Homeowner notes:</strong> ${escapeHtml(lead.notes)}</p>` : ''}
 
     <h2 class="text-lg font-bold text-stone-900 mb-3">Photos</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">${photosHtml || '<p class="text-stone-500 text-sm">No photos.</p>'}</div>
+    <div class="mb-8">${photosHtml}</div>
 
     <form method="POST" id="review-form">
       <h2 class="text-lg font-bold text-stone-900 mb-3">Analysis</h2>
       <div class="space-y-6 mb-8">${categoriesHtml}</div>
+      <script>
+        (function () {
+          var styles = {
+            pass: ['bg-zone-green/10', 'border-zone-green', 'text-zone-green'],
+            needs_work: ['bg-zone-amber/10', 'border-zone-amberdark', 'text-zone-amberdark'],
+            fail: ['bg-zone-red/10', 'border-zone-red', 'text-zone-red'],
+          };
+          var neutral = ['border-stone-300', 'text-stone-600'];
+          var allColorClasses = Object.keys(styles).reduce(function (acc, k) { return acc.concat(styles[k]); }, []);
+          document.querySelectorAll('#review-form fieldset').forEach(function (fieldset) {
+            var radios = fieldset.querySelectorAll('input[type=radio]');
+            radios.forEach(function (input) {
+              input.addEventListener('change', function () {
+                radios.forEach(function (r) {
+                  var label = r.closest('label');
+                  allColorClasses.concat(neutral).forEach(function (c) { label.classList.remove(c); });
+                  (r.checked ? styles[r.value] : neutral).forEach(function (c) { label.classList.add(c); });
+                });
+              });
+            });
+          });
+        })();
+      </script>
 
       <h2 class="text-lg font-bold text-stone-900 mb-3">Finish</h2>
       <div class="space-y-4 mb-8">
@@ -288,32 +328,32 @@ async function handleLeadDetail(env, id) {
 
 function categoryFieldset(cat, data) {
   const f = (key) => (data && data[key]) || '';
+  const rating = f('rating');
   return `
     <fieldset class="border border-stone-200 rounded-lg p-4">
       <legend class="text-sm font-bold text-stone-900 px-1">${escapeHtml(cat.label)}</legend>
-      <div class="grid sm:grid-cols-3 gap-3 mt-2">
-        ${selectField(cat.key, 'status', 'Status', f('status'), ['', 'OK', 'Needs Attention', 'Critical'])}
-        ${selectField(cat.key, 'risk', 'Risk', f('risk'), ['', 'Low', 'Medium', 'High'])}
-        ${selectField(cat.key, 'priority', 'Priority', f('priority'), ['', 'Low', 'Medium', 'High'])}
+      <div class="flex gap-2 mt-2">
+        ${ratingButton(cat.key, 'pass', 'Pass', rating)}
+        ${ratingButton(cat.key, 'needs_work', 'Needs Work', rating)}
+        ${ratingButton(cat.key, 'fail', 'Fail', rating)}
       </div>
-      <div class="grid sm:grid-cols-2 gap-3 mt-3">
-        ${textareaField(cat.key, 'observation', 'Observation', f('observation'))}
-        ${textareaField(cat.key, 'recommended_action', 'Recommended Action', f('recommended_action'))}
-        ${textareaField(cat.key, 'zone0_applicability', 'Zone 0 Applicability', f('zone0_applicability'))}
-        ${textareaField(cat.key, 'how_zone0_can_help', 'How Zone 0 Can Help', f('how_zone0_can_help'))}
+      <div class="mt-3">
+        ${textareaField(cat.key, 'notes', 'Notes', f('notes'))}
       </div>
     </fieldset>`;
 }
 
-function selectField(catKey, fieldKey, label, value, options) {
-  const name = `cat__${catKey}__${fieldKey}`;
-  const opts = options
-    .map((o) => `<option value="${escapeAttr(o)}" ${o === value ? 'selected' : ''}>${o || '—'}</option>`)
-    .join('');
-  return `<div>
-    <label class="block text-[10px] uppercase tracking-wide font-bold text-stone-500 mb-1">${escapeHtml(label)}</label>
-    <select name="${name}" class="w-full border border-stone-300 rounded px-2 py-1.5 text-sm">${opts}</select>
-  </div>`;
+function ratingButton(catKey, value, label, current) {
+  const name = `cat__${catKey}__rating`;
+  const checked = value === current;
+  const colors = {
+    pass: checked ? 'bg-zone-green/10 border-zone-green text-zone-green' : 'border-stone-300 text-stone-600',
+    needs_work: checked ? 'bg-zone-amber/10 border-zone-amberdark text-zone-amberdark' : 'border-stone-300 text-stone-600',
+    fail: checked ? 'bg-zone-red/10 border-zone-red text-zone-red' : 'border-stone-300 text-stone-600',
+  };
+  return `<label class="flex-1 flex items-center justify-center gap-1.5 border rounded px-3 py-1.5 text-xs font-semibold cursor-pointer ${colors[value]}">
+    <input type="radio" name="${name}" value="${value}" ${checked ? 'checked' : ''} class="sr-only">${escapeHtml(label)}
+  </label>`;
 }
 
 function textareaField(catKey, fieldKey, label, value) {
@@ -324,8 +364,8 @@ function textareaField(catKey, fieldKey, label, value) {
   </div>`;
 }
 
-async function handlePhoto(env, leadId, photoId) {
-  const key = `${leadId}/${photoId}`;
+async function handlePhoto(env, leadId, zone, photoId) {
+  const key = `${leadId}/${zone}/${photoId}`;
   const obj = await env.PHOTO_BUCKET.get(key);
   if (!obj) return new Response('Not found', { status: 404 });
   return new Response(obj.body, {
@@ -476,13 +516,8 @@ function collectAnalysis(form) {
   const analysis = {};
   for (const cat of CATEGORIES) {
     analysis[cat.key] = {
-      status: field(form, `cat__${cat.key}__status`),
-      observation: field(form, `cat__${cat.key}__observation`),
-      risk: field(form, `cat__${cat.key}__risk`),
-      priority: field(form, `cat__${cat.key}__priority`),
-      recommended_action: field(form, `cat__${cat.key}__recommended_action`),
-      zone0_applicability: field(form, `cat__${cat.key}__zone0_applicability`),
-      how_zone0_can_help: field(form, `cat__${cat.key}__how_zone0_can_help`),
+      rating: field(form, `cat__${cat.key}__rating`),
+      notes: field(form, `cat__${cat.key}__notes`),
     };
   }
   return analysis;
