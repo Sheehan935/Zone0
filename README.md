@@ -23,7 +23,6 @@ zone0landscaping.com/
 ├── zone-0/
 ├── materials/
 ├── faq/
-├── design/
 ├── CNAME
 ├── README.md
 ├── assets/
