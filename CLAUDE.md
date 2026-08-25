@@ -19,7 +19,7 @@ Verify actual user-visible behavior, including live/external systems where appli
 After verification, determine whether the change is material. If it is, update only the authoritative document(s) it actually affects — do not blindly update both documents for every change.
 
 - `PROJECT-TRUTH.md` — locked decisions and authoritative constraints (Section 1), plus the detailed implementation/verification/production-state log behind them (Section 3). Merged from a separate `PROJECT-TRUTH.md` + `docs/PROJECT-STATE.md` on 2026-08-25 specifically because keeping the same fact in sync across two files was causing drift — don't reintroduce that split.
-- `TODO.md` — only the active, git-relevant next action(s) (≤3 items). The full backlog moved to the **Zone 0 Landscaping Tasks** database in Notion as of 2026-08-25 (the owner's preferred tracker) — don't recreate a backlog section here, and don't let a task exist in both places. Retire or rescope stale items that conflict with current decisions.
+- `TODO.md` — only the active, git-relevant next action(s) (≤3 items). The full backlog lives in the **Zone 0 Landscaping Tasks** spreadsheet in Google Drive as of 2026-08-25 (the owner's preferred tracker — a same-day Notion attempt was superseded) — don't recreate a backlog section here, and don't let a task exist in both places. Retire or rescope stale items that conflict with current decisions.
 
 ## 5. FINAL STATE CHECK
 
