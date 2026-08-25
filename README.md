@@ -26,9 +26,9 @@ zone0landscaping.com/
 ├── design/
 ├── CNAME
 ├── README.md
-├── CHANGELOG.md
 ├── assets/
-├── docs/
+├── docs/              # includes CHANGELOG.md and DECISIONS.md
+├── archive/           # retired content, including the pre-2026-08-24 changelog
 ├── worker/          # Photo Check backend (Cloudflare Worker, deployed separately)
 └── archive/
 ```
