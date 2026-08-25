@@ -496,14 +496,14 @@ async function sendHomeownerResponse(env, lead) {
       from: env.FROM_EMAIL,
       to: lead.email,
       reply_to: env.FROM_EMAIL,
-      subject: `Your Zone 0 Photo Check results — ${lead.city}`,
+      subject: `Your Zone 0 Photo Check results — ${lead.address}`,
       text: lead.homeowner_response,
     }),
   });
 
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    throw new Error(`Resend API error: ${res.status}`);
+    throw new Error(`Resend API error: ${res.status}${data && data.message ? ` — ${data.message}` : ''}`);
   }
   return data.id || null;
 }
