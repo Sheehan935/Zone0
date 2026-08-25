@@ -10,7 +10,7 @@ this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
 **Last synchronized:** 2026-08-25 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `11ef747`
+live GitHub Pages build are all confirmed at commit `f6a72ee`
 (`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
 
 ---
@@ -396,16 +396,69 @@ times. `assets/logos/zone-zero-leaf.png` is the only logo asset referenced
 by `index.html`; the raw Canva source exports are on disk but intentionally
 untracked (the owner's own source material).
 
-### 3.12 Tools (Resources accordion)
+### 3.12 Tools (Resources accordion) — SIMPLIFIED 2026-08-25, 4 items → 3
 
-Risk Calculator, Zone 0 Compliance Checklist (`localStorage`-backed),
-5-Step Inspection Checklist, FAQ & Official Resources all locally verified
-functional. Ordinance Lookup (`js/ordinance-lookup.js`) is preserved on
+Now exactly 3 accordion items: Risk Calculator (rebuilt as a
+diagnostic-style result, see 3.13), Zone 0 Compliance Checklist
+(`localStorage`-backed, unchanged), FAQ & Official Resources. The 5-Step
+Zone 0 Inspection Checklist was removed entirely (commit `ab10a59`) — it
+was fully static (no JS, no state, no `id`, nothing else in the repo
+linked to it) and its content was already covered by the calculator's
+questions and the Compliance Checklist's items. Verified via headless
+Chrome before commit: all 32 calculator answer combinations still score
+and render correctly, Compliance Checklist `localStorage` persistence
+survives a refresh, the calculator's "Work Through the Compliance
+Checklist" CTA still opens it, keyboard `Enter` toggles all 3 accordion
+items at mobile/tablet/desktop, zero new console errors. Confirmed live
+via direct `curl` against production: 0 matches for the removed section's
+heading text. Ordinance Lookup (`js/ordinance-lookup.js`) is preserved on
 disk and still deployed but intentionally unreferenced from `index.html`
 per the locked decision to drop the jurisdiction-lookup feature from the
-homepage.
+homepage — unaffected by this change.
 
-### 3.13 Documentation history
+### 3.13 Risk Calculator Redesign + Homepage Copy Refresh — 2026-08-24/25
+
+Presentation-only redesign of the Risk Calculator (`js/zone0-tools.js`) —
+the same 5 questions and Low/Moderate/High scoring, unchanged: adds a live
+progress bar, renames the CTA to "See My Risk Snapshot," and rebuilds the
+result to surface the highest-priority flagged issue (ranked by a fixed
+severity order, not tied to the score) with a concrete next step, a
+primary CTA that opens the Compliance Checklist, and the Free Photo Check
+as a secondary text link rather than an equally-weighted button (commit
+`9726042`). Companion copy changes, same session:
+
+- Calculator/checklist accordion intro copy rewritten so the two tools
+  read as distinct — "how vulnerable might my home be" vs. "what should I
+  fix first" — instead of two versions of the same thing (`8836490`).
+- Hero subhead rewritten twice; final text: "Create a safer perimeter
+  without sacrificing the design, style, or character of your landscape."
+  (`a1bfad8`, `906ca8d`).
+- Photo Check H2 changed to "Not Sure What Needs to Change Around Your
+  Home?"; supporting copy rewritten to name what to photograph (walls,
+  deck, fence) and what the homeowner gets back (`dfd8e58`, `e1d4c1e`).
+- Lean/Green/Clean card copy rewritten to homeowner-facing language,
+  replacing more technical fuel-continuity/ignition-behavior phrasing
+  (`b908f60`).
+- Landscaping section's "Design Guidance, Not a Plant List" intro centered
+  as an editorial transition between the section header and the four-card
+  grid (was left-aligned); its copy and the four cards' copy reframed
+  around landscape design rather than "bed"/plant-list language, with
+  several fire-behavior claims (resist ignition, fire-retardant, high leaf
+  moisture/low fuel volume) softened to hedge rather than assert
+  (`f94efa8`, `a151ccd`).
+- Header CTA vertical misalignment fixed — the desktop nav flex container
+  was missing `items-center`, so the padded Free Photo Check button
+  defaulted to `align-items: stretch` instead of sharing the nav links'
+  centerline (`0eb879e`).
+
+All verified via headless Chrome (screenshots at desktop/tablet/mobile;
+functional testing of all 32 calculator combinations, `localStorage`
+persistence, and CTA click-through) before commit, then confirmed live in
+production via direct `curl` against `zone0landscaping.com` post-deploy —
+hero text, Photo Check H2/copy, and the calculator's "See My Risk
+Snapshot" button text (served from `js/zone0-tools.js`) all matched.
+
+### 3.14 Documentation history
 
 `docs/decisions.md` carries the dated decision entries this file
 summarizes (2026-08-05 multi-page, 2026-08-19 one-page lock, 2026-08-20
