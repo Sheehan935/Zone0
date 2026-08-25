@@ -36,7 +36,7 @@ zone0landscaping.com/
 ## Planning docs
 
 - `PROJECT-TRUTH.md` - locked decisions and the detailed verification/state log
-- `TODO.md` - active next steps and backlog
+- `TODO.md` - active, git-relevant next steps only (≤3 items); the full backlog lives in the owner's Notion "Zone 0 Landscaping Tasks" database
 - `docs/01-project-brief.md` - project purpose, audience, scope, and stack
 - `docs/02-content-plan.md` - current section-by-section content plan
 - `docs/03-business-plan-structure.md` - offer ladder, funnel, positioning,

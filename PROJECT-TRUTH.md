@@ -83,7 +83,15 @@ pre-existing, unchanged setup, not a build dependency — see 3.1.) Do not
 introduce a framework, build system, npm dependency, or CSS framework
 without explicit approval.
 
-### 1.5 Currently Unresolved
+### 1.5 Explicitly Out of Scope
+
+Not current launch requirements — do not build without separate approval:
+previous 12-page architecture (UNLOCKED/RETIRED, not deleted from project
+history); unapproved multi-page expansion; Shopify plant catalog /
+e-commerce; gravel/stone firebreak packages; advanced developer tooling;
+Astro SSG framework migration; any new route not explicitly approved.
+
+### 1.6 Currently Unresolved
 
 - **Legacy Photo Review / Hazard Tool** (`js/modal.js`, custom hazard-quiz):
   already deleted from the repo and confirmed 404 in production (2026-08-19).
