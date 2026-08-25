@@ -8,7 +8,7 @@ Identify the material business/product/technical decision involved in the task. 
 
 ## 2. IMPLEMENT
 
-Make the change. Do not modify project-control documents (`PROJECT-TRUTH.md`, `docs/PROJECT-STATE.md`, `docs/00-project-dashboard.md`, `TODO.md`) merely to make the work appear complete.
+Make the change. Do not modify project-control documents (`PROJECT-TRUTH.md`, `TODO.md`) merely to make the work appear complete.
 
 ## 3. VERIFY
 
@@ -16,12 +16,10 @@ Verify actual user-visible behavior, including live/external systems where appli
 
 ## 4. SYNCHRONIZE PROJECT TRUTH
 
-After verification, determine whether the change is material. If it is, update only the authoritative document(s) it actually affects — do not blindly update every document.
+After verification, determine whether the change is material. If it is, update only the authoritative document(s) it actually affects — do not blindly update both documents for every change.
 
-- `PROJECT-TRUTH.md` — locked decisions and authoritative constraints.
-- `docs/PROJECT-STATE.md` — what is actually true now: implementation, verification, blockers, production state.
-- `docs/00-project-dashboard.md` — current position, completed work, blockers, actual next actions.
-- `TODO.md` — future work only; retire or rescope stale items that conflict with current decisions.
+- `PROJECT-TRUTH.md` — locked decisions and authoritative constraints (Section 1), plus the detailed implementation/verification/production-state log behind them (Section 3). Merged from a separate `PROJECT-TRUTH.md` + `docs/PROJECT-STATE.md` on 2026-08-25 specifically because keeping the same fact in sync across two files was causing drift — don't reintroduce that split.
+- `TODO.md` — active next actions (top, ≤3 items) and backlog/future work. Merged from a separate `TODO.md` + `docs/00-project-dashboard.md` the same day for the same reason. Retire or rescope stale items that conflict with current decisions.
 
 ## 5. FINAL STATE CHECK
 
