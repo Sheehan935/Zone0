@@ -347,9 +347,37 @@ README.md` (documents the new contract and the required deploy order).
   D1 — add it to the existing "9 test objects" R2 cleanup item in
   `TODO.md` rather than treating it as a separate one-off.
 
-**Still open:** the Review Portal's own authenticated UI has not been
-exercised against this new scheme through a real Cloudflare Access browser
-login yet — see `docs/00-project-dashboard.md`'s Next section (item 0b).
+**Review Portal's first authenticated workflow — COMPLETE 2026-08-25, with a
+real gap found.** The owner logged in through Cloudflare Access, opened a
+real lead (Brian Sheehan, 681 Oberlin Ave), completed the six-category
+analysis, marked it Complete, and successfully sent the homeowner response
+via `hello@zone0landscaping.com`.
+
+While verifying this, a real bug was found and fixed: `sendHomeownerResponse`
+in `review-worker/src/index.js` still referenced `lead.city` for the email
+subject (missed when the column was renamed to `address`), and its error
+handling only surfaced the HTTP status code, not Resend's actual validation
+message. Fixed and redeployed (commit `6232182`): subject now reads
+`lead.address`, and a failed send now includes Resend's own error message.
+
+**That fix then surfaced the real, still-open issue — NOT a code bug:**
+sending to two synthetic test leads with `@example.com` addresses failed
+with `422 Invalid 'to' field... use our testing email address instead`.
+This is Resend's standard restriction for an account that has not verified
+a sending domain: it can only send `to` its own signup address. The first
+real lead succeeded only because that lead's own email happened to match
+the Resend account's verified address — not because arbitrary recipients
+work. **Until a sending domain is verified for whichever Resend account
+owns `review-worker`'s `RESEND_API_KEY`, the portal cannot email real
+homeowner leads**, only the account's own address. See
+`docs/00-project-dashboard.md`'s item 0c for the required next step (the
+site owner's action — Resend dashboard, not something fixable in code).
+
+Two more test leads exist from this verification pass: id
+`98e8b645-4d17-43d0-8d2e-75eb2fafdfd2` ("QA TEST - DO NOT CONTACT") and id
+`f5d474c4-84e3-4e57-b306-aef78abb96c1` ("QA TEST 2 - DO NOT CONTACT") —
+both flagged in `TODO.md`'s R2 cleanup item alongside the pre-existing 9.
+
 The Review Portal section below documents the portal's general status;
 its six categories described there are superseded by this redesign.
 

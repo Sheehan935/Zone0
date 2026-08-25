@@ -194,7 +194,7 @@ No analytics provider should be treated as current until verified.
 
 # Next
 
-**1 active P0 item as of 2026-08-25:**
+**1 active P0 item as of 2026-08-25 (0c) — blocking real homeowner use:**
 
 ### 0a. Deploy the Photo Check Redesign — 🟢 COMPLETE
 The per-side photo capture + address field + zone-based review categories
@@ -205,18 +205,33 @@ static site was pushed to `origin/main`, and a real test submission through
 the deployed public Worker was confirmed end-to-end (R2, D1, byte-identical
 photo retrieval).
 
-### 0b. Run the Review Portal's first authenticated production workflow — 🟠 OPEN
-Cloudflare Access and the review portal's own `RESEND_API_KEY` secret are
-both now confirmed live (see `docs/PROJECT-STATE.md`'s Photo Check Review
-Portal section) — every prerequisite is in place. What's left is the actual
-walkthrough: queue → open a lead → complete the six-category analysis →
-send a response from `hello@zone0landscaping.com` → confirm real email
-delivery. This needs a human browser login through Access, so it's the site
-owner's action, not something to automate further. Do this after 0a so the
-walkthrough exercises the current categories, not the superseded ones.
+### 0b. Run the Review Portal's first authenticated production workflow — 🟢 COMPLETE (with a real gap found)
+Completed 2026-08-25: the owner logged in through Cloudflare Access, opened
+a real lead (Brian Sheehan, 681 Oberlin Ave), completed the analysis,
+marked it Complete, and successfully sent the homeowner response.
 
-Non-blocking cleanup, same priority tier: delete the 9 test/verification
-objects left in the `zone0-photo-check-uploads` R2 bucket, and finish the
+**But this only worked because that lead's email happened to match the
+Resend account's own address.** Testing against synthetic leads with
+`@example.com` addresses failed with `422 Invalid 'to' field... use our
+testing email address instead`. This is Resend's standard restriction for
+an account that hasn't verified a sending domain: it can only email its own
+signup address, not arbitrary recipients. See `docs/PROJECT-STATE.md`'s
+Photo Check Review Portal section for full detail.
+
+### 0c. Verify a sending domain for the Review Portal's Resend account — 🔴 BLOCKING real use
+Until `zone0landscaping.com` (or another domain) is verified for whichever
+Resend account owns `review-worker`'s `RESEND_API_KEY`, the portal can only
+successfully send a homeowner response to that account's own address —
+**not to real customer leads**. This is the site owner's action (Resend
+dashboard → Settings → Domains → Add Domain → add the DNS records at the
+registrar, same process already done for the public form's key). Worth
+first checking whether this is actually the same Resend account as the
+public Worker's key (in which case verifying it there may already cover
+this one) or a genuinely separate account.
+
+Non-blocking cleanup, same priority tier: delete the 11 test/verification
+objects left in the `zone0-photo-check-uploads` R2 bucket (9 pre-existing +
+2 added 2026-08-25 during redesign deploy verification), and finish the
 separate ImprovMX setup for `hello@`/`support@`/`privacy@zone0landscaping.com`
 inbound forwarding (does not block Photo Check or the review portal — see
 `docs/PROJECT-STATE.md`'s Email Architecture section).

@@ -128,11 +128,23 @@ Per explicit decision, the intake form and review console were redesigned:
   dev` + local D1 round trip for `review-worker`'s categories/ratings) was
   also performed earlier the same day — see `docs/PROJECT-STATE.md` for
   that detail.
-- **Still open:** the Review Portal's own authenticated UI (queue → lead
-  detail → analysis → send) has not been exercised against this new
-  scheme through a real Cloudflare Access browser login — see the P0 item
-  below. The public submission path above is fully verified; the
-  Access-gated review side still needs the owner's own browser login.
+- **Review Portal workflow completed 2026-08-25, real gap found:** the
+  owner logged in via Cloudflare Access, ran a real lead through queue →
+  analysis → complete → send, and the send succeeded. Verifying this also
+  found and fixed a real bug (`sendHomeownerResponse` still read
+  `lead.city`, missed in the rename; commit `6232182`), which then exposed
+  a genuine, still-open issue: sending to `@example.com` test addresses
+  fails with a Resend 422 (`Invalid 'to' field... use our testing email
+  address instead`) — the standard restriction for an account without a
+  verified sending domain. The one real lead succeeded only because its
+  email matched the Resend account's own address, not because arbitrary
+  recipients work yet.
+  **NEW BLOCKING ITEM:** until a sending domain is verified for whichever
+  Resend account owns `review-worker`'s `RESEND_API_KEY`, the portal
+  cannot email real homeowner leads — only its own account address. This
+  is the site owner's action (Resend dashboard), not fixable in code. See
+  `docs/00-project-dashboard.md` item 0c and `docs/PROJECT-STATE.md` for
+  full detail.
 
 ### Legacy Decision
 
