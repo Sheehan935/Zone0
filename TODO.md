@@ -50,13 +50,14 @@ concrete, evidenced reason to — don't invent speculative next steps.
 ### Interactive Tools & Local Features
 - [ ] **East Bay ZIP Code Lookup**: Implement dynamic status lookup for `94708`, `94611`, `94563`, and `94549`.
 - [ ] **Direct Contact CTA**: Configure "Have questions on new Zone 0 guidelines>>>" heading with clickable SMS/email links.
-- [ ] **Email aliases (6-address roster)**: ImprovMX account/domain/alias setup still outstanding — see `PROJECT-TRUTH.md` §3.9 for the full roster and current status. Photo Check lead notifications are unaffected.
+- [ ] **Email aliases (6-address roster)**: ImprovMX account/domain/alias setup still outstanding — see `PROJECT-TRUTH.md` §3.9 for the full roster and current status. Photo Check lead notifications are unaffected. **Conflicting signal (2026-08-25):** the owner's external infra-tracker spreadsheet shows ImprovMX forwarding as already Active for `hello@`/`leads@`/`info@`/`brian@` — worth the owner confirming directly (mail to one of the aliases) before treating this as still outstanding or as done.
 - [ ] **Privacy Policy / Terms page**: No such page exists yet. The Photo Check flow collects homeowner photos, name, email, phone, and address, so there's a real case for one. Explicitly deferred 2026-08-24 — revisit before any paid product launch.
 
 ### Site Expansion & Landing Pages
 - [ ] **Create New Landing Pages**: Add dedicated pages for "Zone 0 Hardscape" and "Fire-Adapted Native Planting" under a new "Wildfire Defense" menu tab.
 - [ ] **Add Portfolio Proof**: Create photo gallery showing "Before & After" fire-hazard mitigation (messy Zone 0 -> clean DG).
-- [ ] **Develop Audit Product**: Define scope and price of paid Pre-Inspection Compliance Audit.
+- [ ] **Gallery Photography Assets**: Source and insert photography for the native plant palette and structural (hardscape) transitions in the site's 3-column grid — currently placeholder/missing.
+- [ ] **Develop Audit Product**: Define scope and price of paid Pre-Inspection Compliance Audit. Note: the owner's infra-tracker spreadsheet already lists working figures ($299 audit / $750 design consultation) — confirm whether these are decided pricing or still draft before publishing.
 - [ ] Add real testimonials only when real reviews exist.
 - [ ] Add a real service-area/town list if approved.
 - [ ] Add more before/after project photos.
@@ -64,10 +65,16 @@ concrete, evidenced reason to — don't invent speculative next steps.
 - [ ] Evaluate additional guide/content pages only after architecture is resolved.
 - [ ] Evaluate local SEO pages only after explicit scope approval.
 
+### UI Polish
+- [ ] **Typography & Card Radius Consistency Audit**: Zones/Resources H2 renders at 30px vs. 36px everywhere else on the page; Visual Proof cards use 0px corner radius vs. the site's 8px card standard. Both were explicitly noted as "not touched" during the 2026-08-20 design-system pass (see `PROJECT-TRUTH.md` §3.2) and confirmed still unchanged since — genuine leftover polish, not a regression.
+
 ### Business Discovery & Deployment
 - [ ] **Google Business Profile**: Setup Service-Area Business profile for East Bay search visibility.
 - [ ] **Web Analytics**: Install GA4 / Plausible tracking script to monitor page views and CTA clicks.
 - [ ] **NotebookLM Sync**: Link Google Drive project folder as sources in NotebookLM.
+- [ ] **Payment Gateway**: Set up a payment gateway for paid services/products (audit, design consultation, etc.).
+- [ ] **Marketing Research**: Research the local East Bay landscaping market and competitors.
+- [ ] **Instagram Business Account**: Create and configure an official Instagram business profile for Zone 0 Landscaping.
 
 ---
 
