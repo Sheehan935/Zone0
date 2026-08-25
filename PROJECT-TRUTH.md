@@ -128,23 +128,32 @@ Per explicit decision, the intake form and review console were redesigned:
   dev` + local D1 round trip for `review-worker`'s categories/ratings) was
   also performed earlier the same day — see `docs/PROJECT-STATE.md` for
   that detail.
-- **Review Portal workflow completed 2026-08-25, real gap found:** the
-  owner logged in via Cloudflare Access, ran a real lead through queue →
-  analysis → complete → send, and the send succeeded. Verifying this also
-  found and fixed a real bug (`sendHomeownerResponse` still read
-  `lead.city`, missed in the rename; commit `6232182`), which then exposed
-  a genuine, still-open issue: sending to `@example.com` test addresses
-  fails with a Resend 422 (`Invalid 'to' field... use our testing email
-  address instead`) — the standard restriction for an account without a
-  verified sending domain. The one real lead succeeded only because its
-  email matched the Resend account's own address, not because arbitrary
-  recipients work yet.
-  **NEW BLOCKING ITEM:** until a sending domain is verified for whichever
-  Resend account owns `review-worker`'s `RESEND_API_KEY`, the portal
-  cannot email real homeowner leads — only its own account address. This
-  is the site owner's action (Resend dashboard), not fixable in code. See
-  `docs/00-project-dashboard.md` item 0c and `docs/PROJECT-STATE.md` for
-  full detail.
+- **Review Portal workflow completed 2026-08-25 — fully working, no
+  blocker.** The owner logged in via Cloudflare Access, ran a real lead
+  through queue → analysis → complete → send, and the send succeeded.
+  Verifying this also found and fixed a real bug (`sendHomeownerResponse`
+  still read `lead.city`, missed in the rename; commit `6232182`).
+- **Correction to this file's own prior claim:** an earlier version of
+  this entry (superseded by this one) said sending to `@example.com` test
+  addresses failing with a Resend 422 meant `review-worker`'s Resend
+  account lacked a verified sending domain, and flagged that as a new
+  blocking item. **That was wrong.** The site owner checked the Resend
+  dashboard directly: `zone0landscaping.com` is Verified in the one and
+  only Resend account in use (`sheehan935`); there are only two API keys
+  in that account ("Worker Key", "Onboarding"), both covered by the
+  verified domain; and the Resend Logs page showed every 422's exact
+  error body: `Invalid 'to' field. Please use our testing email address
+  instead of domains like example.com.` — Resend rejects the RFC 2606
+  reserved `example.com` domain as a recipient outright, regardless of
+  sender verification, specifically to stop accidental sends to a domain
+  that was never meant to receive mail. The 422s were interleaved with
+  200s on the same endpoint minutes apart, which a real account/domain
+  problem would not produce. There is no account, domain, or code issue
+  here — the synthetic test addresses (`qa-test@example.com`,
+  `qa-test-2@example.com`) were themselves the problem, not the system.
+  Real recipients (like the one real lead's actual address) work as
+  expected. Any further QA sends should target `delivered@resend.dev`
+  (Resend's own testing address) or a real inbox, never `@example.com`.
 
 ### Legacy Decision
 

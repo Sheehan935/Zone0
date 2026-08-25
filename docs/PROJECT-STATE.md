@@ -347,11 +347,11 @@ README.md` (documents the new contract and the required deploy order).
   D1 — add it to the existing "9 test objects" R2 cleanup item in
   `TODO.md` rather than treating it as a separate one-off.
 
-**Review Portal's first authenticated workflow — COMPLETE 2026-08-25, with a
-real gap found.** The owner logged in through Cloudflare Access, opened a
-real lead (Brian Sheehan, 681 Oberlin Ave), completed the six-category
-analysis, marked it Complete, and successfully sent the homeowner response
-via `hello@zone0landscaping.com`.
+**Review Portal's first authenticated workflow — COMPLETE 2026-08-25,
+fully working, no blocker.** The owner logged in through Cloudflare
+Access, opened a real lead (Brian Sheehan, 681 Oberlin Ave), completed the
+six-category analysis, marked it Complete, and successfully sent the
+homeowner response via `hello@zone0landscaping.com`.
 
 While verifying this, a real bug was found and fixed: `sendHomeownerResponse`
 in `review-worker/src/index.js` still referenced `lead.city` for the email
@@ -360,18 +360,26 @@ handling only surfaced the HTTP status code, not Resend's actual validation
 message. Fixed and redeployed (commit `6232182`): subject now reads
 `lead.address`, and a failed send now includes Resend's own error message.
 
-**That fix then surfaced the real, still-open issue — NOT a code bug:**
-sending to two synthetic test leads with `@example.com` addresses failed
-with `422 Invalid 'to' field... use our testing email address instead`.
-This is Resend's standard restriction for an account that has not verified
-a sending domain: it can only send `to` its own signup address. The first
-real lead succeeded only because that lead's own email happened to match
-the Resend account's verified address — not because arbitrary recipients
-work. **Until a sending domain is verified for whichever Resend account
-owns `review-worker`'s `RESEND_API_KEY`, the portal cannot email real
-homeowner leads**, only the account's own address. See
-`docs/00-project-dashboard.md`'s item 0c for the required next step (the
-site owner's action — Resend dashboard, not something fixable in code).
+**Correction to this file's own prior claim:** an earlier version of this
+entry (superseded by this one) read the resulting 422s as evidence that
+`review-worker`'s Resend account lacked a verified sending domain, and
+flagged that as a new blocking item. **That was wrong, and the site owner
+caught it** by checking the Resend dashboard directly: `zone0landscaping.com`
+is Verified in the one and only Resend account in use (`sheehan935`, the
+account behind both API keys — "Worker Key" and "Onboarding" — so the
+verified domain covers either); and the Resend Logs page showed the exact
+error body for every 422: `Invalid 'to' field. Please use our testing
+email address instead of domains like example.com.` Resend rejects the
+RFC 2606 reserved `example.com` domain as a recipient outright, regardless
+of sender/domain verification, specifically to catch accidental sends to
+a domain that was never meant to receive mail. The 422s were interleaved
+with 200s on the same endpoint minutes apart, which a genuine account or
+domain problem would not produce. **There is no account, domain, or code
+issue** — the synthetic test addresses (`qa-test@example.com`,
+`qa-test-2@example.com`) were themselves invalid test data, not a system
+defect. Real recipients, including the one real lead's actual address,
+work as expected. Any future QA sends should target `delivered@resend.dev`
+(Resend's own testing address) or a real inbox, never `@example.com`.
 
 Two more test leads exist from this verification pass: id
 `98e8b645-4d17-43d0-8d2e-75eb2fafdfd2` ("QA TEST - DO NOT CONTACT") and id
