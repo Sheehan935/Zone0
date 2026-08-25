@@ -35,7 +35,7 @@
   });
 })();
 
-// Sticky header mobile menu (index.html, /zone-0/, /materials/, /faq/)
+// Sticky header mobile menu (index.html)
 (function () {
     function initMobileMenu() {
         var toggle = document.getElementById('mobileMenuToggle');

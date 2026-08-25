@@ -20,9 +20,6 @@ zone0landscaping.com/
 ├── index.html
 ├── css/
 ├── js/
-├── zone-0/
-├── materials/
-├── faq/
 ├── CNAME
 ├── README.md
 ├── assets/
