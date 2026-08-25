@@ -79,7 +79,7 @@ public form/Worker/R2/Resend path is unmodified except for one additive D1
 insert. See `docs/PROJECT-STATE.md`'s Photo Check Review Portal section for
 current status; not yet fully exercised in production.
 
-### Photo Check Redesign — IMPLEMENTED, LOCALLY VERIFIED, NOT YET DEPLOYED (2026-08-24)
+### Photo Check Redesign — IMPLEMENTED AND DEPLOYED, VERIFIED LIVE (2026-08-24/25)
 
 Per explicit decision, the intake form and review console were redesigned:
 
@@ -104,23 +104,35 @@ Per explicit decision, the intake form and review console were redesigned:
   Help, separate Risk/Priority) are gone, not preserved elsewhere — a
   deliberate simplification, not an oversight.
 - **D1 schema:** `review-worker/migrations/0002_address.sql` renames
-  `leads.city` to `leads.address`. Applied and confirmed against a **local**
-  D1 instance only (`wrangler d1 migrations apply zone0-leads --local`) —
-  **not yet run against the remote/production database.**
-- **Verification performed this session:** real browser exercise of the
-  full 3-step stepper (`localhost` static server) including validation,
-  per-zone photo add/remove, progress gating, and the submit error path;
-  and a real `wrangler dev` + local D1 round trip for `review-worker` —
-  inserted a test lead, fetched the queue and lead-detail pages, POSTed a
-  draft save, and confirmed the new categories, Pass/Fail/Needs-Work
-  ratings, and zone-grouped photos all render and persist correctly.
-  **Neither Worker has been redeployed and the D1 migration has not been
-  applied to the remote database** — see `worker/README.md`'s "Deploying
-  the per-side photo redesign" section for the exact deploy steps and
-  order (review-worker + migration first, then worker). This directly
-  affects the open P0 item below ("run the Review Portal's first
-  authenticated production workflow") — that walkthrough should use this
-  redesigned scheme, not the one it was originally scoped against.
+  `leads.city` to `leads.address`. Applied to the **local** D1 instance
+  first, then successfully applied to the **remote/production** database
+  (`wrangler d1 migrations apply zone0-leads --remote`, 2026-08-25).
+- **Deployed 2026-08-25:** `review-worker` (`zone0-review-portal`) and the
+  public `worker` (`zone0-photo-check`) were both redeployed via
+  `wrangler deploy`, in that order, after the remote migration.
+  `index.html`/`js/photo-check-form.js` were committed (`29aea70`) and
+  pushed to `origin/main`, so GitHub Pages serves the new stepper.
+- **Verified live in production, not just locally:** a real, clearly-marked
+  test submission (name "QA TEST - DO NOT CONTACT") was POSTed directly to
+  the deployed public Worker (`https://zone0-photo-check.
+  zone0landscaping.workers.dev/submit`, real `Origin` header, 5 photos
+  across all 4 zones) and returned `{"ok":true}`. Confirmed via direct
+  queries against the **production** D1 database: the row has the new
+  `address` column populated and `photo_keys` correctly encoding
+  `{leadId}/{zone}/{uuid}.ext` for all 4 zones. Confirmed via the public
+  `GET /photo/...` route: the stored photo is retrievable and
+  byte-identical to the uploaded file. This test lead (id
+  `98e8b645-4d17-43d0-8d2e-75eb2fafdfd2`) is still in R2/D1, alongside the
+  9 pre-existing test objects already flagged for cleanup in `TODO.md`.
+  Local-only verification (browser stepper walkthrough, local `wrangler
+  dev` + local D1 round trip for `review-worker`'s categories/ratings) was
+  also performed earlier the same day — see `docs/PROJECT-STATE.md` for
+  that detail.
+- **Still open:** the Review Portal's own authenticated UI (queue → lead
+  detail → analysis → send) has not been exercised against this new
+  scheme through a real Cloudflare Access browser login — see the P0 item
+  below. The public submission path above is fully verified; the
+  Access-gated review side still needs the owner's own browser login.
 
 ### Legacy Decision
 

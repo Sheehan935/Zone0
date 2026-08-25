@@ -194,20 +194,16 @@ No analytics provider should be treated as current until verified.
 
 # Next
 
-**2 active P0 items as of 2026-08-24:**
+**1 active P0 item as of 2026-08-25:**
 
-### 0a. Deploy the Photo Check Redesign — 🟠 OPEN
+### 0a. Deploy the Photo Check Redesign — 🟢 COMPLETE
 The per-side photo capture + address field + zone-based review categories
 (see `PROJECT-TRUTH.md` and `docs/PROJECT-STATE.md`'s Photo Check Redesign
-entries) are implemented and locally verified but **not deployed**: the D1
-migration (`review-worker/migrations/0002_address.sql`) has not been applied
-to the remote database, and neither Worker has been redeployed. This blocks
-item 0b below — the "first authenticated production workflow" should be run
-against this redesigned scheme, not the one it was originally scoped
-against. See `worker/README.md`'s "Deploying the per-side photo redesign"
-section for the exact commands/order. Requires the site owner's own
-Cloudflare credentials to run `wrangler deploy` / `wrangler d1 migrations
-apply --remote`, so it's the owner's action.
+entries) are deployed and verified live as of 2026-08-25: the D1 migration
+was applied to the remote database, both Workers were redeployed, the
+static site was pushed to `origin/main`, and a real test submission through
+the deployed public Worker was confirmed end-to-end (R2, D1, byte-identical
+photo retrieval).
 
 ### 0b. Run the Review Portal's first authenticated production workflow — 🟠 OPEN
 Cloudflare Access and the review portal's own `RESEND_API_KEY` secret are

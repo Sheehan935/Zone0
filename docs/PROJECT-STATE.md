@@ -279,7 +279,7 @@ semantic nav landmarks, keyboard focus, zero console errors, zero horizontal
 overflow (a 768px-width email-wrapping bug was caught and fixed during
 testing). Confirmed live in production.
 
-## Photo Check Redesign — Per-Side Photos + Address — IMPLEMENTED 2026-08-24, LOCALLY VERIFIED, NOT DEPLOYED
+## Photo Check Redesign — Per-Side Photos + Address — DEPLOYED AND VERIFIED LIVE 2026-08-25
 
 Per explicit decision, replaced the flat "City + up to 3 generic photos"
 intake with a full property `address` field and per-side photo capture
@@ -322,17 +322,36 @@ README.md` (documents the new contract and the required deploy order).
   server-rendered re-fetch showed the correct saved rating and its matching
   color highlight.
 
-**Not done — explicitly still open:**
-- Neither Worker has been redeployed (`wrangler deploy`).
-- The `0002_address.sql` migration has **not** been applied to the remote/
-  production D1 database (`--remote` flag), only local.
-- Nothing has been pushed to `origin/main` or built by GitHub Pages.
-- No real end-to-end submission through the live production Worker exists
-  for this new contract yet.
+**Deployed and verified live, 2026-08-25 (same day, following session):**
+- `0002_address.sql` applied to the remote/production D1 database
+  (`wrangler d1 migrations apply zone0-leads --remote`).
+- `review-worker` redeployed first, then the public `worker` — both via
+  `wrangler deploy`, matching the required order in `worker/README.md`.
+- `index.html` + `js/photo-check-form.js` committed (`29aea70`) and pushed
+  to `origin/main` for GitHub Pages to build.
+- **Real production submission, not a local simulation:** POSTed a
+  clearly-marked test lead (name "QA TEST - DO NOT CONTACT") directly to
+  `https://zone0-photo-check.zone0landscaping.workers.dev/submit` with a
+  real `Origin: https://zone0landscaping.com` header and 5 photos spread
+  across all 4 zones → `{"ok":true}`. Confirmed against the **production**
+  D1 database via `wrangler d1 execute --remote`: the row has `address`
+  populated and `photo_keys` correctly zone-tagged
+  (`{leadId}/front/...`, `/back/...`, `/left/...`, `/right/...`).
+  Confirmed via the public `GET /photo/{leadId}/{zone}/{uuid}.ext` route
+  that a stored photo is retrievable and byte-identical to the uploaded
+  file. This is the strongest confirmation short of an actual homeowner
+  submission — the entire path (form contract → Worker → R2 → D1 →
+  Resend) is proven against the real deployed services, not a local
+  emulation.
+- This test lead (id `98e8b645-4d17-43d0-8d2e-75eb2fafdfd2`) remains in R2/
+  D1 — add it to the existing "9 test objects" R2 cleanup item in
+  `TODO.md` rather than treating it as a separate one-off.
 
-See `worker/README.md`'s "Deploying the per-side photo redesign" section
-for the exact commands and required order (review-worker + migration
-first, then the public worker) once the site owner is ready to deploy.
+**Still open:** the Review Portal's own authenticated UI has not been
+exercised against this new scheme through a real Cloudflare Access browser
+login yet — see `docs/00-project-dashboard.md`'s Next section (item 0b).
+The Review Portal section below documents the portal's general status;
+its six categories described there are superseded by this redesign.
 
 ## Photo Check Copy Simplification — CHANGED 2026-08-21, LIVE
 
