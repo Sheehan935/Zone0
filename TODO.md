@@ -13,13 +13,9 @@ Never more than 3 active items in **Next**.
 
 ## Next
 
-**0 active items as of 2026-08-25** — the Photo Check redesign (per-side
-photos, address field, zone-based review categories) is fully deployed and
-verified live, including the Review Portal's first authenticated send. See
-`PROJECT-TRUTH.md` §3.6–3.8 for the full record.
+**1 active item as of 2026-08-25:**
 
-No new items have been identified. Add one here only when there's a
-concrete, evidenced reason to — don't invent speculative next steps.
+- [ ] **Market Research**: Research the local East Bay landscaping market and competitors.
 
 ---
 
@@ -73,7 +69,6 @@ concrete, evidenced reason to — don't invent speculative next steps.
 - [ ] **Web Analytics**: Install GA4 / Plausible tracking script to monitor page views and CTA clicks.
 - [ ] **NotebookLM Sync**: Link Google Drive project folder as sources in NotebookLM.
 - [ ] **Payment Gateway**: Set up a payment gateway for paid services/products (audit, design consultation, etc.).
-- [ ] **Marketing Research**: Research the local East Bay landscaping market and competitors.
 - [ ] **Instagram Business Account**: Create and configure an official Instagram business profile for Zone 0 Landscaping.
 
 ---
