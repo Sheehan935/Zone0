@@ -6,6 +6,32 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 
 ## Unreleased
 
+### Added
+- Optional "areas of interest" multi-select on the Photo Review intake
+  (six whitelisted slugs, stored comma-joined in a new nullable `areas`
+  column via `review-worker/migrations/0003_areas.sql`).
+- Optional close-up photo zone, deliberately excluded from the
+  four-sides-required completion gate.
+
+### Changed
+- The free Photo Check is now the **$29 Detailed Photo Review**, delivered
+  within 48 hours (was "response within 24 hours"). Copy updated across the
+  nav, hero, form section, submit button, FAQ, footer, calculator and
+  checklist CTAs, and the success modal.
+- Relabelled the existing concerns field to "Is there anything specific
+  you're concerned about?" — relabelled, not duplicated.
+- Added the missing YAML frontmatter to
+  `.claude/skills/homeowner-journey/SKILL.md` so it registers as a skill,
+  and updated its outdated "Free Photo Check" positioning.
+
+### Preserved
+- The lead notification subject `New Photo Check lead — {name} ({address})`
+  is unchanged — the Control Center and Dashboard artifacts search Gmail for
+  that exact string.
+- All four side photos remain hard-required, client and server.
+- R2 key shape `{leadId}/{zone}/{uuid}.{ext}` and the `photo_keys` JSON
+  format are unchanged, so existing leads still render in the portal.
+
 ### Changed
 - Simplified the Zone 0 self-check experience by removing the redundant
   static 5-Step Inspection Checklist (the interactive Compliance

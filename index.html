@@ -157,7 +157,7 @@
             <a href="#landscaping" class="hover:text-sage-default transition-colors">Landscaping</a>
             <a href="#zones" class="hover:text-sage-default transition-colors">Zones</a>
             <a href="#resources" class="hover:text-sage-default transition-colors">Resources</a>
-          <a href="#photo-check" class="bg-terracotta hover:bg-[#c85a2f] text-white text-xs font-semibold tracking-wider uppercase px-4 py-2 rounded-full shadow-sm transition-all">Free Photo Check</a>
+          <a href="#photo-check" class="bg-terracotta hover:bg-[#c85a2f] text-white text-xs font-semibold tracking-wider uppercase px-4 py-2 rounded-full shadow-sm transition-all">Photo Review &mdash; $29</a>
             </nav>
 
         <!-- Mobile Menu Button -->
@@ -195,7 +195,7 @@
         </p>
         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
           <a href="#photo-check" class="bg-sage-default text-white px-8 py-4 text-base uppercase tracking-widest font-bold hover:bg-sage-dark transition-colors text-center w-full sm:w-auto shadow-lg rounded-full">
-            Get Your Free Photo Check
+            Get Your $29 Photo Review
           </a>
           <a href="#lean-green-clean" class="border border-stone-600 text-white px-8 py-4 text-base uppercase tracking-widest font-bold hover:bg-white hover:text-stone-900 transition-colors text-center w-full sm:w-auto rounded-full">
             Explore the Approach
@@ -209,9 +209,9 @@
          ======================================================================== -->
     <section id="photo-check" class="scroll-mt-24 form-section py-24 bg-stone-950">
       <div class="form-container max-w-2xl mx-auto px-6">
-        <span class="text-2xs uppercase tracking-widest font-bold text-sage-light block mb-2 text-center">Start Your Free Photo Check</span>
+        <span class="text-2xs uppercase tracking-widest font-bold text-sage-light block mb-2 text-center">$29 Detailed Photo Review</span>
         <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-white text-center">Not Sure What Needs to Change Around Your Home?</h2>
-        <p class="text-stone-300 text-base max-w-md mx-auto my-6 text-center">Upload photos of your home, deck, or fence. We&rsquo;ll show you where small changes can improve Zone 0 without sacrificing the landscape.</p>
+        <p class="text-stone-300 text-base max-w-md mx-auto my-6 text-center">Send photos of the first five feet around your home and get a personalized, plain-English action list within 48 hours &mdash; $29. An educational review of what we can see in your photos, not an official inspection or certification.</p>
 
         <form id="photo-check-form" class="bg-white border border-stone-200 rounded-lg p-6 sm:p-8 mt-8 text-left" novalidate>
 
@@ -316,6 +316,19 @@
                 <input type="file" id="pc-photos-right" data-zone="right" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple class="hidden">
                 <p class="text-xs text-stone-500 mt-2">Show the full side wall and adjacent plantings.</p>
               </div>
+
+              <div class="border border-dashed border-stone-300 rounded-lg p-4 bg-stone-50" data-zone-card="closeup">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-sm font-bold text-stone-900">Close-ups <span class="font-normal text-stone-500">(optional)</span></span>
+                  <span id="pc-count-closeup" class="text-2xs uppercase tracking-widest font-bold text-stone-400">0 photos</span>
+                </div>
+                <div class="flex gap-2 overflow-x-auto pb-1" id="pc-thumbs-closeup"></div>
+                <button type="button" data-zone="closeup" class="pc-add-photo mt-3 text-xs uppercase tracking-widest font-bold text-sage-dark hover:text-sage-default inline-flex items-center gap-1.5">
+                  <i class="fa-solid fa-plus" aria-hidden="true"></i> Add Photo
+                </button>
+                <input type="file" id="pc-photos-closeup" data-zone="closeup" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple class="hidden">
+                <p class="text-xs text-stone-500 mt-2">Anything you want a closer look at &mdash; a wood pile, a fence attachment, mulch against the siding. These do not replace the four required sides.</p>
+              </div>
             </div>
 
             <p class="text-xs text-stone-400 mt-2">JPG, PNG, WEBP, or HEIC. Up to 5 photos per side, 8MB each.</p>
@@ -330,7 +343,38 @@
 
           <div id="pc-step-3" data-step="3" class="hidden">
             <div class="mt-1">
-              <label for="pc-notes" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Specific Concerns <span class="normal-case font-normal text-stone-400">(optional)</span></label>
+              <span class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">What would you like us to look at? <span class="normal-case font-normal text-stone-400">(optional)</span></span>
+              <p class="text-xs text-stone-500 mb-2">Pick any that apply. This tells us where to focus.</p>
+              <div id="pc-areas" class="grid gap-2 sm:grid-cols-2">
+              <label class="flex items-start gap-2 border border-stone-200 rounded-lg p-3 cursor-pointer hover:border-sage-default">
+                <input type="checkbox" name="areas" value="zone0" class="pc-area mt-0.5 accent-[#6b7f5e]">
+                <span class="text-sm text-stone-700">The first 5 feet around the house</span>
+              </label>
+              <label class="flex items-start gap-2 border border-stone-200 rounded-lg p-3 cursor-pointer hover:border-sage-default">
+                <input type="checkbox" name="areas" value="plants" class="pc-area mt-0.5 accent-[#6b7f5e]">
+                <span class="text-sm text-stone-700">Plants and shrubs near the structure</span>
+              </label>
+              <label class="flex items-start gap-2 border border-stone-200 rounded-lg p-3 cursor-pointer hover:border-sage-default">
+                <input type="checkbox" name="areas" value="mulch" class="pc-area mt-0.5 accent-[#6b7f5e]">
+                <span class="text-sm text-stone-700">Ground cover and mulch</span>
+              </label>
+              <label class="flex items-start gap-2 border border-stone-200 rounded-lg p-3 cursor-pointer hover:border-sage-default">
+                <input type="checkbox" name="areas" value="fence_deck" class="pc-area mt-0.5 accent-[#6b7f5e]">
+                <span class="text-sm text-stone-700">Fences, decks, and attached structures</span>
+              </label>
+              <label class="flex items-start gap-2 border border-stone-200 rounded-lg p-3 cursor-pointer hover:border-sage-default">
+                <input type="checkbox" name="areas" value="general" class="pc-area mt-0.5 accent-[#6b7f5e]">
+                <span class="text-sm text-stone-700">General overall review</span>
+              </label>
+              <label class="flex items-start gap-2 border border-stone-200 rounded-lg p-3 cursor-pointer hover:border-sage-default">
+                <input type="checkbox" name="areas" value="not_sure" class="pc-area mt-0.5 accent-[#6b7f5e]">
+                <span class="text-sm text-stone-700">Not sure &mdash; tell me what to look at</span>
+              </label>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <label for="pc-notes" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Is there anything specific you&rsquo;re concerned about? <span class="normal-case font-normal text-stone-400">(optional)</span></label>
               <p class="text-xs text-stone-500 mb-2">E.g. wood mulch, large bushes against the wall, a wood pile.</p>
               <textarea id="pc-notes" name="notes" rows="3"
                 class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default"></textarea>
@@ -341,7 +385,7 @@
             <div class="flex gap-3 mt-6">
               <button type="button" id="pc-step3-back" class="flex-1 bg-stone-100 text-stone-700 p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-stone-200 transition-colors">Back</button>
               <button type="submit" id="pc-submit" class="flex-[2] bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed">
-                Get My Free Photo Check
+                Submit My Photo Review &mdash; $29
               </button>
             </div>
           </div>
@@ -353,7 +397,7 @@
           <input type="hidden" name="loadedAt" id="pc-loaded-at" value="">
         </form>
 
-        <p class="form-reassurance text-stone-400">No obligation &middot; Confidential review &middot; Response within 24 hours</p>
+        <p class="form-reassurance text-stone-400">Educational review &middot; Confidential &middot; Delivered within 48 hours</p>
 
         <div id="pc-success-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="pc-success-title" aria-describedby="pc-success-desc">
           <div class="absolute inset-0 bg-stone-950/70"></div>
@@ -365,10 +409,10 @@
               <span class="flex-shrink-0 w-10 h-10 rounded-full bg-sage-default/10 text-sage-dark flex items-center justify-center" aria-hidden="true">
                 <i class="fa-solid fa-check"></i>
               </span>
-              <h2 id="pc-success-title" class="text-xl font-display font-bold text-stone-900">Photo Check received</h2>
+              <h2 id="pc-success-title" class="text-xl font-display font-bold text-stone-900">Photo Review request received</h2>
             </div>
             <p id="pc-success-desc" class="text-sm text-stone-700 leading-relaxed">
-              Thanks &mdash; your photos and property details are in. We&rsquo;ll review the first five feet around your home for visible ember vulnerabilities and fire-safety opportunities.
+              Thanks &mdash; your photos and property details are in. We&rsquo;ll review the first five feet around your home for visible ember vulnerabilities and send your personalized action list within 48 hours. An invoice for the $29 review follows by email; nothing is charged now.
             </p>
             <button type="button" id="pc-success-close" class="mt-6 w-full bg-sage-default text-white p-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-dark transition-colors focus:outline-none focus:ring-2 focus:ring-sage-default focus:ring-offset-2">
               Close
@@ -696,7 +740,7 @@
                                     <i class="fa-solid fa-chevron-down text-xs text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open/faq:-rotate-180"></i>
                                 </summary>
                                 <div class="mt-3 text-stone-600 leading-relaxed text-sm border-t border-stone-100 pt-3">
-                                    Reporting on the final rule describes two phases. Within roughly 3 years: clear the first 5 ft of firewood, dead leaves and branches, bark mulch, and wood chips; keep gutters and roofs clear; finish any overdue tree work. Within roughly 5 years: create vegetation-free buffers under eaves, windows, and vents; replace combustible fence and gate sections where they attach to the house; address sheds and other attached combustible structures. Enforcement is described as education-first in the early years &mdash; the goal is measurable progress, not a single hard deadline. Our Compliance Checklist above walks through these same items in order, and a <a href="#photo-check" class="text-sage-dark underline underline-offset-2 hover:text-sage-default">Free Photo Check</a> can tell you exactly where your property stands today.
+                                    Reporting on the final rule describes two phases. Within roughly 3 years: clear the first 5 ft of firewood, dead leaves and branches, bark mulch, and wood chips; keep gutters and roofs clear; finish any overdue tree work. Within roughly 5 years: create vegetation-free buffers under eaves, windows, and vents; replace combustible fence and gate sections where they attach to the house; address sheds and other attached combustible structures. Enforcement is described as education-first in the early years &mdash; the goal is measurable progress, not a single hard deadline. Our Compliance Checklist above walks through these same items in order, and a <a href="#photo-check" class="text-sage-dark underline underline-offset-2 hover:text-sage-default">$29 Photo Review</a> can show you where your property stands today.
                                 </div>
                             </details>
                             <details class="group/faq bg-stone-50 border border-stone-200 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
@@ -798,7 +842,7 @@
                     <ul class="text-sm">
                         <li><a href="#visual-proof" class="block py-2 rounded hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">Visual Proof</a></li>
                         <li><a href="#resources" class="block py-2 rounded hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">Resources</a></li>
-                        <li><a href="#photo-check" class="block py-2 rounded font-semibold text-white hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">Free Photo Check</a></li>
+                        <li><a href="#photo-check" class="block py-2 rounded font-semibold text-white hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">Photo Review</a></li>
                     </ul>
                 </nav>
                 <nav aria-label="Contact">

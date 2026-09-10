@@ -8,7 +8,24 @@ const CATEGORIES = [
 ];
 
 const ZONES = ['front', 'back', 'left', 'right'];
-const ZONE_LABELS = { front: 'Front of House', back: 'Back of House', left: 'Left Side', right: 'Right Side' };
+// Rendered after the four required sides, and only when the lead actually has
+// close-ups. Leads submitted before the $29 intake have none.
+const OPTIONAL_ZONES = ['closeup'];
+const ZONE_LABELS = {
+  front: 'Front of House',
+  back: 'Back of House',
+  left: 'Left Side',
+  right: 'Right Side',
+  closeup: 'Close-ups (optional)',
+};
+const AREA_LABELS = {
+  zone0: 'The first 5 feet around the house',
+  plants: 'Plants and shrubs near the structure',
+  mulch: 'Ground cover and mulch',
+  fence_deck: 'Fences, decks, and attached structures',
+  general: 'General overall review',
+  not_sure: 'Not sure — tell me what to look at',
+};
 
 const STATUS_LABELS = {
   new: 'New',
@@ -200,7 +217,7 @@ async function handleLeadDetail(env, id) {
   const analysis = lead.analysis_json ? JSON.parse(lead.analysis_json) : {};
 
   const photosByZone = {};
-  for (const zone of ZONES) photosByZone[zone] = [];
+  for (const zone of ZONES.concat(OPTIONAL_ZONES)) photosByZone[zone] = [];
   for (const key of photoKeys) {
     const [leadId, zone, photoId] = key.split('/');
     if (!photoId) continue; // legacy key format from before per-side capture, skip rather than mis-render
@@ -208,7 +225,8 @@ async function handleLeadDetail(env, id) {
     (photosByZone[zone] || (photosByZone[zone] = [])).push(src);
   }
 
-  const photosHtml = ZONES.map((zone) => {
+  const renderZones = ZONES.concat(OPTIONAL_ZONES.filter((z) => (photosByZone[z] || []).length > 0));
+  const photosHtml = renderZones.map((zone) => {
     const srcs = photosByZone[zone] || [];
     const thumbs = srcs
       .map(
@@ -225,6 +243,14 @@ async function handleLeadDetail(env, id) {
 
   const categoriesHtml = CATEGORIES.map((cat) => categoryFieldset(cat, analysis[cat.key] || {})).join('');
 
+  // `areas` is NULL for every lead submitted before migration 0003. Those leads
+  // render no row at all -- no placeholder, no invented value -- so old data
+  // stays visibly distinct from new data.
+  const areaSlugs = (lead.areas || '').split(',').map((a) => a.trim()).filter(Boolean);
+  const areasHtml = areaSlugs.length
+    ? `<p class="mb-6 text-sm text-stone-700 bg-stone-50 border border-stone-200 rounded-lg p-4"><strong>Areas of interest:</strong> ${escapeHtml(areaSlugs.map((a) => AREA_LABELS[a] || a).join('; '))}</p>`
+    : '';
+
   const canSend = lead.status === 'complete' && !lead.response_sent_at;
   const alreadySent = !!lead.response_sent_at;
 
@@ -240,6 +266,8 @@ async function handleLeadDetail(env, id) {
       </div>
       <div>${statusBadge(lead.status)}</div>
     </div>
+
+    ${areasHtml}
 
     ${lead.notes ? `<p class="mb-6 text-sm text-stone-700 bg-stone-50 border border-stone-200 rounded-lg p-4"><strong>Homeowner notes:</strong> ${escapeHtml(lead.notes)}</p>` : ''}
 

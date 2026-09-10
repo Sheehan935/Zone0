@@ -1,3 +1,8 @@
+---
+name: homeowner-journey
+description: Evaluate the Zone 0 Landscaping website from a real homeowner's perspective — what makes a visitor stop, understand, explore, relate it to their property, and take action. Use for behavioral UX evaluation of the site, not visual design audits, code review, or SEO.
+---
+
 Zone 0 Homeowner Journey
 
 Purpose
@@ -8,7 +13,7 @@ The objective is to identify what makes a visitor:
 
 STOP → UNDERSTAND → EXPLORE → RELATE IT TO THEIR PROPERTY → TAKE ACTION → RETURN → SHARE
 
-The primary business action is the Free Photo Check.
+The primary business action is the $29 Detailed Photo Review.
 
 This skill is a behavioral UX evaluation. It is not primarily a visual design audit, code review, or SEO audit.
 
@@ -433,7 +438,7 @@ Explain:
 2. What natural question follows.
 3. What could answer that question.
 4. What the homeowner would likely do next.
-5. How the loop could lead toward the Free Photo Check.
+5. How the loop could lead toward the $29 Detailed Photo Review.
 
 ⸻
 
@@ -568,7 +573,7 @@ What should the homeowner think or do?
 
 Photo Check connection
 
-How does this naturally lead toward the Free Photo Check?
+How does this naturally lead toward the $29 Detailed Photo Review?
 
 Implementation complexity
 
@@ -627,7 +632,7 @@ Do not:
 
 The primary business action remains:
 
-Free Photo Check submission.
+$29 Detailed Photo Review submission.
 
 The Photo Check should feel like the logical next step after the homeowner discovers something relevant.
 
@@ -827,4 +832,4 @@ The ideal journey is:
 
 →
 
-“Let me get the Free Photo Check.”
+“Let me get the $29 Detailed Photo Review.”

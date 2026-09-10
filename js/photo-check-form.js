@@ -4,7 +4,11 @@
     var ENDPOINT = 'https://zone0-photo-check.zone0landscaping.workers.dev/submit';
 
     var ZONES = ['front', 'back', 'left', 'right'];
-    var ZONE_LABELS = { front: 'front', back: 'back', left: 'left side', right: 'right side' };
+    // Optional zones upload exactly like the required sides but are kept out of
+    // ZONES on purpose: a close-up must never satisfy or block the 4-of-4 gate.
+    var OPTIONAL_ZONES = ['closeup'];
+    var ALL_ZONES = ZONES.concat(OPTIONAL_ZONES);
+    var ZONE_LABELS = { front: 'front', back: 'back', left: 'left side', right: 'right side', closeup: 'close-up' };
     var MAX_FILES_PER_ZONE = 5;
     var MAX_FILE_SIZE = 8 * 1024 * 1024;
     var ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
@@ -25,7 +29,7 @@
         var progressBars = { 1: document.getElementById('pc-progress-1'), 2: document.getElementById('pc-progress-2'), 3: document.getElementById('pc-progress-3') };
         var progressLabels = { 1: document.getElementById('pc-progress-label-1'), 2: document.getElementById('pc-progress-label-2'), 3: document.getElementById('pc-progress-label-3') };
 
-        var zoneFiles = { front: [], back: [], left: [], right: [] };
+        var zoneFiles = { front: [], back: [], left: [], right: [], closeup: [] };
 
         if (loadedAtField) loadedAtField.value = String(Date.now());
 
@@ -92,6 +96,7 @@
 
         function renderZoneThumbs(zone) {
             var container = document.getElementById('pc-thumbs-' + zone);
+            if (!container) return;
             container.innerHTML = '';
             zoneFiles[zone].forEach(function (file, index) {
                 var url = URL.createObjectURL(file);
@@ -109,7 +114,8 @@
                 });
                 container.appendChild(wrap);
             });
-            document.getElementById('pc-count-' + zone).textContent = zoneFiles[zone].length + (zoneFiles[zone].length === 1 ? ' photo' : ' photos');
+            var countEl = document.getElementById('pc-count-' + zone);
+            if (countEl) countEl.textContent = zoneFiles[zone].length + (zoneFiles[zone].length === 1 ? ' photo' : ' photos');
         }
 
         function updateZoneProgress() {
@@ -124,9 +130,10 @@
             step2Next.classList.toggle('text-stone-400', !ready);
         }
 
-        ZONES.forEach(function (zone) {
+        ALL_ZONES.forEach(function (zone) {
             var addBtn = document.querySelector('.pc-add-photo[data-zone="' + zone + '"]');
             var input = document.getElementById('pc-photos-' + zone);
+            if (!addBtn || !input) return;
 
             addBtn.addEventListener('click', function () {
                 input.click();
@@ -143,7 +150,7 @@
                 }
                 var room = MAX_FILES_PER_ZONE - zoneFiles[zone].length;
                 if (incoming.length > room) {
-                    showStepError(step2Error, 'Up to ' + MAX_FILES_PER_ZONE + ' photos are allowed per side — only added the first ' + Math.max(room, 0) + '.');
+                    showStepError(step2Error, 'Up to ' + MAX_FILES_PER_ZONE + ' photos are allowed ' + (zone === 'closeup' ? 'as close-ups' : 'per side') + ' — only added the first ' + Math.max(room, 0) + '.');
                 }
                 zoneFiles[zone] = zoneFiles[zone].concat(incoming.slice(0, room));
                 input.value = '';
@@ -235,7 +242,7 @@
 
         function resetForm() {
             form.reset();
-            ZONES.forEach(function (zone) {
+            ALL_ZONES.forEach(function (zone) {
                 zoneFiles[zone] = [];
                 renderZoneThumbs(zone);
             });
@@ -248,15 +255,16 @@
             e.preventDefault();
             clearError();
 
-            var totalPhotos = ZONES.reduce(function (sum, z) { return sum + zoneFiles[z].length; }, 0);
-            if (totalPhotos === 0) {
-                showError('Please add at least one photo per side before submitting.');
+            // Deliberately counts ZONES only -- close-ups cannot stand in for a side.
+            var missing = ZONES.filter(function (z) { return zoneFiles[z].length === 0; });
+            if (missing.length) {
+                showError('Please add at least one photo of the ' + missing.map(function (z) { return ZONE_LABELS[z]; }).join(', ') + ' before submitting.');
                 goToStep(2);
                 return;
             }
 
             var fd = new FormData(form);
-            ZONES.forEach(function (zone) {
+            ALL_ZONES.forEach(function (zone) {
                 zoneFiles[zone].forEach(function (file) {
                     fd.append('photos_' + zone, file, file.name);
                 });

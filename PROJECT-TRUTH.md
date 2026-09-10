@@ -102,6 +102,44 @@ Astro SSG framework migration; any new route not explicitly approved.
 - **Analytics** (Plausible/Fathom/GA4): same treatment — zero references in
   the repo. Not verified as installed or absent externally.
 
+### 1.7 $29 Detailed Photo Review — DECIDED 2026-09-10, NOT YET DEPLOYED
+
+The free Photo Check becomes the **$29 Detailed Photo Review**: an
+educational, photo-based Zone 0 and landscape wildfire-readiness review
+returning a prioritized plain-English action list, delivered **within 48
+hours** (was "response within 24 hours").
+
+This deliberately reopens two earlier decisions: §1.1's "Free Photo Check"
+section name, and the 2026-08-01 "removed pricing, pure education framing"
+decision. The $299 audit and $750 consultation tiers stay retired.
+
+Settled with it:
+
+- **No payment provider.** Intake is paid-*ready*: the form states the price
+  and that an invoice follows submission. No Stripe, PayPal, or checkout.
+- **All four side photos stay hard-required**, client and server.
+- **Optional close-ups** upload as a fifth zone (`closeup`) that is
+  deliberately excluded from the 4-of-4 completion gate — a close-up can
+  neither satisfy nor block the four required sides.
+- **Optional "areas of interest"** multi-select, six whitelisted slugs
+  (`zone0`, `plants`, `mulch`, `fence_deck`, `general`, `not_sure`), stored
+  comma-joined in a nullable `areas` column (migration `0003_areas.sql`).
+- **The existing `notes` field is relabelled, not duplicated** — still
+  exactly one free-text field.
+- **No large questionnaire**: no roof age, siding, construction year,
+  insurance, or mortgage fields. Intake stays low-friction.
+
+Positioning guardrail: never "certified", "compliant", "official
+inspection", "pass/fail certification", "insurance approval", or
+"guaranteed safe". Distinguish REQUIREMENT / RECOMMENDATION / BEST
+PRACTICE. Invent no legal requirements.
+
+**Load-bearing string — do not change:** the lead notification subject stays
+`New Photo Check lead — {name} ({address})`. The Zone Zero Control Center
+and Dashboard artifacts find leads via a Gmail search on that exact
+subject; renaming it silently empties both panels. Renaming it later
+requires updating both artifacts in the same change.
+
 ---
 
 ## 2. GOVERNANCE RULES
@@ -471,3 +509,28 @@ decision narrative when more context is needed than Section 1 or 3 give.
 ---
 
 **END PROJECT TRUTH**
+
+### 3.15 $29 Detailed Photo Review — IMPLEMENTED 2026-09-10, NOT DEPLOYED
+
+Built on a fresh verified baseline of `origin/main` @ `f455aab` after
+inspection confirmed an earlier attempt at this change had never been
+applied to the repo (no `areas`, no `closeup`, no `0003_areas.sql`, and
+production still serving "Free Photo Check" / "within 24 hours").
+
+Changed: `index.html`, `js/photo-check-form.js`, `js/main.js`,
+`js/zone0-tools.js`, `worker/src/index.js`, `review-worker/src/index.js`,
+new `review-worker/migrations/0003_areas.sql`, and
+`.claude/skills/homeowner-journey/SKILL.md` (missing YAML frontmatter added
+so the skill registers at all, plus its outdated "Free Photo Check"
+primary-business-action language; the 830-line body was otherwise left
+alone).
+
+Review portal behavior for pre-migration leads: `areas` is NULL, and those
+leads render **no areas row at all** — no placeholder, no invented value —
+so old data stays visibly distinct from new data. The close-up group is
+likewise rendered only when close-ups exist.
+
+Verified locally before delivery; **production UNVERIFIED**. The Worker's
+Origin allowlist accepts only `https://zone0landscaping.com`, so end-to-end
+testing is impossible until deployed. Deploy order: D1 migration →
+review-worker → worker → GitHub Pages.
