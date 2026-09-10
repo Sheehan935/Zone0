@@ -1,27 +1,27 @@
 # Zone 0 Landscaping — Next
 
-Full backlog, task history, and status now live in Google Drive (the
-owner's preferred tracker) — the
-**[Zone 0 Landscaping Tasks](https://docs.google.com/spreadsheets/d/1oJEMRDyDPhQNHRvPEFjQ3Zf7_PHyLR4AWJ3H5wf33I4/edit)**
-spreadsheet, in the Zone0 Project Folder. A Notion database briefly held
-this same-day before being moved to Drive — don't recreate it in Notion.
-Locked decisions and the detailed verification/state log stay in
-`PROJECT-TRUTH.md`, since those are tied to the code and commit history,
-not to task status.
+**Tasks live in the Zone Zero Control Center, not here:**
+https://claude.ai/code/artifact/4680b1a7-6fc8-483a-9099-a8677789ec92
 
-The Sheet has a single `NOW` row (ADHD guardrail: only one task should
-ever say NOW at a time) plus a `Backlog` column and a `Done` log — see its
-own "HOW TO USE THIS SHEET" row for the one-time filter setup.
+One item there is marked `Now`; everything else is `Next` or `Done`, and the
+single-`Now` rule is enforced by the page itself. That is the task source.
+This file is not, and must never grow a backlog again.
 
-This file keeps only the **active, git-relevant** next step — the thing a
-coding session should pick up without first opening the Sheet.
+Locked decisions and the verified record of current production state stay in
+`PROJECT-TRUTH.md`. Code-level decisions stay in `docs/decisions.md`.
 
-Never more than 3 active items here.
+The Google Drive Tasks spreadsheet is an archive as of 2026-09-03. It no
+longer drives anything — don't add to it and don't treat it as current.
 
----
+## Before starting a coding session
 
-## Next
+Check what's marked `Now` in the Control Center. Do not trust the section
+below to be current — a stale "active item" is the exact failure this rewrite
+is fixing.
 
-**1 active item as of 2026-08-25:**
+## Active
 
-- [ ] **Market Research**: Research the local East Bay landscaping market and competitors. (Business-side task, kept here as the only active item — no code action needed.)
+_Nothing pinned._
+
+Add a line here only for a git-relevant step that is actively in progress.
+Never more than 3. Delete it when it ships — this is not a log.

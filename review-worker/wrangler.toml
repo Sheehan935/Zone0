@@ -16,8 +16,8 @@ FROM_EMAIL = "hello@zone0landscaping.com"
 # ACCESS_AUD and ACCESS_TEAM_DOMAIN come from the Cloudflare Access application
 # created in the Zero Trust dashboard (see review-worker/README.md). Until both
 # are set, the Worker refuses all requests rather than running unprotected.
-ACCESS_AUD = ""
-ACCESS_TEAM_DOMAIN = ""
+ACCESS_AUD = "af6d49ea68c0272afe71ef4c3e4a2c3c414af4c9755beb9f8be1666ee5ecb943"
+ACCESS_TEAM_DOMAIN = "spring-cell-6642.cloudflareaccess.com"
 
 # RESEND_API_KEY is a secret, not a var -- set it with:
 #   npx wrangler secret put RESEND_API_KEY

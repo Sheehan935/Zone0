@@ -9,7 +9,11 @@
 
 # Editor / Local Assistant Configs
 .claude/.tmp.driveupload/
+.claude/settings.local.json
 local/
+
+# Editor backups / scratch copies
+*.backup.html
 
 # Cloudflare Worker local dev state / secrets (never commit real credentials)
 worker/.wrangler/
