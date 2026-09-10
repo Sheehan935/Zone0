@@ -9,9 +9,11 @@ claim briefly existed in one file after being corrected in the other before
 this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
-**Last synchronized:** 2026-08-25 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `f6a72ee`
-(`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
+**Last synchronized:** 2026-09-10 — local `main`, `origin/main`, and the
+live GitHub Pages build are all confirmed at commit `7a99a59`
+(`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`,
+build `1205580318`). See 3.15 for the $29 Detailed Photo Review
+deploy/verify evidence.
 
 ---
 
@@ -102,7 +104,7 @@ Astro SSG framework migration; any new route not explicitly approved.
 - **Analytics** (Plausible/Fathom/GA4): same treatment — zero references in
   the repo. Not verified as installed or absent externally.
 
-### 1.7 $29 Detailed Photo Review — DECIDED 2026-09-10, NOT YET DEPLOYED
+### 1.7 $29 Detailed Photo Review — DECIDED 2026-09-10, DEPLOYED AND VERIFIED LIVE 2026-09-10
 
 The free Photo Check becomes the **$29 Detailed Photo Review**: an
 educational, photo-based Zone 0 and landscape wildfire-readiness review
@@ -510,7 +512,7 @@ decision narrative when more context is needed than Section 1 or 3 give.
 
 **END PROJECT TRUTH**
 
-### 3.15 $29 Detailed Photo Review — IMPLEMENTED 2026-09-10, NOT DEPLOYED
+### 3.15 $29 Detailed Photo Review — DEPLOYED AND VERIFIED LIVE, 2026-09-10
 
 Built on a fresh verified baseline of `origin/main` @ `f455aab` after
 inspection confirmed an earlier attempt at this change had never been
@@ -530,7 +532,44 @@ leads render **no areas row at all** — no placeholder, no invented value —
 so old data stays visibly distinct from new data. The close-up group is
 likewise rendered only when close-ups exist.
 
-Verified locally before delivery; **production UNVERIFIED**. The Worker's
-Origin allowlist accepts only `https://zone0landscaping.com`, so end-to-end
-testing is impossible until deployed. Deploy order: D1 migration →
-review-worker → worker → GitHub Pages.
+Verified locally before delivery, then deployed in order — D1 migration
+(`0003_areas.sql`) → `review-worker` → public `worker` → GitHub Pages — all
+within the same minute, 2026-09-10 04:08–04:10 UTC.
+
+**Production verified live, 2026-09-10:**
+- `gh api repos/Sheehan935/Zone0/pages/builds/latest` → commit `7a99a59`,
+  `status: built`.
+- `curl https://zone0landscaping.com/` shows the new copy live: nav CTA
+  "Photo Review — $29", hero "Get Your $29 Photo Review", form header "$29
+  Detailed Photo Review", submit button "Submit My Photo Review — $29",
+  the `closeup` zone card, and all six `areas` checkboxes.
+- `npx wrangler deployments list` (both Workers): new versions deployed
+  2026-09-10T04:08:37Z (`review-worker`) and 2026-09-10T04:08:43Z (public
+  `worker`).
+- `npx wrangler d1 migrations list zone0-leads --remote` → "No migrations
+  to apply" (0003 applied).
+- Real HTTP submission against the live public Worker with an `Origin:
+  https://zone0landscaping.com` header: 3-required-sides submission
+  correctly rejected (`"At least 1 photo of the right is required."`,
+  HTTP 400) confirming the four-side gate is still enforced server-side
+  post-deploy; a complete submission (4 sides + 1 closeup + 3 `areas`)
+  returned `{"ok":true}`, HTTP 200.
+- D1 row for that lead confirmed `areas: "zone0,mulch,fence_deck"` and a
+  fifth `closeup` entry in `photo_keys`, alongside the four required
+  sides.
+- Notification email confirmed delivered to `sheehan935@gmail.com`
+  (Gmail search), subject `New Photo Check lead — QA TEST - DO NOT
+  CONTACT (123 Test St, Testville, CA)` — matches the load-bearing
+  subject format the Control Center/Dashboard artifacts depend on — with
+  body correctly listing "Areas of interest: The first 5 feet around the
+  house; Ground cover and mulch; Fences, decks, and attached structures".
+- Test lead cleaned up post-verification (same precedent as 3.1): D1 row
+  and all 5 R2 objects deleted. The notification email was left in place
+  (not part of the established cleanup precedent).
+
+**Correction to the deploy report that triggered this verification:** it
+described the push as going out via "Cloudflare Pages." Production is,
+and remains, GitHub Pages per 1.3 — confirmed again above via the GitHub
+Pages Builds API. No Cloudflare Pages project is involved in serving this
+site; only the two Cloudflare Workers (`worker`, `review-worker`), D1, and
+R2 sit behind it.
