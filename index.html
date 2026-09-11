@@ -21,6 +21,7 @@
 
     <!-- Shared component system (cards, buttons, checklist, matrix, science callouts) -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/contact-form.css">
 
     <!-- Tailwind CSS (existing site-wide setup, unchanged) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -819,10 +820,78 @@
         </div>
     </section>
 
+    <!-- ========================================================================
+         10. CONTACT
+         ======================================================================== -->
+    <section id="contact" class="contact-section">
+      <div class="contact-wrap">
+        <h2>Contact us</h2>
+        <p class="contact-intro">
+          Questions about Zone 0 clearance, pricing, or your property? Send us
+          a message and we'll get back to you within one business day.
+        </p>
+
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-name">Full name <span aria-hidden="true">*</span></label>
+              <input type="text" id="cf-name" name="fullName" autocomplete="name" required />
+              <p class="field-error" id="cf-name-error" role="alert"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="cf-email">Email address <span aria-hidden="true">*</span></label>
+              <input type="email" id="cf-email" name="email" autocomplete="email" required />
+              <p class="field-error" id="cf-email-error" role="alert"></p>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-phone">Phone number <span class="optional">(optional)</span></label>
+              <input type="tel" id="cf-phone" name="phone" autocomplete="tel" />
+              <p class="field-error" id="cf-phone-error" role="alert"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="cf-subject">Subject <span aria-hidden="true">*</span></label>
+              <select id="cf-subject" name="subject" required>
+                <option value="" disabled selected>Select a topic</option>
+                <option value="general">General question</option>
+                <option value="photo-check">Photo check follow-up</option>
+                <option value="quote">Request a quote</option>
+                <option value="other">Something else</option>
+              </select>
+              <p class="field-error" id="cf-subject-error" role="alert"></p>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="cf-message">Message <span aria-hidden="true">*</span></label>
+            <textarea id="cf-message" name="message" rows="5" maxlength="500" required></textarea>
+            <p class="char-count"><span id="cf-message-count">0</span>/500</p>
+            <p class="field-error" id="cf-message-error" role="alert"></p>
+          </div>
+
+          <div class="hp-field" aria-hidden="true">
+            <label for="cf-website">Company website</label>
+            <input type="text" id="cf-website" name="companyWebsite" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div id="contact-form-banner" class="form-banner" role="status" hidden></div>
+
+          <button type="submit" id="contact-submit" class="btn-primary">
+            <span class="btn-label">Send message</span>
+            <span class="btn-spinner" hidden></span>
+          </button>
+        </form>
+      </div>
+    </section>
+
     </main>
 
     <!-- ========================================================================
-         10. FOOTER
+         11. FOOTER
          ======================================================================== -->
     <footer class="bg-stone-950 text-stone-400 pt-16 pb-10 border-t border-stone-900">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -902,5 +971,6 @@
     <script src="/js/zone0-tools.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/photo-check-form.js"></script>
+    <script src="/js/contact-form.js"></script>
 </body>
 </html>

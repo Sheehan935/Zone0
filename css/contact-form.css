@@ -1,0 +1,155 @@
+/*
+  Scoped styling for the contact form. If the site already has CSS
+  variables (colors, fonts) defined globally, swap the literal values
+  below for those variables so this matches the rest of the site
+  automatically. These are reasonable defaults if it doesn't.
+*/
+
+.contact-section {
+  padding: 3rem 1.5rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.contact-intro {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.form-field .optional {
+  font-weight: 400;
+  color: #888;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: #6B7A64;
+  box-shadow: 0 0 0 3px rgba(107, 122, 100, 0.25);
+}
+
+.form-field input[aria-invalid="true"],
+.form-field select[aria-invalid="true"],
+.form-field textarea[aria-invalid="true"] {
+  border-color: #c0392b;
+}
+
+.field-error {
+  font-size: 0.8rem;
+  color: #c0392b;
+  min-height: 1rem;
+  margin: 0;
+}
+
+.char-count {
+  font-size: 0.75rem;
+  color: #888;
+  text-align: right;
+  margin: 0;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-banner {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.form-banner.success {
+  background: #eaf4e6;
+  color: #2e5c22;
+  border: 1px solid #bcdcae;
+}
+
+.form-banner.error {
+  background: #fbeceb;
+  color: #8e2b21;
+  border: 1px solid #f0bdb7;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #6B7A64;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #4A5744;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -18,6 +18,14 @@ const AREA_LABELS = {
   not_sure: 'Not sure — tell me what to look at',
 };
 const MIN_SUBMIT_TIME_MS = 3000; // reject submissions faster than a human could plausibly fill the form
+const CONTACT_SUBJECT_SLUGS = ['general', 'photo-check', 'quote', 'other'];
+const CONTACT_SUBJECT_LABELS = {
+  general: 'General question',
+  'photo-check': 'Photo check follow-up',
+  quote: 'Request a quote',
+  other: 'Something else',
+};
+const CONTACT_MESSAGE_MAX = 500; // mirrors js/contact-form.js's MESSAGE_MAX
 
 export default {
   async fetch(request, env) {
@@ -35,6 +43,10 @@ export default {
 
     if (url.pathname === '/submit' && request.method === 'POST') {
       return handleSubmit(request, env, corsHeaders);
+    }
+
+    if (url.pathname === '/contact' && request.method === 'POST') {
+      return handleContact(request, env, corsHeaders);
     }
 
     return json({ ok: false, error: 'Not found' }, 404, corsHeaders);
@@ -166,6 +178,51 @@ async function handleSubmit(request, env, corsHeaders) {
   return json({ ok: true }, 200, corsHeaders);
 }
 
+async function handleContact(request, env, corsHeaders) {
+  if (request.headers.get('Origin') !== env.ALLOWED_ORIGIN) {
+    return json({ ok: false, error: 'Origin not allowed.' }, 403, corsHeaders);
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return json({ ok: false, error: 'Could not read the submitted form.' }, 400, corsHeaders);
+  }
+
+  // Honeypot: the client never sends this field filled in. A direct API
+  // call that fills it gets a fake-success response, same as /submit.
+  if ((body.companyWebsite || '').toString().trim() !== '') {
+    return json({ ok: true }, 200, corsHeaders);
+  }
+
+  const fullName = (body.fullName || '').toString().trim();
+  const email = (body.email || '').toString().trim();
+  const phone = (body.phone || '').toString().trim();
+  const subject = (body.subject || '').toString().trim();
+  const message = (body.message || '').toString();
+
+  const errors = [];
+  if (!fullName) errors.push('Full name is required.');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('A valid email is required.');
+  if (phone && !/^[\d\s()+\-.]{7,20}$/.test(phone)) errors.push('Enter a valid phone number.');
+  if (!CONTACT_SUBJECT_SLUGS.includes(subject)) errors.push('Choose a topic.');
+  if (!message.trim() || message.trim().length < 10) errors.push('Message must be at least 10 characters.');
+  if (message.length > CONTACT_MESSAGE_MAX) errors.push(`Message must be ${CONTACT_MESSAGE_MAX} characters or fewer.`);
+
+  if (errors.length) {
+    return json({ ok: false, error: errors.join(' ') }, 400, corsHeaders);
+  }
+
+  try {
+    await sendContactNotification(env, { fullName, email, phone, subject, message });
+  } catch (e) {
+    return json({ ok: false, error: 'Could not send your message. Please try again or email hello@zone0landscaping.com directly.' }, 502, corsHeaders);
+  }
+
+  return json({ ok: true }, 200, corsHeaders);
+}
+
 async function insertLeadRecord(env, lead) {
   if (!env.DB) return; // D1 binding not configured on this environment
   const now = Date.now();
@@ -218,6 +275,39 @@ async function sendNotification(env, lead) {
       to: env.NOTIFY_EMAIL,
       reply_to: lead.email,
       subject: `New Photo Check lead — ${lead.name} (${lead.address})`,
+      text,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Resend API error: ${res.status}`);
+  }
+}
+
+async function sendContactNotification(env, contact) {
+  const text = [
+    'New Zone 0 contact form message',
+    '',
+    `Name: ${contact.fullName}`,
+    `Email: ${contact.email}`,
+    `Phone: ${contact.phone || '(none)'}`,
+    `Subject: ${CONTACT_SUBJECT_LABELS[contact.subject] || contact.subject}`,
+    '',
+    'Message:',
+    contact.message,
+  ].join('\n');
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: env.FROM_EMAIL,
+      to: env.NOTIFY_EMAIL,
+      reply_to: contact.email,
+      subject: `New contact form message — ${contact.fullName} (${CONTACT_SUBJECT_LABELS[contact.subject] || contact.subject})`,
       text,
     }),
   });
