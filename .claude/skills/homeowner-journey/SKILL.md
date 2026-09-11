@@ -13,7 +13,7 @@ The objective is to identify what makes a visitor:
 
 STOP → UNDERSTAND → EXPLORE → RELATE IT TO THEIR PROPERTY → TAKE ACTION → RETURN → SHARE
 
-The primary business action is the $29 Detailed Photo Review.
+The primary business action is the free Detailed Photo Review.
 
 This skill is a behavioral UX evaluation. It is not primarily a visual design audit, code review, or SEO audit.
 
@@ -438,7 +438,7 @@ Explain:
 2. What natural question follows.
 3. What could answer that question.
 4. What the homeowner would likely do next.
-5. How the loop could lead toward the $29 Detailed Photo Review.
+5. How the loop could lead toward the free Detailed Photo Review.
 
 ⸻
 
@@ -573,7 +573,7 @@ What should the homeowner think or do?
 
 Photo Check connection
 
-How does this naturally lead toward the $29 Detailed Photo Review?
+How does this naturally lead toward the free Detailed Photo Review?
 
 Implementation complexity
 
@@ -632,7 +632,7 @@ Do not:
 
 The primary business action remains:
 
-$29 Detailed Photo Review submission.
+free Detailed Photo Review submission.
 
 The Photo Check should feel like the logical next step after the homeowner discovers something relevant.
 
@@ -832,4 +832,4 @@ The ideal journey is:
 
 →
 
-“Let me get the $29 Detailed Photo Review.”
+“Let me get the free Detailed Photo Review.”

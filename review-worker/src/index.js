@@ -9,7 +9,7 @@ const CATEGORIES = [
 
 const ZONES = ['front', 'back', 'left', 'right'];
 // Rendered after the four required sides, and only when the lead actually has
-// close-ups. Leads submitted before the $29 intake have none.
+// close-ups. Leads submitted before the expanded intake have none.
 const OPTIONAL_ZONES = ['closeup'];
 const ZONE_LABELS = {
   front: 'Front of House',

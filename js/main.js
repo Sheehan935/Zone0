@@ -127,7 +127,7 @@
 
             if (banner) {
                 if (checkedCount === items.length) {
-                    banner.textContent = 'All 4 complete — nice work. Consider a $29 Photo Review to confirm.';
+                    banner.textContent = 'All 4 complete — nice work. Consider a free Photo Review to confirm.';
                 } else if (checkedCount === 0) {
                     banner.textContent = '0 of ' + items.length + ' complete — start with mulch removal, the highest-impact fix.';
                 } else {

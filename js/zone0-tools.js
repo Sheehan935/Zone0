@@ -111,7 +111,7 @@
             '<div class="border-t border-stone-100 pt-6">' +
                 '<p class="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">What to Do Next</p>' +
                 '<a href="#compliance-checklist-section" class="risk-calc-open-checklist block text-center bg-stone-900 text-white px-6 py-3 text-xs uppercase tracking-widest font-bold rounded-full hover:bg-sage-default transition-colors mb-4">Work Through the Compliance Checklist</a>' +
-                '<p class="text-center text-xs text-stone-500">Want a second set of eyes? <a href="#photo-check" class="font-bold text-sage-dark hover:text-sage-default underline underline-offset-2">Get a $29 Photo Review</a>.</p>' +
+                '<p class="text-center text-xs text-stone-500">Want a second set of eyes? <a href="#photo-check" class="font-bold text-sage-dark hover:text-sage-default underline underline-offset-2">Get a free Photo Review</a>.</p>' +
             '</div>' +
             '<p class="text-xs text-stone-400 leading-relaxed text-center mt-6">This is a quick educational self-check based on common Zone 0 ember-ignition points, not a substitute for a professional inspection or official AB 3074 compliance verification.</p>'
         );

@@ -1,4 +1,4 @@
--- The $29 Detailed Photo Review intake adds an optional "areas of interest"
+-- The Detailed Photo Review intake adds an optional "areas of interest"
 -- multi-select (see PROJECT-TRUTH.md, decision 1.7). Stored as a comma-joined
 -- list of whitelisted slugs: zone0, plants, mulch, fence_deck, general, not_sure.
 --
