@@ -9,12 +9,13 @@ claim briefly existed in one file after being corrected in the other before
 this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
-**Last synchronized:** 2026-09-10 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `7a99a59`
-(`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`,
-build `1205580318`). This predates the 1.8/3.16 free-again reversal,
-which is implemented locally but not yet committed/deployed as of this
-writing — update this line once it ships.
+**Last synchronized:** 2026-09-11 — local `main`, `origin/main`, and the
+live GitHub Pages build are all confirmed at commit `b917a10`
+(`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
+The public Worker is deployed at the same point (version
+`f13c7faa-5dc3-4f00-ae75-231b22db7442`). See 1.8/3.16 for the free-again
+Photo Review reversal and 1.9/3.17 for the new Contact form, both
+verified live as of this commit.
 
 ---
 
@@ -181,6 +182,30 @@ not sticking, not as a fresh call.
 
 Same load-bearing-string rule as 1.7: the lead notification subject is
 unchanged and still `New Photo Check lead — {name} ({address})`.
+
+### 1.9 Contact Form — DECIDED AND DEPLOYED 2026-09-11
+
+A second intake channel, independent of the Photo Review: a general
+"Contact us" section (full name, email, optional phone, subject dropdown,
+message) at the bottom of the homepage, above the footer. Settled with it:
+
+- **Same Worker, new route.** `/contact` was added to the existing public
+  `zone0-photo-check` Worker rather than standing up a second Worker —
+  reuses the same `RESEND_API_KEY`, `NOTIFY_EMAIL`, `FROM_EMAIL`, and
+  Origin allowlist already configured there.
+- **Email notification only, no D1 persistence.** Unlike Photo Check
+  leads, contact messages are not written to the `leads` table or any
+  new table — this channel is intentionally lighter-weight. Revisit if
+  volume ever justifies a queue/portal view.
+- **Its own notification subject**, distinct from the Photo Check
+  load-bearing string: `New contact form message — {fullName}
+  ({subjectLabel})`. Not searched by the Control Center or Dashboard —
+  no load-bearing-string constraint applies to it (yet; if that changes,
+  document it here first).
+- **No new anti-bot timing field.** The Photo Check form's
+  `MIN_SUBMIT_TIME_MS` timing check has no equivalent here — this form's
+  only anti-bot measure is the honeypot (`companyWebsite`). Acceptable
+  for a low-volume contact form; revisit if spam becomes a problem.
 
 ---
 
@@ -618,7 +643,7 @@ Pages Builds API. No Cloudflare Pages project is involved in serving this
 site; only the two Cloudflare Workers (`worker`, `review-worker`), D1, and
 R2 sit behind it.
 
-### 3.16 Photo Review returns to FREE — 2026-09-11
+### 3.16 Photo Review returns to FREE — DEPLOYED AND VERIFIED LIVE, 2026-09-11
 
 Reverses 3.15 less than 24 hours after it deployed. Changed: `index.html`
 (nav CTA, hero, form section label, form intro paragraph, success modal,
@@ -633,5 +658,57 @@ migration behavior changed. The four-required-sides gate, optional
 lead notification subject stays `New Photo Check lead — {name}
 ({address})` — not touched, per the load-bearing-string rule in 1.7/1.8.
 
-Not yet deployed as of this writing — see 1.8 for the decision;
-deployment and live verification to be recorded here once pushed.
+Deployed in commits `751d02b` (copy) and `3908ed8` (this record), pushed
+to `main`, GitHub Pages rebuilt. **Production verified live, 2026-09-11:**
+`curl https://zone0landscaping.com/` shows zero remaining `$29` anywhere
+on the page, and confirms the replacement copy — "Get Your Free Photo
+Review", "Free Detailed Photo Review", "free while we have capacity",
+"Free while spots last", and the success-modal's "There's no charge and
+nothing to pay." (Note: this verification was itself delayed — an earlier
+poll for this exact check was interrupted by a session restart and never
+followed up on until this entry. No functional gap resulted since the
+deploy itself succeeded; the gap was purely in confirming it.)
+
+### 3.17 Contact Form — DEPLOYED AND VERIFIED LIVE, 2026-09-11
+
+Client markup, `css/contact-form.css`, and `js/contact-form.js` arrived
+pre-built and untracked in the working tree — confirmed as the site
+owner's own work before integrating. `js/contact-form.js` posts JSON to
+`/contact`; a companion untracked file, `worker/worker-contact-route.js`,
+was a reference/instructions stub (not meant to be a real source file —
+its own comments said "paste this into the existing Worker") whose spec
+is now fully incorporated into `worker/src/index.js`'s `handleContact`,
+which is stricter than that stub (matches the client's phone-format and
+500-char message-length validation, which the stub didn't check). The
+stub was deleted after its content was confirmed redundant.
+
+Changed: `index.html` (new section 10 "Contact", footer renumbered
+10→11, plus `<link>`/`<script>` tags for the two new asset files),
+`worker/src/index.js` (new `/contact` POST route, `handleContact`,
+`sendContactNotification`). New: `css/contact-form.css` (brand colors
+corrected from a generic green to the site's actual sage palette,
+`#6B7A64`/`#4A5744`, matching `tailwind.config`), `js/contact-form.js`.
+Also fixed a pre-existing inconsistency in the pasted markup: the
+message textarea's `maxlength` was `550` while the counter and both
+client- and server-side validation capped at `500` — aligned to `500`.
+
+**Verified locally before deploy:** `wrangler dev --local` — valid
+submission reached the Resend call (failed only on missing
+`RESEND_API_KEY`, expected in local dev); missing/invalid fields
+returned the correct 400 with all expected error messages; honeypot
+(`companyWebsite` filled) returned silent `{"ok":true}`; wrong `Origin`
+returned 403.
+
+**Production verified live:** `npx wrangler deploy` from `worker/`
+(version `f13c7faa-5dc3-4f00-ae75-231b22db7442`); GitHub Pages rebuilt at
+commit `b917a10`. Real HTTPS POST to
+`https://zone0-photo-check.zone0landscaping.workers.dev/contact` with a
+valid payload returned `{"ok":true}`, HTTP 200; an invalid payload
+returned the expected 400 with all four field errors. Notification email
+confirmed delivered to `sheehan935@gmail.com` (Gmail search), subject
+`New contact form message — QA TEST - DO NOT REPLY (General question)`,
+body correctly formatted. `curl https://zone0landscaping.com/` confirms
+`<section id="contact">`, `#contact-form`, `#contact-submit`, and both
+`/css/contact-form.css` and `/js/contact-form.js` are present and return
+HTTP 200. No test data to clean up — this route only sends email, it
+never writes to D1 or R2.

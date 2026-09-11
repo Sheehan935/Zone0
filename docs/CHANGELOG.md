@@ -7,6 +7,10 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 ## Unreleased
 
 ### Added
+- New "Contact us" section (`PROJECT-TRUTH.md` 1.9/3.17): name, email,
+  optional phone, subject dropdown, message, honeypot. Posts to a new
+  `/contact` route on the existing `zone0-photo-check` Worker — email
+  notification only, no D1 persistence.
 - Optional "areas of interest" multi-select on the Photo Review intake
   (six whitelisted slugs, stored comma-joined in a new nullable `areas`
   column via `review-worker/migrations/0003_areas.sql`).
