@@ -14,6 +14,12 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
   four-sides-required completion gate.
 
 ### Changed
+- Reverted the $29 Detailed Photo Review back to **free** (see
+  `PROJECT-TRUTH.md` 1.8/3.16) — pricing removed entirely, framed as
+  "free while capacity lasts" with a scarcity line in place of a price.
+  Turnaround stays 48 hours; still no payment provider. Copy-only change
+  across the nav, hero, form section label, form intro, success modal,
+  FAQ link, JS helper banners, and the homeowner-journey skill.
 - The free Photo Check is now the **$29 Detailed Photo Review**, delivered
   within 48 hours (was "response within 24 hours"). Copy updated across the
   nav, hero, form section, submit button, FAQ, footer, calculator and

@@ -12,8 +12,9 @@ the detailed evidence trail behind those decisions.
 **Last synchronized:** 2026-09-10 — local `main`, `origin/main`, and the
 live GitHub Pages build are all confirmed at commit `7a99a59`
 (`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`,
-build `1205580318`). See 3.15 for the $29 Detailed Photo Review
-deploy/verify evidence.
+build `1205580318`). This predates the 1.8/3.16 free-again reversal,
+which is implemented locally but not yet committed/deployed as of this
+writing — update this line once it ships.
 
 ---
 
@@ -104,7 +105,12 @@ Astro SSG framework migration; any new route not explicitly approved.
 - **Analytics** (Plausible/Fathom/GA4): same treatment — zero references in
   the repo. Not verified as installed or absent externally.
 
-### 1.7 $29 Detailed Photo Review — DECIDED 2026-09-10, DEPLOYED AND VERIFIED LIVE 2026-09-10
+### 1.7 $29 Detailed Photo Review — SUPERSEDED 2026-09-11 (see 1.8)
+
+Kept for history, not current. The $29 price decided and deployed below
+lasted less than 24 hours before 1.8 reverted the review to free.
+
+### 1.7 (historical) $29 Detailed Photo Review — DECIDED 2026-09-10, DEPLOYED AND VERIFIED LIVE 2026-09-10
 
 The free Photo Check becomes the **$29 Detailed Photo Review**: an
 educational, photo-based Zone 0 and landscape wildfire-readiness review
@@ -141,6 +147,40 @@ PRACTICE. Invent no legal requirements.
 and Dashboard artifacts find leads via a Gmail search on that exact
 subject; renaming it silently empties both panels. Renaming it later
 requires updating both artifacts in the same change.
+
+### 1.8 Photo Review returns to FREE — DECIDED 2026-09-11
+
+Supersedes 1.7. The $29 price is removed entirely — not discounted, not
+deferred. The review is free again, framed as **"free while capacity
+lasts"** with a scarcity line rather than the plain no-pricing framing
+1.7 itself had reopened. Settled with it:
+
+- **No price anywhere** — nav CTA, hero, form header, form intro,
+  success modal, FAQ link, JS helper banners, and the homeowner-journey
+  skill all drop "$29".
+- **Scarcity replaces price** as the reason to act now: "Free while
+  spots last" is prepended to the form's reassurance line, and the intro
+  paragraph reads "within 48 hours — free while we have capacity" in
+  place of "— $29".
+- **Turnaround stays 48 hours.** Not reopened by this change.
+- **Still no payment provider.** 1.7's "paid-ready, no checkout" stance
+  is moot now that there's no price, not reversed.
+- **The success-modal invoice line is gone.** "An invoice for the $29
+  review follows by email" becomes "There's no charge and nothing to
+  pay" — there is no invoice to promise.
+- **Four-required-sides, optional close-ups, and the `areas` multi-select
+  are all unaffected** — those are intake-shape decisions, independent of
+  price, and this change touches copy only. No worker logic, D1 schema,
+  or migration changed.
+
+**Pattern worth naming:** pricing on this form has now moved three times
+in six weeks — pure education framing (2026-08-01) → $29 Detailed Photo
+Review (2026-09-10) → free again (2026-09-11). Treat any future pricing
+proposal for this form as reopening a decision with a track record of
+not sticking, not as a fresh call.
+
+Same load-bearing-string rule as 1.7: the lead notification subject is
+unchanged and still `New Photo Check lead — {name} ({address})`.
 
 ---
 
@@ -512,7 +552,11 @@ decision narrative when more context is needed than Section 1 or 3 give.
 
 **END PROJECT TRUTH**
 
-### 3.15 $29 Detailed Photo Review — DEPLOYED AND VERIFIED LIVE, 2026-09-10
+### 3.15 $29 Detailed Photo Review — SUPERSEDED 2026-09-11 (see 3.16)
+
+Kept for history, not current. See 3.16 for the free-again reversal.
+
+### 3.15 (historical) $29 Detailed Photo Review — DEPLOYED AND VERIFIED LIVE, 2026-09-10
 
 Built on a fresh verified baseline of `origin/main` @ `f455aab` after
 inspection confirmed an earlier attempt at this change had never been
@@ -573,3 +617,21 @@ and remains, GitHub Pages per 1.3 — confirmed again above via the GitHub
 Pages Builds API. No Cloudflare Pages project is involved in serving this
 site; only the two Cloudflare Workers (`worker`, `review-worker`), D1, and
 R2 sit behind it.
+
+### 3.16 Photo Review returns to FREE — 2026-09-11
+
+Reverses 3.15 less than 24 hours after it deployed. Changed: `index.html`
+(nav CTA, hero, form section label, form intro paragraph, success modal,
+FAQ link, form reassurance line), `js/main.js`, `js/zone0-tools.js`,
+`review-worker/src/index.js` (comment only), `review-worker/migrations/0003_areas.sql`
+(comment only), and `.claude/skills/homeowner-journey/SKILL.md` (all 5
+"$29 Detailed Photo Review" references).
+
+Copy-only change: no Worker request/response logic, D1 schema, or
+migration behavior changed. The four-required-sides gate, optional
+`closeup` zone, and `areas` multi-select from 3.15 are untouched. The
+lead notification subject stays `New Photo Check lead — {name}
+({address})` — not touched, per the load-bearing-string rule in 1.7/1.8.
+
+Not yet deployed as of this writing — see 1.8 for the decision;
+deployment and live verification to be recorded here once pushed.
