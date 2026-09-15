@@ -9,13 +9,15 @@ claim briefly existed in one file after being corrected in the other before
 this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
-**Last synchronized:** 2026-09-11 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `b917a10`
+**Last synchronized:** 2026-09-15 — local `main`, `origin/main`, and the
+live GitHub Pages build are all confirmed at commit `a07f92c`
 (`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
-The public Worker is deployed at the same point (version
-`f13c7faa-5dc3-4f00-ae75-231b22db7442`). See 1.8/3.16 for the free-again
-Photo Review reversal and 1.9/3.17 for the new Contact form, both
-verified live as of this commit.
+Both Workers were last deployed at the 1.10/3.18 homepage-cleanup point
+(`zone0-photo-check` version `75ec35ad-92c7-4add-be88-d67afb37f64d`,
+`zone0-review-portal` version `045be44c-66b9-422a-b94d-bdd9e657c461`) —
+no Worker code has changed since, so no redeploy was needed for
+1.11/3.19 (Mockup Sections) or 1.12/3.20 (Bottom CTA), both site-code-
+only changes, both verified live as of this commit.
 
 ---
 
@@ -951,7 +953,7 @@ Review → rest unchanged; 7 `.compliance-check-item`s; exactly one
 live page resolves to a real `id`; zero occurrences of "Upload 3",
 "3 photos", or "Understand the Zones".
 
-### 3.20 Bottom CTA — IMPLEMENTED, PENDING DEPLOY VERIFICATION (branch `bottom-cta`)
+### 3.20 Bottom CTA — DEPLOYED AND VERIFIED LIVE, 2026-09-15
 
 Built on branch `bottom-cta`, on top of 3.19. Changed: `index.html`
 only (Contact section CTA, 2 FAQ links). No other file touched.
@@ -964,5 +966,9 @@ the pre-existing legitimate "AB 3074 compliance" uses); `git diff
 `git diff` on the two Worker files' subject-line strings empty. Content
 rendered correctly on a local static server before commit.
 
-**Not yet deployed as of this entry** — deploy/verification evidence to
-follow in this section once pushed.
+**Deployed and verified live.** Merged to `main` (`a07f92c`), pushed,
+GitHub Pages rebuilt (`gh api .../pages/builds/latest` → commit
+`a07f92c`, `status: built`). Production `curl` confirms all three new
+strings present: "Want a plan for your property instead?" (Contact)
+and "Want this for your property? Start your free photo review →"
+(×2, mulch + plants FAQ answers).
