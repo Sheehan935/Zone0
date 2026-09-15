@@ -1071,12 +1071,11 @@ footer.site-footer {
   }
 }
 
-/* -- Interactive Compliance Checklist -------------------------------------- */
+/* -- Interactive Compliance Checklist --------------------------------------
+   No outer card styling here on purpose: the two 15-Minute/Structural cards
+   (Tailwind utility classes in index.html) carry the white-box look now.
+   This is a layout wrapper for the shared progress bar + banner only. */
 .compliance-checklist {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: var(--space-6);
 }
 
 .compliance-progress-track {

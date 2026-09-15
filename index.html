@@ -156,7 +156,7 @@
         <nav class="hidden md:flex items-center space-x-8 text-sm uppercase tracking-[0.1em] font-bold text-stone-900">
             <a href="#lean-green-clean" class="hover:text-sage-default transition-colors">Approach</a>
             <a href="#landscaping" class="hover:text-sage-default transition-colors">Solutions</a>
-            <a href="#zones" class="hover:text-sage-default transition-colors">Zones</a>
+            <a href="#what-is-zone-0" class="hover:text-sage-default transition-colors">What Is Zone 0</a>
             <a href="#resources" class="hover:text-sage-default transition-colors">Resources</a>
           <a href="#photo-check" class="bg-terracotta hover:bg-[#c85a2f] text-white text-xs font-semibold tracking-wider uppercase px-4 py-2 rounded-full shadow-sm transition-all">Photo Review</a>
             </nav>
@@ -176,7 +176,7 @@
     <div id="mobileMenu" class="hidden md:hidden flex-col bg-stone-100 border-t border-stone-200 px-6 py-4 shadow-lg">
         <a href="#lean-green-clean" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Approach</a>
         <a href="#landscaping" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Solutions</a>
-        <a href="#zones" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Zones</a>
+        <a href="#what-is-zone-0" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">What Is Zone 0</a>
         <a href="#resources" class="block px-4 py-3 text-xs uppercase tracking-widest font-bold text-stone-900 hover:bg-stone-200">Resources</a>
     </div>
 </header>
@@ -208,13 +208,145 @@
     </section>
 
     <!-- ========================================================================
-         3. FREE DETAILED PHOTO REVIEW
+         3. WHAT IS ZONE 0?
+         ======================================================================== -->
+    <section id="what-is-zone-0" class="scroll-mt-24 py-24 bg-white border-b border-stone-200">
+        <div class="max-w-5xl mx-auto px-6">
+            <span class="text-2xs uppercase tracking-widest font-bold text-sage-default block mb-2">Start Here</span>
+            <h2 class="text-3xl font-display font-bold mb-4 text-stone-900">What Is Zone 0?</h2>
+            <p class="text-stone-600 max-w-2xl text-base font-light leading-relaxed mb-8">Zone 0 is the first 5 feet around your foundation. Wind-blown embers ignite houses by landing in dry fuel against exterior walls. Keeping this zone clear of combustible materials is the single most effective way to protect your home.</p>
+
+            <div class="max-w-2xl border border-stone-200 border-l-4 border-l-terracotta bg-stone-50 rounded-lg p-6 mb-12">
+                <h3 class="font-display font-bold text-stone-900 mb-2">Does it apply to me?</h3>
+                <p class="text-stone-600 text-base leading-relaxed">Check if your home is in an official hazard zone using the <a href="https://osfm.fire.ca.gov/what-we-do/community-wildfire-preparedness-and-mitigation/fire-hazard-severity-zones" target="_blank" rel="noopener noreferrer" class="text-sage-dark underline underline-offset-2 hover:text-sage-default font-semibold">CAL FIRE Fire Hazard Severity Zone Viewer</a>.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+                <div class="bg-white border border-stone-200 border-l-4 border-l-zone-red rounded-lg p-6">
+                    <span class="text-xs font-bold uppercase tracking-widest text-zone-red block mb-1">Zone 0 &middot; 0&ndash;5 ft</span>
+                    <span class="block text-sm font-semibold text-stone-900 mb-2">Ember-resistant zone</span>
+                    <p class="text-stone-600 text-base leading-relaxed">Hardscape only. Nothing combustible against the house.</p>
+                </div>
+                <div class="bg-white border border-stone-200 border-l-4 border-l-zone-amber rounded-lg p-6">
+                    <span class="text-xs font-bold uppercase tracking-widest text-zone-amberdark block mb-1">Zone 1 &middot; 5&ndash;30 ft</span>
+                    <span class="block text-sm font-semibold text-stone-900 mb-2">Lean. Green. Clean.</span>
+                    <p class="text-stone-600 text-base leading-relaxed">Low, well-spaced, well-watered plants with no ladder fuels.</p>
+                </div>
+                <div class="bg-white border border-stone-200 border-l-4 border-l-zone-green rounded-lg p-6">
+                    <span class="text-xs font-bold uppercase tracking-widest text-zone-green block mb-1">Zone 2 &middot; 30&ndash;100 ft</span>
+                    <span class="block text-sm font-semibold text-stone-900 mb-2">Reduced fuel</span>
+                    <p class="text-stone-600 text-base leading-relaxed">Spaced shrubs, limbed-up trees, mowed grasses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         4. YOUR FIRST-5-FEET TO-DO LIST
+         ======================================================================== -->
+    <section class="scroll-mt-24 py-24 bg-stone-100 border-b border-stone-200">
+        <div class="max-w-5xl mx-auto px-6">
+            <span class="text-2xs uppercase tracking-widest font-bold text-sage-default block mb-2">What To Do</span>
+            <h2 class="text-3xl font-display font-bold mb-3 text-stone-900">Your First-5-Feet To-Do List</h2>
+            <p class="text-stone-600 max-w-2xl text-base font-light leading-relaxed mb-10">Start with the quick wins this weekend, then plan the upgrades.</p>
+
+            <div id="compliance-checklist-section" class="scroll-mt-24">
+                <div class="compliance-checklist" id="compliance-checklist">
+                    <div class="compliance-progress-track">
+                        <div class="compliance-progress-fill" id="compliance-progress-fill"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="bg-white border border-stone-200 rounded-lg p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="font-display font-bold text-lg text-stone-900">15-Minute Weekend Fixes</h3>
+                                <span class="text-2xs uppercase tracking-widest font-bold text-sage-dark bg-sage-default/10 px-2 py-0.5 rounded-full">DIY</span>
+                            </div>
+
+                            <label class="compliance-check-item" data-item-id="firewood-lumber-clearance">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Firewood, Lumber &amp; Bin Clearance</span>
+                                    <p class="compliance-item-detail">Move firewood, lumber, and trash/recycling bins at least 5 ft from siding.</p>
+                                </span>
+                            </label>
+
+                            <label class="compliance-check-item" data-item-id="doormats-cushions">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Doormats &amp; Cushions</span>
+                                    <p class="compliance-item-detail">Swap doormats and outdoor cushions for non-combustible alternatives, or store them inside.</p>
+                                </span>
+                            </label>
+
+                            <label class="compliance-check-item" data-item-id="gutter-debris">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Gutter &amp; Roof Debris</span>
+                                    <p class="compliance-item-detail">Clear dry leaves and pine needles from gutters, roof valleys, and under the deck.</p>
+                                </span>
+                            </label>
+
+                            <label class="compliance-check-item" data-item-id="mulch-removal">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Organic Mulch Removal</span>
+                                    <p class="compliance-item-detail">Remove bark, wood mulch, and dead plant litter within 5 ft of the foundation.</p>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="bg-white border border-stone-200 rounded-lg p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="font-display font-bold text-lg text-stone-900">Structural Upgrades</h3>
+                                <span class="text-2xs uppercase tracking-widest font-bold text-terracotta bg-terracotta/10 px-2 py-0.5 rounded-full">Plan Ahead</span>
+                            </div>
+
+                            <label class="compliance-check-item" data-item-id="fence-isolation">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Wooden Fence Isolation</span>
+                                    <p class="compliance-item-detail">Replace the first 5 ft of any wood fence or gate touching the house with metal.</p>
+                                </span>
+                            </label>
+
+                            <label class="compliance-check-item" data-item-id="vent-mesh">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Vent Mesh Retrofits</span>
+                                    <p class="compliance-item-detail">Cover attic, crawlspace, and foundation vents with 1/8-inch corrosion-resistant metal mesh.</p>
+                                </span>
+                            </label>
+
+                            <label class="compliance-check-item" data-item-id="tree-branch-clearance">
+                                <input type="checkbox">
+                                <span>
+                                    <span class="compliance-item-title">Tree Branch Clearance</span>
+                                    <p class="compliance-item-detail">Trim tree branches back at least 6&ndash;10 ft from the roof line and siding.</p>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="compliance-status-banner" id="compliance-status-banner">0 of 7 complete &mdash; start with the first one.</div>
+                </div>
+                <p class="text-xs text-stone-400 leading-relaxed mt-6">A self-audit tool for homeowner reference, not a substitute for an official AB 3074 compliance inspection.</p>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#photo-check" class="inline-block bg-sage-default text-white px-8 py-4 text-base uppercase tracking-widest font-bold hover:bg-sage-dark transition-colors shadow-lg rounded-full">Get Your Free Photo Review</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================
+         5. FREE DETAILED PHOTO REVIEW
          ======================================================================== -->
     <section id="photo-check" class="scroll-mt-24 form-section py-24 bg-stone-950">
       <div class="form-container max-w-2xl mx-auto px-6">
         <span class="text-2xs uppercase tracking-widest font-bold text-sage-light block mb-2 text-center">Free Detailed Photo Review</span>
         <h2 class="text-3xl sm:text-4xl font-display font-bold mb-4 text-white text-center">Not Sure What Needs to Change Around Your Home?</h2>
-        <p class="text-stone-300 text-base max-w-md mx-auto my-6 text-center">Send photos of the first five feet around your home and get a personalized, plain-English action list within 48 hours. An educational review of what we can see in your photos, not an official inspection or certification.</p>
+        <p class="text-stone-300 text-base max-w-md mx-auto my-6 text-center">Send us a few details, plus photos of your home&rsquo;s perimeter if you have them. We&rsquo;ll deliver a personalized, plain-English action checklist within 48 hours &mdash; zero sales pressure, no obligation.</p>
 
         <form id="photo-check-form" class="bg-white border border-stone-200 rounded-lg p-6 sm:p-8 mt-8 text-left" novalidate>
 
@@ -247,13 +379,14 @@
               <label for="pc-email" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Email</label>
               <input type="email" id="pc-email" name="email" autocomplete="email"
                 class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
-              <p class="text-xs text-stone-400 mt-1">Your report is sent here.</p>
+              <p class="text-xs text-stone-400 mt-1">Where your 48-hr report will be sent.</p>
             </div>
 
             <div class="mt-4">
               <label for="pc-address" class="block text-xs uppercase tracking-widest font-bold text-stone-700 mb-1">Property Address</label>
               <input type="text" id="pc-address" name="address" autocomplete="street-address" placeholder="123 Skyline Blvd, Oakland, CA"
                 class="w-full border border-stone-300 rounded px-3 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-sage-default focus:border-sage-default">
+              <p class="text-xs text-stone-400 mt-1">So we can check your fire severity zone.</p>
             </div>
 
             <div id="pc-step1-error" class="hidden mt-4 text-sm text-zone-red" role="alert"></div>
@@ -426,7 +559,7 @@
     </section>
 
     <!-- ========================================================================
-         4. LEAN. GREEN. CLEAN.
+         6. LEAN. GREEN. CLEAN.
          ======================================================================== -->
     <section id="lean-green-clean" class="scroll-mt-24 py-24 bg-stone-50 border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
@@ -451,7 +584,7 @@
     </section>
 
     <!-- ========================================================================
-         5. LANDSCAPING / HARDSCAPING / DESIGN
+         7. LANDSCAPING / HARDSCAPING / DESIGN
          ======================================================================== -->
     <section id="landscaping" class="scroll-mt-24 py-24 bg-white border-b border-stone-200">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -537,7 +670,7 @@
     </section>
 
     <!-- ========================================================================
-         6. VISUAL PROOF
+         8. VISUAL PROOF
          ======================================================================== -->
     <section id="visual-proof" class="py-24 bg-stone-50 border-b border-stone-200">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -616,111 +749,20 @@
     </section>
 
     <!-- ========================================================================
-         7. UNDERSTAND THE ZONES
-         ======================================================================== -->
-    <section id="zones" class="scroll-mt-24 py-24 bg-white border-b border-stone-200">
-        <div class="max-w-5xl mx-auto px-6 text-center">
-            <span class="text-2xs uppercase tracking-widest font-bold text-sage-default block mb-2">Defensible Space</span>
-            <h2 class="text-3xl font-display font-bold mb-4 text-stone-900">Understand the Zones</h2>
-            <p class="text-stone-600 max-w-2xl mx-auto mb-12 text-base font-light">Defensible space radiates out from the structure in rings, each with different rules for what can grow there.</p>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
-                <div class="bg-white border border-stone-200 border-t-4 border-t-zone-red rounded-lg p-6">
-                    <span class="text-xs font-bold uppercase tracking-widest text-zone-red block mb-1">Zone 0</span>
-                    <span class="block text-sm font-semibold text-stone-900 mb-2">0&ndash;5 ft from structure</span>
-                    <p class="text-stone-600 text-base leading-relaxed">Ember-resistant zone. Non-combustible gravel, pavers, and hardscape only &mdash; no woody plants touching the structure.</p>
-                </div>
-                <div class="bg-white border border-stone-200 border-t-4 border-t-zone-amber rounded-lg p-6">
-                    <span class="text-xs font-bold uppercase tracking-widest text-zone-amberdark block mb-1">Zone 1</span>
-                    <span class="block text-sm font-semibold text-stone-900 mb-2">5&ndash;30 ft</span>
-                    <p class="text-stone-600 text-base leading-relaxed">Lean. Green. Clean. Low, well-spaced, well-irrigated native plants with no ladder fuels.</p>
-                </div>
-                <div class="bg-white border border-stone-200 border-t-4 border-t-zone-green rounded-lg p-6">
-                    <span class="text-xs font-bold uppercase tracking-widest text-zone-green block mb-1">Zone 2</span>
-                    <span class="block text-sm font-semibold text-stone-900 mb-2">30&ndash;100 ft</span>
-                    <p class="text-stone-600 text-base leading-relaxed">Reduced fuel zone. Spaced shrubs, limbed-up trees, and regularly mowed grasses.</p>
-                </div>
-            </div>
-
-            <div class="mt-12 pt-8 border-t border-stone-200">
-                <p class="text-stone-600 text-base font-light mb-4">Does this apply to your home? Check your fire hazard zone.</p>
-                <a href="https://osfm.fire.ca.gov/what-we-do/community-wildfire-preparedness-and-mitigation/fire-hazard-severity-zones" target="_blank" rel="noopener noreferrer" class="inline-block border border-stone-300 text-stone-700 px-6 py-3 text-xs uppercase tracking-widest font-bold hover:border-sage-default hover:text-sage-dark transition-colors rounded-full">Check the CAL FIRE map</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================================================
-         8. RESOURCES
+         9. RESOURCES
          ======================================================================== -->
     <section id="resources" class="scroll-mt-24 py-24 bg-stone-100 border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
             <span class="text-2xs uppercase tracking-widest font-bold text-sage-default block mb-2">Resources</span>
-            <h2 class="text-3xl font-display font-bold mb-3 text-stone-900 tracking-tight">Tools &amp; Reference Material</h2>
+            <h2 class="text-3xl font-display font-bold mb-3 text-stone-900 tracking-tight">Reference Material</h2>
             <p class="text-stone-600 max-w-xl mx-auto mb-14 text-base font-light leading-relaxed">
-                Self-audit tools, checklists, and official sources &mdash; everything short of an on-site visit.
+                Official sources and answers to common questions &mdash; everything short of an on-site visit.
             </p>
 
             <div class="max-w-3xl mx-auto text-left space-y-4">
 
-                <!-- Zone 0 Compliance Checklist (open by default now that the calculator above it is gone) -->
-                <details id="compliance-checklist-section" class="scroll-mt-24 group bg-white border border-stone-200 rounded-lg" open>
-                    <summary class="flex items-center justify-between cursor-pointer p-6 font-display font-bold text-lg text-stone-900 [&::-webkit-details-marker]:hidden">
-                        <span>Zone 0 Compliance Checklist</span>
-                        <i class="fa-solid fa-chevron-down text-sm text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open:-rotate-180"></i>
-                    </summary>
-                    <div class="px-6 pb-6 border-t border-stone-100 pt-4">
-                        <span class="text-2xs uppercase tracking-widest font-bold text-sage-default block mb-2">0&ndash;5 ft Action List</span>
-                        <p class="text-stone-600 text-base font-light leading-relaxed mb-6">Once you know what to look for, work through the four highest-impact retrofits in the 0&ndash;5 ft zone. Your progress is saved in this browser.</p>
-
-                        <div class="compliance-checklist" id="compliance-checklist">
-                            <div class="compliance-progress-track">
-                                <div class="compliance-progress-fill" id="compliance-progress-fill"></div>
-                            </div>
-
-                            <label class="compliance-check-item" data-item-id="mulch-removal">
-                                <input type="checkbox">
-                                <span>
-                                    <span class="compliance-item-title">Organic Mulch Removal</span>
-                                    <p class="compliance-item-detail">Replace wood bark, wood chips, and other organic mulch within 5 ft of the foundation with non-combustible decomposed granite (DG) or rock.</p>
-                                </span>
-                            </label>
-
-                            <label class="compliance-check-item" data-item-id="vent-mesh">
-                                <input type="checkbox">
-                                <span>
-                                    <span class="compliance-item-title">Vent Mesh Retrofits</span>
-                                    <p class="compliance-item-detail">Install 1/8" stainless steel wire mesh over all attic and crawlspace vents to stop embers from entering the structure.</p>
-                                </span>
-                            </label>
-
-                            <label class="compliance-check-item" data-item-id="under-deck-clearance">
-                                <input type="checkbox">
-                                <span>
-                                    <span class="compliance-item-title">Under-Deck Clearance</span>
-                                    <p class="compliance-item-detail">Remove stored lumber, firewood, and dry debris from underneath decks and elevated porches.</p>
-                                </span>
-                            </label>
-
-                            <label class="compliance-check-item" data-item-id="fence-isolation">
-                                <input type="checkbox">
-                                <span>
-                                    <span class="compliance-item-title">Wooden Fence Isolation</span>
-                                    <p class="compliance-item-detail">Replace the first 5 ft of a wooden fence attached to the house with a non-combustible section, or otherwise isolate it from the siding.</p>
-                                </span>
-                            </label>
-
-                            <div class="compliance-status-banner" id="compliance-status-banner">0 of 4 complete &mdash; start with mulch removal, the highest-impact fix.</div>
-                        </div>
-                        <p class="text-xs text-stone-400 leading-relaxed mt-6">A self-audit tool for homeowner reference, not a substitute for an official AB 3074 compliance inspection.</p>
-                    </div>
-                </details>
-
-                <div class="text-center pt-2">
-                    <a href="#photo-check" class="inline-block bg-sage-default text-white px-8 py-4 text-base uppercase tracking-widest font-bold hover:bg-sage-dark transition-colors shadow-lg rounded-full">Get Your Free Photo Review</a>
-                </div>
-
-                <!-- FAQ + Official Resources (collapsed) -->
-                <details class="group bg-white border border-stone-200 rounded-lg">
+                <!-- FAQ + Official Resources (open by default now that it's the only thing in Resources) -->
+                <details class="group bg-white border border-stone-200 rounded-lg" open>
                     <summary class="flex items-center justify-between cursor-pointer p-6 font-display font-bold text-lg text-stone-900 [&::-webkit-details-marker]:hidden">
                         <span>FAQ &amp; Official Resources</span>
                         <i class="fa-solid fa-chevron-down text-sm text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open:-rotate-180"></i>
@@ -742,7 +784,7 @@
                                     <i class="fa-solid fa-chevron-down text-xs text-stone-500 ml-4 flex-shrink-0 transition-transform duration-300 group-open/faq:-rotate-180"></i>
                                 </summary>
                                 <div class="mt-3 text-stone-600 leading-relaxed text-sm border-t border-stone-100 pt-3">
-                                    Reporting on the final rule describes two phases. Within roughly 3 years: clear the first 5 ft of firewood, dead leaves and branches, bark mulch, and wood chips; keep gutters and roofs clear; finish any overdue tree work. Within roughly 5 years: create vegetation-free buffers under eaves, windows, and vents; replace combustible fence and gate sections where they attach to the house; address sheds and other attached combustible structures. Enforcement is described as education-first in the early years &mdash; the goal is measurable progress, not a single hard deadline. Our Compliance Checklist above walks through these same items in order, and a <a href="#photo-check" class="text-sage-dark underline underline-offset-2 hover:text-sage-default">free Photo Review</a> can show you where your property stands today.
+                                    Reporting on the final rule describes two phases. Within roughly 3 years: clear the first 5 ft of firewood, dead leaves and branches, bark mulch, and wood chips; keep gutters and roofs clear; finish any overdue tree work. Within roughly 5 years: create vegetation-free buffers under eaves, windows, and vents; replace combustible fence and gate sections where they attach to the house; address sheds and other attached combustible structures. Enforcement is described as education-first in the early years &mdash; the goal is measurable progress, not a single hard deadline. Our <a href="#compliance-checklist-section" class="text-sage-dark underline underline-offset-2 hover:text-sage-default">First-5-Feet To-Do List</a> walks through these same items in order, and a <a href="#photo-check" class="text-sage-dark underline underline-offset-2 hover:text-sage-default">free Photo Review</a> can show you where your property stands today.
                                 </div>
                             </details>
                             <details class="group/faq bg-stone-50 border border-stone-200 p-5 [&_summary::-webkit-details-marker]:hidden cursor-pointer">
@@ -784,7 +826,7 @@
     </section>
 
     <!-- ========================================================================
-         9. HOW WE HELP
+         10. HOW WE HELP
          ======================================================================== -->
     <section id="how-we-help" class="py-24 bg-white border-b border-stone-200">
         <div class="max-w-5xl mx-auto px-6 text-center">
@@ -822,7 +864,7 @@
     </section>
 
     <!-- ========================================================================
-         10. CONTACT
+         11. CONTACT
          ======================================================================== -->
     <section id="contact" class="contact-section">
       <div class="contact-wrap">
@@ -893,7 +935,7 @@
     </main>
 
     <!-- ========================================================================
-         11. FOOTER
+         12. FOOTER
          ======================================================================== -->
     <footer class="bg-stone-950 text-stone-400 pt-16 pb-10 border-t border-stone-900">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -904,7 +946,7 @@
                         <li><a href="/" class="block py-2 rounded hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">Home</a></li>
                         <li><a href="#lean-green-clean" class="block py-2 rounded hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">Approach</a></li>
                         <li><a href="#landscaping" class="block py-2 rounded hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">Solutions</a></li>
-                        <li><a href="#zones" class="block py-2 rounded hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">Zones</a></li>
+                        <li><a href="#what-is-zone-0" class="block py-2 rounded hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">What Is Zone 0</a></li>
                         <li><a href="#how-we-help" class="block py-2 rounded hover:text-sage-light focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sage-default transition-colors">How We Help</a></li>
                     </ul>
                 </nav>

@@ -127,9 +127,9 @@
 
             if (banner) {
                 if (checkedCount === items.length) {
-                    banner.textContent = 'All 4 complete — nice work. Consider a free Photo Review to confirm.';
+                    banner.textContent = 'All ' + items.length + ' complete — nice work. Consider a free Photo Review to confirm.';
                 } else if (checkedCount === 0) {
-                    banner.textContent = '0 of ' + items.length + ' complete — start with mulch removal, the highest-impact fix.';
+                    banner.textContent = '0 of ' + items.length + ' complete — start with the first one.';
                 } else {
                     banner.textContent = checkedCount + ' of ' + items.length + ' complete.';
                 }
