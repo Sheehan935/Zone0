@@ -6,7 +6,23 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 
 ## Unreleased
 
-### Changed (homepage cleanup, branch `homepage-cleanup`, pending review)
+### Changed (mockup sections, branch `mockup-sections`)
+- New homepage section order (see `PROJECT-TRUTH.md` 1.11/3.19): Hero →
+  **What Is Zone 0** (new) → **Your First-5-Feet To-Do List** (new) →
+  Free Detailed Photo Review → the rest of the page, unchanged.
+- "Understand the Zones" removed — its 3 zones were near-duplicated by
+  the new "What Is Zone 0" section. All "Zones" nav links now point to
+  `#what-is-zone-0` and read "What Is Zone 0".
+- The Compliance Checklist moved (not duplicated) from Resources into
+  "Your First-5-Feet To-Do List", expanded from 4 items to 7, split into
+  two cards ("15-Minute Weekend Fixes" / "Structural Upgrades"). Its ids
+  are unchanged, so existing links to it still work.
+- Resources is FAQ-only now; heading/intro reworded, FAQ open by default.
+- Photo Review section intro restyled (new copy, field hints on Address/
+  Email); the form itself — fields, photo slots, `areas` multi-select,
+  validation, submit logic — has zero diff.
+
+### Changed (homepage cleanup, branch `homepage-cleanup`, deployed 2026-09-15)
 - **Photo Review: all photos now optional**, client and server (see
   `PROJECT-TRUTH.md` 1.10/3.18 — reopens the "four sides hard-required"
   decision locked in 1.7 and reaffirmed in 1.8). A submission with zero
@@ -25,7 +41,7 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 - Added the phone number `(510) 394-2590` to the footer, the Contact
   section intro, and as a mobile-only call icon in the header.
 
-### Removed (homepage cleanup)
+### Removed (homepage cleanup, deployed 2026-09-15)
 - Property Fire Risk Audit Calculator (introduced in 3.13) removed from
   Resources — the Compliance Checklist and FAQ stay, along with both
   Resources nav links. `js/zone0-tools.js`, which powered only the

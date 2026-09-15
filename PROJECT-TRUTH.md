@@ -255,6 +255,55 @@ route (kept exactly as 1.9 left it), the `areas` multi-select, the
 close-up zone's existence. There is no About/"Who We Are" section on
 this site to remove — never existed in the current architecture.
 
+### 1.11 Mockup Sections — DECIDED 2026-09-15
+
+New homepage page order, built from the site owner's own mockup, on
+branch `mockup-sections`:
+
+Header → Hero → **What Is Zone 0** (new) → **Your First-5-Feet To-Do
+List** (new) → Free Detailed Photo Review → Lean.Green.Clean →
+Landscaping → Visual Proof → Resources → How We Help → Contact →
+Footer.
+
+- **"What Is Zone 0" replaces "Understand the Zones", which is
+  deleted.** The two covered the same three zones with near-duplicate
+  copy — confirmed and flagged before removal, not assumed. All three
+  "Zones" nav links (desktop, mobile, footer) now point to
+  `#what-is-zone-0` and are relabeled "What Is Zone 0" so the link text
+  matches its destination.
+- **The Compliance Checklist moved**, not duplicated, from Resources
+  into the new "Your First-5-Feet To-Do List" section, keeping its
+  existing ids (`#compliance-checklist-section`, `#compliance-checklist`,
+  `#compliance-progress-fill`, `#compliance-status-banner`) so nothing
+  externally pointing at them breaks.
+- **Checklist content fully replaced**: 4 items → 7, split into two
+  cards ("15-Minute Weekend Fixes" / DIY, "Structural Upgrades" / Plan
+  Ahead). `js/main.js`'s progress banner is item-count-driven now, not
+  hardcoded to 4 — the "start with mulch removal" callout (mulch
+  removal is no longer item 1) was genericized rather than left stale.
+  Returning visitors' localStorage checklist state resets given the
+  content is materially different — acceptable for a client-only
+  self-check tool.
+- **Resources is FAQ-only now.** Heading changed from "Tools &
+  Reference Material" to "Reference Material", intro no longer mentions
+  "checklists". The FAQ is open by default (same pattern as 1.10's
+  Compliance-Checklist-becomes-default-open, now applied to FAQ since
+  it's the only thing left).
+- **CAL FIRE link exists in exactly one place** — inside "What Is Zone
+  0"'s "Does it apply to me?" callout. The copy this superseded (added
+  to "Understand the Zones" in 1.10/3.18) is gone along with that
+  section, so the link never appears twice.
+- **Photo Review section: intro/hints only, form untouched.** New intro
+  copy, field hints on Address/Email. A 3-step strip (Send/Get/Decide)
+  was added and then removed at the site owner's request after viewing
+  it locally. `js/photo-check-form.js` has zero diff — fields, per-side
+  photo slots, `areas` multi-select, honeypot, validation, and submit
+  logic are byte-for-byte what 1.10 left them.
+
+**Not changed:** the lead notification subject, the Contact section,
+the phone number links, any Worker code (`worker/src/index.js`,
+`review-worker/src/index.js` — zero diff, confirmed before commit).
+
 ---
 
 ## 2. GOVERNANCE RULES
@@ -761,7 +810,7 @@ body correctly formatted. `curl https://zone0landscaping.com/` confirms
 HTTP 200. No test data to clean up — this route only sends email, it
 never writes to D1 or R2.
 
-### 3.18 Homepage Cleanup — IMPLEMENTED, PENDING REVIEW (branch `homepage-cleanup`)
+### 3.18 Homepage Cleanup — DEPLOYED AND VERIFIED LIVE, 2026-09-15
 
 Built on branch `homepage-cleanup`, not yet merged/deployed. Changed:
 `index.html`, `js/photo-check-form.js`, `worker/src/index.js`. Removed
@@ -821,5 +870,52 @@ live `console --errors` check. No headless-browser tooling
 file server was started locally instead so these can be checked
 directly in a real browser.
 
-**Not deployed.** No commit, push, or Worker deploy has happened —
-awaiting the site owner's diff review per their explicit instruction.
+**Approved and deployed, 2026-09-15.** Committed on `homepage-cleanup`
+(content + docs commits), merged to `main`, both Workers redeployed,
+`main` pushed, GitHub Pages rebuilt. **Production verified live:** a
+real `/submit` POST with zero photos returned `{"ok":true}`; D1
+confirmed `photo_keys: "[]"`; notification email delivered with subject
+`New Photo Check lead — {name} ({address})` unchanged; live `curl`
+confirmed the scarcity copy, `$29`, and the Risk Calculator are all
+gone, while "East Bay based", the CAL FIRE block, both phone numbers,
+and the header call icon are present. Test lead deleted from D1
+afterward (no R2 objects existed to clean up).
+
+### 3.19 Mockup Sections — IMPLEMENTED, PENDING DEPLOY VERIFICATION (branch `mockup-sections`)
+
+Built on branch `mockup-sections`, on top of 3.18. Changed: `index.html`
+(new "What Is Zone 0" and "Your First-5-Feet To-Do List" sections,
+"Understand the Zones" deleted, Photo Review intro restyled, Resources
+heading/intro reworded, three "Zones" nav links repointed to
+`#what-is-zone-0` and relabeled "What Is Zone 0", section-comment
+numbers 3–12 renumbered sequentially), `js/main.js` (checklist banner
+made item-count-driven), `css/styles.css` (`.compliance-checklist`'s
+outer box styling removed — the two new DIY/Structural-Upgrades cards
+carry that look instead; the class is used in exactly one place).
+
+**Verified before this was shown for approval:**
+- Zone-card content overlap between the old "Understand the Zones" and
+  the new "What Is Zone 0" — confirmed near-duplicate (same 3 zones,
+  same distances, close wording) and flagged for a decision rather than
+  silently deleting or silently leaving a duplicate. Site owner chose
+  deletion.
+- Resources' post-move content — confirmed only the FAQ would remain
+  and that the section's own heading/intro text referenced "checklists"
+  and would go stale; flagged rather than left inaccurate.
+- `js/zone0-tools.js`, `worker/`, `review-worker/`, `js/photo-check-form.js`
+  — re-confirmed zero diff before every commit in this branch.
+- Tag balance (`section`/`div`/`header`/`footer`/`form`/`details`), every
+  `#anchor` in the file resolves to a real `id` (no orphaned `#zones`
+  left behind — all three nav links repointed), single CAL FIRE link,
+  single checklist instance (7 `.compliance-check-item`s), all three
+  "Get Your Free Photo Review" buttons pointing to `#photo-check`.
+- `node --check` on `js/main.js`: pass.
+
+**Iterated on the site owner's own local review**, not assumed correct
+on the first pass: a 3-step strip (Send/Get/Decide) was added above the
+Photo Review form per the mockup, viewed locally, then removed at the
+site owner's request — the intro paragraph and field hints it sat
+between were unaffected by either the add or the removal.
+
+**Not yet deployed as of this entry** — deploy/verification evidence to
+follow in this section and the sync header once pushed.
