@@ -304,6 +304,29 @@ Footer.
 the phone number links, any Worker code (`worker/src/index.js`,
 `review-worker/src/index.js` — zero diff, confirmed before commit).
 
+### 1.12 Bottom CTA — DECIDED 2026-09-15
+
+Two small conversion additions, branch `bottom-cta`:
+
+- **Contact section**: a line ("Want a plan for your property
+  instead?") and a hero-styled "Get Your Free Photo Review" button
+  added above the contact form, linking to `#photo-check`. The form,
+  "Send message" button, and phone line are unchanged.
+- **FAQ**: a short "Want this for your property? Start your free photo
+  review →" link added to exactly 2 of 5 answers — mulch, and plants/
+  what-to-remove — where the site owner's own examples pointed.
+  Deliberately **not** added to "What's the compliance timeline for
+  existing homes?", which already ends with an embedded Photo Review
+  link (added when the checklist moved in 1.11) — a second one there
+  would read as two competing CTAs in one answer.
+- **Header mobile Photo Review visibility — investigated, not fixed.**
+  The header's "Photo Review" pill lives inside `nav.hidden.md:flex`,
+  invisible below 768px, and is not duplicated into the mobile
+  hamburger menu either. At 375px there is currently no header path to
+  the Photo Review form at all. Reported to the site owner; left alone
+  per their explicit "report what you find; don't change it yet."
+  **Open item — revisit if asked.**
+
 ---
 
 ## 2. GOVERNANCE RULES
@@ -881,7 +904,7 @@ gone, while "East Bay based", the CAL FIRE block, both phone numbers,
 and the header call icon are present. Test lead deleted from D1
 afterward (no R2 objects existed to clean up).
 
-### 3.19 Mockup Sections — IMPLEMENTED, PENDING DEPLOY VERIFICATION (branch `mockup-sections`)
+### 3.19 Mockup Sections — DEPLOYED AND VERIFIED LIVE, 2026-09-15
 
 Built on branch `mockup-sections`, on top of 3.18. Changed: `index.html`
 (new "What Is Zone 0" and "Your First-5-Feet To-Do List" sections,
@@ -917,5 +940,29 @@ Photo Review form per the mockup, viewed locally, then removed at the
 site owner's request — the intro paragraph and field hints it sat
 between were unaffected by either the add or the removal.
 
+**Deployed and verified live, 2026-09-15.** Committed on `mockup-sections`
+(content + docs commits), fast-forward merged to `main`, pushed, GitHub
+Pages rebuilt (`gh api .../pages/builds/latest` → commit `76b1d04`,
+`status: built`). Production `curl` confirmed: section order exactly
+Header → Hero → What Is Zone 0 → To-Do List → Free Detailed Photo
+Review → rest unchanged; 7 `.compliance-check-item`s; exactly one
+`osfm.fire.ca.gov` link; all three "Get Your Free Photo Review" buttons
+(hero + 2 mid-page) linking to `#photo-check`; every `#anchor` on the
+live page resolves to a real `id`; zero occurrences of "Upload 3",
+"3 photos", or "Understand the Zones".
+
+### 3.20 Bottom CTA — IMPLEMENTED, PENDING DEPLOY VERIFICATION (branch `bottom-cta`)
+
+Built on branch `bottom-cta`, on top of 3.19. Changed: `index.html`
+only (Contact section CTA, 2 FAQ links). No other file touched.
+
+**Verified before commit:** tag balance (`section`/`div`/`p`/`a`/
+`details`); every `#anchor` resolves to a real `id`; no new
+"certified"/"compliant"/"guaranteed" language (grep filtered against
+the pre-existing legitimate "AB 3074 compliance" uses); `git diff
+--stat` on `js/photo-check-form.js`, `worker/`, `review-worker/` empty;
+`git diff` on the two Worker files' subject-line strings empty. Content
+rendered correctly on a local static server before commit.
+
 **Not yet deployed as of this entry** — deploy/verification evidence to
-follow in this section and the sync header once pushed.
+follow in this section once pushed.

@@ -6,7 +6,16 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 
 ## Unreleased
 
-### Changed (mockup sections, branch `mockup-sections`)
+### Changed (bottom CTA, branch `bottom-cta`)
+- Contact section: added "Want a plan for your property instead?" and
+  a "Get Your Free Photo Review" button above the form, linking to
+  `#photo-check`. Form, "Send message" button, and phone line unchanged.
+- FAQ: added a "Want this for your property? Start your free photo
+  review →" link to 2 of 5 answers (mulch; plants/what-to-remove) —
+  not added to the compliance-timeline answer, which already links to
+  a Photo Review.
+
+### Changed (mockup sections, branch `mockup-sections`, deployed 2026-09-15)
 - New homepage section order (see `PROJECT-TRUTH.md` 1.11/3.19): Hero →
   **What Is Zone 0** (new) → **Your First-5-Feet To-Do List** (new) →
   Free Detailed Photo Review → the rest of the page, unchanged.
