@@ -6,6 +6,31 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 
 ## Unreleased
 
+### Changed (homepage cleanup, branch `homepage-cleanup`, pending review)
+- **Photo Review: all photos now optional**, client and server (see
+  `PROJECT-TRUTH.md` 1.10/3.18 — reopens the "four sides hard-required"
+  decision locked in 1.7 and reaffirmed in 1.8). A submission with zero
+  photos attached now saves and notifies successfully.
+- Removed "Free while spots last" and "— free while we have capacity"
+  scarcity copy (added in 1.8 less than a week earlier); added "East Bay
+  based" to the form reassurance line instead.
+- Hero simplified to a single CTA ("Get Your Free Photo Review" only,
+  "Explore the Approach" removed); hero badge text changed to white for
+  legibility against the background photo.
+- Added two mid-page "Get Your Free Photo Review" CTAs (after the
+  Compliance Checklist, and after the Landscaping/Design section) and a
+  new "Does this apply to your home?" block linking to CAL FIRE's
+  official Fire Hazard Severity Zone page, at the end of "Understand the
+  Zones".
+- Added the phone number `(510) 394-2590` to the footer, the Contact
+  section intro, and as a mobile-only call icon in the header.
+
+### Removed (homepage cleanup)
+- Property Fire Risk Audit Calculator (introduced in 3.13) removed from
+  Resources — the Compliance Checklist and FAQ stay, along with both
+  Resources nav links. `js/zone0-tools.js`, which powered only the
+  calculator, is no longer loaded on the page.
+
 ### Added
 - New "Contact us" section (`PROJECT-TRUTH.md` 1.9/3.17): name, email,
   optional phone, subject dropdown, message, honeypot. Posts to a new

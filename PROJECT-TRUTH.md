@@ -207,6 +207,54 @@ message) at the bottom of the homepage, above the footer. Settled with it:
   only anti-bot measure is the honeypot (`companyWebsite`). Acceptable
   for a low-volume contact form; revisit if spam becomes a problem.
 
+### 1.10 Homepage Cleanup — DECIDED 2026-09-15
+
+A batch of copy/structure changes to the homepage, done on branch
+`homepage-cleanup`, pending review before merge. The one piece that
+reopens a previous LOCKED decision:
+
+- **Four-required-photos, REOPENED.** §1.7 locked "all four side photos
+  stay hard-required, client and server"; §1.8 explicitly carried that
+  forward unchanged through the pricing reversal. This decision reopens
+  and reverses it: **all photos on the Photo Review form are now fully
+  optional**, client and server. The four side zones (front/back/left/
+  right) and the close-up zone are all optional now — there is no
+  meaningful difference between them anymore except FormData field
+  naming. A lead with zero photos attached must save and notify
+  successfully; verified locally (see 3.18).
+
+Everything else here is ordinary content/copy scope, not a reopened
+lock:
+
+- **Property Fire Risk Audit Calculator removed** from Resources
+  (introduced in 3.13). The Compliance Checklist and FAQ stay, both
+  Resources nav links stay. `js/zone0-tools.js` (which powered only the
+  calculator) is no longer loaded on the page.
+- **Two new mid-page CTAs** ("Get Your Free Photo Review", hero-button
+  styled): after the Compliance Checklist, and after the Landscaping/
+  Design section ("Planting With Purpose").
+- **New "Does this apply to your home?" block** at the end of
+  "Understand the Zones", linking out to CAL FIRE's official Fire
+  Hazard Severity Zone page (`osfm.fire.ca.gov`), `target="_blank"
+  rel="noopener noreferrer"`.
+- **Scarcity copy removed.** "Free while spots last" (form reassurance
+  line) and "— free while we have capacity" (form intro paragraph) are
+  both gone — dropped less than a week after 1.8 added them. Replaced
+  with a trust signal, "East Bay based", in the reassurance line.
+- **Hero simplified to one CTA.** "Explore the Approach" removed; "Get
+  Your Free Photo Review" is the only hero button. Hero badge text
+  changed from `text-stone-300` to `text-white` for legibility against
+  the photo background.
+- **Phone number added**: `(510) 394-2590` / `tel:+15103942590`, in the
+  footer Contact column, the Contact section intro (above the form),
+  and as a mobile-only (`md:hidden`) call icon in the header.
+
+**Not changed:** the lead notification subject (`New Photo Check lead
+— {name} ({address})`), the Contact section/form/CSS/JS/`/contact`
+route (kept exactly as 1.9 left it), the `areas` multi-select, the
+close-up zone's existence. There is no About/"Who We Are" section on
+this site to remove — never existed in the current architecture.
+
 ---
 
 ## 2. GOVERNANCE RULES
@@ -712,3 +760,66 @@ body correctly formatted. `curl https://zone0landscaping.com/` confirms
 `/css/contact-form.css` and `/js/contact-form.js` are present and return
 HTTP 200. No test data to clean up — this route only sends email, it
 never writes to D1 or R2.
+
+### 3.18 Homepage Cleanup — IMPLEMENTED, PENDING REVIEW (branch `homepage-cleanup`)
+
+Built on branch `homepage-cleanup`, not yet merged/deployed. Changed:
+`index.html`, `js/photo-check-form.js`, `worker/src/index.js`. Removed
+the `<script src="/js/zone0-tools.js">` tag (file itself left on disk,
+now unreferenced anywhere).
+
+**Reference drift caught before implementing.** The instructions this
+was built from initially cited several things that don't exist in this
+repo: an About/"Who We Are" section, a "Your First-5-Feet To-Do List"
+section, a "Does it apply to me?" section, an existing CAL FIRE FHSZ
+Viewer reference, and literal copy like "Upload 3 photos". None of
+these matched actual file content on inspection — flagged and
+corrected with the site owner before any edit was made, per this
+file's own Evidence First rule. The revised instructions that followed
+matched the real section names exactly (Zone 0 Compliance Checklist,
+Planting With Purpose, Understand the Zones), confirming genuine
+familiarity with the corrected picture.
+
+**Verified before implementing (not after):**
+- `js/zone0-tools.js` read in full — confirmed it powers *only* the
+  risk-calculator mount points (`#risk-calculator`,
+  `.risk-calculator-container`) and nothing else on the page, making
+  the delete safe.
+- `review-worker/src/index.js`'s lead-detail rendering already handles
+  zero photos per zone gracefully (`srcs.length ? thumbs : "No
+  photos."`) — confirmed **no change needed** there.
+- Lead status (`new`→`in_review`→`complete`) is set by human review
+  action in the portal, not photo count — confirmed making photos
+  optional can't cascade into a broken/stuck status.
+
+**Verified after implementing:**
+- `node --check` on both changed `.js` files: pass.
+- HTML tag balance (`section`/`div`/`header`/`footer`/`form`/`main`
+  open vs. close counts): all matched.
+- Workspace search for `spots last`, `capacity`, `$29`, `Who We Are`,
+  `Upload 3`: zero occurrences. `Resources` search confirms the section,
+  both nav links, and the FAQ sub-heading survived (calculator-only
+  removal, not section removal).
+- All local `<script src>`/`<link href>` paths resolved to real files
+  on disk (`zone0-tools.js` correctly absent from that list).
+- No dangling references to `risk-calc`/`risk-calculator`/
+  `initRiskCalculator` anywhere in `js/main.js` or `index.html` after
+  the calculator's removal — zero console-error risk from orphaned
+  selectors.
+- `wrangler dev --local`: a `/submit` POST with **zero photos attached**
+  (all four zones + close-up omitted) returned `{"ok":true,"warning":
+  "Received, but the confirmation email failed to send."}`, HTTP 200 —
+  the warning is expected in local dev (no `RESEND_API_KEY` configured
+  locally), not a validation failure. Confirms the zero-photo path
+  reaches submission success rather than being blocked.
+
+**Not yet verified — requires a real browser, deferred to the site
+owner's review:** rendered visual check of the diff (mobile 375px
+layout, tap-target sizing, hero badge contrast, CTA placement) and a
+live `console --errors` check. No headless-browser tooling
+(`chromium-cli`, Playwright) is installed in this environment: a static
+file server was started locally instead so these can be checked
+directly in a real browser.
+
+**Not deployed.** No commit, push, or Worker deploy has happened —
+awaiting the site owner's diff review per their explicit instruction.
