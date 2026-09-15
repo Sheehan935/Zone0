@@ -4,11 +4,10 @@
     var ENDPOINT = 'https://zone0-photo-check.zone0landscaping.workers.dev/submit';
 
     var ZONES = ['front', 'back', 'left', 'right'];
-    // Optional zones upload exactly like the required sides but are kept out of
-    // ZONES on purpose: a close-up must never satisfy or block the 4-of-4 gate.
+    // All photos are optional. Close-ups are kept in their own list purely for
+    // labeling/FormData field naming (photos_closeup vs photos_front, etc.).
     var OPTIONAL_ZONES = ['closeup'];
     var ALL_ZONES = ZONES.concat(OPTIONAL_ZONES);
-    var ZONE_LABELS = { front: 'front', back: 'back', left: 'left side', right: 'right side', closeup: 'close-up' };
     var MAX_FILES_PER_ZONE = 5;
     var MAX_FILE_SIZE = 8 * 1024 * 1024;
     var ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
@@ -120,14 +119,10 @@
 
         function updateZoneProgress() {
             var covered = ZONES.filter(function (z) { return zoneFiles[z].length > 0; }).length;
-            zonesProgress.textContent = covered + ' of 4 areas covered — at least 1 photo needed per area';
-            var ready = covered === ZONES.length;
-            step2Next.disabled = !ready;
-            step2Next.classList.toggle('bg-sage-default', ready);
-            step2Next.classList.toggle('text-white', ready);
-            step2Next.classList.toggle('hover:bg-sage-dark', ready);
-            step2Next.classList.toggle('bg-stone-200', !ready);
-            step2Next.classList.toggle('text-stone-400', !ready);
+            zonesProgress.textContent = covered + ' of 4 sides added — optional, add any that help';
+            step2Next.disabled = false;
+            step2Next.classList.add('bg-sage-default', 'text-white', 'hover:bg-sage-dark');
+            step2Next.classList.remove('bg-stone-200', 'text-stone-400');
         }
 
         ALL_ZONES.forEach(function (zone) {
@@ -254,14 +249,6 @@
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             clearError();
-
-            // Deliberately counts ZONES only -- close-ups cannot stand in for a side.
-            var missing = ZONES.filter(function (z) { return zoneFiles[z].length === 0; });
-            if (missing.length) {
-                showError('Please add at least one photo of the ' + missing.map(function (z) { return ZONE_LABELS[z]; }).join(', ') + ' before submitting.');
-                goToStep(2);
-                return;
-            }
 
             var fd = new FormData(form);
             ALL_ZONES.forEach(function (zone) {

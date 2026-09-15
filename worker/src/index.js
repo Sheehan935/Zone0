@@ -1,9 +1,8 @@
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
 const MAX_FILE_SIZE = 8 * 1024 * 1024; // 8MB per photo
 const ZONES = ['front', 'back', 'left', 'right'];
-// Optional zones are uploaded and stored exactly like the required sides, but
-// they are deliberately kept out of ZONES so they can neither satisfy nor block
-// the four-sides-required rule.
+// All photos are optional. Close-ups are kept in their own list purely for
+// storage-key naming (leadId/closeup/... vs leadId/front/...).
 const OPTIONAL_ZONES = ['closeup'];
 const MAX_FILES_PER_ZONE = 5;
 // Area-of-interest slugs. Anything not on this list is dropped silently rather
@@ -119,7 +118,7 @@ async function handleSubmit(request, env, corsHeaders) {
   for (const zone of ZONES) {
     const files = form.getAll(`photos_${zone}`).filter((f) => f && typeof f === 'object' && 'arrayBuffer' in f && f.size > 0);
     filesByZone[zone] = files;
-    if (files.length < 1) errors.push(`At least 1 photo of the ${zone} is required.`);
+    // No minimum: all four sides are optional, same as the close-up zone.
     if (files.length > MAX_FILES_PER_ZONE) errors.push(`No more than ${MAX_FILES_PER_ZONE} photos are allowed per side.`);
     for (const f of files) {
       if (!ALLOWED_IMAGE_TYPES.includes(f.type)) errors.push(`"${f.name}" is not a supported image type.`);
