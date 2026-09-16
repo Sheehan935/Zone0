@@ -9,15 +9,14 @@ claim briefly existed in one file after being corrected in the other before
 this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
-**Last synchronized:** 2026-09-15 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `3193ec8`
-(`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
-Both Workers were last deployed at the 1.10/3.18 homepage-cleanup point
-(`zone0-photo-check` version `75ec35ad-92c7-4add-be88-d67afb37f64d`,
-`zone0-review-portal` version `045be44c-66b9-422a-b94d-bdd9e657c461`) —
-no Worker code has changed since, so no redeploy was needed for
-1.11/3.19, 1.12/3.20, or 1.13/3.21, all site-code-only changes, all
-verified live as of this commit.
+**Last synchronized:** 2026-09-16 — local `main`, `origin/main`, and the
+live GitHub Pages build are all confirmed at commit `3193ec8` (this will
+move once 1.14/3.22's commit is pushed — see below). `zone0-photo-check`
+was redeployed 2026-09-16 (version `14477ea3-c456-40eb-91ba-29623519e9a1`)
+for 1.14/3.22, the daily social content draft engine — a new `scheduled`
+cron handler, verified live. `zone0-review-portal` is still at its
+1.10/3.18 deploy point (`045be44c-66b9-422a-b94d-bdd9e657c461`) — no
+review-worker code has changed since.
 
 ---
 
@@ -348,6 +347,62 @@ site owner's design feedback, committed directly to `main` (no branch
   button are now wrapped in one white, centered card — visually
   distinct from the section's `bg-stone-100`, matching the site's
   existing callout-card pattern rather than inventing a new color.
+
+### 1.14 Daily Social Content Draft Engine — DECIDED 2026-09-15/16
+
+A cron-triggered `scheduled` handler added to the existing public
+`worker/` (`zone0-photo-check`) — not a new Worker, not a new domain,
+not new secrets. Generates a daily Instagram caption + image-generator
+prompt and emails it to `NOTIFY_EMAIL` for manual review and posting.
+**Never posts anywhere automatically.**
+
+- **Schedule:** `0 15 * * *` UTC (8am Pacific during PDT; drifts to 7am
+  during PST — Cloudflare cron has no DST awareness).
+- **Content rotation:** 3 buckets (Educational & Compliance, Design
+  Inspiration, Maintenance & Action) selected by day-of-year modulo 3.
+- **Model:** `@cf/meta/llama-3.1-8b-instruct-fp8` (Workers AI). The
+  model initially proposed by an external AI tool in this conversation,
+  `@cf/meta/llama-3.1-8b-instruct` (no `-fp8`), is deprecated as of
+  2026-05-30 — confirmed live via a real test call before this was
+  written, not assumed from the suggestion.
+- **Output format is delimited text (`[INSTAGRAM_POST]`/
+  `[IMAGE_PROMPT]`), not strict JSON.** Live-tested: `response_format:
+  json_object` + `JSON.parse` broke on the model's second real output
+  (multi-line caption content produced invalid JSON escaping). Delimited
+  text with regex extraction degrades gracefully instead of throwing.
+- **Reuses proven infrastructure on purpose:** `RESEND_API_KEY`,
+  `FROM_EMAIL` (`hello@zone0landscaping.com`), and `NOTIFY_EMAIL` are
+  the same ones already live for Photo Check and Contact notifications
+  — no new Resend domain verification, no new sender address.
+- **Failure path is a real feature, not an afterthought.** A generation
+  or parse failure sends a distinct "⚠️ ... failed" diagnostic email
+  with the raw error, instead of failing silently. Verified live: this
+  path fired for real (deprecated-model error, then a JSON parse error)
+  before the working version was reached.
+
+**An external AI tool (outside Claude Code) proposed multiple versions
+of this feature across this conversation; several were not usable as
+given** — flagged and corrected rather than absorbed silently, per this
+file's own no-parallel-AI-tools guidance:
+- A "Production Script" that replaced the *entire* `fetch` handler with
+  a stub returning `{success:true}`, discarding the real Photo Check/
+  Contact logic in a comment. Not used.
+- A broken Resend endpoint (`fetch('https://resend.com', ...)` instead
+  of `https://api.resend.com/emails`) that persisted across multiple
+  "corrected" versions from that tool, including its own claimed
+  self-correction. Fixed here from the start.
+- Repeated suggestions to house this in a brand-new directory/Worker
+  (`review-worker/`, then `social-engine/`) with its own `SENDER_EMAIL`
+  var and fresh Resend domain verification — all unnecessary; building
+  into the existing `worker/` avoids every one of those steps.
+- `npx wrangler deploy --assets=.`, proposed as a step to "deploy your
+  flat static HTML frontend assets" via this Worker. **This conflicts
+  with the LOCKED §1.3 decision that the site deploys via GitHub
+  Pages** — declined outright, not run. Running it anyway (independent
+  of this conversation) created a stray root-level `wrangler.jsonc`
+  (`assets.directory: "_site"`, a directory that doesn't exist in this
+  project) that briefly interfered with deploying the real Worker
+  change. Deleted; see 3.22.
 
 ---
 
@@ -1012,3 +1067,55 @@ before commit.
 pushed, GitHub Pages rebuilt (`gh api .../pages/builds/latest` → commit
 `3193ec8`, `status: built`). Production `curl` confirms both
 "Done with these? Get your official plan." mini-CTAs present.
+
+### 3.22 Daily Social Content Draft Engine — DEPLOYED AND VERIFIED LIVE, 2026-09-16
+
+Changed: `worker/src/index.js` (new `scheduled` handler,
+`handleDailySocialContent`, `sendDailySocialEmail`, `escapeHtml`,
+`SOCIAL_CONTENT_BUCKETS`), `worker/wrangler.toml` (new `[ai]` binding,
+new `[triggers]` cron). `review-worker/`, `js/photo-check-form.js`,
+`index.html` — zero diff.
+
+**Tested against real production infrastructure before writing any of
+this into the record as working** — not assumed from the external AI
+tool's suggestions:
+- Added a temporary `/__test-social` debug route, ran it against
+  `wrangler dev --remote` (required for the real `AI` binding — Workers
+  AI cannot be meaningfully emulated fully offline), then removed the
+  route before commit. Confirmed removed (`grep` for the route string:
+  no match) and the file re-checked with `node --check` after removal.
+- First real run: failed exactly as `AiError: 5028:
+  @cf/meta/llama-3.1-8b-instruct was deprecated on 2026-05-30` —
+  caught by the error-handling path, which sent a real diagnostic email
+  (confirmed via Gmail search) instead of failing silently. Fixed by
+  switching to `@cf/meta/llama-3.1-8b-instruct-fp8`, found via
+  `npx wrangler ai models` against the live current catalog, not
+  guessed.
+- Second real run (still on `json_object` mode at that point): failed
+  with `SyntaxError: Unterminated string in JSON at position 1096` —
+  the model's multi-line caption broke `JSON.parse`. This is what
+  drove the switch to delimited-text parsing (see 1.14).
+- Third real run, delimited-text format: succeeded. Real email
+  received and read in full (Gmail `get_thread`) — on-brand tone,
+  correct contact info, aspirational image prompt with no fire/smoke,
+  no forbidden vocabulary. One quality gap: the model omitted the
+  "exactly 5 hashtags" instruction on this run — noted as an accepted
+  tradeoff of a smaller/faster free-tier model for a human-reviewed
+  draft, not fixed further.
+- Smoke-tested the *existing* live routes after deploy (`/contact`
+  validation, `/submit` wrong-origin rejection) to confirm the new
+  `scheduled` handler didn't regress anything already live.
+
+**Deployed and verified live.** `npx wrangler deploy` from `worker/` —
+`zone0-photo-check`, version `14477ea3-c456-40eb-91ba-29623519e9a1`,
+`schedule: 0 15 * * *` confirmed in the deploy output.
+
+**Incident during deploy, resolved:** `npx wrangler deploy --assets=.`
+(see 1.14 — declined, but run independently outside this session) had
+created a stray root-level `wrangler.jsonc` with a nonexistent
+`assets.directory`. This caused the legitimate `worker/` deploy to fail
+on the first attempt with an unrelated-looking error. Diagnosed via the
+Wrangler debug log (`configFileType: "jsonc"`), traced to the root
+file, deleted, redeployed successfully. No second Worker was ever
+actually live — the `--assets=.` attempt itself had already failed
+before this session touched anything.

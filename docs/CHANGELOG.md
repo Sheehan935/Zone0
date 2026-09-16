@@ -6,6 +6,14 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 
 ## Unreleased
 
+### Added (daily social content draft engine, deployed 2026-09-16)
+- New `scheduled` cron handler on the existing `worker/`
+  (`zone0-photo-check`) — daily at 8am Pacific, generates an Instagram
+  caption + image-generator prompt and emails it for manual review.
+  Never posts automatically. See `PROJECT-TRUTH.md` 1.14/3.22 for the
+  full record, including two real bugs (a deprecated model, a JSON
+  parsing failure) caught by live testing before this shipped.
+
 ### Changed (To-Do List conversion zone)
 - Added a "Done with these? Get your official plan." link to the
   bottom of both To-Do List cards, linking to `#photo-check`.
