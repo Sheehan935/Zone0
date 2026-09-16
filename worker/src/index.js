@@ -26,7 +26,30 @@ const CONTACT_SUBJECT_LABELS = {
 };
 const CONTACT_MESSAGE_MAX = 500; // mirrors js/contact-form.js's MESSAGE_MAX
 
+// Daily social content generation (cron trigger, see wrangler.toml [triggers]).
+// Rotates through three buckets by day-of-year so the same topic doesn't
+// repeat two days running. Email-digest only -- this never posts to
+// Instagram itself, it just gets a draft into the owner's inbox for review.
+const SOCIAL_CONTENT_BUCKETS = [
+  {
+    name: 'Educational & Compliance',
+    prompt: "Explain a specific part of California's Zone 0 (0-5 ft ember-resistant zone) rules in plain English -- e.g. why bark mulch near the foundation is a hazard, or how embers (not flame contact) cause most home ignitions.",
+  },
+  {
+    name: 'Design Inspiration',
+    prompt: 'Showcase a specific fire-adapted planting or hardscaping choice for the 0-5 ft zone -- e.g. pairing river rock or decomposed granite with a specific California native plant, or a combustible-plant-to-fire-resistant-alternative swap.',
+  },
+  {
+    name: 'Maintenance & Action',
+    prompt: "Give a specific, seasonal defensible-space maintenance tip homeowners can do themselves -- e.g. gutter/roof debris clearing, or a short property self-audit -- and point toward the free photo review as the next step.",
+  },
+];
+
 export default {
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(handleDailySocialContent(env));
+  },
+
   async fetch(request, env) {
     const url = new URL(request.url);
     const origin = request.headers.get('Origin') || '';
@@ -314,4 +337,93 @@ async function sendContactNotification(env, contact) {
   if (!res.ok) {
     throw new Error(`Resend API error: ${res.status}`);
   }
+}
+
+async function handleDailySocialContent(env) {
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const bucket = SOCIAL_CONTENT_BUCKETS[dayOfYear % SOCIAL_CONTENT_BUCKETS.length];
+
+  const systemPrompt = `You are the social media manager for Zone 0 Landscaping, a defensible-space and fire-adapted landscaping company in the East Bay, California. Your goal is to educate homeowners on CA Zone 0 rules, fire-adapted planting design, hardscaping, and defensible space maintenance.
+
+Every post should point toward our free offer: a personalized 48-hour photo review and action checklist. Contact for it: hello@zone0landscaping.com or (510) 394-2590.
+
+Tone: professional, calm, encouraging, knowledgeable about East Bay ecology. Never use scare tactics. Never say "certified", "compliant", "guaranteed", or "official inspection" -- this is educational content, not a certification.
+
+Today's topic focus: ${bucket.name} -- ${bucket.prompt}
+
+You must output exactly two blocks, in this exact format, and nothing else -- no intro, no markdown fences, no extra commentary:
+
+[INSTAGRAM_POST]
+(a hook line, 3 short bullet points, a call-to-action mentioning hello@zone0landscaping.com or (510) 394-2590, and exactly 5 relevant hashtags)
+
+[IMAGE_PROMPT]
+(a detailed photorealistic prompt for a text-to-image generator -- a crisp daylight architectural photo of a home's 0-5 ft perimeter with non-combustible ground cover (gravel, pavers, decomposed granite) or fire-resistant native plants. No fire, smoke, ash, or damage -- aspirational only.)`;
+
+  let caption;
+  let imagePrompt;
+  try {
+    const aiResponse = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fp8', {
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: `Generate today's ${bucket.name} post.` },
+      ],
+      max_tokens: 800,
+    });
+
+    const raw = (aiResponse.response || '').trim();
+    // Delimited text, not JSON -- a smaller model reliably hitting exact JSON
+    // string-escaping rules (multi-line captions, embedded quotes) is not a
+    // safe bet; this format degrades gracefully if it wanders slightly.
+    const postMatch = raw.match(/\[INSTAGRAM_POST\]\s*([\s\S]*?)\s*(?=\[IMAGE_PROMPT\]|$)/i);
+    const promptMatch = raw.match(/\[IMAGE_PROMPT\]\s*([\s\S]*)/i);
+    caption = postMatch ? postMatch[1].trim() : '';
+    imagePrompt = promptMatch ? promptMatch[1].trim() : '';
+    if (!caption || !imagePrompt) throw new Error('AI response missing expected [INSTAGRAM_POST]/[IMAGE_PROMPT] sections. Raw response: ' + raw.slice(0, 500));
+  } catch (e) {
+    await sendDailySocialEmail(env, {
+      subject: '⚠️ Zone 0 daily content generation failed',
+      html: `<p>Today's automated social content draft (${escapeHtml(bucket.name)}) failed to generate.</p><pre>${escapeHtml(String(e))}</pre>`,
+    });
+    return;
+  }
+
+  await sendDailySocialEmail(env, {
+    subject: `☀️ Zone 0 daily Instagram draft — ${bucket.name}`,
+    html: `
+      <h2>Today's topic: ${escapeHtml(bucket.name)}</h2>
+      <p><strong>Instagram caption (copy/paste):</strong></p>
+      <pre style="background:#f4f4f4;padding:12px;white-space:pre-wrap;">${escapeHtml(caption)}</pre>
+      <p><strong>Image prompt (paste into your image generator):</strong></p>
+      <pre style="background:#e4e4e4;padding:12px;white-space:pre-wrap;">${escapeHtml(imagePrompt)}</pre>
+      <p style="color:#888;font-size:13px;">This is a draft only -- nothing was posted automatically. Review, generate the image, and post manually.</p>
+    `,
+  });
+}
+
+async function sendDailySocialEmail(env, { subject, html }) {
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: env.FROM_EMAIL,
+      to: env.NOTIFY_EMAIL,
+      subject,
+      html,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Resend API error: ${res.status}`);
+  }
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
