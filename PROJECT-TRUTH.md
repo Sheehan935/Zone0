@@ -10,7 +10,7 @@ this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
 **Last synchronized:** 2026-09-16 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `5a7792d`
+live GitHub Pages build are all confirmed at commit `f6f08bc`
 (`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
 `zone0-photo-check` was redeployed 2026-09-16 (version
 `58bc2324-8838-4694-ae27-30a6c15a43ee`, for 1.15/3.23, homeowner
