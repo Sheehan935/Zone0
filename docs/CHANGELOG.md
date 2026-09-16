@@ -6,6 +6,14 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 
 ## Unreleased
 
+### Added (homeowner auto-reply, deployed 2026-09-16)
+- `/submit` and `/contact` now email the submitter an immediate
+  confirmation ("We got your Zone 0 Photo Review request" /
+  "Thanks for reaching out to Zone 0 Landscaping"), in addition to the
+  existing owner notification. Best-effort — can't affect lead capture
+  or the response to the visitor if it fails. See `PROJECT-TRUTH.md`
+  1.15/3.23.
+
 ### Added (daily social content draft engine, deployed 2026-09-16)
 - New `scheduled` cron handler on the existing `worker/`
   (`zone0-photo-check`) — daily at 8am Pacific, generates an Instagram

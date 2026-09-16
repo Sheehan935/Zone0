@@ -13,11 +13,13 @@ the detailed evidence trail behind those decisions.
 live GitHub Pages build are all confirmed at commit `5a7792d`
 (`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
 `zone0-photo-check` was redeployed 2026-09-16 (version
-`5e3134cd-4bc1-41ab-b526-1ffe4d3dc77a`, the localized-topic-matrix
-follow-up) for 1.14/3.22, the daily social content draft engine — a
-new `scheduled` cron handler, verified live. `zone0-review-portal` is
-still at its 1.10/3.18 deploy point (`045be44c-66b9-422a-b94d-bdd9e657c461`) — no
-review-worker code has changed since.
+`58bc2324-8838-4694-ae27-30a6c15a43ee`, for 1.15/3.23, homeowner
+auto-replies on `/submit` and `/contact` — verified live). Prior
+`zone0-photo-check` deploy points this session: `5e3134cd...`
+(1.14/3.22 localized topics), `14477ea3...` (1.14/3.22 initial cron).
+`zone0-review-portal` is still at its 1.10/3.18 deploy point
+(`045be44c-66b9-422a-b94d-bdd9e657c461`) — no review-worker code has
+changed since.
 
 ---
 
@@ -414,6 +416,39 @@ file's own no-parallel-AI-tools guidance:
   (`assets.directory: "_site"`, a directory that doesn't exist in this
   project) that briefly interfered with deploying the real Worker
   change. Deleted; see 3.22.
+
+### 1.15 Homeowner Auto-Reply — DECIDED 2026-09-16
+
+Both intake forms now email the submitter an immediate confirmation,
+in addition to the existing owner notification (unchanged):
+
+- **`/submit` (Photo Review):** "We got your Zone 0 Photo Review
+  request" — confirms receipt, restates the 48-hour turnaround and
+  "free, educational, not an official inspection or certification"
+  framing already used on-site, gives a reply-to and phone number.
+- **`/contact`:** "Thanks for reaching out to Zone 0 Landscaping" —
+  confirms receipt, restates the "within one business day" promise
+  already used on-site.
+- **Best-effort, non-blocking.** Both are sent *after* the existing
+  owner-notification send already succeeded, wrapped in their own
+  try/catch that cannot change the response to the visitor. A failure
+  here is invisible to the homeowner and doesn't affect lead capture —
+  by design, since the owner notification (the critical path) already
+  went out by the time this runs.
+- **Distinct from, and does not touch, the owner-notification
+  functions** (`sendNotification`, `sendContactNotification`) or their
+  subject lines. The Photo Check lead subject in particular is
+  untouched, per the standing load-bearing-string rule.
+- **Reuses existing infrastructure**: same `RESEND_API_KEY`,
+  `FROM_EMAIL`; `reply_to` is set to `NOTIFY_EMAIL` so a homeowner
+  hitting reply reaches the same inbox the owner already monitors.
+- **The external AI's proposed snippet for this used
+  `request.json()`** to read the submitted fields — correct for
+  `/contact` (which already parses JSON) but wrong for `/submit`
+  (multipart `FormData` with file uploads; calling `.json()` on that
+  request would throw). Used the form/body variables each handler
+  already parses correctly instead of introducing a second, wrong
+  parse.
 
 ---
 
@@ -1144,3 +1179,27 @@ included all 5 hashtags (the 3.22 run's missing-hashtags gap did not
 recur). Existing `/contact` validation smoke-tested again post-deploy
 — unaffected. Redeployed: `zone0-photo-check`, version
 `5e3134cd-4bc1-41ab-b526-1ffe4d3dc77a`.
+
+### 3.23 Homeowner Auto-Reply — DEPLOYED AND VERIFIED LIVE, 2026-09-16
+
+Changed: `worker/src/index.js` (`sendHomeownerPhotoReviewReply`,
+`sendHomeownerContactReply`, plus one call site each in `handleSubmit`
+and `handleContact`). No other file touched.
+
+**Verified against real production infrastructure, both paths, before
+recording this as working:**
+- `/contact`: real POST with a self-addressed test email, live worker
+  via `wrangler dev --remote`. Owner notification, homeowner auto-reply
+  ("Thanks for reaching out to Zone 0 Landscaping"), both received —
+  confirmed via Gmail search.
+- `/submit`: real multipart POST with 4 test JPEGs, same method.
+  Owner notification (subject confirmed unchanged: `New Photo Check
+  lead — QA Autoreply Test (123 Test St, Testville, CA)`) and homeowner
+  auto-reply ("We got your Zone 0 Photo Review request") both received.
+- Test lead cleaned up afterward: D1 row deleted, all 4 R2 photo
+  objects deleted (same precedent as every prior test lead this
+  project).
+- `node --check` before deploy.
+
+**Deployed and verified live.** `npx wrangler deploy` from `worker/` —
+`zone0-photo-check`, version `58bc2324-8838-4694-ae27-30a6c15a43ee`.
