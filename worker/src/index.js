@@ -27,21 +27,84 @@ const CONTACT_SUBJECT_LABELS = {
 const CONTACT_MESSAGE_MAX = 500; // mirrors js/contact-form.js's MESSAGE_MAX
 
 // Daily social content generation (cron trigger, see wrangler.toml [triggers]).
-// Rotates through three buckets by day-of-year so the same topic doesn't
-// repeat two days running. Email-digest only -- this never posts to
-// Instagram itself, it just gets a draft into the owner's inbox for review.
-const SOCIAL_CONTENT_BUCKETS = [
+// Rotates through a 12-day localized topic matrix by day-of-year so the same
+// topic/location doesn't repeat for 12 days. Email-digest only -- this never
+// posts to Instagram itself, it just gets a draft into the owner's inbox for
+// review. Locations are real East Bay communities within Zone 0's service
+// area, each paired with a hazard/action pair specific enough to read as
+// locally researched rather than generic.
+const SOCIAL_CONTENT_TOPICS = [
   {
-    name: 'Educational & Compliance',
-    prompt: "Explain a specific part of California's Zone 0 (0-5 ft ember-resistant zone) rules in plain English -- e.g. why bark mulch near the foundation is a hazard, or how embers (not flame contact) cause most home ignitions.",
+    bucket: 'Compliance & Laws',
+    location: 'Oakland Hills (Montclair & Skyline areas)',
+    hazard: 'Combustible shredded bark mulch sitting directly against dry wooden structural siding.',
+    action: 'Swapping out organic ground cover for smooth river rock or clean gravel borders.',
   },
   {
-    name: 'Design Inspiration',
-    prompt: 'Showcase a specific fire-adapted planting or hardscaping choice for the 0-5 ft zone -- e.g. pairing river rock or decomposed granite with a specific California native plant, or a combustible-plant-to-fire-resistant-alternative swap.',
+    bucket: 'Design & Aesthetics',
+    location: 'Berkeley Hills & Kensington',
+    hazard: 'Overcrowded, continuous canopy chains of oily, ember-catching ornamental plants.',
+    action: "Spacing out beautiful, broad-leaf native anchors like Toyon or Manzanita 'Dr. Hurd'.",
   },
   {
-    name: 'Maintenance & Action',
-    prompt: "Give a specific, seasonal defensible-space maintenance tip homeowners can do themselves -- e.g. gutter/roof debris clearing, or a short property self-audit -- and point toward the free photo review as the next step.",
+    bucket: 'Seasonal Upkeep',
+    location: 'Orinda & Lafayette',
+    hazard: 'Massive seasonal pine needle and dry oak leaf drops piling up in hidden roof valleys and gutters.',
+    action: 'Clearing out structural collection tracks before the hot autumn offshore wind events strike.',
+  },
+  {
+    bucket: 'Structural Defense',
+    location: 'Moraga',
+    hazard: 'Exposed foundation and crawlspace vents inviting wind-driven sparks directly under the subfloor.',
+    action: 'Retrofitting all exterior vents with 1/8-inch corrosion-resistant metal mesh screen.',
+  },
+  {
+    bucket: 'Compliance & Laws',
+    location: 'Walnut Creek & Alamo',
+    hazard: "Wood privacy fences acting as direct fuel fuses leading wildfire directly up to the home's structure.",
+    action: "Replacing the first 5 feet of any perimeter fence touching the house with a clean metal transition.",
+  },
+  {
+    bucket: 'Design & Aesthetics',
+    location: 'Piedmont & Rockridge',
+    hazard: 'Overgrown foundation flower beds filled with oil-rich hazards like Rosemary or Juniper.',
+    action: 'Replacing them with compact, moisture-rich native succulents like Canyon Live-Forever.',
+  },
+  {
+    bucket: 'Seasonal Upkeep',
+    location: 'Oakland Hills (Joaquin Miller / Woodminster)',
+    hazard: 'Eucalyptus leaf litter and dry ground fuel accumulating beneath mature tree canopies.',
+    action: 'Clearing out low-lying ladder fuels to create safe separation below the major tree line.',
+  },
+  {
+    bucket: 'Structural Defense',
+    location: 'Berkeley Hills',
+    hazard: 'Wooden deck structures with dry leaves or storage bins tucked tightly underneath them.',
+    action: 'Clearing out all under-deck voids and maintaining a clean non-combustible base beneath wood framing.',
+  },
+  {
+    bucket: 'Compliance & Laws',
+    location: 'Orinda',
+    hazard: 'Misunderstanding the timeline and rules of the historic AB 3074 statewide ember-resistant mandate.',
+    action: 'Breaking down the multi-year implementation window and immediate actions for local homeowners.',
+  },
+  {
+    bucket: 'Design & Aesthetics',
+    location: 'Lafayette & Moraga',
+    hazard: 'The misconception that a fire-safe landscape means stripping a yard bare of green character.',
+    action: 'Pairing architectural gravel pathways with resilient pollinator choices like California Buckwheat.',
+  },
+  {
+    bucket: 'Seasonal Upkeep',
+    location: 'Alamo & Danville',
+    hazard: 'Dry summer weeds and unmaintained grasses encroaching heavily inside your outer 30-100ft Zone 2 boundary.',
+    action: 'Mowing down roadside fuel paths and thin, dense brush lines to give arriving fire crews room to maneuver.',
+  },
+  {
+    bucket: 'Action/Offer Promotion',
+    location: 'East Bay Communities',
+    hazard: 'Homeowners feeling overwhelmed and not knowing which part of their perimeter layout needs immediate fix.',
+    action: 'Taking advantage of the Free 48-Hour Personalized Photo Review and Action Checklist offer.',
   },
 ];
 
@@ -62,6 +125,8 @@ export default {
     if (url.pathname.startsWith('/photo/') && request.method === 'GET') {
       return servePhoto(url, env);
     }
+
+
 
     if (url.pathname === '/submit' && request.method === 'POST') {
       return handleSubmit(request, env, corsHeaders);
@@ -341,7 +406,8 @@ async function sendContactNotification(env, contact) {
 
 async function handleDailySocialContent(env) {
   const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-  const bucket = SOCIAL_CONTENT_BUCKETS[dayOfYear % SOCIAL_CONTENT_BUCKETS.length];
+  const topic = SOCIAL_CONTENT_TOPICS[dayOfYear % SOCIAL_CONTENT_TOPICS.length];
+  const topicLabel = `${topic.bucket} — ${topic.location}`;
 
   const systemPrompt = `You are the social media manager for Zone 0 Landscaping, a defensible-space and fire-adapted landscaping company in the East Bay, California. Your goal is to educate homeowners on CA Zone 0 rules, fire-adapted planting design, hardscaping, and defensible space maintenance.
 
@@ -349,15 +415,18 @@ Every post should point toward our free offer: a personalized 48-hour photo revi
 
 Tone: professional, calm, encouraging, knowledgeable about East Bay ecology. Never use scare tactics. Never say "certified", "compliant", "guaranteed", or "official inspection" -- this is educational content, not a certification.
 
-Today's topic focus: ${bucket.name} -- ${bucket.prompt}
+Today's target audience: homeowners in ${topic.location}.
+Content bucket: ${topic.bucket}
+Specific hazard to address: ${topic.hazard}
+Solution/action to recommend: ${topic.action}
 
 You must output exactly two blocks, in this exact format, and nothing else -- no intro, no markdown fences, no extra commentary:
 
 [INSTAGRAM_POST]
-(a hook line, 3 short bullet points, a call-to-action mentioning hello@zone0landscaping.com or (510) 394-2590, and exactly 5 relevant hashtags)
+(a hook line referencing ${topic.location}, 3 short bullet points built from the hazard and action above, a call-to-action mentioning hello@zone0landscaping.com or (510) 394-2590, and exactly 5 relevant hashtags)
 
 [IMAGE_PROMPT]
-(a detailed photorealistic prompt for a text-to-image generator -- a crisp daylight architectural photo of a home's 0-5 ft perimeter with non-combustible ground cover (gravel, pavers, decomposed granite) or fire-resistant native plants. No fire, smoke, ash, or damage -- aspirational only.)`;
+(a detailed photorealistic prompt for a text-to-image generator -- a crisp daylight architectural photo of a home's 0-5 ft perimeter with non-combustible ground cover (gravel, pavers, decomposed granite) or fire-resistant native plants, matching the action described above. No fire, smoke, ash, or damage -- aspirational only.)`;
 
   let caption;
   let imagePrompt;
@@ -365,7 +434,7 @@ You must output exactly two blocks, in this exact format, and nothing else -- no
     const aiResponse = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fp8', {
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Generate today's ${bucket.name} post.` },
+        { role: 'user', content: `Generate today's ${topicLabel} post.` },
       ],
       max_tokens: 800,
     });
@@ -382,15 +451,15 @@ You must output exactly two blocks, in this exact format, and nothing else -- no
   } catch (e) {
     await sendDailySocialEmail(env, {
       subject: '⚠️ Zone 0 daily content generation failed',
-      html: `<p>Today's automated social content draft (${escapeHtml(bucket.name)}) failed to generate.</p><pre>${escapeHtml(String(e))}</pre>`,
+      html: `<p>Today's automated social content draft (${escapeHtml(topicLabel)}) failed to generate.</p><pre>${escapeHtml(String(e))}</pre>`,
     });
     return;
   }
 
   await sendDailySocialEmail(env, {
-    subject: `☀️ Zone 0 daily Instagram draft — ${bucket.name}`,
+    subject: `☀️ Zone 0 daily Instagram draft — ${topicLabel}`,
     html: `
-      <h2>Today's topic: ${escapeHtml(bucket.name)}</h2>
+      <h2>Today's topic: ${escapeHtml(topicLabel)}</h2>
       <p><strong>Instagram caption (copy/paste):</strong></p>
       <pre style="background:#f4f4f4;padding:12px;white-space:pre-wrap;">${escapeHtml(caption)}</pre>
       <p><strong>Image prompt (paste into your image generator):</strong></p>
