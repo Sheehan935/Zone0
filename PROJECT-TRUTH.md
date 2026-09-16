@@ -744,6 +744,18 @@ times. `assets/logos/zone-zero-leaf.png` is the only logo asset referenced
 by `index.html`; the raw Canva source exports are on disk but intentionally
 untracked (the owner's own source material).
 
+**REVISED 2026-09-16 — rebrand logo (supersedes the leaf mark above).**
+Owner's new Canva logo: dark-green Z (#1E4D3B) in an orange ring, no leaf;
+wordmark "ZONE ZERO", tagline "WILDFIRE-READY SOLUTIONS". Source exports
+committed in `assets/logos/zone-zero/` (b8f242a). The live-text principle is
+kept: the header now uses `assets/logos/zone-zero/zone-zero-mark.png` (Z +
+ring, background removed, 256px, decorative `alt=""`) beside the existing
+"ZONE ZERO" `<span>`, recolored from `sage-default` to #1E4D3B. Added a
+favicon (`favicon-64.png`) and `apple-touch-icon.png` — the site had none.
+The branding guide page (`docs/branding-guide/`) still shows the leaf mark
+and sage palette; not yet updated. `zone-zero-leaf.png` is no longer
+referenced by `index.html`.
+
 ### 3.12 Tools (Resources accordion) — SIMPLIFIED 2026-08-25, 4 items → 3
 
 Now exactly 3 accordion items: Risk Calculator (rebuilt as a
