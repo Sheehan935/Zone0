@@ -12,10 +12,11 @@ the detailed evidence trail behind those decisions.
 **Last synchronized:** 2026-09-16 — local `main`, `origin/main`, and the
 live GitHub Pages build are all confirmed at commit `f02ad1e`
 (`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
-`zone0-photo-check` was redeployed 2026-09-16 (version `14477ea3-c456-40eb-91ba-29623519e9a1`)
-for 1.14/3.22, the daily social content draft engine — a new `scheduled`
-cron handler, verified live. `zone0-review-portal` is still at its
-1.10/3.18 deploy point (`045be44c-66b9-422a-b94d-bdd9e657c461`) — no
+`zone0-photo-check` was redeployed 2026-09-16 (version
+`5e3134cd-4bc1-41ab-b526-1ffe4d3dc77a`, the localized-topic-matrix
+follow-up) for 1.14/3.22, the daily social content draft engine — a
+new `scheduled` cron handler, verified live. `zone0-review-portal` is
+still at its 1.10/3.18 deploy point (`045be44c-66b9-422a-b94d-bdd9e657c461`) — no
 review-worker code has changed since.
 
 ---
@@ -358,8 +359,18 @@ prompt and emails it to `NOTIFY_EMAIL` for manual review and posting.
 
 - **Schedule:** `0 15 * * *` UTC (8am Pacific during PDT; drifts to 7am
   during PST — Cloudflare cron has no DST awareness).
-- **Content rotation:** 3 buckets (Educational & Compliance, Design
-  Inspiration, Maintenance & Action) selected by day-of-year modulo 3.
+- **Content rotation (updated 2026-09-16):** a 12-node localized topic
+  matrix — each node pairs a content bucket (Compliance & Laws, Design
+  & Aesthetics, Seasonal Upkeep, Structural Defense, or Action/Offer
+  Promotion) with a real East Bay community (Oakland Hills, Berkeley
+  Hills, Kensington, Orinda, Lafayette, Moraga, Walnut Creek, Alamo,
+  Piedmont, Rockridge, Danville) and a specific hazard/action pair,
+  selected by day-of-year modulo 12. Replaced the original 3-generic-
+  bucket rotation; content is now locally specific rather than generic
+  Zone 0 messaging. The prompt/parsing format (delimited
+  `[INSTAGRAM_POST]`/`[IMAGE_PROMPT]` text, not JSON) was kept as-is —
+  already proven reliable — rather than adopting the different `--`-
+  delimited format the external AI tool proposed alongside this content.
 - **Model:** `@cf/meta/llama-3.1-8b-instruct-fp8` (Workers AI). The
   model initially proposed by an external AI tool in this conversation,
   `@cf/meta/llama-3.1-8b-instruct` (no `-fp8`), is deprecated as of
@@ -1072,9 +1083,10 @@ pushed, GitHub Pages rebuilt (`gh api .../pages/builds/latest` → commit
 
 Changed: `worker/src/index.js` (new `scheduled` handler,
 `handleDailySocialContent`, `sendDailySocialEmail`, `escapeHtml`,
-`SOCIAL_CONTENT_BUCKETS`), `worker/wrangler.toml` (new `[ai]` binding,
-new `[triggers]` cron). `review-worker/`, `js/photo-check-form.js`,
-`index.html` — zero diff.
+`SOCIAL_CONTENT_BUCKETS` — later renamed `SOCIAL_CONTENT_TOPICS`, see
+the 2026-09-16 follow-up below), `worker/wrangler.toml` (new `[ai]`
+binding, new `[triggers]` cron). `review-worker/`,
+`js/photo-check-form.js`, `index.html` — zero diff.
 
 **Tested against real production infrastructure before writing any of
 this into the record as working** — not assumed from the external AI
@@ -1119,3 +1131,16 @@ Wrangler debug log (`configFileType: "jsonc"`), traced to the root
 file, deleted, redeployed successfully. No second Worker was ever
 actually live — the `--assets=.` attempt itself had already failed
 before this session touched anything.
+
+**Follow-up, same day: content rotation replaced (see 1.14).** The
+3-generic-bucket rotation was swapped for the 12-node localized topic
+matrix. Re-verified with the same rigor as the first deploy: temporary
+`/__test-social` route added, tested live, removed before commit
+(confirmed via `grep`), `node --check` re-run. Live email received and
+read in full — topic correctly matched the day-of-year selection
+(Structural Defense — Berkeley Hills), caption correctly referenced
+the location and the specific hazard/action pair, and this run
+included all 5 hashtags (the 3.22 run's missing-hashtags gap did not
+recur). Existing `/contact` validation smoke-tested again post-deploy
+— unaffected. Redeployed: `zone0-photo-check`, version
+`5e3134cd-4bc1-41ab-b526-1ffe4d3dc77a`.

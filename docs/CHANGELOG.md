@@ -13,6 +13,10 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
   Never posts automatically. See `PROJECT-TRUTH.md` 1.14/3.22 for the
   full record, including two real bugs (a deprecated model, a JSON
   parsing failure) caught by live testing before this shipped.
+- Content rotation replaced same-day: 3 generic buckets → a 12-node
+  topic matrix pairing real East Bay communities with specific
+  hazards/actions, so posts read as locally researched rather than
+  generic. Live-tested again before deploying.
 
 ### Changed (To-Do List conversion zone)
 - Added a "Done with these? Get your official plan." link to the
