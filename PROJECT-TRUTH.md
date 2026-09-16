@@ -10,9 +10,9 @@ this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
 **Last synchronized:** 2026-09-16 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `3193ec8` (this will
-move once 1.14/3.22's commit is pushed — see below). `zone0-photo-check`
-was redeployed 2026-09-16 (version `14477ea3-c456-40eb-91ba-29623519e9a1`)
+live GitHub Pages build are all confirmed at commit `f02ad1e`
+(`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
+`zone0-photo-check` was redeployed 2026-09-16 (version `14477ea3-c456-40eb-91ba-29623519e9a1`)
 for 1.14/3.22, the daily social content draft engine — a new `scheduled`
 cron handler, verified live. `zone0-review-portal` is still at its
 1.10/3.18 deploy point (`045be44c-66b9-422a-b94d-bdd9e657c461`) — no
