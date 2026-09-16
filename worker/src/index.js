@@ -262,6 +262,14 @@ async function handleSubmit(request, env, corsHeaders) {
     return json({ ok: true, warning: 'Received, but the confirmation email failed to send.' }, 200, corsHeaders);
   }
 
+  try {
+    await sendHomeownerPhotoReviewReply(env, { name, email });
+  } catch (e) {
+    // Homeowner auto-reply is a nice-to-have, not the critical path -- the
+    // owner notification above already succeeded, so the lead is handled
+    // either way. Never let this failure change the response to the visitor.
+  }
+
   return json({ ok: true }, 200, corsHeaders);
 }
 
@@ -305,6 +313,13 @@ async function handleContact(request, env, corsHeaders) {
     await sendContactNotification(env, { fullName, email, phone, subject, message });
   } catch (e) {
     return json({ ok: false, error: 'Could not send your message. Please try again or email hello@zone0landscaping.com directly.' }, 502, corsHeaders);
+  }
+
+  try {
+    await sendHomeownerContactReply(env, { fullName, email });
+  } catch (e) {
+    // Same as the Photo Review path: the notification to the owner above
+    // already succeeded, so this failing must never change the response.
   }
 
   return json({ ok: true }, 200, corsHeaders);
@@ -395,6 +410,74 @@ async function sendContactNotification(env, contact) {
       to: env.NOTIFY_EMAIL,
       reply_to: contact.email,
       subject: `New contact form message — ${contact.fullName} (${CONTACT_SUBJECT_LABELS[contact.subject] || contact.subject})`,
+      text,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Resend API error: ${res.status}`);
+  }
+}
+
+// Homeowner-facing auto-replies. Distinct from sendNotification/
+// sendContactNotification, which email the site owner -- these email the
+// person who just submitted. Best-effort only: callers must not let a
+// failure here change the response to the visitor (see call sites).
+async function sendHomeownerPhotoReviewReply(env, lead) {
+  const text = [
+    `Hi ${lead.name},`,
+    '',
+    "Thanks for sending your Zone 0 Photo Review request -- we've got your photos and property details.",
+    '',
+    "We'll go through them and send your personalized, plain-English action list within 48 hours. It's a free educational review, not an official inspection or certification -- zero sales pressure, no obligation.",
+    '',
+    'Questions in the meantime? Just reply to this email, or call (510) 394-2590.',
+    '',
+    '— Zone 0 Landscaping',
+  ].join('\n');
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: env.FROM_EMAIL,
+      to: lead.email,
+      reply_to: env.NOTIFY_EMAIL,
+      subject: 'We got your Zone 0 Photo Review request',
+      text,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Resend API error: ${res.status}`);
+  }
+}
+
+async function sendHomeownerContactReply(env, contact) {
+  const text = [
+    `Hi ${contact.fullName},`,
+    '',
+    "Thanks for reaching out to Zone 0 Landscaping -- we've got your message and will get back to you within one business day.",
+    '',
+    'Questions in the meantime? Just reply to this email, or call (510) 394-2590.',
+    '',
+    '— Zone 0 Landscaping',
+  ].join('\n');
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: env.FROM_EMAIL,
+      to: contact.email,
+      reply_to: env.NOTIFY_EMAIL,
+      subject: 'Thanks for reaching out to Zone 0 Landscaping',
       text,
     }),
   });
