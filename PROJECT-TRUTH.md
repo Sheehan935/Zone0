@@ -10,14 +10,14 @@ this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
 **Last synchronized:** 2026-09-15 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `a07f92c`
+live GitHub Pages build are all confirmed at commit `3193ec8`
 (`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
 Both Workers were last deployed at the 1.10/3.18 homepage-cleanup point
 (`zone0-photo-check` version `75ec35ad-92c7-4add-be88-d67afb37f64d`,
 `zone0-review-portal` version `045be44c-66b9-422a-b94d-bdd9e657c461`) —
 no Worker code has changed since, so no redeploy was needed for
-1.11/3.19 (Mockup Sections) or 1.12/3.20 (Bottom CTA), both site-code-
-only changes, both verified live as of this commit.
+1.11/3.19, 1.12/3.20, or 1.13/3.21, all site-code-only changes, all
+verified live as of this commit.
 
 ---
 
@@ -993,7 +993,7 @@ strings present: "Want a plan for your property instead?" (Contact)
 and "Want this for your property? Start your free photo review →"
 (×2, mulch + plants FAQ answers).
 
-### 3.21 To-Do List Conversion Zone — IMPLEMENTED, PENDING DEPLOY VERIFICATION
+### 3.21 To-Do List Conversion Zone — DEPLOYED AND VERIFIED LIVE, 2026-09-15
 
 Changed: `index.html` only (the To-Do List section). No branch —
 small enough to commit directly to `main`.
@@ -1008,5 +1008,7 @@ buttons pointing to `#photo-check`; exactly 2 new "Done with these?"
 mini-CTAs (one per card). Rendered correctly on a local static server
 before commit.
 
-**Not yet deployed as of this entry** — deploy/verification evidence to
-follow in this section once pushed.
+**Deployed and verified live.** Committed directly to `main` (`3193ec8`),
+pushed, GitHub Pages rebuilt (`gh api .../pages/builds/latest` → commit
+`3193ec8`, `status: built`). Production `curl` confirms both
+"Done with these? Get your official plan." mini-CTAs present.
