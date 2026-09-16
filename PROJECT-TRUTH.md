@@ -329,6 +329,26 @@ Two small conversion additions, branch `bottom-cta`:
   per their explicit "report what you find; don't change it yet."
   **Open item — revisit if asked.**
 
+### 1.13 To-Do List Conversion Zone — DECIDED 2026-09-15
+
+Two layout refinements to "Your First-5-Feet To-Do List", from the
+site owner's design feedback, committed directly to `main` (no branch
+— small, low-risk, easily-revertible styling change):
+
+- **Verified before implementing, not assumed:** the feedback described
+  the two card headers as needing to move "to the far left" — checked
+  the actual markup first; they were already left-aligned. No change
+  made there; only the two genuinely actionable pieces below were built.
+- **Per-card mini-CTA.** "Done with these? Get your official plan."
+  added at the bottom of both the DIY and Structural-Upgrades cards,
+  pinned to align across both columns regardless of item count (4 vs
+  3), linking to `#photo-check`.
+- **Unified "conversion zone".** The "0 of 7 complete" counter, the
+  AB-3074 disclaimer line, and the main "Get Your Free Photo Review"
+  button are now wrapped in one white, centered card — visually
+  distinct from the section's `bg-stone-100`, matching the site's
+  existing callout-card pattern rather than inventing a new color.
+
 ---
 
 ## 2. GOVERNANCE RULES
@@ -972,3 +992,21 @@ GitHub Pages rebuilt (`gh api .../pages/builds/latest` → commit
 strings present: "Want a plan for your property instead?" (Contact)
 and "Want this for your property? Start your free photo review →"
 (×2, mulch + plants FAQ answers).
+
+### 3.21 To-Do List Conversion Zone — IMPLEMENTED, PENDING DEPLOY VERIFICATION
+
+Changed: `index.html` only (the To-Do List section). No branch —
+small enough to commit directly to `main`.
+
+**Verified before commit:** re-checked the design feedback against the
+actual markup before acting on it — the claimed "headers aren't
+left-aligned" issue didn't hold up, so nothing was changed there,
+avoiding a no-op edit dressed up as a fix. Tag balance (`section`/
+`div`/`details`); every `#anchor` resolves to a real `id`; still
+exactly 7 `.compliance-check-item`s and 3 "Get Your Free Photo Review"
+buttons pointing to `#photo-check`; exactly 2 new "Done with these?"
+mini-CTAs (one per card). Rendered correctly on a local static server
+before commit.
+
+**Not yet deployed as of this entry** — deploy/verification evidence to
+follow in this section once pushed.

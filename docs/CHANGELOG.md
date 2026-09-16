@@ -6,7 +6,14 @@ archived at `archive/CHANGELOG-v1-netlify-era.md`, not deleted.
 
 ## Unreleased
 
-### Changed (bottom CTA, branch `bottom-cta`)
+### Changed (To-Do List conversion zone)
+- Added a "Done with these? Get your official plan." link to the
+  bottom of both To-Do List cards, linking to `#photo-check`.
+- Wrapped the "0 of 7 complete" counter, the disclaimer, and the main
+  "Get Your Free Photo Review" button in one unified white card at the
+  end of the To-Do List section (see `PROJECT-TRUTH.md` 1.13/3.21).
+
+### Changed (bottom CTA, branch `bottom-cta`, deployed 2026-09-15)
 - Contact section: added "Want a plan for your property instead?" and
   a "Get Your Free Photo Review" button above the form, linking to
   `#photo-check`. Form, "Send message" button, and phone line unchanged.
