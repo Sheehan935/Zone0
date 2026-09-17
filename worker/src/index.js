@@ -108,9 +108,21 @@ const SOCIAL_CONTENT_TOPICS = [
   },
 ];
 
+// A visitor who drops off after step 1 (contact info) but before finishing
+// the form is still worth a lead -- see handleStart/handleAbandonedLeadSweep.
+const PARTIAL_LEAD_ABANDON_MS = 30 * 60 * 1000; // 30 minutes
+
 export default {
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(handleDailySocialContent(env));
+    // Two cron patterns share this handler (see wrangler.toml [triggers]):
+    // the daily social-content draft, and a frequent sweep for abandoned
+    // 'started' leads. Branching on event.cron keeps the daily job from
+    // running every 15 minutes too.
+    if (event.cron === '0 15 * * *') {
+      ctx.waitUntil(handleDailySocialContent(env));
+    } else {
+      ctx.waitUntil(handleAbandonedLeadSweep(env));
+    }
   },
 
   async fetch(request, env) {
@@ -126,7 +138,9 @@ export default {
       return servePhoto(url, env);
     }
 
-
+    if (url.pathname === '/start' && request.method === 'POST') {
+      return handleStart(request, env, corsHeaders);
+    }
 
     if (url.pathname === '/submit' && request.method === 'POST') {
       return handleSubmit(request, env, corsHeaders);
@@ -167,6 +181,69 @@ async function servePhoto(url, env) {
   });
 }
 
+async function handleStart(request, env, corsHeaders) {
+  if (request.headers.get('Origin') !== env.ALLOWED_ORIGIN) {
+    return json({ ok: false, error: 'Origin not allowed.' }, 403, corsHeaders);
+  }
+
+  let form;
+  try {
+    form = await request.formData();
+  } catch (e) {
+    return json({ ok: false, error: 'Could not read the submitted form.' }, 400, corsHeaders);
+  }
+
+  // Honeypot: real visitors never fill this hidden field in. Same fake-success
+  // response as /submit -- no row is created, no leadId returned, and the
+  // frontend doesn't distinguish this from any other /start failure.
+  if (field(form, 'website') !== '') {
+    return json({ ok: true }, 200, corsHeaders);
+  }
+
+  const loadedAt = Number(form.get('loadedAt') || 0);
+  if (!loadedAt || Date.now() - loadedAt < MIN_SUBMIT_TIME_MS) {
+    return json({ ok: false, error: 'Please try again.' }, 400, corsHeaders);
+  }
+
+  const name = field(form, 'name');
+  const email = field(form, 'email');
+  const phone = field(form, 'phone');
+  const address = field(form, 'address');
+
+  const errors = [];
+  if (!name) errors.push('Name is required.');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('A valid email is required.');
+  if (!phone || phone.replace(/\D/g, '').length < 7) errors.push('A valid phone number is required.');
+  if (!address) errors.push('Property address is required.');
+
+  if (errors.length) {
+    return json({ ok: false, error: errors.join(' ') }, 400, corsHeaders);
+  }
+
+  // Best-effort only: a D1 problem here must never block the visitor from
+  // moving on to the photo step, so any failure (including no DB binding)
+  // just comes back as ok-with-no-leadId rather than an error the frontend
+  // would have to handle.
+  if (!env.DB) {
+    return json({ ok: true }, 200, corsHeaders);
+  }
+
+  const leadId = crypto.randomUUID();
+  const now = Date.now();
+  try {
+    await env.DB.prepare(
+      `INSERT INTO leads (id, name, email, phone, address, photo_keys, status, submitted_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, '[]', 'started', ?, ?)`
+    )
+      .bind(leadId, name, email, phone, address, now, now)
+      .run();
+  } catch (e) {
+    return json({ ok: true }, 200, corsHeaders);
+  }
+
+  return json({ ok: true, leadId }, 200, corsHeaders);
+}
+
 async function handleSubmit(request, env, corsHeaders) {
   if (request.headers.get('Origin') !== env.ALLOWED_ORIGIN) {
     return json({ ok: false, error: 'Origin not allowed.' }, 403, corsHeaders);
@@ -195,6 +272,7 @@ async function handleSubmit(request, env, corsHeaders) {
   const address = field(form, 'address');
   const notes = field(form, 'notes');
   const areas = parseAreas(form);
+  const submittedLeadId = field(form, 'leadId');
 
   const errors = [];
   if (!name) errors.push('Name is required.');
@@ -229,7 +307,22 @@ async function handleSubmit(request, env, corsHeaders) {
     return json({ ok: false, error: errors.join(' ') }, 400, corsHeaders);
   }
 
-  const leadId = crypto.randomUUID();
+  // A leadId from a completed /start call reuses that row's id (so R2 keys
+  // and the D1 row line up) and turns the later insert into an update. Any
+  // other case -- no leadId, unknown id, or a row that isn't still 'started'
+  // (already completed, or a D1 lookup failure) -- falls back to today's
+  // behavior: a fresh id, a fresh insert.
+  let startedLead = null;
+  if (submittedLeadId && env.DB) {
+    try {
+      startedLead = await env.DB.prepare(`SELECT id FROM leads WHERE id = ? AND status = 'started'`)
+        .bind(submittedLeadId)
+        .first();
+    } catch (e) {
+      startedLead = null;
+    }
+  }
+  const leadId = startedLead ? submittedLeadId : crypto.randomUUID();
   const uploadedKeys = [];
   try {
     for (const zone of ZONES.concat(OPTIONAL_ZONES)) {
@@ -249,7 +342,7 @@ async function handleSubmit(request, env, corsHeaders) {
   const photoUrls = uploadedKeys.map((k) => `${new URL(request.url).origin}/photo/${k}`);
 
   try {
-    await insertLeadRecord(env, { leadId, name, email, phone, address, notes, areas, uploadedKeys });
+    await insertLeadRecord(env, { leadId, name, email, phone, address, notes, areas, uploadedKeys, isUpdate: !!startedLead });
   } catch (e) {
     // The lead + photos are already safely stored in R2 even if the review-portal
     // database write failed -- this must never block the homeowner's submission.
@@ -328,12 +421,92 @@ async function handleContact(request, env, corsHeaders) {
 async function insertLeadRecord(env, lead) {
   if (!env.DB) return; // D1 binding not configured on this environment
   const now = Date.now();
+  const areas = lead.areas && lead.areas.length ? lead.areas.join(',') : null;
+  const photoKeys = JSON.stringify(lead.uploadedKeys);
+
+  if (lead.isUpdate) {
+    // Completes a row /start already inserted with status 'started'.
+    // submitted_at is bumped to now (same as a fresh insert) so the review
+    // queue -- sorted by submitted_at DESC -- surfaces it as the now-actionable
+    // lead it is, rather than leaving it ranked by when the visitor first
+    // opened the form.
+    await env.DB.prepare(
+      `UPDATE leads SET name = ?, email = ?, phone = ?, address = ?, notes = ?, areas = ?,
+       photo_keys = ?, status = 'new', submitted_at = ?, updated_at = ? WHERE id = ?`
+    )
+      .bind(lead.name, lead.email, lead.phone, lead.address, lead.notes || null, areas, photoKeys, now, now, lead.leadId)
+      .run();
+    return;
+  }
+
   await env.DB.prepare(
     `INSERT INTO leads (id, name, email, phone, address, notes, areas, photo_keys, status, submitted_at, updated_at)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?)`
   )
-    .bind(lead.leadId, lead.name, lead.email, lead.phone, lead.address, lead.notes || null, lead.areas && lead.areas.length ? lead.areas.join(',') : null, JSON.stringify(lead.uploadedKeys), now, now)
+    .bind(lead.leadId, lead.name, lead.email, lead.phone, lead.address, lead.notes || null, areas, photoKeys, now, now)
     .run();
+}
+
+// Runs on the frequent cron trigger (see wrangler.toml [triggers] and the
+// event.cron branch in `scheduled`). Finds 'started' leads old enough that
+// the visitor evidently isn't coming back, emails the owner their contact
+// details once, then stamps partial_notified_at so the same lead never
+// generates a second email on a later sweep.
+async function handleAbandonedLeadSweep(env) {
+  if (!env.DB) return;
+
+  const cutoff = Date.now() - PARTIAL_LEAD_ABANDON_MS;
+  const { results } = await env.DB.prepare(
+    `SELECT id, name, email, phone, address, submitted_at FROM leads
+     WHERE status = 'started' AND submitted_at < ? AND partial_notified_at IS NULL`
+  )
+    .bind(cutoff)
+    .all();
+
+  for (const lead of results) {
+    try {
+      await sendPartialLeadNotification(env, lead);
+      await env.DB.prepare(`UPDATE leads SET partial_notified_at = ? WHERE id = ?`)
+        .bind(Date.now(), lead.id)
+        .run();
+    } catch (e) {
+      // Leave partial_notified_at unset so a failed send is retried on the
+      // next sweep rather than silently lost.
+    }
+  }
+}
+
+async function sendPartialLeadNotification(env, lead) {
+  const text = [
+    'A visitor started the Zone 0 Photo Review but did not finish.',
+    '',
+    `Name: ${lead.name}`,
+    `Email: ${lead.email}`,
+    `Phone: ${lead.phone}`,
+    `Address: ${lead.address}`,
+    '',
+    `Lead ID: ${lead.id}`,
+    `Started: ${new Date(lead.submitted_at).toISOString()}`,
+  ].join('\n');
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: env.FROM_EMAIL,
+      to: env.NOTIFY_EMAIL,
+      reply_to: lead.email,
+      subject: 'Partial Photo Review lead (no photos)',
+      text,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Resend API error: ${res.status}`);
+  }
 }
 
 function field(form, key) {

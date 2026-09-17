@@ -10,6 +10,19 @@ this directory from the Pages build.
 
 ## What it does
 
+`POST /start` — fired as soon as the visitor finishes step 1 (contact info)
+of the form, before photos or concerns. Accepts `multipart/form-data`: Name,
+Phone, Email, Address, `loadedAt`, and the honeypot -- same Origin allowlist,
+honeypot, `loadedAt` timing check, and field validation as `/submit`. On
+success, inserts a `leads` row with `status = 'started'` and an empty
+`photo_keys` (`'[]'`), and returns `{ ok: true, leadId }`. Sends no
+notification and no homeowner auto-reply -- those still only fire on a
+completed `/submit`. Any D1 failure (including no `DB` binding) responds
+`{ ok: true }` with no `leadId` rather than an error, since a visitor moving
+on to the photo step must never be blocked by this being best-effort. The
+frontend (`js/photo-check-form.js`) calls this without waiting for a
+response before advancing to step 2.
+
 `POST /submit` — accepts the Photo Check form (`multipart/form-data`):
 Name, Phone, Email, Address, optional Notes, plus photos submitted
 per-side as separate fields — `photos_front`, `photos_back`, `photos_left`,
@@ -21,6 +34,32 @@ Zone 0 via Resend. Responds with `{ ok: true }` on success or
 `{ ok: false, error: "..." }` on a validation failure — the frontend
 (`js/photo-check-form.js`) shows that error inline and lets the homeowner fix
 it and resubmit, rather than failing silently.
+
+Accepts an optional `leadId` field. If it matches a row with
+`status = 'started'` (created by `/start` above), that row is **updated**
+in place -- contact fields, notes, areas, `photo_keys`, `status` set to
+`'new'` -- rather than inserted again, so a visitor who finished step 1
+and then completed the form doesn't end up as two leads. Photos are stored
+under that same `leadId` so R2 keys and the D1 row agree. Any other case
+(no `leadId`, an unknown one, or one that's no longer `'started'`) falls
+back to inserting a fresh lead exactly as before -- so `/submit` from a
+client that has never called `/start` keeps working unchanged.
+
+**Lead statuses:** `started` (step 1 done, nothing else yet) -> `new`
+(fully submitted, unreviewed) -> `in_review` -> `complete` -> optionally
+`follow_up` or `closed`. `started` rows more than 30 minutes old and never
+completed are picked up by the abandoned-lead sweep below rather than
+sitting in the review queue indefinitely unexplained.
+
+**Abandoned leads:** the same `scheduled` handler that generates the daily
+social-content draft also runs a frequent sweep (see `[triggers]` in
+`wrangler.toml` -- two cron patterns, branched on `event.cron`) for `leads`
+rows still `status = 'started'` more than 30 minutes old that haven't been
+flagged yet. Each one gets a single "Partial Photo Review lead (no
+photos)" email to `NOTIFY_EMAIL` via the existing Resend setup -- the
+homeowner gets no auto-reply for a partial lead, only the owner is
+notified -- and the row's `partial_notified_at` is stamped so it's never
+sent twice, even across many later sweeps.
 
 `GET /photo/{leadId}/{zone}/{uuid}.{ext}` — streams a stored photo back out of
 R2. Used only in the lead-notification email links; the keys are random

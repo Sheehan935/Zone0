@@ -14,11 +14,15 @@ database_id = "cb6e31ac-2d8b-4425-bc96-785e0d42253c"
 [ai]
 binding = "AI"
 
-# 8am Pacific. Cloudflare cron is UTC-only, no DST awareness -- this is
-# 15:00 UTC (8am PDT). During PST (Nov-Mar) this fires at 7am Pacific
-# instead of 8am. Update to "0 16 * * *" for winter if exact timing matters.
+# Two schedules share the one `scheduled` handler (branched on event.cron):
+# - "0 15 * * *" -- 8am Pacific daily social-content draft. Cloudflare cron
+#   is UTC-only, no DST awareness -- this is 15:00 UTC (8am PDT). During PST
+#   (Nov-Mar) this fires at 7am Pacific instead of 8am. Update to "0 16 * * *"
+#   for winter if exact timing matters.
+# - "*/15 * * * *" -- abandoned-lead sweep (leads/started > 30min old),
+#   frequent enough that the 30-minute threshold means something in practice.
 [triggers]
-crons = ["0 15 * * *"]
+crons = ["0 15 * * *", "*/15 * * * *"]
 
 [vars]
 ALLOWED_ORIGIN = "https://zone0landscaping.com"

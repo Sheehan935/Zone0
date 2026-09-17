@@ -2,6 +2,7 @@
 // See worker/README.md for the backend implementation and deployment steps.
 (function () {
     var ENDPOINT = 'https://zone0-photo-check.zone0landscaping.workers.dev/submit';
+    var START_ENDPOINT = 'https://zone0-photo-check.zone0landscaping.workers.dev/start';
 
     var ZONES = ['front', 'back', 'left', 'right'];
     // All photos are optional. Close-ups are kept in their own list purely for
@@ -29,6 +30,11 @@
         var progressLabels = { 1: document.getElementById('pc-progress-label-1'), 2: document.getElementById('pc-progress-label-2'), 3: document.getElementById('pc-progress-label-3') };
 
         var zoneFiles = { front: [], back: [], left: [], right: [], closeup: [] };
+
+        // Set once /start resolves for the current step-1 details -- see the
+        // pc-step1-next handler below. Carried into the final /submit so the
+        // partial lead it created gets updated instead of duplicated.
+        var startedLeadId = null;
 
         if (loadedAtField) loadedAtField.value = String(Date.now());
 
@@ -73,6 +79,17 @@
             if (!address) return showStepError(step1Error, 'Please enter your property address.');
 
             goToStep(2);
+
+            // Non-blocking: the visitor is already on step 2 regardless of how
+            // this turns out. A failure here is never shown -- worst case, the
+            // final /submit just inserts a fresh lead instead of updating one.
+            var startFd = new FormData(form);
+            fetch(START_ENDPOINT, { method: 'POST', body: startFd })
+                .then(function (res) { return res.json(); })
+                .then(function (data) {
+                    if (data && data.ok && data.leadId) startedLeadId = data.leadId;
+                })
+                .catch(function () {});
         });
 
         // ---- Step 2: per-zone photo capture ----------------------------------
@@ -243,6 +260,7 @@
             });
             updateZoneProgress();
             if (loadedAtField) loadedAtField.value = String(Date.now());
+            startedLeadId = null;
             goToStep(1);
         }
 
@@ -256,6 +274,7 @@
                     fd.append('photos_' + zone, file, file.name);
                 });
             });
+            if (startedLeadId) fd.append('leadId', startedLeadId);
 
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending…';

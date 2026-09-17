@@ -450,6 +450,54 @@ in addition to the existing owner notification (unchanged):
   already parses correctly instead of introducing a second, wrong
   parse.
 
+### 1.16 Partial-Lead Capture at Step 1 — DECIDED AND DEPLOYED 2026-09-17
+
+A visitor who finishes step 1 (name/phone/email/address) of the Photo
+Review form but abandons before finishing steps 2–3 was previously lost
+entirely — nothing was sent to the Worker until the final `/submit`. Now
+step 1 alone creates a lead.
+
+- **New `POST /start`**, called the moment step 1 passes client-side
+  validation. Same Origin allowlist, honeypot (`website`), `loadedAt`
+  timing check, and field validation as `/submit`. Inserts a `leads` row
+  with `status = 'started'`, empty `photo_keys`, and returns `{ ok: true,
+  leadId }`. Sends no notification, no homeowner auto-reply — those still
+  only fire on a completed `/submit`.
+- **`/submit` gained an optional `leadId`.** A `leadId` matching a row
+  still `status = 'started'` gets that row updated in place (contact
+  fields, notes, areas, photo_keys, `status → 'new'`, `submitted_at`
+  bumped to completion time) instead of inserted again — one lead, not
+  two. Any other case (no `leadId`, unknown, already completed) falls
+  back to inserting fresh, unchanged from before this decision.
+- **New `started` status and `partial_notified_at` column**
+  (migration `0004_started_status.sql`) — SQLite's CHECK constraint
+  can't be altered in place, so the migration rebuilds the `leads` table
+  (create-copy-drop-rename), preserving all existing rows.
+- **Abandoned-lead sweep**: a second cron trigger, `*/15 * * * *`,
+  added alongside the existing daily `0 15 * * *` social-content job —
+  both share the one `scheduled` handler, branched on `event.cron`. The
+  sweep finds `started` rows more than 30 minutes old with
+  `partial_notified_at IS NULL`, sends the owner one "Partial Photo
+  Review lead (no photos)" email each via the existing Resend setup, and
+  stamps `partial_notified_at` so it's never sent twice. No homeowner
+  auto-reply for a partial lead.
+- **Frontend is non-blocking by design**: `js/photo-check-form.js` fires
+  `/start` and immediately advances to step 2 without waiting for a
+  response; a `leadId` is only carried into the final `/submit` if
+  `/start` happened to resolve before then. A slow `/start` response
+  racing a fast visitor through steps 2–3 can still result in a second,
+  fresh lead rather than an update — accepted tradeoff, not fixed, since
+  never blocking the visitor was the explicit requirement.
+- **Confirmed live**: a `started` row can still be completed correctly
+  even after the sweep has already sent a partial-lead email for it —
+  the sweep only stamps `partial_notified_at`, never changes `status`,
+  so `/submit`'s `status = 'started'` lookup still matches and updates
+  the same row rather than duplicating it.
+- **Not changed**: R2 upload logic, the `areas` whitelist, the `closeup`
+  zone, `/contact`, and the load-bearing notification subject (`New
+  Photo Check lead — {name} ({address})`) — confirmed unchanged by not
+  touching `sendNotification` at all.
+
 ---
 
 ## 2. GOVERNANCE RULES
@@ -1215,3 +1263,64 @@ recording this as working:**
 
 **Deployed and verified live.** `npx wrangler deploy` from `worker/` —
 `zone0-photo-check`, version `58bc2324-8838-4694-ae27-30a6c15a43ee`.
+
+### 3.24 Partial-Lead Capture at Step 1 — DEPLOYED AND VERIFIED LIVE, 2026-09-17
+
+Changed: `review-worker/migrations/0004_started_status.sql` (new),
+`worker/src/index.js` (`handleStart`, `handleAbandonedLeadSweep`,
+`sendPartialLeadNotification`, `insertLeadRecord` update path, `scheduled`
+branched on `event.cron`), `worker/wrangler.toml` (second cron trigger),
+`js/photo-check-form.js` (`/start` call, `startedLeadId`), `index.html`
+(one reassurance line under the step-1 button), `worker/README.md`.
+`review-worker/src/index.js` — zero diff.
+
+**Migration applied local-first, then remote**, in that order:
+`npx wrangler d1 migrations apply zone0-leads --local` from
+`review-worker/`, schema inspected (`CHECK` now includes `'started'`,
+`partial_notified_at` column present) before `--remote`. Remote apply
+confirmed via `d1 migrations list --remote` (only `0004` pending
+beforehand) and a post-apply `SELECT sql FROM sqlite_master` + row-count
+check — all 6 pre-existing real leads intact (2 `complete`, 4 `new`)
+before and after.
+
+**Deployed**: `review-worker` (`zone0-review-portal`, no code change,
+redeployed per the documented order) then `worker`
+(`zone0-photo-check`, version `e18a623f-a8d3-45f1-ba2f-43ed30e5bf5c`) —
+both cron schedules (`0 15 * * *`, `*/15 * * * *`) confirmed registered
+in the deploy output.
+
+**Verified against real production infrastructure** (Origin allowlist
+blocks `workers.dev`/bare `curl`, so every call below used
+`Origin: https://zone0landscaping.com` against the real deployed Worker):
+
+- **Fast complete flow** (`/start` then `/submit` seconds later, no
+  photos — all sides are optional per §1.10): exactly one D1 row
+  (`status: 'new'`), one owner notification and one homeowner auto-reply
+  confirmed via Gmail search, no partial-lead email ever generated for
+  it (guaranteed by the sweep's `status = 'started'` filter, not just
+  timing — a `'new'` row can never match it).
+- **Stop at step 2** (`/start` only, never completed): a `'started'` row
+  appeared immediately with `photo_keys = '[]'`. After the next cron
+  tick past the 30-minute threshold, exactly one "Partial Photo Review
+  lead (no photos)" email arrived (confirmed via Gmail search) and
+  `partial_notified_at` was stamped — `status` stayed `'started'`
+  (the sweep flags, it doesn't complete).
+- **A `started` lead notified as abandoned can still be completed
+  later without duplicating** — found by accident (a real ~2.5 hour gap
+  in this session between the `/start` and `/submit` test calls let the
+  sweep fire first) and confirmed as correct, not a bug: the sweep never
+  changes `status`, so `/submit`'s `status = 'started'` lookup still
+  matched and updated the same row. Worth knowing operationally — a
+  "Partial Photo Review lead" email doesn't mean that lead is
+  necessarily still incomplete by the time it's read.
+- **`/submit` with no `leadId` at all**: unchanged — a fresh row
+  inserted directly to `status: 'new'`, notification and auto-reply
+  sent, same as before this change.
+- **Honeypot, timing, and Origin rejections on `/start`** (mirroring
+  `/submit`'s existing behavior) all verified to return their expected
+  responses without creating a D1 row.
+- All four test leads (name-prefixed "QA TEST - DO NOT CONTACT", same
+  precedent as every prior test lead in this project) deleted from
+  production D1 after verification — confirmed back to exactly the
+  original 6 real rows. None had photos, so no R2 cleanup was needed.
+- `node --check` on both changed JS files before deploy.
