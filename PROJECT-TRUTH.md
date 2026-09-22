@@ -9,9 +9,14 @@ claim briefly existed in one file after being corrected in the other before
 this merge). Section 1 is the terse, skimmable decision layer; Section 3 is
 the detailed evidence trail behind those decisions.
 
-**Last synchronized:** 2026-09-16 — local `main`, `origin/main`, and the
-live GitHub Pages build are all confirmed at commit `f6f08bc`
-(`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`).
+**Last synchronized:** 2026-09-22 — local `main`, `origin/main`, and the
+live GitHub Pages build are all confirmed at commit `1830b01`
+(`gh api repos/Sheehan935/Zone0/pages/builds/latest` → `status: built`,
+polled after push). Includes `ca8b530` (1.16/3.24, Partial-Lead Capture —
+its `worker/src/index.js` changes were already deployed to
+`zone0-photo-check` days earlier per §3.24; this push only caught git up)
+and the 1.17/3.25 regulatory-copy fix — no Worker redeploy needed for
+either, both are static-asset-only from GitHub Pages' perspective.
 `zone0-photo-check` was redeployed 2026-09-16 (version
 `58bc2324-8838-4694-ae27-30a6c15a43ee`, for 1.15/3.23, homeowner
 auto-replies on `/submit` and `/contact` — verified live). Prior
@@ -1362,7 +1367,7 @@ blocks `workers.dev`/bare `curl`, so every call below used
   original 6 real rows. None had photos, so no R2 cleanup was needed.
 - `node --check` on both changed JS files before deploy.
 
-### 3.25 Regulatory Status Copy — Sep 8 OAL Withdrawal — IMPLEMENTED AND VERIFIED LOCALLY, NOT YET DEPLOYED, 2026-09-22
+### 3.25 Regulatory Status Copy — Sep 8 OAL Withdrawal — DEPLOYED AND VERIFIED LIVE, 2026-09-22
 
 Changed: `index.html` only (5 insertions / 4 deletions across 4 spans —
 the two FAQ answers under "Is Zone 0 final yet?" / "What's the compliance
@@ -1394,8 +1399,14 @@ padding.
   over HTTP to confirm the new copy renders byte-for-byte as written, not
   just as saved to disk.
 
-**Not yet done**: not committed, not pushed to `origin/main`, so **not
-live** — GitHub Pages serves from `main` (§1.3) and this change has not
-been through that path yet. Per this file's own governance rules, commit
-happens only once the user asks for it, and push to `main` requires
-separate confirmation per standing feedback in this project.
+**Deployed**: committed as two atomic commits — `b597ff8` (`index.html`
+copy fix) and `1830b01` (this file's 1.17/3.25 sync) — pushed to
+`origin/main` alongside the already-existing but not-yet-pushed `ca8b530`
+(Partial-Lead Capture, §1.16/3.24). GitHub Pages build for `1830b01`
+polled via `gh api repos/Sheehan935/Zone0/pages/builds/latest` until
+`status: built`. Confirmed live by re-fetching
+`https://zone0landscaping.com/` afterward: the new "Not yet. On August 19,
+2026..." answer and both "Regulatory status last verified September 22,
+2026" stamps are present; the old "expected around late September" /
+"pending final effective date after Office of..." strings return zero
+matches.
