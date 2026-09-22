@@ -41,7 +41,8 @@
   <p class="text-xs font-bold uppercase tracking-widest text-stone-400">Internal reference &middot; not published to the website</p>
 
   <h1 class="text-3xl font-display font-bold mt-4 mb-2">Zone 0 Branding Guide</h1>
-  <p class="text-stone-600 mb-12">Component library, colors, and layout ratios. Colors below are pulled directly from the live site's Tailwind config and inline styles &mdash; not aspirational, this is what's actually deployed.</p>
+  <p class="text-stone-600 mb-2">Component library, colors, and layout ratios. Colors below are pulled directly from the live site's Tailwind config and inline styles &mdash; not aspirational, this is what's actually deployed.</p>
+  <p class="text-xs text-stone-400 mb-12">Last checked against live <code class="bg-stone-200 px-1 rounded">index.html</code>: 2026-09-22. This page has gone stale twice before (most recently after the Sept 16 logo rebrand went live without it) &mdash; if you're reading this after that date, verify against the live site before trusting it.</p>
 
   <section class="mb-16">
     <h2 class="text-xl font-display font-bold mb-1">Core Theme Colors</h2>
@@ -139,37 +140,66 @@
 
   <section class="mb-16">
     <h2 class="text-xl font-display font-bold mb-1">Zone Accent Colors</h2>
-    <p class="text-stone-500 text-sm mb-6">Inline hex values (not in the Tailwind config) used for the Zone 0&ndash;3 tab badges, borders, and the System Overview proximity bar &mdash; color-coded from closest to the structure (most critical) to the wildland edge.</p>
+    <p class="text-stone-500 text-sm mb-6">Tokenized in <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">tailwind.config</code> as <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">zone.red / amber / amberdark / green</code> (added in the Aug 20 design pass &mdash; this page previously and incorrectly described them as inline-only). The site defines exactly three defensible-space zones (0, 1, 2); there is no Zone 3 &mdash; a swatch for one was documented here in error and has been removed.</p>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
       <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
         <div class="h-20" style="background:#c0492f"></div>
         <div class="p-3">
-          <p class="text-sm font-bold">Zone 0</p>
+          <p class="text-sm font-bold">zone-red &middot; Zone 0</p>
           <p class="text-xs text-stone-500 font-mono">#c0492f</p>
         </div>
       </div>
       <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
         <div class="h-20" style="background:#b7791f"></div>
         <div class="p-3">
-          <p class="text-sm font-bold">Zone 1</p>
+          <p class="text-sm font-bold">zone-amber &middot; Zone 1</p>
           <p class="text-xs text-stone-500 font-mono">#b7791f</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#92600c"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">zone-amberdark</p>
+          <p class="text-xs text-stone-500 font-mono">#92600c</p>
         </div>
       </div>
       <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
         <div class="h-20" style="background:#2f855a"></div>
         <div class="p-3">
-          <p class="text-sm font-bold">Zone 2</p>
+          <p class="text-sm font-bold">zone-green &middot; Zone 2</p>
           <p class="text-xs text-stone-500 font-mono">#2f855a</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-xl font-display font-bold mb-1">Other Inline Colors (not tokenized)</h2>
+    <p class="text-stone-500 text-sm mb-6">Real, currently-deployed colors that exist only as raw hex in <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">index.html</code> &mdash; not in <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">tailwind.config</code>. Listed here so they're at least visible; consider promoting the recurring ones to real tokens next time that section is touched.</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
       <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
-        <div class="h-20" style="background:#78716c"></div>
+        <div class="h-20" style="background:#1E4D3B"></div>
         <div class="p-3">
-          <p class="text-sm font-bold">Zone 3</p>
-          <p class="text-xs text-stone-500 font-mono">#78716c</p>
+          <p class="text-sm font-bold">Header wordmark</p>
+          <p class="text-xs text-stone-500 font-mono">#1E4D3B</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#c85a2f"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">Terracotta hover</p>
+          <p class="text-xs text-stone-500 font-mono">#c85a2f</p>
+        </div>
+      </div>
+      <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+        <div class="h-20" style="background:#6b7f5e"></div>
+        <div class="p-3">
+          <p class="text-sm font-bold">Photo Check checkbox accent</p>
+          <p class="text-xs text-stone-500 font-mono">#6b7f5e &mdash; close to but not sage-default</p>
         </div>
       </div>
     </div>
+    <p class="text-stone-500 text-sm">The <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">.zone-plant-card</code> component (Landscaping section) also uses a full set of Tailwind's stock default grays (<code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">#1a202c #2d3748 #4a5568 #718096 #e2e8f0 #edf2f7</code>) instead of the site's own <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">stone</code> scale &mdash; a pre-existing inconsistency, not swatched individually here.</p>
   </section>
 
   <section class="mb-16">
@@ -193,7 +223,7 @@
     <div class="border border-stone-200 rounded-lg divide-y divide-stone-200 bg-white">
       <div class="p-5">
         <p class="font-display font-light text-6xl leading-tight mb-1">Hero H1</p>
-        <p class="text-xs text-stone-500 font-mono">font-display font-light &middot; text-5xl sm:text-6xl lg:text-7xl &middot; tracking-tight</p>
+        <p class="text-xs text-stone-500 font-mono">font-display font-light &middot; text-[34px] sm:text-6xl lg:text-7xl &middot; tracking-tight</p>
       </div>
       <div class="p-5">
         <p class="font-display font-bold text-4xl mb-1">Section H2</p>
@@ -216,23 +246,56 @@
 
   <section class="mb-16">
     <h2 class="text-xl font-display font-bold mb-1">Logo / Wordmark</h2>
-    <p class="text-stone-500 text-sm mb-6">The current Zone Zero brand lockup combines the approved two-leaf sage mark with the ZONE ZERO wordmark. The wordmark is live text rather than a baked image, keeping it crisp, accessible, and scalable.</p>
+    <p class="text-stone-500 text-sm mb-1">Rebranded 2026-09-16 &mdash; this supersedes the old two-leaf sage mark shown on this page before today. Current header lockup: a dark-green &ldquo;Z&rdquo; in an orange ring (no leaf) beside a live-text &ldquo;ZONE ZERO&rdquo; wordmark.</p>
+    <p class="text-stone-500 text-sm mb-6">The wordmark stays live text rather than a baked image, keeping it crisp, accessible, and scalable &mdash; that principle carried over from the previous mark.</p>
 
     <div class="border border-stone-200 rounded-lg p-8 bg-white flex items-center">
       <div class="flex items-center gap-3">
-        <img src="../../assets/logos/zone-zero-leaf.png" alt="" class="h-10 w-auto">
-        <span class="text-2xl font-bold font-display tracking-[0.12em] text-sage-default">ZONE ZERO</span>
+        <img src="../../assets/logos/zone-zero/zone-zero-mark.png" alt="" class="h-10 w-auto">
+        <span class="text-2xl font-bold font-display tracking-[0.12em]" style="color:#1E4D3B">ZONE ZERO</span>
       </div>
     </div>
 
-    <p class="text-xs text-stone-500 font-mono mt-3">Leaf: /assets/logos/zone-zero-leaf.png &middot; Wordmark: Plus Jakarta Sans Bold &middot; Primary sage: #6B7A64 &middot; Dark sage: #4A5744</p>
+    <p class="text-xs text-stone-500 font-mono mt-3">Mark: /assets/logos/zone-zero/zone-zero-mark.png (256&times;256, background removed) &middot; Wordmark: Plus Jakarta Sans Bold &middot; Wordmark color: #1E4D3B &mdash; hardcoded, not a Tailwind token (see &ldquo;Other Inline Colors&rdquo; above)</p>
+
+    <div class="mt-8">
+      <h3 class="text-sm font-bold uppercase tracking-widest text-sage-default mb-2">Favicon</h3>
+      <p class="text-sm text-stone-600">Added alongside the rebrand &mdash; the site had none before. <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">favicon-64.png</code> (64&times;64) and <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">apple-touch-icon.png</code> (180&times;180), both in <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">/assets/logos/zone-zero/</code>.</p>
+    </div>
+
+    <div class="mt-8">
+      <h3 class="text-sm font-bold uppercase tracking-widest text-sage-default mb-2">Logo Variants (committed, not yet used on the site)</h3>
+      <p class="text-sm text-stone-600 mb-4">Full lockup family exported alongside the header mark. None of these are referenced by <code class="bg-stone-200 px-1.5 py-0.5 rounded text-xs">index.html</code> today &mdash; available for social posts, print, or other placements as needed. The tagline &ldquo;WILDFIRE-READY SOLUTIONS&rdquo; exists only inside the tagline variant below; it is not used anywhere live.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+          <div class="h-28 flex items-center justify-center p-4"><img src="../../assets/logos/zone-zero/zone-zero-horizontal-green.png" alt="" class="max-h-full max-w-full"></div>
+          <div class="p-3 border-t border-stone-200"><p class="text-xs font-mono text-stone-500">zone-zero-horizontal-green.png</p></div>
+        </div>
+        <div class="border border-stone-200 rounded-lg overflow-hidden bg-stone-900">
+          <div class="h-28 flex items-center justify-center p-4"><img src="../../assets/logos/zone-zero/zone-zero-horizontal-cream.png" alt="" class="max-h-full max-w-full"></div>
+          <div class="p-3 border-t border-stone-800 bg-white"><p class="text-xs font-mono text-stone-500">zone-zero-horizontal-cream.png &mdash; for dark backgrounds</p></div>
+        </div>
+        <div class="border border-stone-200 rounded-lg overflow-hidden bg-white">
+          <div class="h-32 flex items-center justify-center p-4"><img src="../../assets/logos/zone-zero/zone-zero-stacked-green.png" alt="" class="max-h-full max-w-full"></div>
+          <div class="p-3 border-t border-stone-200"><p class="text-xs font-mono text-stone-500">zone-zero-stacked-green.png</p></div>
+        </div>
+        <div class="border border-stone-200 rounded-lg overflow-hidden bg-stone-900">
+          <div class="h-32 flex items-center justify-center p-4"><img src="../../assets/logos/zone-zero/zone-zero-stacked-cream.png" alt="" class="max-h-full max-w-full"></div>
+          <div class="p-3 border-t border-stone-800 bg-white"><p class="text-xs font-mono text-stone-500">zone-zero-stacked-cream.png &mdash; for dark backgrounds</p></div>
+        </div>
+        <div class="border border-stone-200 rounded-lg overflow-hidden bg-stone-900 sm:col-span-2">
+          <div class="h-32 flex items-center justify-center p-4"><img src="../../assets/logos/zone-zero/zone-zero-stacked-tagline-cream.png" alt="" class="max-h-full max-w-full"></div>
+          <div class="p-3 border-t border-stone-800 bg-white"><p class="text-xs font-mono text-stone-500">zone-zero-stacked-tagline-cream.png &mdash; includes &ldquo;WILDFIRE-READY SOLUTIONS&rdquo;, unused live</p></div>
+        </div>
+      </div>
+    </div>
 
     <div class="mt-8">
       <h3 class="text-sm font-bold uppercase tracking-widest text-sage-default mb-2">Logo Usage</h3>
       <ul class="text-sm text-stone-600 space-y-1 list-disc pl-5">
-        <li>Use the approved two-leaf sprig only. Do not introduce house, flame, shovel, mower, or generic-tree symbols.</li>
-        <li>Use the approved sage palette: <code>#6B7A64</code> default sage and <code>#4A5744</code> dark sage.</li>
-        <li>Do not add &ldquo;Landscaping&rdquo; to the logo lockup, tagline, or additional decorative symbols.</li>
+        <li>Current mark is the Z-in-ring lockup above. The earlier two-leaf sprig (<code>zone-zero-leaf.png</code>) is retired and no longer referenced by <code>index.html</code>, though the file remains on disk.</li>
+        <li>Wordmark color is #1E4D3B, not the sage palette &mdash; don't reintroduce sage-default on the wordmark from memory of the old guide.</li>
+        <li>Do not add &ldquo;Landscaping&rdquo; to the logo lockup or additional decorative symbols.</li>
         <li>Keep the ZONE ZERO wordmark clear and legible at actual header size.</li>
       </ul>
     </div>
@@ -246,8 +309,8 @@
       <div class="bg-white border border-stone-200 shadow-sm max-w-3xl mx-auto px-8 py-7">
         <div class="flex items-center justify-between border-b border-stone-200 pb-5">
           <div class="flex items-center gap-3">
-            <img src="../../assets/logos/zone-zero-leaf.png" alt="" class="h-9 w-auto">
-            <span class="text-lg font-bold font-display tracking-[0.12em] text-sage-default">ZONE ZERO</span>
+            <img src="../../assets/logos/zone-zero/zone-zero-mark.png" alt="" class="h-9 w-auto">
+            <span class="text-lg font-bold font-display tracking-[0.12em]" style="color:#1E4D3B">ZONE ZERO</span>
           </div>
           <div class="text-right text-xs text-stone-500">
             <div>hello@zone0landscaping.com</div>
@@ -262,7 +325,7 @@
       </div>
     </div>
 
-    <p class="text-xs text-stone-500 font-mono mt-3">Approved sage version &middot; no &ldquo;Serving the East Bay Hills&rdquo; line &middot; matches current website identity</p>
+    <p class="text-xs text-stone-500 font-mono mt-3">Updated to the Z-in-ring mark &middot; no &ldquo;Serving the East Bay Hills&rdquo; line &middot; matches current website identity</p>
   </section>
 
   <section class="mb-16">
@@ -276,6 +339,10 @@
       <div class="bg-stone-900 p-4 rounded-lg">
         <a href="#" class="inline-block border border-white/50 text-white px-8 py-4 text-xs uppercase tracking-widest font-bold hover:bg-white hover:text-stone-900 transition-colors backdrop-blur-sm pointer-events-none" onclick="return false;">Secondary Action</a>
         <p class="text-xs text-stone-300 font-mono mt-2">border-white/50, used on dark/image backgrounds</p>
+      </div>
+      <div>
+        <a href="#" class="inline-block bg-terracotta hover:bg-[#c85a2f] text-white text-xs font-semibold tracking-wider uppercase px-4 py-2 rounded-full shadow-sm transition-all pointer-events-none" onclick="return false;">Photo Review</a>
+        <p class="text-xs text-stone-500 font-mono mt-2">bg-terracotta, hover #c85a2f (not tokenized) &middot; header nav CTA only</p>
       </div>
     </div>
   </section>
