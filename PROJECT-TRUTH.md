@@ -500,6 +500,43 @@ step 1 alone creates a lead.
 
 ---
 
+### 1.17 Regulatory Status Copy — Sep 8 OAL Withdrawal — DECIDED 2026-09-22
+
+A read-only audit against a verified regulatory baseline found the FAQ and
+footer still described Zone 0 as on track to take legal effect "around late
+September 2026" via ongoing Office of Administrative Law review. That
+review was withdrawn on 2026-09-08, before the rule took effect — one day
+*before* the FAQ copy asserting the opposite was written (`9c49831`,
+2026-09-09), so the copy was stale from the day it shipped, not from later
+drift.
+
+- **Verified baseline used as ground truth for this correction:**
+  Board of Forestry and Fire Protection approved final Zone 0 regulations
+  Aug 19, 2026 (unanimous vote); package submitted to OAL as emergency
+  rulemaking Aug 28, 2026 (file 2026-0828-03E); **withdrawn from OAL
+  review Sep 8, 2026, before taking effect.** No statewide effective date
+  and no Zone 0 compliance clock currently running. Existing fire-safety /
+  brush-clearance / vegetation-management requirements still apply.
+- **Four passages rewritten** in `index.html` to state the withdrawal and
+  the "no clock running" status explicitly, replace the false "Yes" /
+  "expected around late September 2026" framing, and reframe the 3-year/
+  5-year phase-in as *what happens once the rule takes effect*, not an
+  active countdown: the "Is Zone 0 final yet?" FAQ answer, the "What's the
+  compliance timeline?" FAQ answer, the "Official AB 3074 Text" resource
+  card, and the footer regulatory source citation.
+- **Added a "Regulatory status last verified [date]" stamp** — two places
+  (top of the FAQ/Resources accordion, end of the footer citation) — since
+  the audit that caught this also found no freshness indicator existed
+  anywhere on regulatory content, despite it being a genuinely moving
+  target. Stamped 2026-09-22 at time of this fix; must be updated by hand
+  whenever this copy is next revised.
+- **Not changed**: no other audit findings from the same pass are acted on
+  here (license number, photography provenance, and service-area/social-
+  proof items were NEEDS OWNER DECISION or required no code change) — see
+  the audit conversation for the full 11-item table.
+
+---
+
 ## 2. GOVERNANCE RULES
 
 - **Evidence first.** Never assume the codebase matches documentation.
@@ -1324,3 +1361,41 @@ blocks `workers.dev`/bare `curl`, so every call below used
   production D1 after verification — confirmed back to exactly the
   original 6 real rows. None had photos, so no R2 cleanup was needed.
 - `node --check` on both changed JS files before deploy.
+
+### 3.25 Regulatory Status Copy — Sep 8 OAL Withdrawal — IMPLEMENTED AND VERIFIED LOCALLY, NOT YET DEPLOYED, 2026-09-22
+
+Changed: `index.html` only (5 insertions / 4 deletions across 4 spans —
+the two FAQ answers under "Is Zone 0 final yet?" / "What's the compliance
+timeline?", the "Official AB 3074 Text" card, the footer source citation —
+plus a new "Regulatory status last verified" line).
+
+**Trigger**: a read-only audit run earlier this session against a verified
+external baseline (Board approval Aug 19 → OAL submission Aug 28 →
+withdrawal Sep 8, all confirmed against OAL's own emergency-regulations
+log) found the live FAQ still asserting the rule was on track to take
+effect "around late September 2026." Full 11-item audit findings are in
+the conversation transcript, not duplicated here — only the one material,
+acted-on finding is logged in this file, per this file's own rule against
+padding.
+
+**Verified**:
+- Repo/live diff before editing: `curl` fetch of `https://zone0landscaping.com/`
+  matched local `index.html` except one unrelated line from the
+  not-yet-pushed `ca8b530` (Photo Check step-1 microcopy) — confirms the
+  stale regulatory copy was live in production, not just in the repo.
+  Live `js/photo-check-form.js` (13,229 B) also confirmed behind local
+  (14,282 B) for the same reason.
+- After editing: grepped `index.html` for the old "expected around late
+  September" / "pending final effective date after Office of..." strings
+  — zero matches. Grepped for "withdrawn from" — 4 matches, one per
+  rewritten passage. `<details>`/`</details>` tag count in the FAQ block
+  still balanced (6/6) after the edit.
+- Served the file locally (`python3 -m http.server`) and fetched it back
+  over HTTP to confirm the new copy renders byte-for-byte as written, not
+  just as saved to disk.
+
+**Not yet done**: not committed, not pushed to `origin/main`, so **not
+live** — GitHub Pages serves from `main` (§1.3) and this change has not
+been through that path yet. Per this file's own governance rules, commit
+happens only once the user asks for it, and push to `main` requires
+separate confirmation per standing feedback in this project.
