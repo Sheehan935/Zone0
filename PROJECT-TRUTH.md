@@ -1571,7 +1571,7 @@ all 3 kit anchors present, "Pricing coming soon" ×3, and all four
 `assets/images/kits/*.jpg` resolve 200 with the expected optimized
 file sizes (204–334 KB) — not the original multi-MB PNGs.
 
-### 3.27 Contact Section Restyle — IMPLEMENTED AND VERIFIED LOCALLY, 2026-09-22
+### 3.27 Contact Section Restyle — DEPLOYED AND VERIFIED LIVE, 2026-09-22
 
 Changed: `index.html` (contact section markup only), `css/contact-form.css`
 (container rules removed, colors swapped to `--z0-*` variables). See
@@ -1588,3 +1588,11 @@ header-overlap artifact). Confirmed: "Contact" eyebrow renders, "Contact
 Us" heading in the display font, sage-colored phone link and button,
 form sits in a bordered white card with correctly styled inputs, no
 console errors (`page.on('pageerror')` empty).
+
+**Deployed**: pushed as `b16ca49` (fix) and `9c51757` (this file's
+sync), `97fe46c..9c51757`. GitHub Pages build for `9c51757` polled via
+`gh api repos/Sheehan935/Zone0/pages/builds/latest` until `status:
+built`. Confirmed live: new section classes present, old
+`.contact-section`/`.contact-wrap` classes return zero matches, and
+`contact-form.css` served live has zero remaining old hardcoded
+colors (`#6B7A64`, `#4A5744`, `#c0392b`, `#ccc`).
