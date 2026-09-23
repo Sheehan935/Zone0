@@ -1,20 +1,11 @@
 /*
-  Scoped styling for the contact form. If the site already has CSS
-  variables (colors, fonts) defined globally, swap the literal values
-  below for those variables so this matches the rest of the site
-  automatically. These are reasonable defaults if it doesn't.
+  Scoped styling for the contact form fields. Section-level layout
+  (spacing, heading, intro copy) lives on the Tailwind classes in
+  index.html, matching every other section on the page. This file only
+  styles what Tailwind's utility classes don't cover: form field
+  internals. Colors reference the site's real design-system variables
+  (--z0-*, defined in styles.css) rather than one-off hex values.
 */
-
-.contact-section {
-  padding: 3rem 1.5rem;
-  max-width: 640px;
-  margin: 0 auto;
-}
-
-.contact-intro {
-  color: #555;
-  margin-bottom: 1.5rem;
-}
 
 #contact-form {
   display: flex;
@@ -47,13 +38,13 @@
 
 .form-field .optional {
   font-weight: 400;
-  color: #888;
+  color: var(--z0-stone-600);
 }
 
 .form-field input,
 .form-field select,
 .form-field textarea {
-  border: 1px solid #ccc;
+  border: 1px solid var(--z0-stone-200);
   border-radius: 6px;
   padding: 0.6rem 0.75rem;
   font-size: 1rem;
@@ -65,26 +56,26 @@
 .form-field select:focus,
 .form-field textarea:focus {
   outline: none;
-  border-color: #6B7A64;
+  border-color: var(--z0-sage);
   box-shadow: 0 0 0 3px rgba(107, 122, 100, 0.25);
 }
 
 .form-field input[aria-invalid="true"],
 .form-field select[aria-invalid="true"],
 .form-field textarea[aria-invalid="true"] {
-  border-color: #c0392b;
+  border-color: #c0492f;
 }
 
 .field-error {
   font-size: 0.8rem;
-  color: #c0392b;
+  color: #c0492f;
   min-height: 1rem;
   margin: 0;
 }
 
 .char-count {
   font-size: 0.75rem;
-  color: #888;
+  color: var(--z0-stone-600);
   text-align: right;
   margin: 0;
 }
@@ -121,7 +112,7 @@
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
-  background: #6B7A64;
+  background: var(--z0-sage);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -131,7 +122,7 @@
 }
 
 .btn-primary:hover {
-  background: #4A5744;
+  background: var(--z0-sage-dark);
 }
 
 .btn-primary:disabled {
