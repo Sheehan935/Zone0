@@ -597,6 +597,38 @@ below (retail cost references, the pricing checklist) was not and is
 
 ---
 
+### 1.19 Contact Section Restyle — DECIDED 2026-09-22
+
+The `#contact` section (last content section before the footer) had
+never been integrated into the site's real design system. It shipped
+with its own `.contact-section`/`.contact-wrap` container classes and
+`contact-form.css`'s literal fallback colors (`#555`, `#ccc`, `#888`,
+plus `#6B7A64`/`#4A5744` that happened to already equal sage but weren't
+sourced from anywhere) — `contact-form.css`'s own top comment admitted
+these were placeholder defaults pending real integration. Result: a
+plain, unstyled-looking `<h2>`, 3rem padding instead of the site's
+6rem (`py-24`), and no eyebrow/card treatment, all visibly inconsistent
+against every other polished section. Caught from a user screenshot.
+
+- **`index.html`**: replaced `.contact-section`/`.contact-wrap` with
+  the same Tailwind pattern used everywhere else (eyebrow span, `h2`
+  in `font-display`, `py-24`/`bg-stone-100`/`border-b` on the section,
+  `max-w-2xl` centered container); wrapped the form itself in the
+  site's standard white card (`bg-white border border-stone-200
+  rounded-lg p-6 sm:p-8`), matching the Photo Review form's treatment.
+  No field, validation, or JS behavior changed — purely presentational.
+- **`css/contact-form.css`**: removed the now-dead container rules;
+  swapped hardcoded colors for the site's actual `--z0-*` custom
+  properties (defined in `styles.css`) so the form's focus states,
+  button, and borders are sourced from the real design system instead
+  of coincidentally-matching literals. Also aligned the field-error/
+  invalid-border red from `#c0392b` to `#c0492f` to exactly match
+  `zone-red`, the same error color already used on the Photo Review
+  form — previously two near-identical-but-different reds existed on
+  the same page.
+
+---
+
 ## 2. GOVERNANCE RULES
 
 - **Evidence first.** Never assume the codebase matches documentation.
@@ -1538,3 +1570,21 @@ until `status: built`. Confirmed live: `#ember-defense-kits` present,
 all 3 kit anchors present, "Pricing coming soon" ×3, and all four
 `assets/images/kits/*.jpg` resolve 200 with the expected optimized
 file sizes (204–334 KB) — not the original multi-MB PNGs.
+
+### 3.27 Contact Section Restyle — IMPLEMENTED AND VERIFIED LOCALLY, 2026-09-22
+
+Changed: `index.html` (contact section markup only), `css/contact-form.css`
+(container rules removed, colors swapped to `--z0-*` variables). See
+§1.19 for the decision record.
+
+**Verified**: tag balance unaffected (11/11 sections, 2/2 forms); grepped
+for the old class names and old hex literals — zero matches. Served
+locally and screenshotted with Playwright (`chromium` downloaded via
+`npx playwright install chromium` — not previously cached at a
+compatible version in this sandbox) via a real `#contact` hash
+navigation (not just `scrollIntoView`, which under-reported the
+`scroll-mt-24` offset in an earlier attempt and produced a misleading
+header-overlap artifact). Confirmed: "Contact" eyebrow renders, "Contact
+Us" heading in the display font, sage-colored phone link and button,
+form sits in a bordered white card with correctly styled inputs, no
+console errors (`page.on('pageerror')` empty).
