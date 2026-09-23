@@ -586,14 +586,11 @@ below (retail cost references, the pricing checklist) was not and is
   `/submit`, `/start`, and `/contact` are the only handled routes (see
   §1.2/1.9). Substituted a link to the existing `#contact` section
   instead. Flagged to the user as a judgment call, not silently decided.
-- **Image slots, not images**: four placeholder boxes (dashed border,
-  `fa-image` icon, no image loaded) — one section header, one per kit
-  card — each preceded by an HTML comment naming a suggested filename
-  (`ember-defense-kits-header.jpg`, `kit-starter.jpg`, `kit-retrofit.jpg`,
-  `kit-pro-pack.jpg`). Real images were explicitly deferred by the user
-  ("I'll supply section images separately") — **the placeholder boxes
-  will be visible on the live site if this is deployed before real
-  images are supplied.**
+- **Image slots, filled same session.** Originally shipped as four
+  placeholder boxes (dashed border, `fa-image` icon) pending real photos
+  the user said they'd supply separately. The user then supplied all
+  four within the same conversation; real photos are now live in all
+  four slots — see the update at the end of §3.26.
 - **Section comments renumbered** 6→7 through 12→13 in `index.html` to
   keep the file's own sequential section-comment convention intact
   (this section became the new 6).
@@ -1496,7 +1493,40 @@ the Resources accordion; 6 section-comment numbers shifted.
 - Served the file locally (`python3 -m http.server`) and re-fetched it
   over HTTP to confirm the section renders as written.
 
-**Not yet done**: not committed at the time this entry was written. See
+Committed as `bc07e1b` (`index.html`) and `343ec3a` (this file). See
 §1.18 for the decision record, including the source document's publishing
 boundary (its `INTERNAL ONLY` pricing section is not in this repo), the
 pricing-placeholder policy, and the email-capture-widget substitution.
+
+**Images added, same session, commit `042a429`**: the user supplied all
+four real photos directly in chat (not as files on disk — pasted
+images aren't independently readable, so the user placed them into
+`assets/images/` themselves and confirmed). Each was matched by content
+against its intended slot (foundation/gravel/vent wide shot → header;
+soffit vent with mesh → Starter; gravel-and-vent retrofit → 5-Foot
+Retrofit; bulk mesh roll with fasteners and gable vents → Pro Pack) and
+verified to match by visual inspection before wiring in.
+
+Source PNGs were large (2.4–3.2 MB each, ~11 MB total) relative to the
+rest of this site's image budget (§3.26's own §11 performance note in
+the earlier audit flagged the existing 447 KB hero as already large).
+Resized and re-encoded with `sips` to `assets/images/kits/`: header to
+1600×685 JPEG (328 KB), the three kit-card shots to 900×675 JPEG
+(204–292 KB each) — roughly 10x smaller combined (~1.1 MB total) with
+no visible quality loss at display size. Verified via local HTTP
+server that all four resolve 200 and the placeholder markup/comments
+are fully gone (`grep` for "IMAGE SLOT" / "placeholder" returns
+nothing). **Originals deleted per explicit user choice** (asked
+directly rather than assumed) — not present in git history.
+
+One git-environment note worth recording: this repo has
+`core.untrackedCache = true`, and in this sandbox `git status` served a
+stale cached result after the PNG deletions — repeatedly reporting the
+deleted files as still present/untracked even though `find`/`stat`
+confirmed they were gone. `git -c core.untrackedCache=false status`
+bypassed the stale cache and showed the true state. Not a real bug in
+this repo, but worth knowing if a future session sees `git status`
+disagree with the filesystem here — don't trust it blindly, re-check
+with the cache disabled before acting on it. Did not change the repo's
+`core.untrackedCache` setting itself (git config changes are off-limits
+per this project's standing rules).
