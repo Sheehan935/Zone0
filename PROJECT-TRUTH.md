@@ -542,6 +542,64 @@ drift.
 
 ---
 
+### 1.18 Ember-Defense Kits Section — DECIDED 2026-09-22
+
+New on-page section, `#ember-defense-kits`, added to `index.html`
+immediately after the Photo Review form and before Lean. Green. Clean.
+Adapted from a user-supplied source document ("Zone Zero Kit Website
+Copy") that itself carried an explicit publishing boundary: everything
+above its `INTERNAL ONLY` marker was cleared for the site, everything
+below (retail cost references, the pricing checklist) was not and is
+**not present anywhere in this repo**.
+
+- **Pricing policy — locked**: every `[PRICE TBD]` marker in the source
+  document renders on-site as literal text **"Pricing coming soon."** No
+  dollar figure of any kind appears on any kit card. This is a stricter
+  application of the existing §1.8 free-Photo-Review pricing stance,
+  not a conflict with it — §1.8 covers the *service*, this covers three
+  *physical material kits* that don't have supplier-confirmed costs yet.
+- **Honest-claim rules applied** (non-negotiable, carried over verbatim
+  from the task): never "required by law," never "fireproof," "ember-
+  resistant" used only where the cited manufacturer already markets a
+  product that way (Master Flow vent screens, Embers Out vents — both
+  phrased exactly as the source document phrased them), educational
+  tone with soft CTAs only.
+- **Three kit cards** (`#kit-starter`, `#kit-retrofit`, `#kit-pro-pack`)
+  reproduce the source document's exact contents lists — no quantities,
+  dimensions, or product names invented or altered.
+- **Cross-links added** (not in the source document — synthesized to
+  connect the new section into the existing page, per explicit
+  instruction): "Gutter & Roof Debris" and "Vent Mesh Retrofits" in the
+  First-5-Feet To-Do List link to `#kit-retrofit`/`#kit-starter`
+  respectively (mapped by which kit's vent hardware — soffit vs.
+  foundation — matches each checklist item's wording); "Organic Mulch
+  Removal" links to `#kit-retrofit` (its non-combustible ground cover);
+  How We Help step 04 (Hardscape) links to `#kit-retrofit` as the DIY
+  option; all 9 FAQ entries from the source document were also added to
+  the existing Resources accordion under a new "Ember-Defense Kits"
+  label, in addition to living in the new section itself — deliberate
+  duplication, both explicitly requested.
+- **Email-capture widget from the source document was NOT built as a
+  new form.** The document's closing CTA included a standalone
+  email-capture field ("Ask About Your Assessment"). Building it would
+  mean a new, unbacked form with no Worker endpoint — this repo's
+  `/submit`, `/start`, and `/contact` are the only handled routes (see
+  §1.2/1.9). Substituted a link to the existing `#contact` section
+  instead. Flagged to the user as a judgment call, not silently decided.
+- **Image slots, not images**: four placeholder boxes (dashed border,
+  `fa-image` icon, no image loaded) — one section header, one per kit
+  card — each preceded by an HTML comment naming a suggested filename
+  (`ember-defense-kits-header.jpg`, `kit-starter.jpg`, `kit-retrofit.jpg`,
+  `kit-pro-pack.jpg`). Real images were explicitly deferred by the user
+  ("I'll supply section images separately") — **the placeholder boxes
+  will be visible on the live site if this is deployed before real
+  images are supplied.**
+- **Section comments renumbered** 6→7 through 12→13 in `index.html` to
+  keep the file's own sequential section-comment convention intact
+  (this section became the new 6).
+
+---
+
 ## 2. GOVERNANCE RULES
 
 - **Evidence first.** Never assume the codebase matches documentation.
@@ -1410,3 +1468,35 @@ polled via `gh api repos/Sheehan935/Zone0/pages/builds/latest` until
 2026" stamps are present; the old "expected around late September" /
 "pending final effective date after Office of..." strings return zero
 matches.
+
+### 3.26 Ember-Defense Kits Section — IMPLEMENTED AND VERIFIED LOCALLY, 2026-09-22
+
+Changed: `index.html` only. New `#ember-defense-kits` section (~370
+inserted lines); 3 cross-link additions to the To-Do List checklist;
+1 cross-link addition to How We Help step 04; 9 FAQ entries added to
+the Resources accordion; 6 section-comment numbers shifted.
+
+**Verified**:
+- Tag balance after the edit: 11/11 `<section>`, 24/24 `<details>`,
+  184/184 `<div>`.
+- `grep -o 'id="..."' index.html | sort | uniq -d` — zero duplicate ids
+  (confirms `#kit-starter`/`#kit-retrofit`/`#kit-pro-pack` don't collide
+  with anything existing).
+- `grep -c "Pricing coming soon"` — exactly 3 (one per kit card).
+  `grep '\$[0-9]'` — zero matches anywhere in the new section: no
+  invented price ever rendered.
+- `grep -in "required by law\|fireproof"` — the only matches are the
+  FAQ question text itself ("Are these kits required by law?") and its
+  "No" answer, i.e. the honest-claim rule being followed, not violated.
+- `grep -in "ember-resistant"` in the new section — all three product
+  mentions match the source document's own phrasing exactly (two say
+  "marketed for ember resistance" explicitly; the third reproduces the
+  document's "ember-resistant screens" product description verbatim,
+  not asserted independently).
+- Served the file locally (`python3 -m http.server`) and re-fetched it
+  over HTTP to confirm the section renders as written.
+
+**Not yet done**: not committed at the time this entry was written. See
+§1.18 for the decision record, including the source document's publishing
+boundary (its `INTERNAL ONLY` pricing section is not in this repo), the
+pricing-placeholder policy, and the email-capture-widget substitution.
