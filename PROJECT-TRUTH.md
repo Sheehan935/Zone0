@@ -1466,7 +1466,7 @@ polled via `gh api repos/Sheehan935/Zone0/pages/builds/latest` until
 "pending final effective date after Office of..." strings return zero
 matches.
 
-### 3.26 Ember-Defense Kits Section — IMPLEMENTED AND VERIFIED LOCALLY, 2026-09-22
+### 3.26 Ember-Defense Kits Section — DEPLOYED AND VERIFIED LIVE, 2026-09-22
 
 Changed: `index.html` only. New `#ember-defense-kits` section (~370
 inserted lines); 3 cross-link additions to the To-Do List checklist;
@@ -1530,3 +1530,11 @@ disagree with the filesystem here — don't trust it blindly, re-check
 with the cache disabled before acting on it. Did not change the repo's
 `core.untrackedCache` setting itself (git config changes are off-limits
 per this project's standing rules).
+
+**Deployed**: pushed as `bc07e1b`, `343ec3a`, `042a429`, `15f9ace` — all
+four commits went out together (`8a69bf2..15f9ace`). GitHub Pages build
+for `15f9ace` polled via `gh api repos/Sheehan935/Zone0/pages/builds/latest`
+until `status: built`. Confirmed live: `#ember-defense-kits` present,
+all 3 kit anchors present, "Pricing coming soon" ×3, and all four
+`assets/images/kits/*.jpg` resolve 200 with the expected optimized
+file sizes (204–334 KB) — not the original multi-MB PNGs.
